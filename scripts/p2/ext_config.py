@@ -4,7 +4,6 @@ Vanilla AC ignores the folder, so the track still works without CSP."""
 from pathlib import Path
 
 TREES = "tree_oak, tree_bay, tree_euc"
-GRASS = "ground, litter, bank, shoulder_dirt"
 
 
 def ext_config(materials):
@@ -60,7 +59,7 @@ LINES_MATERIALS = paint_white, paint_yellow, paint_yellow_dbl, road_decal
     # sanity: every material named above must exist in the kn5s
     import re
     named = set()
-    for k, v in re.findall(r"^(MATERIALS|\w+_MATERIALS(?:_ALPHA)?)\s*=\s*(.*)$", s, re.M):
+    for k, v in re.findall(r"^(MATERIALS|\w+_MATERIALS(?:_ALPHA)?)[ \t]*=[ \t]*(.*)$", s, re.M):
         named |= {x.strip() for x in v.split(",") if x.strip()}
     missing = named - set(materials)
     assert not missing, f"ext_config names unknown materials: {missing}"
