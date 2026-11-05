@@ -1,5 +1,20 @@
 # Race kerbs + painted run-off for the track_* layouts (scripts/p2/kerbs.py, called from 21_build_geometry.py).
-# Curvature is |1/R| of the refined centerline, smoothed with a Gaussian (sigma_m).
+# dev4: kerbs are placed FROM THE RACING LINE (scripts/p2/racing_line.py, config/racing_line.yaml), per run
+# direction -> palomares_kerbs_nb.kn5 / _sb.kn5. The curvature keys below are still used by 21b (marshal posts,
+# barrier ranking); apex_entry_m / inside_exit_m / outside_exit_* are legacy (curvature placement, unused).
+placement:
+  touch_m: 0.60                    # kerb only where the line's tyre comes within this of that asphalt edge
+  apex_min_k_1pm: 0.004            # apex = inside touch while the line curves toward that edge (R < 250 m)
+  min_touch_m: 3                   # ignore shorter touches
+  exit_lookback_m: 90              # outside touch within this distance after an apex on the other side = exit
+  pad_m: 3                         # extend kerbs this far past the touch zone at both ends (covers the taper)
+  apex_forbid_env: [steep_drop]                # never an apex kerb above a steep drop
+  exit_forbid_env: [drop_off, steep_drop]      # no exit kerb where running wide means going over the edge
+  driveway_clear_m: 8              # no kerb within this of a driveway mouth (features.geojson) ...
+  junction_clear_m: 15             # ... or a junction
+  apron_clear_m: 3                 # ... or a surveyed driveway apron span (edge_profile._aprons)
+  side_offset_m: 1.0               # |offset_m| below this -> feature blocks both sides
+  runoff_gap_m: 0.45               # painted run-off only where the line runs out to <= this from the edge
 sigma_m: 6.0
 curvature_threshold_1pm: 0.0167    # R < 60 m counts as a corner
 min_corner_length_m: 10            # ignore shorter curvature blips

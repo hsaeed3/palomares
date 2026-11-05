@@ -1,5 +1,9 @@
 """Phase 2: race kerbs + painted run-off for the track_* layouts (called from 21_build_geometry.py).
 
+Placement (dev4) follows the racing line of each run direction (racing_line.py): apex kerbs where the line's
+tyre touches the inside edge while turning toward it, exit kerbs where it runs out to the outside edge after
+that apex; nothing where the line stays > placement.touch_m from the edge, at driveways/junctions, or on
+forbidden verge types; run-off only where the line runs really wide and the ground is flat.
 Kerb types (config/kerbs.yaml):
   apex : inside of the corner, entry -> just past the peak. Narrow, rounded-ridged rumble profile.
   exit : outside of the corner after the peak. Full shoulder width, low flat-topped profile, plus a
@@ -56,15 +60,10 @@ class TerrainZ:
 def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w):
     """SH = {"left": (SLX, SLY, SLZ), "right": (SRX, SRY, SRZ)} (columns edge -> mid -> out)."""
     N = len(road.s)
-    ks = gaussian_filter1d(road.k, K["sigma_m"])
     T = K["types"]
-    lab, nl = label(np.abs(ks) > K["curvature_threshold_1pm"])
-    corners = []
-    for l in range(1, nl + 1):
-        idx = np.nonzero(lab == l)[0]
-        if len(idx) >= K["min_corner_length_m"]:
-            apex = idx[np.argmax(np.abs(ks[idx]))]
-            corners.append((apex, "left" if ks[apex] > 0 else "right"))
+    import racing_line as RLm
+    RL = RLm.compute(road)                       # optimal line per run direction (config/racing_line.yaml)
+    PL = K["placement"]
     skip = np.zeros(N, bool)
     for lo, hi in K["skip_s_ranges"]:
         skip |= (road.s >= lo) & (road.s <= hi)
@@ -72,27 +71,19 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
     for g in guardrails:
         gr_mask[g["side"]][(road.s >= g["s0"] - 3) & (road.s <= g["s1"] + 3)] = True
     env = {"left": road.env_l, "right": road.env_r}
+    excl = access_mask(road, PL)                 # driveways / junctions / aprons per side
 
-    KERBS, acc = [], {}
+    KERBS, acc, corners = [], {}, []
+    LINE = {}
 
     def push(key, name, mat, P, Tr, UV):
         a = acc.setdefault(key, dict(name=name, mat=mat, P=[], T=[], UV=[], n=0))
         a["P"].append(P); a["T"].append(Tr + a["n"]); a["UV"].append(UV); a["n"] += len(P)
 
     for dname, sd in (("nb", 1), ("sb", -1)):
-        rowlab = {"left": np.zeros(N, np.int8), "right": np.zeros(N, np.int8)}   # 1 apex, 2 exit
-        for apex, inner in corners:
-            outer = "right" if inner == "left" else "left"
-            sa = road.s[apex]
-            if sd > 0:
-                a_rng = (sa - K["apex_entry_m"], sa + K["inside_exit_m"])
-                e_rng = (sa + K["outside_exit_start_m"], sa + K["outside_exit_start_m"] + K["outside_exit_length_m"])
-            else:
-                a_rng = (sa - K["inside_exit_m"], sa + K["apex_entry_m"])
-                e_rng = (sa - K["outside_exit_start_m"] - K["outside_exit_length_m"], sa - K["outside_exit_start_m"])
-            m = (road.s >= e_rng[0]) & (road.s <= e_rng[1]) & (rowlab[outer] == 0)
-            rowlab[outer][m] = 2
-            rowlab[inner][(road.s >= a_rng[0]) & (road.s <= a_rng[1])] = 1      # apex wins over an exit
+        D = RL[dname]
+        rowlab, wide, LINE[dname] = line_rows(road, D, sd, PL, env, skip, excl)
+        corners += [(int(a_), sd_, dname) for a_, sd_ in LINE[dname]["apexes"]]
         for side in ("left", "right"):
             rl = rowlab[side]; rl[skip] = 0; rl[:1] = 0; rl[-2:] = 0
             for v in (1, 2):
@@ -141,19 +132,94 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     from geom import grid_tris
                     c = chunk_of(i[n // 2])
                     push((dname, "k", c), f"1KERB_{dname.upper()}_{c:02d}", "kerb", Pm, grid_tris(n, len(t)), UV)
-                    KERBS.append(dict(s0=float(road.s[i[0]]), s1=float(road.s[i[-1]]), side=side, dir=dname, type=typ))
+                    gap = (D["gap_l"] if side == "left" else D["gap_r"])[i]
+                    KERBS.append(dict(s0=float(road.s[i[0]]), s1=float(road.s[i[-1]]), side=side, dir=dname, type=typ,
+                                      line_gap_min_m=round(float(gap.min()), 2), v_kmh=round(float(D["v"][i].mean() * 3.6), 0)))
                     if typ == "exit" and K["runoff"]["enabled"]:
-                        build_runoff(road, K["runoff"], i, side, sgn, SX, SY, SZ, env[side], gr_mask[side], dname, P3, TT, push, chunk_of)
+                        build_runoff(road, K["runoff"], i, side, sgn, SX, SY, SZ, env[side], gr_mask[side] | ~wide[side], dname, P3, TT, push, chunk_of)
     for (dname, kind, c), a in sorted(acc.items()):
         add(f"kerbs_{dname}", a["name"], a["mat"], np.concatenate(a["P"]), np.concatenate(a["T"]), np.concatenate(a["UV"]),
             cast_shadows=False)
     return KERBS, corners
 
 
+def access_mask(road, PL):
+    """stations (per side) where a kerb would cross a driveway / junction / apron mouth"""
+    import json
+    from geom import DER
+    N = len(road.s); m = {"left": np.zeros(N, bool), "right": np.zeros(N, bool)}
+    def mark(s0, s1, side):
+        for sd_ in (("left", "right") if side == "both" else (side,)):
+            m[sd_] |= (road.s >= s0) & (road.s <= s1)
+    for f in json.load(open(DER / "features.geojson"))["features"]:
+        p = f["properties"]
+        if p["kind"] not in ("driveway", "junction") or "s_m" not in p:
+            continue
+        r = PL["junction_clear_m"] if p["kind"] == "junction" else PL["driveway_clear_m"]
+        o = p.get("offset_m", 0) or 0
+        mark(p["s_m"] - r, p["s_m"] + r, "left" if o > PL["side_offset_m"] else "right" if o < -PL["side_offset_m"] else "both")
+    try:
+        import edge_profile
+        for s0, s1, side, _mat in edge_profile._aprons():
+            mark(s0 - PL["apron_clear_m"], s1 + PL["apron_clear_m"], side)
+    except Exception as e:   # survey files optional
+        print("kerbs: no apron spans:", e)
+    return m
+
+
+def line_rows(road, D, sd, PL, env, skip, excl):
+    """kerb row labels from the racing line (station order). 1 = apex (inside, line touches the inside edge
+    while turning toward it), 2 = exit (outside, line runs out to the edge after an apex on the other side).
+    Entry-side touches (turn-in from the outside) get no kerb. Returns rowlab, wide (run-off allowed), info."""
+    N = len(road.s)
+    k = gaussian_filter1d(D["k"], 2)            # + = curving toward station-left (both directions)
+    gap = {"left": D["gap_l"], "right": D["gap_r"]}
+    touch = {sd_: gap[sd_] < PL["touch_m"] for sd_ in gap}
+    turning = {"left": k > PL["apex_min_k_1pm"], "right": k < -PL["apex_min_k_1pm"]}
+    rowlab = {"left": np.zeros(N, np.int8), "right": np.zeros(N, np.int8)}
+    apex_side = np.zeros(N, np.int8)             # +1 apex on left, -1 on right
+    apexes = []
+    for side, sg in (("left", 1), ("right", -1)):
+        for r in runs(touch[side] & turning[side]):
+            if len(r) < PL["min_touch_m"]:
+                continue
+            apex_side[r] = sg
+            ia = r[np.argmin(gap[side][r])]; apexes.append((int(ia), side))
+    # walk in run direction: an outside touch within exit_lookback_m after an apex on the OTHER side = exit
+    order = np.arange(N) if sd > 0 else np.arange(N)[::-1]
+    last_side, last_pos = 0, -1e9
+    exitm = {"left": np.zeros(N, bool), "right": np.zeros(N, bool)}
+    for n_, i in enumerate(order):
+        if apex_side[i]:
+            last_side, last_pos = apex_side[i], n_
+        for side, sg in (("left", 1), ("right", -1)):
+            if touch[side][i] and not apex_side[i] and last_side == -sg and n_ - last_pos <= PL["exit_lookback_m"]:
+                exitm[side][i] = True
+    pad = int(round(PL["pad_m"]))
+    forbid = {"apex": PL["apex_forbid_env"], "exit": PL["exit_forbid_env"]}
+    stats = dict(apex_rows=0, exit_rows=0, dropped_access=0, dropped_env=0)
+    for side, sg in (("left", 1), ("right", -1)):
+        for v, typ, msk in ((2, "exit", exitm[side]), (1, "apex", (apex_side == sg))):
+            for r in runs(msk):
+                a = max(r[0] - pad, 0); b = min(r[-1] + pad, N - 1)
+                rr = np.arange(a, b + 1)
+                bad_env = np.isin(env[side][rr], forbid[typ]); bad_acc = excl[side][rr]
+                stats["dropped_env"] += int(bad_env.sum()); stats["dropped_access"] += int((bad_acc & ~bad_env).sum())
+                ok = rr[~bad_env & ~bad_acc]
+                if v == 2:
+                    ok = ok[rowlab[side][ok] == 0]
+                rowlab[side][ok] = v                         # apex (written last) wins over an exit
+                stats[f"{typ}_rows"] += len(ok)
+    wide = {side: gaussian_filter1d((gap[side] < PL["runoff_gap_m"]).astype(float), 3) > 0.05 for side in gap}
+    for side in rowlab:
+        rowlab[side][skip] = 0
+    return rowlab, wide, dict(apexes=apexes, stats=stats)
+
+
 def build_runoff(road, R, i, side, sgn, SX, SY, SZ, env, grm, dname, P3, TT, push, chunk_of):
     """painted strip on the terrain beyond the exit kerb; inner column == shoulder/terrain seam vertex"""
     from geom import grid_tris
-    ok = np.isin(env[i], R["allowed_env"]) & ~grm[i]
+    ok = np.isin(env[i], R["allowed_env"]) & ~grm[i]          # grm also masks rows where the line does not run wide
     nc = R["columns"]
     t = np.linspace(0, 1, nc)
     for r in runs(ok):
