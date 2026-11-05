@@ -4,12 +4,16 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const root = path.resolve(__dirname, '../..');
 const lay = process.argv[2] || 'road_summit';
 const dir = path.join(root, 'build/vis', lay);
-const outDir = path.join(root, 'reports/visual', lay); fs.mkdirSync(outDir, { recursive: true });
+// optional: CAMS=<json in build/vis/<lay>> and OUT=<reports/visual subdir> (e.g. terrain views)
+const outDir = path.join(root, 'reports/visual', process.env.OUT || lay); fs.mkdirSync(outDir, { recursive: true });
+const CAMS_ = process.env.CAMS || '';
 const html = `<!doctype html><html><body style="margin:0;background:#000">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
+const CAMS = '${CAMS_}';
 const sc = await (await fetch('scene.json')).json();
+if (CAMS) sc.cams = await (await fetch(CAMS)).json();
 const bin = await (await fetch('scene.bin')).arrayBuffer();
 const r = new THREE.WebGLRenderer({antialias:true}); r.setSize(1280,720); document.body.appendChild(r.domElement);
 r.outputColorSpace = THREE.SRGBColorSpace;
@@ -21,10 +25,11 @@ const mats = sc.materials.map(m => { let t = null;
   if (m.tex) { t = texs[m.tex] || (texs[m.tex] = tl.load(m.tex)); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; }
   const mm = new THREE.MeshLambertMaterial({map: t, alphaTest: m.alpha ? 0.5 : 0, side: THREE.FrontSide});
   if (m.det) { const d = texs[m.det] || (texs[m.det] = tl.load(m.det)); d.wrapS = d.wrapT = THREE.RepeatWrapping; d.colorSpace = THREE.SRGBColorSpace; d.anisotropy = 8;
-    // ksPerPixelMultiMap: diffuse * detail(uv * detailUVMultiplier) where diffuse alpha = 0 (terrain macro layer)
+    // ksPerPixelMultiMap: diffuse * detail(uv * detailUVMultiplier) where diffuse alpha = 0 (terrain macro layer);
+    // terrain is opaque: force alpha 1, else the alpha-0 macro map writes a=0 into the premultiplied canvas (washed-out white)
     mm.onBeforeCompile = sh => { sh.uniforms.tDet = {value: d}; sh.uniforms.dMul = {value: m.dmul};
       sh.fragmentShader = 'uniform sampler2D tDet; uniform float dMul;\n' + sh.fragmentShader.replace('#include <map_fragment>',
-        '#include <map_fragment>\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);'); };
+        '#include <map_fragment>\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);\n diffuseColor.a = 1.0;'); };
     mm.customProgramCacheKey = () => 'det' + m.dmul; }
   return mm; });
 for (const m of sc.meshes) { const g = new THREE.BufferGeometry(); let o = m.off;
@@ -54,7 +59,7 @@ const srv = http.createServer((q, s) => { const p = path.join(dir, decodeURIComp
   const n = await p.evaluate(() => window.ncams);
   for (let i = 0; i < n; i++) {
     const s = await p.evaluate(i => window.shot(i), i);
-    await p.screenshot({ path: path.join(outDir, `s${String(s).padStart(5, '0')}.jpg`), type: 'jpeg', quality: 82, timeout: 300000 });
+    await p.screenshot({ path: path.join(outDir, (typeof s === 'string' ? s : `s${String(s).padStart(5, '0')}`) + '.jpg'), type: 'jpeg', quality: 82, timeout: 300000 });
     console.log('shot', lay, s);
   }
   await b.close(); srv.close();

@@ -6,9 +6,9 @@ Shader: ksPerPixelMultiMap. AC combines detail as a plain multiply where txDiffu
 
   txDiffuse = unique per-chunk macro map (MACRO_PX^2 over the chunk's square UV window from 21):
               USGS ortho (1 m, summer-gold) re-graded to the spring GoPro palette (open/bright -> spring grass,
-              dark/canopy -> leaf litter), + fbm noise at ~6/20/60 m + unique fbm. Stored as a
-              multiplier around MACRO_MEAN (alpha 0 = detail everywhere).
-  txDetail  = the calibrated class texture (ground / bank / litter, ~6 m period), raw-brightened by 1/MACRO_MEAN
+              dark/canopy -> leaf litter), + fbm noise at ~6/20/60 m + unique fbm. Stored as the spring
+              colour / MACRO_MEAN (alpha 0 = detail everywhere).
+  txDetail  = the calibrated class texture (ground / bank / litter, ~6 m period), x MACRO_MEAN / reference colour
               so macro x detail keeps the materials.yaml albedo on average.
 Scales: ortho (~1.5 m) + fbm 6/20/60 m unique in the macro, ~5-6 m class detail (per-class periods) -> 3+ scales, no visible period.
 """
@@ -18,6 +18,7 @@ from PIL import Image
 from scipy.ndimage import map_coordinates, gaussian_filter, zoom
 
 MACRO_PX = 1024
+MACRO_VAR = 0.6      # fraction of the ortho/fbm colour deviation kept in the macro
 MACRO_MEAN = 0.8      # raw (sRGB-space) mean of the macro multiplier; detail textures are divided by it
 DETAIL_PERIOD = {"ground": 6.1, "bank": 5.3, "litter": 5.7}   # m per detail tile
 ROCK_BASE_M, ROCK_DETAIL_MULT = 20.0, 4.3                    # rock: 20 m diffuse tile x 4.65 m detail tile
@@ -64,15 +65,13 @@ def macro_map(mc, ortho, pal, lab, rgb, tile_gray, seed):
     tgt[..., 0] += _fbm(r, N, ((6 / px, 2.5), (20 / px, 2.5), (60 / px, 3.0)))
     tgt[..., 1] += _fbm(r, N, ((30 / px, 2.5), (90 / px, 2.0)))      # green <-> olive drift
     tgt[..., 2] += _fbm(r, N, ((25 / px, 2.5), (80 / px, 2.5)))      # fresh <-> yellowing
-    ref = (gp + lp) / 2
-    c = rgb(tgt).astype(np.float32) / 255; c0 = rgb(ref[None, None]).astype(np.float32)[0, 0] / 255
-    M = 1 + 0.45 * (c / np.maximum(c0, 1e-3) - 1)
-    M[..., 2] = np.minimum(M[..., 2], 0.5 * (M[..., 0] + M[..., 1]))   # spring: never bluer than neutral
-    # 17.3 m luminance tile (mid scale)
-    # (a baked 17.3 m luminance tile was tried here: it reads as a visible lattice from height -> removed;
-    #  mid-scale comes from the unique fbm octaves instead)
-    M = np.clip(M, 0.55, 1.25) * MACRO_MEAN
-    M = M / M.reshape(-1, 3).mean(0).mean() * MACRO_MEAN
+    c0 = macro_ref(pal, rgb)
+    c = rgb(tgt).astype(np.float32) / 255
+    c = c0 + MACRO_VAR * (c - c0)                                        # ortho + fbm colour variation, damped
+    c[..., 2] = np.minimum(c[..., 2], 0.5 * (c[..., 0] + c[..., 1]))   # spring: never bluer than neutral
+    # txDiffuse carries the real spring COLOUR (so GrassFX, which samples the ground colour, sees green/olive,
+    # never a pale grey multiplier); divided by MACRO_MEAN because the detail layer averages MACRO_MEAN
+    M = c / MACRO_MEAN
     a = np.dstack([np.clip(M, 0, 1) * 255, np.zeros((N, N))]).astype(np.uint8)
     return Image.fromarray(a, "RGBA")
 
@@ -83,8 +82,16 @@ def tile_gray_from(img, n=512):
     return (g - g.mean()) / (g.std() + 1e-6)
 
 
-def detail_from(png_bytes, mult=1 / MACRO_MEAN):
-    a = np.asarray(Image.open(io.BytesIO(png_bytes)).convert("RGB"), np.float32) * mult
+def macro_ref(pal, rgb):
+    """neutral reference colour of the macro map (mid grass/litter), 0..1 sRGB"""
+    ref = (np.array(pal["grass"]["lab_mean"]) + np.array(pal["litter"]["lab_mean"])) / 2
+    return rgb(ref[None, None]).astype(np.float32)[0, 0] / 255
+
+
+def detail_from(png_bytes, ref):
+    """class detail = class texture / macro reference colour * MACRO_MEAN  ->  macro x detail = macro colour x
+    (class colour / reference): grass greener, bank/litter browner, mean albedo kept"""
+    a = np.asarray(Image.open(io.BytesIO(png_bytes)).convert("RGB"), np.float32) * (MACRO_MEAN / np.asarray(ref, np.float32))
     return Image.fromarray(a.clip(0, 255).astype(np.uint8))
 
 

@@ -101,14 +101,23 @@ MASK_MAX_LUMINANCE = 1
 
 [GRASS_FX_ADJUSTMENT_0]
 MATERIALS = {TG}
+; terrain is ksPerPixelMultiMap whose txDiffuse alpha is 0 (= detail everywhere): never read it as a grass mask
+USE_MULTIMAP_DETAIL_MASK = 0
+USE_MULTILAYER_MASK = 0
 MAP = A
 
 [GRASS_FX_ADJUSTMENT_1]
 MATERIALS = {TB}
+; terrain is ksPerPixelMultiMap whose txDiffuse alpha is 0 (= detail everywhere): never read it as a grass mask
+USE_MULTIMAP_DETAIL_MASK = 0
+USE_MULTILAYER_MASK = 0
 MAP = B
 
 [GRASS_FX_ADJUSTMENT_2]
 MATERIALS = {TL}
+; terrain is ksPerPixelMultiMap whose txDiffuse alpha is 0 (= detail everywhere): never read it as a grass mask
+USE_MULTIMAP_DETAIL_MASK = 0
+USE_MULTILAYER_MASK = 0
 MAP = C
 
 [RAIN_FX]

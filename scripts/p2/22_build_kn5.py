@@ -502,8 +502,9 @@ _TMP = {**BASE, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "fresnelC": 0.0, "fresn
         "isAdditive": 0.0, "useDetail": 1.0, "detailUVMultiplier": 1.0, "shadowBiasMult": 1.0}
 T["ter_flat_n.png"] = png(solid((128, 128, 255)))
 T["ter_maps.png"] = png(solid((20, 0, 0)))
+_ref = _TM.macro_ref(PAL, _rgb)
 for _c, _f in (("ground", "ground_d.png"), ("bank", "bank_d.png"), ("litter", "litter_d.png")):
-    T[f"ter_{_c}_det.png"] = png(_TM.detail_from(T[_f]))
+    T[f"ter_{_c}_det.png"] = png(_TM.detail_from(T[_f], _ref))
 _rd, _rdet = _TM.rock_textures(T["rock_d.png"])
 T["ter_rock_d.png"], T["ter_rock_det.png"] = png(_rd), png(_rdet)
 MATS["rock"] = Material("rock", "ksPerPixelMultiMap", {**_TMP, "detailUVMultiplier": _TM.ROCK_DETAIL_MULT},

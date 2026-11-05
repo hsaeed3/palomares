@@ -63,12 +63,31 @@ GoPro palette: open -> grass, canopy -> litter, plus fbm at 6/20/60 m), alpha 0;
 `detailUVMultiplier`. AC multiplies detail into diffuse where diffuse alpha is 0 (Kunos car workflow), so mean albedo is kept.
 Rock: multimap with a 20 m base tile x 4.65 m detail. Physics names `1GRASS_t*` unchanged; no extra draw calls.
 
-### In-game GrassFX check
-1. CM > Settings > Custom Shaders Patch > **Grass FX: Active** (also check its quality/distance slider is not at minimum).
-   GrassFX is a CSP module; with Pure it is unchanged. Track config must show "loaded from track folder" (Tracks tab).
-2. Expect: dense, knee-high, untidy bright green grass on open (non-canopy) slopes either side,
-   shorter mixed tufts on cut banks, and sparse short tufts on the leaf-litter verge under the oaks. Grass fades out at a few
-   tens of metres (CSP spawns around the camera); the macro map carries the colour beyond that.
-3. Never: grass through asphalt, on the shoulder strip, on kerbs, rock faces or paint. Report the distance marker if seen.
-4. If grass is too tall/dense: lower SHAPE_SIZE in A/B/C; too uniform: raise MASK_MAIN_THRESHOLD in B/C towards 0.2-0.5.
-5. Terrain without CSP: no visible 6 m repeat from the driver's seat; colour patches follow the real meadows/canopy.
+**dev-next-2 fixes (terrain looked pale/flat, still no grass):**
+- The macro `txDiffuse` used to be a near-grey *multiplier* (~sRGB 204/206/199) with all the colour in `txDetail`. Anything
+  that reads only the diffuse (GrassFX colour/mask sampling, distant mips, the offline renderer) saw pale grey. Now
+  `txDiffuse` carries the real spring colour (ortho re-graded to the GoPro palette, `MACRO_VAR` 0.6 of its variation) / 0.8, and
+  `txDetail` = class texture x 0.8 / macro reference colour (near neutral: grass a bit greener, bank/litter browner).
+  Final colour = macro x detail = same calibrated mean albedo as before. Physics names, UVs, draw calls unchanged.
+- GrassFX adjustments now set `USE_MULTIMAP_DETAIL_MASK = 0` and `USE_MULTILAYER_MASK = 0`: our multimap diffuse alpha is 0
+  everywhere (= "detail on" for AC), and must never be read as a grass-density mask (alpha 0 = no grass).
+  Mask syntax checked against acc-extension-config (`highforce.ini` uses the same opened `-1/0/-1/1` masks,
+  `sakina_hill.ini`/`ks_highlands.ini` the `GRASS_FX_ADJUSTMENT_n: MATERIALS / MAP = A` form).
+- Offline renderer (24_visual_render.js, 24e): forces alpha 1 on multimap terrain; the alpha-0 macro was writing a=0 into the
+  premultiplied canvas, which is what washed the terrain out to near white in reports/visual/edges/f030.jpg.
+
+### In-game GrassFX check (exact)
+1. Install the new zip (delete the old `palomares_road*` folder first). Check
+   `content/tracks/palomares_road/extension/ext_config.ini` exists and its `[GRASS_FX]` `GRASS_MATERIALS` line lists `ter_ground_00 ...`.
+2. Content Manager > Settings > Custom Shaders Patch > **Grass FX**: tick *Active*; set *Grass quality/range* above minimum;
+   leave *Use for tracks without config* irrelevant (we ship a config). Also in CSP > *General*: track configs must not be
+   disabled (no "Ignore track configs").
+3. In a session, CSP's in-game app *Shaders Patch Settings / Grass FX* should show the module active; if CSP's
+   *Developer > Track config* shows "loaded from track folder", the config was read.
+4. Expect at s 1750, 3300, 5300 (open south slopes): dense knee-high untidy spring grass either side from the shoulder edge out;
+   s 9000 / 12500 (canopy): short sparse tufts on the litter verge, medium tufts on cut banks; none on rock faces.
+5. Never: grass on asphalt, shoulder strip, kerbs, decals, paint, rock. Report the distance marker if seen.
+6. Still no grass anywhere: set `MASK_MAIN_THRESHOLD = -1` in B and C too (only A is fully open); if then still none, report the
+   CSP version and a screenshot of the Grass FX settings page (Pure does not replace GrassFX).
+7. Too tall/dense: lower SHAPE_SIZE in A/B/C; too uniform: raise MASK_MAIN_THRESHOLD in B/C towards 0.2-0.5.
+8. Terrain without CSP: no visible 6 m repeat from the driver's seat; colour patches follow the real meadows/canopy.

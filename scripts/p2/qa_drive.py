@@ -29,9 +29,40 @@ import yaml
 T0 = time.time()
 TRK = BUILD / "palomares_road"
 STEP_LIM = 0.02
-AZ_LIM_G = 3.0          # vertical accel of the contact path that would unsettle / launch a car (flag)
-AZ_SIGMA = 3            # samples (0.3 m): tyre envelope + suspension low-pass of the contact path
+AZ_LIM_G = 2.0          # sprung-mass (body) vertical accel that would unsettle a car (quarter-car model)
+LOAD_LIM = 0.10         # tyre load below 10 % of static = wheel unloads / launch risk
 ENV_HALF = 1.0
+
+
+def quarter_car(zr, V, ds=0.1, ms=300.0, mu=40.0, ks=45e3, cs=3.5e3, kt=260e3, patch=0.15):
+    """sprung-mass vertical accel (g) and tyre load factor (Fz / static) of a race-car quarter model driven along
+    the contact path zr (0.1 m samples) at speed V. load < 0.1 = wheel unloads (launch risk over a kerb/bump).
+    The raw contact-path second derivative is meaningless at 0.1 m resolution (mesh facets / noise -> 30 g)."""
+    n = max(int(round(patch / ds)), 1)
+    zr = np.convolve(np.pad(zr, (n, n), mode="edge"), np.ones(2 * n + 1) / (2 * n + 1), "valid")   # tyre patch envelope
+    dt = ds / np.maximum(V, 1.0); g = 9.81; fst = (ms + mu) * g
+    return _qc(zr, dt, ms, mu, ks, cs, kt, fst, g)
+
+
+def _qc_py(zr, dt, ms, mu, ks, cs, kt, fst, g):
+    # states are deviations from static equilibrium; semi-implicit Euler, <= 0.5 ms sub-steps
+    zs = zu = zr[0]; vs = vu = 0.0; n = len(zr); acc = np.zeros(n); load = np.ones(n); a_s = 0.0; ft = fst
+    for i in range(n):
+        sub = max(1, int(np.ceil(dt[i] / 0.0005))); h = dt[i] / sub
+        for _ in range(sub):
+            fsus = ks * (zu - zs) + cs * (vu - vs)
+            ft = max(fst + kt * (zr[i] - zu), 0.0)
+            a_s = fsus / ms; a_u = (ft - fst - fsus) / mu
+            vs += a_s * h; vu += a_u * h; zs += vs * h; zu += vu * h
+        acc[i] = a_s / g; load[i] = ft / fst
+    return acc, load
+
+
+try:
+    from numba import njit
+    _qc = njit(cache=True)(_qc_py)
+except Exception:
+    _qc = _qc_py
 KC = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
 road = Road(CFG["build_end_m"]); NS = len(road.s)
 ckd = cKDTree(np.c_[road.x, road.y])
@@ -168,13 +199,14 @@ for lay in ("road_full", "road_full_rev", "track_full", "track_full_rev"):
             sk = kind_of[who[k]] if who[k] >= 0 else "?"; sk2 = kind_of[who[k + 1]] if who[k + 1] >= 0 else "?"
             find(lay, road.s[st_line[k]], wn, "HIGH" if step[k] > 0.04 else "MED", "step",
                  f"vertical step {step[k] * 100:.1f} cm on the line ({sk}->{sk2}) at {V[k] * 3.6:.0f} km/h")
-        zs = gaussian_filter1d(zf, AZ_SIGMA)       # tyre envelope low-pass (mesh facets are not felt)
-        az = np.gradient(np.gradient(zs, 0.1), 0.1) * V ** 2 / 9.81
+        az, ld = quarter_car(zf, V)                # body accel + tyre load (quarter-car, tyre patch envelope)
         res[f"max_az_{wn}_g"] = float(np.abs(az).max()); res[f"p999_az_{wn}_g"] = float(np.percentile(np.abs(az), 99.9))
-        bad = np.abs(az) > AZ_LIM_G
+        res[f"min_load_{wn}"] = float(ld.min())
+        bad = (np.abs(az) > AZ_LIM_G) | (ld < LOAD_LIM)
         for a, b in ranges(bad, s_ln):
-            k = a + int(np.argmax(np.abs(az[a:b + 1])))
-            find(lay, road.s[st_line[k]], wn, "MED", "vertical_accel", f"contact-path vertical accel {az[k]:+.1f} g at {V[k] * 3.6:.0f} km/h on {kind_of[who[k]] if who[k] >= 0 else '?'}")
+            k = a + int(np.argmin(ld[a:b + 1]))
+            find(lay, road.s[st_line[k]], wn, "HIGH" if ld[k] < 0.02 else "MED", "vertical_accel",
+                 f"body accel {az[k]:+.1f} g, tyre load {ld[k] * 100:.0f}% of static at {V[k] * 3.6:.0f} km/h on {kind_of[who[k]] if who[k] >= 0 else '?'}")
     # ---- kerb ride (track layouts): push the car onto the kerbs where the line is near the edge
     if lay.startswith("track"):
         D = RL[dname]; j = st_line
@@ -192,18 +224,19 @@ for lay in ("road_full", "road_full_rev", "track_full", "track_full_rev"):
             zf = np.where(hole, np.interp(np.arange(len(z)), np.nonzero(~hole)[0], z[~hole]), z)
             on_k = (who >= 0) & (kind_of[np.maximum(who, 0)] == "KERB")
             dz = np.diff(zf); step = np.abs(dz - median_filter(dz, 11, mode="nearest"))
-            az = np.gradient(np.gradient(gaussian_filter1d(zf, AZ_SIGMA), 0.1), 0.1) * V ** 2 / 9.81
+            az, ld = quarter_car(zf, V)
             for a, b in ranges(on_k, s_ln, 5):
                 a2, b2 = max(a - 10, 0), min(b + 10, len(az) - 1)
                 k = a2 + int(np.argmax(np.abs(az[a2:b2 + 1])))
-                kmax.append((float(abs(az[k])), float(step[a2:b2].max()), float(road.s[j[k]]), wn, float(V[k] * 3.6)))
+                kmax.append((float(abs(az[k])), float(step[a2:b2].max()), float(road.s[j[k]]), wn, float(V[k] * 3.6), float(ld[a2:b2 + 1].min())))
         res["kerb_rides"] = len(kmax)
         if kmax:
             res["kerb_ride_max_az_g"] = max(k[0] for k in kmax); res["kerb_ride_max_step_m"] = max(k[1] for k in kmax)
-            for azk, stk, sk, wn, vk in kmax:
-                if azk > AZ_LIM_G or stk > STEP_LIM:
-                    find(lay, sk, wn, "HIGH" if (azk > 4 or stk > 0.04) else "MED", "kerb_ride",
-                         f"riding the kerb at {vk:.0f} km/h: vertical accel {azk:.1f} g, step {stk * 100:.1f} cm")
+            res["kerb_ride_min_load"] = min(k[5] for k in kmax)
+            for azk, stk, sk, wn, vk, lk in kmax:
+                if azk > AZ_LIM_G or stk > STEP_LIM or lk < LOAD_LIM:
+                    find(lay, sk, wn, "HIGH" if (lk < 0.02 or stk > 0.04) else "MED", "kerb_ride",
+                         f"riding the kerb at {vk:.0f} km/h: body accel {azk:.1f} g, min tyre load {lk * 100:.0f}%, step {stk * 100:.1f} cm")
         # static kerb cross-sections: height above the surface beneath, ramp angle, outer drop
         KI = phys_items([f for f in files if "kerbs" in f], ("KERB",))
         if KI:

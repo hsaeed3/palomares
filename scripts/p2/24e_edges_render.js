@@ -21,10 +21,11 @@ const mats = sc.materials.map(m => { let t = null;
   if (m.tex) { t = texs[m.tex] || (texs[m.tex] = tl.load(m.tex)); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; }
   const mm = new THREE.MeshLambertMaterial({map: t, alphaTest: m.alpha ? 0.5 : 0, side: THREE.FrontSide});
   if (m.det) { const d = texs[m.det] || (texs[m.det] = tl.load(m.det)); d.wrapS = d.wrapT = THREE.RepeatWrapping; d.colorSpace = THREE.SRGBColorSpace; d.anisotropy = 8;
-    // ksPerPixelMultiMap: diffuse * detail(uv * detailUVMultiplier) where diffuse alpha = 0 (terrain macro layer)
+    // ksPerPixelMultiMap: diffuse * detail(uv * detailUVMultiplier) where diffuse alpha = 0 (terrain macro layer);
+    // terrain is opaque: force alpha 1, else the alpha-0 macro map writes a=0 into the premultiplied canvas (washed-out white)
     mm.onBeforeCompile = sh => { sh.uniforms.tDet = {value: d}; sh.uniforms.dMul = {value: m.dmul};
       sh.fragmentShader = 'uniform sampler2D tDet; uniform float dMul;\n' + sh.fragmentShader.replace('#include <map_fragment>',
-        '#include <map_fragment>\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);'); };
+        '#include <map_fragment>\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);\n diffuseColor.a = 1.0;'); };
     mm.customProgramCacheKey = () => 'det' + m.dmul; }
   return mm; });
 for (const m of sc.meshes) { const g = new THREE.BufferGeometry(); let o = m.off;
