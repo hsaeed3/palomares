@@ -79,9 +79,9 @@ for i in range(3):   # checker ends
     for j in range(7):
         for xs in (i * 32 + 16, S - 16 - (i + 1) * 32):
             dr.rectangle((xs, 22 + j * 30, xs + 31, 22 + j * 30 + 29), fill=WHITE if (i + j) % 2 else (12, 12, 12))
-logo_mark(250, 128, 82, WHITE, NAVY)
-dr.text((1060, 104), "PALOMARES HILL CLIMB", fill=WHITE, font=F(118), anchor="mm")
-dr.text((1060, 196), "ALAMEDA COUNTY  ·  NILES CANYON  →  CASTRO VALLEY", fill=GOLD, font=F(38, False), anchor="mm")
+logo_mark(185, 128, 76, WHITE, NAVY)
+dr.text((1110, 104), "PALOMARES HILL CLIMB", fill=WHITE, font=F(112), anchor="mm")
+dr.text((1110, 196), "ALAMEDA COUNTY  ·  NILES CANYON  →  CASTRO VALLEY", fill=GOLD, font=F(38, False), anchor="mm")
 region("banner", 0, 0, S, TS)
 
 # --- row 1: four fictional sponsor boards (512 x 256)

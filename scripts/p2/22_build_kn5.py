@@ -257,7 +257,7 @@ def _leaf_cell(kind, seed, S=512):
     c = S / 2; R = S * 0.47
     # 3-6 sub-clumps -> clumped masses with gaps between them
     subs = [(c + r.normal(0, R * 0.35), c + r.normal(0, R * 0.35), R * r.uniform(0.45, 0.7)) for _ in range(r.integers(4, 7))]
-    holes = _vnoise(r, S, S, 40) > 0.74  # ~15-25 % sky holes inside the clump
+    holes = _vnoise(r, S, S, 40) > 0.80  # ~10-20 % sky holes inside the clump
     lo, hi = LEAF_SIZE[kind]
     for _ in range(3000):
         sx, sy, sr = subs[r.integers(len(subs))]
@@ -283,13 +283,18 @@ def _leaf_cell(kind, seed, S=512):
     return np.dstack([rgb, np.where(m > 128, 255, 0)]).astype(np.uint8)
 
 
+COL_TINT = (np.array([0.74, 0.80, 0.76]), np.array([0.90, 0.94, 0.90]), np.array([1.0, 1.04, 0.96]), np.array([1.12, 1.22, 0.74]))
+
+
 def leaf_atlas():
     """tree_leaves.png 2048x2048: 4x4 cells of 512; row = species (v bottom-up: oak, bay, euc, syc), col = variant"""
     A = np.zeros((2048, 2048, 4), np.uint8)
     for ri, k in enumerate(("oak", "bay", "euc", "syc")):
         for v in range(4):
             y0 = (3 - ri) * 512
-            A[y0:y0 + 512, v * 512:(v + 1) * 512] = _leaf_cell(k, ri * 4 + v)
+            cell = _leaf_cell(k, ri * 4 + v).astype(float)
+            cell[..., :3] *= COL_TINT[v]  # per-cluster tint via column: darker old leaves (0) .. lime new growth (3)
+            A[y0:y0 + 512, v * 512:(v + 1) * 512] = cell.clip(0, 255).astype(np.uint8)
     return Image.fromarray(A, "RGBA")
 
 

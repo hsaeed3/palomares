@@ -49,9 +49,9 @@ class _B:
                 a = b0 + i * (sides + 1) + j; b = a + sides + 1
                 self.bT += [(a, b, b + 1), (a, b + 1, a + 1)]
 
-    def leaf(self, c, size, centre, row, col, rng):
+    def leaf(self, c, size, centre, row, col, rng, outward=True):
         out = _unit(c - centre + np.array([0, 0, 0.3 * size]))
-        n = _unit(out * 0.6 + rng.normal(0, 0.6, 3))
+        n = _unit(out + rng.normal(0, 0.25, 3)) if outward else _unit(rng.normal(0, 1, 3))
         u, v = _frame(n); rot = rng.uniform(0, 2 * math.pi)
         u, v = u * math.cos(rot) + v * math.sin(rot), -u * math.sin(rot) + v * math.cos(rot)
         h = size / 2; b0 = len(self.lP)
@@ -63,25 +63,37 @@ class _B:
 
 
 # species parameters: n main limbs, limb angle from vertical (deg), trunk fraction, recursion depth, kids, spread,
-# droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m), trunk radius / height
+# droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m, near; far x FAR_LS),
+# trunk radius / height, crown volume: base / top as fraction of H, edge droop (fraction of H), lobe irregularity
 _SP = {
-    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(54, 16), ls=(2.8, 4.2), r0=0.040),
-    "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(48, 14), ls=(2.4, 3.6), r0=0.016),
-    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(28, 9), ls=(2.2, 3.4), r0=0.022),
-    "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(32, 10), ls=(2.4, 3.6), r0=0.024),
+    "oak": dict(limbs=(4, 6), ang=(50, 74), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(118, 34), ls=(2.1, 3.4), r0=0.034,
+                cz=(0.26, 1.0), cdroop=0.20, lobe=0.18),
+    "bay": dict(limbs=(4, 6), ang=(8, 26), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(104, 30), ls=(2.0, 3.1), r0=0.014,
+                cz=(0.05, 1.0), cdroop=0.04, lobe=0.12),
+    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(64, 20), ls=(1.9, 3.0), r0=0.020,
+                cz=(0.34, 1.0), cdroop=0.06, lobe=0.22),
+    "syc": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(84, 24), ls=(2.0, 3.2), r0=0.022,
+                cz=(0.22, 1.0), cdroop=0.08, lobe=0.18),
 }
+FAR_LS = 1.85
+PE = 2.6  # crown superellipsoid exponent (fuller, rounder-shouldered crowns than an ellipsoid)
 
 
 def make_proto(kind, seed, lod=0):
-    """returns dict(bark=(P,N,UV,T), leaf=(P,N,UV,T)) in metres, base at origin, height ~H0[kind]."""
+    """returns dict(bark=(P,N,UV,T), leaf=(P,N,UV,T)) in metres, base at origin, height ~H0[kind], crown radius ~R0.
+    Wood skeleton is scaled to sit inside the crown volume; leaf clusters (overlapping, smaller near / big far) are
+    placed at every limb end (no bare stubs) + filling an irregular, low, wide crown ellipsoid incl. its interior."""
     r = np.random.default_rng(1000 * SPECIES.index(kind) + seed)
-    S = _SP[kind]; H = H0[kind]; B = _B(); row = LEAFROW[kind]
-    centre = np.array([0, 0, H * (0.62 if kind != "oak" else 0.55)])
-    tips = []
-    maxd = S["depth"] - (1 if lod else 0)
+    S = _SP[kind]; H = H0[kind]; R = R0[kind]; B = _B(); row = LEAFROW[kind]
+    z0c, z1c = S["cz"][0] * H, S["cz"][1] * H
+    zc, rz = (z0c + z1c) / 2, (z1c - z0c) / 2
+    centre = np.array([0, 0, zc])
+    tips, ends = [], []
+    maxd = S["depth"]
+    tubes = []  # deferred: drawn after the skeleton is scaled into the crown
 
     def grow(p, d, ln, rad, depth):
-        nsub = (3, 2, 1, 1)[min(depth, 3)]
+        nsub = (3, 2, 1, 1)[min(depth, 3)] if not lod else 1
         pts, rr = [p.copy()], [rad]
         for i in range(nsub):
             d = _unit(d + r.normal(0, 0.13 if kind != "euc" else 0.05, 3))
@@ -90,25 +102,22 @@ def make_proto(kind, seed, lod=0):
                 d = _unit(d + hz * S["droop"] - _UP * S["droop"] * 0.5 * (depth >= 2))
             if kind in ("syc", "euc", "bay") and depth <= 1:
                 d = _unit(d + _UP * 0.08)
-            p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.35 * (i + 1) / nsub))
-        sides = (6, 4, 3, 3)[min(depth, 3)]
+            p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.45 * (i + 1) / nsub))
         if depth <= 1:  # small branches are hidden inside the leaf clusters: no tubes
-            B.tube(np.array(pts), rr, sides, STRIP[kind])
-        end_r = rr[-1]
+            tubes.append((np.array(pts), rr, (4 if not lod else 3)))
+            ends.append(p.copy())
         if depth >= maxd:
-            tips.append((p, d)); return
-        if depth >= maxd - 1:  # leaves also along the outer branches
-            for q in pts[1:-1]:
-                tips.append((q, d))
+            tips.append(p.copy()); return
         k = r.integers(S["kids"][0], S["kids"][1] + 1)
         az0 = r.uniform(0, 2 * math.pi)
         for i in range(k):
             u, v = _frame(d); az = az0 + 2 * math.pi * i / k + r.normal(0, 0.3)
             side = u * math.cos(az) + v * math.sin(az)
             nd = _unit(d * math.cos(S["spread"]) + side * math.sin(S["spread"]))
-            grow(p, nd, ln * r.uniform(0.55, 0.75), end_r * (0.85 if i == 0 else 0.7), depth + 1)
+            grow(p, nd, ln * r.uniform(0.55, 0.75), rr[-1] * (0.85 if i == 0 else 0.7), depth + 1)
 
-    rt = H * S["r0"] * (1.4 if kind == "oak" else 1.0) * 1.0
+    rt = H * S["r0"] * (1.4 if kind == "oak" else 1.0)
+    trunk = None
     if kind == "bay":  # multi-stem from the root crown
         for i in range(r.integers(*S["limbs"])):
             az = r.uniform(0, 2 * math.pi); a = math.radians(r.uniform(*S["ang"]))
@@ -118,7 +127,7 @@ def make_proto(kind, seed, lod=0):
         lean = math.radians(r.uniform(0, 10)); laz = r.uniform(0, 2 * math.pi)
         d0 = np.array([math.sin(lean) * math.cos(laz), math.sin(lean) * math.sin(laz), math.cos(lean)])
         top = d0 * H * S["trunk"] + np.array([0, 0, -0.3])
-        B.tube(np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 6 if not lod else 5, STRIP[kind])
+        trunk = (np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 6 if not lod else 4)
         nl = r.integers(S["limbs"][0], S["limbs"][1] + 1)
         for i in range(nl):
             az = 2 * math.pi * i / nl + r.normal(0, 0.35); a = math.radians(r.uniform(*S["ang"]))
@@ -127,31 +136,56 @@ def make_proto(kind, seed, lod=0):
             if kind == "euc" and i == 0:
                 d = _unit(d0 + _UP)
             grow(top, d, ln, rt * (0.85 if nl == 1 else 0.65) * r.uniform(0.85, 1.0), 1)
-    # leaf clusters at tips; ~20 % dropped at random -> real sky/sun holes between clumps
-    # few, big textured clusters (each cell of tree_leaves.png shows hundreds of leaves) spread evenly over the outer
-    # branches -> dense clumped crown hiding the twigs, gaps come from the cluster texture holes + spacing
-    nlv = S["nl"][1 if lod else 0]
-    order = r.permutation(len(tips))
-    tp = np.array([p for p, _ in tips]); trx = max(np.percentile(np.hypot(tp[:, 0], tp[:, 1]), 90), 1.0)
-    tz0, tz1 = np.percentile(tp[:, 2], 5), tp[:, 2].max(); tzc, tzh = (tz0 + tz1) / 2, max((tz1 - tz0) / 2, 1.0)
-    for i in range(nlv):
-        if i % 2 == 0:  # on the outer branches
-            p, d = tips[order[(i // 2) % len(tips)]]
-            q = p + d * r.uniform(-0.3, 0.5) + r.normal(0, 0.7, 3)
-        else:  # filling the crown volume (outer-shell biased) so trunks/limbs disappear into the canopy
-            v = r.normal(0, 1, 3); v /= np.linalg.norm(v); u = r.uniform() ** 0.35
-            q = np.array([v[0] * trx * u, v[1] * trx * u, tzc + v[2] * tzh * u * 1.1])
-        B.leaf(q, r.uniform(*S["ls"]) * (1.5 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
-    # normalise: crown radius R0 (90th pct of leaf distance), height H
-    lp = np.array(B.lP); bp = np.array(B.bP)
-    rx = np.percentile(np.hypot(lp[:, 0], lp[:, 1]), 90) if len(lp) else R0[kind]
-    zt = max(lp[:, 2].max() if len(lp) else 0, bp[:, 2].max())
-    sxy, sz = R0[kind] / max(rx, 0.5), H / max(zt, 1.0)
+    # scale the skeleton (not the trunk base) so every branch tip lies inside the crown: 80 % radius, 90 % height
+    tp = np.array(tips)
+    sxy = 0.80 * R / max(np.percentile(np.hypot(tp[:, 0], tp[:, 1]), 95), 0.5)
+    sz = 0.90 * H / max(tp[:, 2].max(), 1.0)
     sc = np.array([sxy, sxy, sz])
+    if trunk is not None:
+        B.tube(trunk[0] * sc, trunk[1], trunk[2], STRIP[kind])
+    for pts, rr, sides in tubes:
+        pts = pts * sc
+        pts[-1] = pts[-2] + (pts[-1] - pts[-2]) * 0.85  # limb tips pruned back: they end inside a leaf cluster
+        B.tube(pts, rr, sides, STRIP[kind])
+    ends = [e * sc for e in ends]; tips = [t * sc for t in tips]
+    # crown volume: ellipsoid (rx = R, z0c..z1c), lobed outline, edges droop toward the ground (oak skirts)
+    ph = r.uniform(0, 2 * math.pi, 3)
+
+    def shell(az, el):
+        return 1.0 + S["lobe"] * (0.6 * math.sin(3 * az + ph[0]) * math.cos(el) + 0.4 * math.sin(5 * az + 2 * el + ph[1]))
+
+    def place(q):  # pull a point into the crown volume, apply edge droop
+        rel = q - centre; az = math.atan2(rel[1], rel[0])
+        rho = math.hypot(rel[0], rel[1]) / R; el = math.atan2(rel[2] / rz, rho + 1e-6)
+        e = (rho ** PE + abs(rel[2] / rz) ** PE) ** (1 / PE); lim = shell(az, el) * 0.95
+        if e > lim:
+            rel = rel * lim / e; rho *= lim / e
+        q = centre + rel
+        q[2] -= S["cdroop"] * H * min(rho, 1.2) ** 3
+        return q
+
+    nlv = S["nl"][1 if lod else 0]
+    pts = []
+    anchors = ends + tips[::(1 if not lod else 3)]
+    for e in anchors[:int(nlv * 0.45)]:  # every limb end (then tips) carries a cluster
+        pts.append(place(e + r.normal(0, 0.25, 3)))
+    while len(pts) < nlv:  # fill the volume: shell-biased but with interior clusters so the crown isn't hollow
+        v = r.normal(0, 1, 3); v /= np.linalg.norm(v); u = r.uniform() ** (1 / 2.2 if not lod else 1 / 1.6)
+        az = math.atan2(v[1], v[0]); el = math.asin(np.clip(v[2], -1, 1))
+        u *= shell(az, el)
+        v = v / (np.abs(v[0] ** 2 + v[1] ** 2) ** (PE / 2) + np.abs(v[2]) ** PE) ** (1 / PE)  # superellipsoid: full dome, no thin top
+        pts.append(place(centre + np.array([v[0] * R * u, v[1] * R * u, v[2] * rz * u])))
+    for q in pts:
+        rel = q - centre
+        frac = min(1.0, math.sqrt((rel[0] ** 2 + rel[1] ** 2) / R ** 2 + (rel[2] / rz) ** 2))
+        # tint: outer / upper clusters fresh lime (col 3), interior / lower darker old leaves (col 0)
+        sc_ = 0.55 * frac + 0.35 * (rel[2] / rz + 1) / 2 + r.normal(0, 0.18)
+        col = int(np.clip(sc_ * 4 - 0.6, 0, 3))
+        sz_ = r.uniform(*S["ls"]) * (FAR_LS if lod else 1.0) * (0.8 + 0.3 * frac)
+        B.leaf(q, sz_, centre, row, col, r, outward=bool(r.uniform() < 0.68))
 
     def fin(P, N, UV, T):
-        P = np.array(P) * sc; N = np.array(N) / sc; N /= np.linalg.norm(N, axis=1, keepdims=True)
-        return P, N, np.array(UV), np.array(T, np.int64)
+        return np.array(P, float).reshape(-1, 3), np.array(N, float).reshape(-1, 3), np.array(UV, float).reshape(-1, 2), np.array(T, np.int64).reshape(-1, 3)
     return dict(bark=fin(B.bP, B.bN, B.bUV, B.bT), leaf=fin(B.lP, B.lN, B.lUV, B.lT))
 
 
@@ -174,12 +208,14 @@ def instance(proto, x, y, z, h, cr, kind, yaw, lean_dir=None, lean=0.0):
     return out
 
 
-def shrub_clump(x, y, z, h, w, u0, rng, nq=3):
+def shrub_clump(x, y, z, h, w, u0, rng, nq=6):
     """small 3D clump of shrub leaf quads (shrub.png atlas, two styles in u halves); spherical normals"""
     P, N, UV, T = [], [], [], []
     c = np.array([x, y, z + h * 0.45])
     for i in range(nq):
-        q = c + np.array([rng.normal(0, w * 0.22), rng.normal(0, w * 0.22), rng.uniform(-0.15, 0.25) * h])
+        # varying heights: low fern / poison-oak layer, mid brush, a few tall toyon / coyote-brush tops
+        lev = (-0.32, -0.12, 0.0, 0.12, 0.25, -0.25, 0.05, 0.18)[i % 8]
+        q = c + np.array([rng.normal(0, w * 0.28), rng.normal(0, w * 0.28), (lev + rng.uniform(-0.06, 0.06)) * h])
         n = _unit(np.array([q[0] - x, q[1] - y, 0]) + rng.normal(0, 0.5, 3) + np.array([0, 0, 0.2]))
         hz = _unit(np.array([-n[1], n[0], 0.0]) + 1e-6); vt = _unit(np.cross(n, hz))
         if vt[2] < 0: vt = -vt

@@ -160,7 +160,10 @@ for gn, ms in G.items():
             nv += CO.thicken_away(m, road_xy); m.update(CO.WALL_FLAGS); m["_thick"] = True; nw += 1
 print(f"walls: {nw} 1WALL meshes thickened to {CO.WALL_DEPTH} m away from the road ({nv} vertices moved)")
 
-geo["meta"]["physics"] = dict(terrain_before=before, terrain_after=after, open_edges_near=open_near,
+_prev = geo["meta"].get("physics", {})
+geo["meta"]["physics"] = dict(terrain_before=_prev.get("terrain_before") if TERRAIN_DONE else before,
+                              terrain_after=_prev.get("terrain_after") if TERRAIN_DONE else after,
+                              open_edges_near=_prev.get("open_edges_near") if TERRAIN_DONE else open_near,
                               tree_colliders=ntree, walls_thickened=nw)
 geo["meta"]["physics_21d_done"] = True
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))

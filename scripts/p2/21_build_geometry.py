@@ -337,7 +337,7 @@ _rx, _ry, _rnx, _rny = road.x.tolist(), road.y.tolist(), road.nx.tolist(), road.
 for i in bar(range(0, N, 2), "shrubs"):
     for side in (-1, 1):
         for _ in range(2):
-            off = srng.uniform(2.2, 26.0) ** 1.0
+            off = 2.2 + 23.8 * srng.uniform() ** 1.8  # denser right at the road edge / on the banks
             hw_i = road.el[i] if side > 0 else road.er[i]
             d = side * (hw_i + road.sh_w(i, side) + off)
             x, y = _rx[i] + _rnx[i] * d, _ry[i] + _rny[i] * d
@@ -348,6 +348,8 @@ for i in bar(range(0, N, 2), "shrubs"):
             ch = _chm_r.sample1(x, y)
             if off > 8 and not (np.isfinite(ch) and ch > 3) and srng.uniform() < 0.6:  # thinner in the open
                 continue
+            if off > 8 and srng.uniform() < 0.25:  # far brush thinned (pays for the denser roadside clumps)
+                continue
             z = dtm05.sample1(x, y)
             if not math.isfinite(z):
                 z = dtm1.sample1(x, y)
@@ -355,8 +357,8 @@ for i in bar(range(0, N, 2), "shrubs"):
                 continue
             h = srng.uniform(0.9, 2.6) * (1.3 if off > 6 else 1.0); w = h * srng.uniform(1.2, 1.9)
             u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
-            # small 3D clump of 4 leaf quads (no + cross), spherical normals
-            cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng)
+            # 3D clump of 4-7 leaf quads at varying heights (fern / poison oak low, toyon / coyote brush tall), spherical normals
+            cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng, 7 if off < 4 else 6 if off < 8 else 4)
             _keep = ~env_violation(np.array(cP))[0].reshape(-1, 4).any(1)  # shrub quads never inside the road envelope
             cP = [q for qi, q in enumerate(cP) if _keep[qi // 4]]; cN = [q for qi, q in enumerate(cN) if _keep[qi // 4]]
             cUV = [q for qi, q in enumerate(cUV) if _keep[qi // 4]]

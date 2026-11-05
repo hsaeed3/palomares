@@ -1,9 +1,9 @@
 {
  "kn5_files": 17,
  "physics_meshes": 129,
- "collision_triangles": 213120,
+ "collision_triangles": 213182,
  "solid_items": 469,
- "uncovered_items": 0,
+ "uncovered_items": 1,
  "per_type": {
   "guardrail_candidate": {
    "items": 12,
@@ -77,8 +77,8 @@
   },
   "wood_split_rail_fence": {
    "items": 21,
-   "uncovered": 0,
-   "uncovered_m": 0.0
+   "uncovered": 1,
+   "uncovered_m": 0.5
   },
   "white_rail_fence": {
    "items": 18,
@@ -111,7 +111,9 @@
    "uncovered_m": 0.0
   }
  },
- "failures": [],
+ "failures": [
+  "1 solid items lack collision within 0.3 m / 1.25 m height"
+ ],
  "tolerance_m": 0.3,
  "min_height_m": 1.25
 }
