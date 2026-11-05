@@ -6,11 +6,11 @@ Shader: ksPerPixelMultiMap. AC combines detail as a plain multiply where txDiffu
 
   txDiffuse = unique per-chunk macro map (MACRO_PX^2 over the chunk's square UV window from 21):
               USGS ortho (1 m, summer-gold) re-graded to the spring GoPro palette (open/bright -> spring grass,
-              dark/canopy -> leaf litter), + fbm noise at ~6/20/60 m + a 17.3 m luminance tile. Stored as a
+              dark/canopy -> leaf litter), + fbm noise at ~6/20/60 m + unique fbm. Stored as a
               multiplier around MACRO_MEAN (alpha 0 = detail everywhere).
   txDetail  = the calibrated class texture (ground / bank / litter, ~6 m period), raw-brightened by 1/MACRO_MEAN
               so macro x detail keeps the materials.yaml albedo on average.
-Scales: macro 0.3-0.5 m/px unique, 17.3 m tile baked in macro, ~6 m class detail -> 3 scales, no visible period.
+Scales: ortho (~1.5 m) + fbm 6/20/60 m unique in the macro, ~5-6 m class detail (per-class periods) -> 3+ scales, no visible period.
 """
 import io, json
 import numpy as np
@@ -51,7 +51,7 @@ def macro_map(mc, ortho, pal, lab, rgb, tile_gray, seed):
     N = MACRO_PX; r = np.random.default_rng(seed)
     t = (np.arange(N) + 0.5) / N * mc["size"]
     X, Y = np.meshgrid(mc["x0"] + t, mc["y0"] + t)
-    o = gaussian_filter(ortho.sample(X, Y), (1.2, 1.2, 0))
+    o = gaussian_filter(ortho.sample(X, Y), (1.5 / (mc["size"] / N),) * 2 + (0,))   # ~1.5 m: ortho grain off
     L = lab(o.clip(0, 255))
     Lo = L[..., 0]
     # open (bright, sunlit dry grass in the summer ortho) -> spring grass; dark (canopy / shade) -> leaf litter
@@ -66,11 +66,11 @@ def macro_map(mc, ortho, pal, lab, rgb, tile_gray, seed):
     tgt[..., 2] += _fbm(r, N, ((25 / px, 2.5), (80 / px, 2.5)))      # fresh <-> yellowing
     ref = (gp + lp) / 2
     c = rgb(tgt).astype(np.float32) / 255; c0 = rgb(ref[None, None]).astype(np.float32)[0, 0] / 255
-    M = 1 + 0.6 * (c / np.maximum(c0, 1e-3) - 1)
+    M = 1 + 0.45 * (c / np.maximum(c0, 1e-3) - 1)
+    M[..., 2] = np.minimum(M[..., 2], 0.5 * (M[..., 0] + M[..., 1]))   # spring: never bluer than neutral
     # 17.3 m luminance tile (mid scale)
-    tp = tile_gray.shape[0]
-    ti = ((Y / 17.3 * tp) % tp).astype(int); tj = ((X / 17.3 * tp) % tp).astype(int)
-    M *= (1 + 0.06 * tile_gray[ti, tj])[..., None]
+    # (a baked 17.3 m luminance tile was tried here: it reads as a visible lattice from height -> removed;
+    #  mid-scale comes from the unique fbm octaves instead)
     M = np.clip(M, 0.55, 1.25) * MACRO_MEAN
     M = M / M.reshape(-1, 3).mean(0).mean() * MACRO_MEAN
     a = np.dstack([np.clip(M, 0, 1) * 255, np.zeros((N, N))]).astype(np.uint8)
@@ -79,7 +79,7 @@ def macro_map(mc, ortho, pal, lab, rgb, tile_gray, seed):
 
 def tile_gray_from(img, n=512):
     g = np.asarray(img.convert("L").resize((n, n)), np.float32)
-    g = gaussian_filter(g, 3, mode="wrap")
+    g = gaussian_filter(g, n / 17.3 * 0.6, mode="wrap")   # >= ~1 m features: no aliasing at macro resolution
     return (g - g.mean()) / (g.std() + 1e-6)
 
 

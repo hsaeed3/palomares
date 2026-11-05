@@ -230,13 +230,18 @@ for ch, col in sorted(colls.items()):
 print(f"trees: {ntree} trunk colliders within {TREE_R} m in {len(colls)} meshes; {renamed} physical-named tree meshes renamed")
 
 # ------------------------------------------------------------------ 3. walls
+# dev4: 'away from the road' is measured from the CENTRELINE (1 m stations): with wide / paved shoulders the
+# 1ROAD vertices sit on the fence line itself, which flipped the away direction and pushed whole boxes 0.3 m out
+# (qa_collisions: chainlink s=3500, guardrail 3490, fences 13625-14385 uncovered)
+from geom import load_centerline as _lc
+_c = _lc(); CL_XY = np.c_[_c["x_local"], _c["y_local"]]
 nw = nv = 0
 for gn, ms in G.items():
     if gn == "trees":
         continue
     for m in ms:
         if m["name"].startswith("1WALL") and not m.get("_thick"):
-            nv += CO.thicken_away(m, road_xy); m.update(CO.WALL_FLAGS); m["_thick"] = True; nw += 1
+            nv += CO.thicken_away(m, CL_XY); m.update(CO.WALL_FLAGS); m["_thick"] = True; nw += 1
 print(f"walls: {nw} 1WALL meshes thickened to {CO.WALL_DEPTH} m away from the road ({nv} vertices moved)")
 
 _prev = geo["meta"].get("physics", {})

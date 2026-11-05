@@ -533,14 +533,23 @@ def merge_by(meshes, key):
     for m in meshes:
         out.setdefault((key(m["name"]), m["material"]), []).append(m)
     res = []
-    for (k, mat), ms in out.items():
-        if len(ms) == 1:
-            res.append(ms[0]); continue
-        off = 0; P = []; Tt = []; UV = []; Nn = []
-        for m in ms:
-            P.append(m["P"]); Tt.append(m["T"] + off); UV.append(m["UV"]); Nn.append(m["N"]); off += len(m["P"])
-        r = dict(ms[0]); r.update(name=k, P=np.concatenate(P), T=np.concatenate(Tt), UV=np.concatenate(UV), N=np.concatenate(Nn))
-        res.append(r)
+    for (k, mat), ms_all in out.items():
+        # dev4: keep every merged mesh under the 16-bit vertex limit (split greedily)
+        groups_, cur, nv = [], [], 0
+        for m in ms_all:
+            if cur and nv + len(m["P"]) > 65000:
+                groups_.append(cur); cur, nv = [], 0
+            cur.append(m); nv += len(m["P"])
+        groups_.append(cur)
+        for gi_, ms in enumerate(groups_):
+            k_ = k if gi_ == 0 else f"{k}_{gi_}"
+            if len(ms) == 1:
+                r = dict(ms[0]); r["name"] = ms[0]["name"] if len(ms_all) == 1 else k_; res.append(r); continue
+            off = 0; P = []; Tt = []; UV = []; Nn = []
+            for m in ms:
+                P.append(m["P"]); Tt.append(m["T"] + off); UV.append(m["UV"]); Nn.append(m["N"]); off += len(m["P"])
+            r = dict(ms[0]); r.update(name=k_, P=np.concatenate(P), T=np.concatenate(Tt), UV=np.concatenate(UV), N=np.concatenate(Nn))
+            res.append(r)
     return res
 
 
@@ -584,17 +593,26 @@ def write(fname, groups, extra_nodes=(), merge=None):
 
 
 gr_key = lambda n: "guardrail_all" if n.startswith(("guardrail_", "grpost_")) else n
-line_key = lambda n: "lines_" + n.rsplit("_", 1)[1]  # one mesh per chunk per colour
+def line_key(n):  # dev4: one mesh per 500 m (2 chunks) per material (was per chunk) - draw-call headroom
+    t = n.rsplit("_", 1)[1]
+    return f"lines_{int(t) // 2:02d}" if t.isdigit() else "lines_" + t
+def road_key(n):  # visual edge strips L+R of 2 chunks -> one mesh; physical meshes keep their names
+    import re as _re
+    m_ = _re.match(r"^edge_[LR](\d+)$", n)
+    return f"edge_{int(m_.group(1)) // 2:02d}" if m_ else n
+def kerb_key(n):  # 1KERB_NB_07 -> 1KERB_NB_m01 (1 km); physical prefix 1KERB / 1RUNOFF kept
+    a, d, c = n.split("_")
+    return f"{a}_{d}_m{int(c) // 4:02d}" if c.isdigit() else n
 
-write("palomares_road.kn5", ["road"])
+write("palomares_road.kn5", ["road"], merge={"road": road_key})
 write("palomares_terrain.kn5", ["terrain", "backdrop"])
 write("palomares_trees.kn5", ["trees"])
 write("palomares_barriers.kn5", ["barriers"], merge={"barriers": gr_key})
 write("palomares_roadside.kn5", ["roadside"])     # 21c: guardrails, fences, walls, poles, signs, buildings + their 1WALL_rs_* collision
 write("palomares_lines_road.kn5", ["lines_road"], merge={"lines_road": line_key})
 # lines_track retired: track layouts keep the real markings (user request)
-write("palomares_kerbs_nb.kn5", ["kerbs_nb"])
-write("palomares_kerbs_sb.kn5", ["kerbs_sb"])
+write("palomares_kerbs_nb.kn5", ["kerbs_nb"], merge={"kerbs_nb": kerb_key})
+write("palomares_kerbs_sb.kn5", ["kerbs_sb"], merge={"kerbs_sb": kerb_key})
 write("palomares_dressing.kn5", ["dressing"])
 write("palomares_dressing_nb.kn5", ["dressing_nb"])   # direction-specific: distance boards face the run direction
 write("palomares_dressing_sb.kn5", ["dressing_sb"])

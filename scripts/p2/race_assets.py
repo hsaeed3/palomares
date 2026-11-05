@@ -679,7 +679,7 @@ def build(ns):
         d, j = ctree.query(np.atleast_2d(pts))
         return d - np.maximum(road.outer(j, 1), road.outer(j, -1))
 
-    def spot(s0, s1, L, W, offs, sides=(1, -1), step=2.0, margin=1.5, maxrange=0.8, s_ref=None, wo=0.05, ws=0.01, clear=0.6):
+    def spot(s0, s1, L, W, offs, sides=(1, -1), step=2.0, margin=1.5, maxrange=0.8, s_ref=None, wo=0.05, ws=0.01, clear=0.6, wz=0.0):
         best = None; s_ref = (s0 + s1) / 2 if s_ref is None else s_ref
         R = 0.5 * math.hypot(L, W)
         for s in np.arange(max(s0, 1.0), min(s1, s_end - 1.0) + 0.01, step):
@@ -699,7 +699,9 @@ def build(ns):
                     pts = np.array([x, y]) + g[:, :1] * (L + 2 * clear) * f + g[:, 1:] * (W + 2 * clear) * l
                     if np.any(otree.query(pts)[0] < 0.8):
                         continue
-                    sc = r[0] + wo * off + ws * abs(s - s_ref)
+                    # wz: prefer ground near road level (a stand perched on a cut bank on tall legs looks wrong)
+                    zr_ = road.surface_z(j, side * road.outer(j, side), noise=False)
+                    sc = r[0] + wo * off + ws * abs(s - s_ref) + wz * abs(0.5 * (r[1] + r[2]) - zr_)
                     if best is None or sc < best[0]:
                         best = (sc, x, y, j, side, s, off, r)
         return best
@@ -748,7 +750,9 @@ def build(ns):
     # ------------------------------------------------------------------ grandstands (start area + summit finish)
     def grandstand_site(name, s0, s1, s_ref, nrows, L):
         W = nrows * 0.8 + 1.0
-        best = spot(s0, s1, L + 2.4, W, np.arange(4.5, 22.1, 1.0), maxrange=2.2, margin=3.5, s_ref=s_ref, wo=0.04, ws=0.004)
+        best = spot(s0, s1, L + 2.4, W, np.arange(4.5, 22.1, 1.0), maxrange=1.6, margin=3.5, s_ref=s_ref, wo=0.04, ws=0.004, wz=0.8)
+        if not best:
+            best = spot(s0, s1, L + 2.4, W, np.arange(4.5, 22.1, 1.0), maxrange=2.2, margin=3.5, s_ref=s_ref, wo=0.04, ws=0.004, wz=0.8)
         if not best:
             RLOG.append(f"{name}: no spot for a grandstand"); return None
         x, y, j, side, s, off, r, xa, ya = site(best, 0.5 * math.hypot(L + 2.4, W) + 1.0, L + 2.4, W, f"grandstand_{name.split()[0].lower().replace('-', '')}")
@@ -880,6 +884,9 @@ def build(ns):
         best = spot(s_c - 40, s_c + 40, 14.0, 6.0, np.arange(3.0, 12.1, 1.0), sides=(inner,), maxrange=1.0, margin=2.5, s_ref=s_c, wo=0.08)
         if not best:
             continue
+        _sd = "left" if best[4] > 0 else "right"           # dev4 safety QA: never where cars run wide (exit kerbs, either direction)
+        if any(k_["type"] == "exit" and k_["side"] == _sd and k_["s0"] - 30 <= best[5] <= k_["s1"] + 30 for k_ in ns["meta"].get("kerbs", [])):
+            RLOG.append(f"spectator area near s={best[5]:.0f}: skipped, run-wide zone of an exit"); continue
         x, y, j, side, s, off, r, xa, ya = site(best, 8.0, 14.0, 6.0, f"spectators_s{int(s_c):05d}"); zref = r[2]; sp_s.append(s_c); nsp += 1
         bl = [W2(x, y, xa, ya, -7.0, 1.0), W2(x, y, xa, ya, -7.0, -2.6), W2(x, y, xa, ya, 7.0, -2.6), W2(x, y, xa, ya, 7.0, 1.0)]
         cb = crowd_barriers(bl[:2], lambda a, b: gz(a, b, zref)); put(cb, 0, 0, 0, (1.0, 0.0), s)
@@ -907,6 +914,9 @@ def build(ns):
         RLOG.append("side roads: data/raw/race_assets/osm/side_ways.json missing (run fetch_side_ways()), skipped")
     Fe = json.load(open(DER / "features.geojson"))["features"]
     nbar = ncone = 0; done = []
+    import glob as _gl
+    GATED = [(float(e["s0"]), float(e["s1"]), e.get("side", "both")) for f_ in _gl.glob(str(DER / "roadside_assets_*.json"))
+             for e in json.load(open(f_)) if any(k_ in e.get("type", "") for k_ in ("gate", "chainlink"))]
     for f in sorted(Fe, key=lambda f: f["properties"].get("s_m", 0)):
         p = f["properties"]
         if p.get("kind") not in ("junction", "driveway") or str(p.get("osm_way")) not in ways:
@@ -937,6 +947,9 @@ def build(ns):
                 continue
             if any(math.hypot(mouth[0] - a, mouth[1] - b) < r for a, b, r in USED):
                 continue
+            sd_txt = "left" if side > 0 else "right"
+            if p["kind"] == "junction" and any(a_ - 8 <= s <= b_ + 8 and g_ in (sd_txt, "both", "center") for a_, b_, g_ in GATED):
+                RLOG.append(f"  barricade s={s:.0f} {side_txt(side)}: skipped, gate / fence already closes the mouth"); continue
             xa = np.array([d[1], -d[0]]); done.append(mouth)
             sub = MB()
             if p["kind"] == "junction":
