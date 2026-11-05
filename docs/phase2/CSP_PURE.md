@@ -21,3 +21,16 @@ there is no foliage translucency or tree wind, and GrassFX/RainFX have no materi
 7. Turn CSP off: the track must look exactly as before.
 Report: whether trees look too bright or too dark (we tune PROP ksDiffuse), and any card that went
 fully transparent (we tune ksAlphaRef).
+
+## v-next: canopy blocks all light / midday blow-out
+- **Solid canopy shadows:** every alpha-tested material had `ksAlphaRef = 0`. With a threshold of 0 every texel passes
+  the alpha test, so the shadow pass rendered whole quads (forum report: alpha ref drives the AT shadow cut-out,
+  https://assettocorsamods.net/goto/post?id=12493). Now `ksAlphaRef = 0.5` in the kn5 (works without CSP) and again in ext_config.
+- Tree card normals had an upward bias of +0.8, which made N·L flat and removed backlight. It is now +0.3 (21).
+  Shrubs don't cast shadows.
+- **Albedo:** the textures were graded to GoPro exposure (asphalt ~0.33 linear). `albedo_calibrate()` in 22 rescales
+  each texture to the target in `config/materials.yaml`. Before/after values are in build/albedo_calibration.json.
+- ksAmbient/ksDiffuse: base 0.5/0.5, asphalt 0.5/0.6 (spec 0.15, fresnel max 0.15), trees 0.5/0.5.
+
+Tune in game: albedo targets in config/materials.yaml (asphalt 0.13; raise if shade looks dead, lower if midday is
+blown out), ksAlphaRef (0.5; raise for more holes in the crowns), and the tree PROP_1 ksDiffuse in ext_config.

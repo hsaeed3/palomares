@@ -65,7 +65,7 @@ class _B:
 # species parameters: n main limbs, limb angle from vertical (deg), trunk fraction, recursion depth, kids, spread,
 # droop (oak limbs arc out and down), leaf clusters per tip, cluster size (m)
 _SP = {
-    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=3, kids=(2, 3), spread=0.65, droop=0.10, lpt=3, ls=(0.9, 1.6), r0=0.030),
+    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=3, kids=(2, 3), spread=0.65, droop=0.10, lpt=4, ls=(1.0, 1.8), r0=0.030),
     "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=3, kids=(2, 3), spread=0.45, droop=0.0, lpt=3, ls=(0.8, 1.4), r0=0.012),
     "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=3, kids=(2, 3), spread=0.55, droop=0.03, lpt=4, ls=(0.9, 1.6), r0=0.017),
     "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=3, kids=(2, 2), spread=0.6, droop=0.0, lpt=4, ls=(0.8, 1.5), r0=0.018),
@@ -81,7 +81,7 @@ def make_proto(kind, seed, lod=0):
     maxd = S["depth"] - (1 if lod else 0)
 
     def grow(p, d, ln, rad, depth):
-        nsub = 4 if depth == 0 else 3
+        nsub = 3 if depth <= 1 else 2
         pts, rr = [p.copy()], [rad]
         for i in range(nsub):
             d = _unit(d + r.normal(0, 0.13 if kind != "euc" else 0.05, 3))
@@ -91,7 +91,7 @@ def make_proto(kind, seed, lod=0):
             if kind in ("syc", "euc", "bay") and depth <= 1:
                 d = _unit(d + _UP * 0.08)
             p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.35 * (i + 1) / nsub))
-        sides = (7, 5, 4, 3)[min(depth, 3)]
+        sides = (6, 4, 3, 3)[min(depth, 3)]
         if lod and depth >= 2: sides = 3
         B.tube(np.array(pts), rr, sides, STRIP[kind])
         end_r = rr[-1]
@@ -118,7 +118,7 @@ def make_proto(kind, seed, lod=0):
         lean = math.radians(r.uniform(0, 10)); laz = r.uniform(0, 2 * math.pi)
         d0 = np.array([math.sin(lean) * math.cos(laz), math.sin(lean) * math.sin(laz), math.cos(lean)])
         top = d0 * H * S["trunk"] + np.array([0, 0, -0.3])
-        B.tube(np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 7 if not lod else 5, STRIP[kind])
+        B.tube(np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 6 if not lod else 5, STRIP[kind])
         nl = r.integers(S["limbs"][0], S["limbs"][1] + 1)
         for i in range(nl):
             az = 2 * math.pi * i / nl + r.normal(0, 0.35); a = math.radians(r.uniform(*S["ang"]))
@@ -132,9 +132,9 @@ def make_proto(kind, seed, lod=0):
     for (p, d) in tips:
         if r.uniform() > keep or r.uniform() < 0.18:
             continue
-        for _ in range(S["lpt"] + (1 if lod else 0)):
+        for _ in range(S["lpt"] if not lod else max(2, S["lpt"] - 1)):
             q = p + d * r.uniform(0, 0.6) + r.normal(0, 0.55, 3)
-            B.leaf(q, r.uniform(*S["ls"]) * (1.5 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
+            B.leaf(q, r.uniform(*S["ls"]) * (1.6 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
     # normalise: crown radius R0 (90th pct of leaf distance), height H
     lp = np.array(B.lP); bp = np.array(B.bP)
     rx = np.percentile(np.hypot(lp[:, 0], lp[:, 1]), 90) if len(lp) else R0[kind]

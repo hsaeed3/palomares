@@ -195,7 +195,11 @@ for ty in range(4):
             add("backdrop", f"backdrop_{ty}{tx}", "backdrop", Pb[used], inv.reshape(-1, 3), UVb[used], cast_shadows=False)
 
 _tick("backdrop")
-# ------------------------------------------------------------------ trees
+# ------------------------------------------------------------------ trees: procedural 3D (scripts/p2/trees3d.py)
+# 4 prototypes per style (oak / bay / pale sycamore-alder / tall euc), instanced at the LiDAR tree positions, scaled to
+# LiDAR height + crown radius, random yaw, slight lean (near-road oaks lean over the road). Merged per 250 m chunk per
+# material (tree_trunk bark, tree_leaves clusters) and per LOD; split <= 60k vertices per mesh.
+import trees3d as T3
 tr = list(csv.DictReader(open(DER / "trees.csv")))
 tx_, ty_, tz_, th_, tcr_, ts_ = (np.array([float(t[k]) for t in tr]) for k in ("x_local", "y_local", "ground_z", "height_m", "crown_radius_m", "s_m"))
 d_tc, j_tc = bt.query(np.c_[tx_, ty_])
@@ -208,57 +212,44 @@ species = np.where((th_ > 24) & (ratio < 0.3), "euc", np.where(ratio > 0.42, "oa
 _zl = np.array([np.percentile(tz_[np.abs(ts_ - s) < 300], 25) if np.any(np.abs(ts_ - s) < 300) else -1e9 for s in ts_])
 _h = (np.arange(len(tr)) * 2654435761) % 1000 / 1000.0  # stable per-tree hash
 species = np.where(((species == "euc") & (_h < 0.5)) | ((species != "oak") & (tz_ < _zl) & (_h < 0.6)), "syc", species)
-# keep in sync with 22: TREE_VARIANTS, TREE_FORK, TREE_TW; trunk atlas strip order
-TREE_VARIANTS = 4
-TREE_FORK = {"oak": 0.16, "bay": 0.0, "euc": 0.42, "syc": 0.24}
-TREE_TW = {"oak": 26, "bay": 9, "euc": 12, "syc": 15}
-TRUNK_STRIP = {"oak": 0, "bay": 1, "euc": 2, "syc": 3}
-trunk_buckets = {}
-tree_buckets = {}
+TREE_NEAR = 18.0   # m past the road edge: full prototype (twigs, all clusters); beyond: simpler LOD prototype
+PROTOS = {(sp, v, lod): T3.make_proto(sp, v, lod) for sp in T3.SPECIES for v in range(T3.N_PROTO) for lod in (0, 1)}
+trng = np.random.default_rng(21)
+tree_acc = {}  # (chunk, lod, material) -> lists
 for k in np.nonzero(sel)[0]:
     c = min(int(road.s[j_tc[k]] // CHUNK), nchunks - 1)
-    tree_buckets.setdefault((c, species[k]), []).append(k)
-for (c, sp), ks in sorted(tree_buckets.items()):
-    P, T, UV = [], [], []
-    for k in ks:
-        h = th_[k]; w = min(max(tcr_[k] * 2.0, 2.5), h * 1.1)
-        z0 = tz_[k] - 0.3
-        a0 = rng.uniform(0, np.pi)
-        u0 = int(_h[k] * 997) % TREE_VARIANTS / TREE_VARIANTS; du = 1.0 / TREE_VARIANTS
-        # solid 6-sided tapered trunk under the card for big trees near the road (cards look flat side-on)
-        if TREE_FORK[sp] > 0 and h > 9 and d_tc[k] < hw_t[k] + 20:
-            trunk_buckets.setdefault(c, []).append((tx_[k], ty_[k], z0, h * TREE_FORK[sp] + 0.3, TREE_TW[sp] / 512 * w, TRUNK_STRIP[sp]))
-        for a in (a0, a0 + np.pi / 2):
-            dx, dy = math.cos(a) * w / 2, math.sin(a) * w / 2
-            q = [(tx_[k] - dx, ty_[k] - dy, z0), (tx_[k] + dx, ty_[k] + dy, z0), (tx_[k] + dx, ty_[k] + dy, z0 + h), (tx_[k] - dx, ty_[k] - dy, z0 + h)]
-            for back in (False, True):
-                b = len(P); P += q; UV += [(u0, 0), (u0 + du, 0), (u0 + du, 1), (u0, 1)]
-                T += [(b, b + 1, b + 2), (b, b + 2, b + 3)] if not back else [(b, b + 2, b + 1), (b, b + 3, b + 2)]
-    P = np.array(P); T = np.array(T)
-    # mild upward bias only: strong bias (0.8) flattened N.L and killed CSP backlight/translucency
-    Nn = vertex_normals(P, T); Nn[:, 2] += 0.3; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
-    add("trees", f"tree_{sp}_{c:02d}", f"tree_{sp}", P, T, np.array(UV), N_=Nn, cast_shadows=True, transparent=False, lod_out=900.0)
-
-for c, items in sorted(trunk_buckets.items()):
-    P, T, UV = [], [], []
-    for (x0, y0, zb, ht, rad, st) in items:
-        rad = max(rad, 0.12); nseg = 6; b = len(P)
-        for j in range(nseg + 1):
-            ang = 2 * np.pi * j / nseg; ca, sa = math.cos(ang), math.sin(ang)
-            P += [(x0 + ca * rad * 1.15, y0 + sa * rad * 1.15, zb), (x0 + ca * rad * 0.85, y0 + sa * rad * 0.85, zb + ht)]
-            uu = (st + j / nseg) / 4.0
-            UV += [(uu, 0), (uu, ht / (2 * np.pi * rad))]  # bark strip ~square texels
-        for j in range(nseg):
-            i0 = b + 2 * j
-            T += [(i0, i0 + 2, i0 + 3), (i0, i0 + 3, i0 + 1)]
-    P = np.array(P); T = np.array(T)
-    add("trees", f"trunk_{c:02d}", "tree_trunk", P, T, np.array(UV), cast_shadows=True, lod_out=500.0)
-print("3D trunks", sum(len(v) for v in trunk_buckets.values()))
+    sp = str(species[k]); lod = 0 if d_tc[k] - hw_t[k] < TREE_NEAR else 1
+    pr = PROTOS[(sp, int(_h[k] * 997) % T3.N_PROTO, lod)]
+    jr = j_tc[k]; to_road = np.array([road.x[jr] - tx_[k], road.y[jr] - ty_[k]]); to_road /= np.linalg.norm(to_road) + 1e-9
+    if sp == "oak" and lod == 0:
+        lean_dir, lean = to_road, trng.uniform(0.05, 0.22)   # roadside oaks reach out over the road
+    else:
+        a = trng.uniform(0, 2 * np.pi); lean_dir, lean = np.array([math.cos(a), math.sin(a)]), trng.uniform(0, 0.06)
+    inst = T3.instance(pr, tx_[k], ty_[k], tz_[k], th_[k], tcr_[k], sp, trng.uniform(0, 2 * np.pi), lean_dir, lean)
+    for key, mat in (("bark", "tree_trunk"), ("leaf", "tree_leaves")):
+        tree_acc.setdefault((c, lod, mat), []).append(inst[key])
+_tv = {}
+for (c, lod, mat), parts in sorted(tree_acc.items()):
+    n = 0; buf = []
+    def _flush(buf, n):
+        P = np.concatenate([p[0] for p in buf]); Nn = np.concatenate([p[1] for p in buf]); UV = np.concatenate([p[2] for p in buf])
+        off = np.cumsum([0] + [len(p[0]) for p in buf[:-1]]); T = np.concatenate([p[3] + o for p, o in zip(buf, off)])
+        add("trees", f"{mat}_{c:02d}_{lod}_{n}", mat, P, T, UV, N_=Nn, cast_shadows=True, transparent=False,
+            lod_out=600.0 if lod == 0 else 1100.0)
+        _tv[mat] = _tv.get(mat, 0) + len(P)
+    cnt = 0
+    for p in parts:
+        if cnt + len(p[0]) > 60000:
+            _flush(buf, n); n += 1; buf = []; cnt = 0
+        buf.append(p); cnt += len(p[0])
+    if buf: _flush(buf, n)
+print("3D trees: vertices", _tv, "total", sum(_tv.values()), "| near", int(((d_tc - hw_t) < TREE_NEAR)[sel].sum()), "far", int(((d_tc - hw_t) >= TREE_NEAR)[sel].sum()),
+      "| species", {s: int((species[sel] == s).sum()) for s in T3.SPECIES})
 _tick("trees")
 # ------------------------------------------------------------------ understory shrubs (GoPro: dense green brush on every
-# bank and drop-off between the trunks; LiDAR trees >= 4 m miss it). Non-physical crossed cards, 1 mesh per chunk.
+# bank and drop-off between the trunks; LiDAR trees >= 4 m miss it). Non-physical 3D clumps of leaf quads, 1 mesh per chunk.
 srng = np.random.default_rng(11)
-SH_P, SH_T, SH_UV, SH_C = [], [], [], []
+SH_P, SH_T, SH_UV, SH_C, SH_N = [], [], [], [], []
 _rx, _ry, _rnx, _rny = road.x.tolist(), road.y.tolist(), road.nx.tolist(), road.ny.tolist()  # scalar fast path
 for i in bar(range(0, N, 2), "shrubs"):
     for side in (-1, 1):
@@ -280,24 +271,22 @@ for i in bar(range(0, N, 2), "shrubs"):
             if not np.isfinite(z):
                 continue
             h = srng.uniform(0.9, 2.6) * (1.3 if off > 6 else 1.0); w = h * srng.uniform(1.2, 1.9)
-            a0 = srng.uniform(0, np.pi); u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
-            for a in (a0, a0 + np.pi / 2):
-                dx, dy = math.cos(a) * w / 2, math.sin(a) * w / 2
-                b = len(SH_P)
-                SH_P += [(x - dx, y - dy, z - 0.25), (x + dx, y + dy, z - 0.25), (x + dx, y + dy, z + h), (x - dx, y - dy, z + h)]
-                SH_UV += [(u0, 0), (u0 + 0.5, 0), (u0 + 0.5, 1), (u0, 1)]
-                SH_T += [(b, b + 1, b + 2), (b, b + 2, b + 3), (b, b + 2, b + 1), (b, b + 3, b + 2)]
-                SH_C += [chunk_of(i)] * 4
-SH_P = np.array(SH_P); SH_T = np.array(SH_T); SH_UV = np.array(SH_UV); SH_C = np.array(SH_C)
+            u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
+            # small 3D clump of 4 leaf quads (no + cross), spherical normals
+            cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng)
+            b = len(SH_P)
+            SH_P += cP; SH_N += cN; SH_UV += cUV; SH_T += [(t0 + b, t1 + b, t2 + b) for (t0, t1, t2) in cT]
+            SH_C += [chunk_of(i)] * len(cP)
+SH_P = np.array(SH_P); SH_T = np.array(SH_T); SH_UV = np.array(SH_UV); SH_C = np.array(SH_C); SH_N = np.array(SH_N)
 for c in range(nchunks):
     m = SH_C[SH_T[:, 0]] == c
     if not m.any():
         continue
     used, inv = np.unique(SH_T[m], return_inverse=True)
     P = SH_P[used]; T = inv.reshape(-1, 3)
-    Nn = np.tile([0, 0, 1.0], (len(P), 1))
+    Nn = SH_N[used]
     add("trees", f"shrub_{c:02d}", "shrub", P, T, SH_UV[used], N_=Nn, cast_shadows=False, lod_out=250.0)
-print("shrub cards", len(SH_T) // 4)
+print("shrub clumps", len(SH_T) // 16, "vertices", len(SH_P))
 
 _tick("shrubs")
 # ------------------------------------------------------------------ barriers

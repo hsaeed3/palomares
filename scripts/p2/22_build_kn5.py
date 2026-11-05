@@ -245,9 +245,61 @@ def foliage(kind, seed):
     return Image.fromarray(np.hstack(cards), "RGBA")
 
 
+LEAF_TINT = {"oak": (0.92, 0.98, 0.88), "bay": (0.86, 0.94, 0.86), "euc": (0.95, 0.98, 0.92), "syc": (1.08, 1.12, 0.84)}
+LEAF_SIZE = {"oak": (7, 15), "bay": (9, 20), "euc": (8, 22), "syc": (12, 26)}  # px of a 512 cell (~1.2 m clump)
+
+
+def _leaf_cell(kind, seed, S=512):
+    """one alpha-tested leaf cluster: individual photo-textured leaves in a ragged clump with sky holes + twigs"""
+    r = np.random.default_rng(500 + seed)
+    mask = Image.new("L", (S, S), 0); lum = Image.new("L", (S, S), 128)
+    dm, dl = ImageDraw.Draw(mask), ImageDraw.Draw(lum)
+    c = S / 2; R = S * 0.44
+    # 3-6 sub-clumps -> clumped masses with gaps between them
+    subs = [(c + r.normal(0, R * 0.35), c + r.normal(0, R * 0.35), R * r.uniform(0.35, 0.6)) for _ in range(r.integers(3, 7))]
+    holes = _vnoise(r, S, S, 40) > 0.66
+    lo, hi = LEAF_SIZE[kind]
+    for _ in range(1400):
+        sx, sy, sr = subs[r.integers(len(subs))]
+        a = r.uniform(0, 2 * np.pi); q = math.sqrt(r.uniform())
+        x, y = sx + math.cos(a) * sr * q, sy + math.sin(a) * sr * q
+        if not (14 < x < S - 14 and 14 < y < S - 14) or math.hypot(x - c, y - c) > R or holes[int(y), int(x)]:
+            continue
+        L_ = r.uniform(lo, hi); W_ = L_ * r.uniform(0.35, 0.55); th = r.uniform(0, np.pi)
+        ca, sa = math.cos(th), math.sin(th)
+        pts = [(x + ca * L_ * t - sa * W_ * w, y + sa * L_ * t + ca * W_ * w) for t, w in ((-1, 0), (-0.3, 1), (0.5, 0.7), (1, 0), (0.5, -0.7), (-0.3, -1))]
+        dm.polygon(pts, fill=255)
+        dl.polygon(pts, fill=int(np.clip(128 + r.normal(0, 22) - 30 * q + (y < c) * 10, 40, 230)))
+    # twigs inside the clump
+    for _ in range(r.integers(2, 5)):
+        x, y = c + r.normal(0, 30), S * 0.9; ang = r.normal(0, 0.5)
+        for i in range(5):
+            ang += r.normal(0, 0.25); x1, y1 = x + math.sin(ang) * 40, y - math.cos(ang) * 40
+            dm.line([(x, y), (x1, y1)], fill=254, width=max(1, 5 - i)); x, y = x1, y1
+    m = np.asarray(mask); l = np.asarray(lum, float) / 128
+    leaves = photo_fill(S, S, r).astype(float) * np.array(LEAF_TINT[kind]) * l[..., None]
+    twig = np.array(BARK[kind][0], float) * 0.8
+    rgb = np.where((m == 254)[..., None], twig, leaves).clip(0, 255)
+    return np.dstack([rgb, np.where(m > 128, 255, 0)]).astype(np.uint8)
+
+
+def leaf_atlas():
+    """tree_leaves.png 2048x2048: 4x4 cells of 512; row = species (v bottom-up: oak, bay, euc, syc), col = variant"""
+    A = np.zeros((2048, 2048, 4), np.uint8)
+    for ri, k in enumerate(("oak", "bay", "euc", "syc")):
+        for v in range(4):
+            y0 = (3 - ri) * 512
+            A[y0:y0 + 512, v * 512:(v + 1) * 512] = _leaf_cell(k, ri * 4 + v)
+    return Image.fromarray(A, "RGBA")
+
+
 def trunk_atlas():
-    """bark strips for 21's 3D trunks: u in [i/4,(i+1)/4] = oak, bay, euc, syc"""
-    return Image.fromarray(np.hstack([bark_tex(k, 512, 256, 7) for k in ("oak", "bay", "euc", "syc")]).astype(np.uint8))
+    """tree_trunk.png: bark strips u in [i/4,(i+1)/4] = oak, bay, euc, syc; mirror-tiled so v wraps seamlessly"""
+    cols = []
+    for k in ("oak", "bay", "euc", "syc"):
+        b = bark_tex(k, 256, 256, 7)
+        cols.append(np.vstack([b, b[::-1]]))
+    return Image.fromarray(np.hstack(cols).clip(0, 255).astype(np.uint8))
 
 
 def bank_tex():
@@ -326,8 +378,8 @@ T = {
     "bank_d.png": png(bank_tex()),  # moss / new grass over bare dirt cut banks
     "shrub.png": png(shrub_atlas()),
     "backdrop_d.png": png(backdrop_img),
-    "tree_oak.png": png(foliage("oak", 1)), "tree_bay.png": png(foliage("bay", 2)), "tree_euc.png": png(foliage("euc", 3)),
-    "tree_syc.png": png(foliage("syc", 4)), "tree_trunk.png": png(trunk_atlas()),
+    # 3D trees (21 + trees3d.py): leaf-cluster atlas + bark strips. foliage() card atlases kept for reference, unused
+    "tree_leaves.png": png(leaf_atlas()), "tree_trunk.png": png(trunk_atlas()),
     **dict(zip(("kerb_d.png", "kerb_n.png"), map(png, kerb_tex()))), "runoff_d.png": png(__import__("race_tex").runoff_tex()),
     "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
     **road_surface_tex(),
@@ -391,6 +443,7 @@ MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0
 for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
+MATS["tree_leaves"] = Material("tree_leaves", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": "tree_leaves.png"}, alpha_tested=True)
 
 
 def merge_by(meshes, key):
