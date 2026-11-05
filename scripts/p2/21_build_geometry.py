@@ -212,15 +212,30 @@ _jit = np.sin(cen[:, 0] * 0.37) * np.cos(cen[:, 1] * 0.29) * 1.5  # break the st
 kind_t = np.where(nz < 0.66, "r", np.where(nz < 0.9, "b",
                   np.where((_edge < 6 + _jit) | (np.nan_to_num(_chm) > 5), "l", "g")))
 TMAT = {"g": "ground", "r": "rock", "b": "bank", "l": "litter"}
+# materials / UVs (macro colour layer, 22 terrain_macro()): grass / bank / litter use one top-down UV over a square
+# per-chunk window (unique macro map in txDiffuse, tiled class detail in txDetail via detailUVMultiplier);
+# material per (class, chunk) = "ter_<class>_<cc>". Rock keeps a slope-following projection, 2-scale tiled (22).
+TERRAIN_MACRO = {}
 for c in range(nchunks):
+    Tc = TT[(tch == c) & (kind_t != "r")]
+    if len(Tc):
+        pc = P3[np.unique(Tc)]
+        lo, hi = pc[:, :2].min(0) - 2.0, pc[:, :2].max(0) + 2.0
+        TERRAIN_MACRO[c] = dict(x0=float(lo[0]), y0=float(lo[1]), size=float((hi - lo).max()))
     for kind in "grbl":
         T = TT[(tch == c) & (kind_t == kind)]
         if not len(T):
             continue
         used, inv = np.unique(T, return_inverse=True)
         P = P3[used]
-        UV = np.c_[P[:, 0] / 6.0, P[:, 1] / 6.0] if kind in "gl" else np.c_[(P[:, 0] + P[:, 1]) / 5.0, P[:, 2] / 5.0]
-        add("terrain", f"1GRASS_t{kind}{c:02d}", TMAT[kind], P, inv.reshape(-1, 3), UV)
+        if kind == "r":
+            UV = np.c_[(P[:, 0] + P[:, 1]) / 20.0, P[:, 2] / 20.0]   # 20 m base tile, detail x4.3 in 22
+            add("terrain", f"1GRASS_t{kind}{c:02d}", "rock", P, inv.reshape(-1, 3), UV)
+        else:
+            mc = TERRAIN_MACRO[c]
+            UV = np.c_[(P[:, 0] - mc["x0"]) / mc["size"], (P[:, 1] - mc["y0"]) / mc["size"]]
+            add("terrain", f"1GRASS_t{kind}{c:02d}", f"ter_{TMAT[kind]}_{c:02d}", P, inv.reshape(-1, 3), UV,
+                macro=dict(chunk=c, cls=TMAT[kind], **mc))
 print("terrain classes", {k: int((kind_t == k).sum()) for k in "grbl"})
 print("terrain tris", len(TT))
 
@@ -358,7 +373,7 @@ for i in bar(range(0, N, 2), "shrubs"):
             h = srng.uniform(0.9, 2.6) * (1.3 if off > 6 else 1.0); w = h * srng.uniform(1.2, 1.9)
             u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
             # 3D clump of 4-7 leaf quads at varying heights (fern / poison oak low, toyon / coyote brush tall), spherical normals
-            cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng, 7 if off < 4 else 6 if off < 8 else 4)
+            cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng, 6 if off < 4 else 5 if off < 8 else 3)
             _keep = ~env_violation(np.array(cP))[0].reshape(-1, 4).any(1)  # shrub quads never inside the road envelope
             cP = [q for qi, q in enumerate(cP) if _keep[qi // 4]]; cN = [q for qi, q in enumerate(cN) if _keep[qi // 4]]
             cUV = [q for qi, q in enumerate(cUV) if _keep[qi // 4]]

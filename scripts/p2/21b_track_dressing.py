@@ -374,8 +374,9 @@ for gi, sg in enumerate(GATES):
             quad(P4, UVT["flag"])
 
 # ================================================================== summit bleacher + catch fence
-best = flat_spot(7392 - 60, 7392 + 60, 3, np.arange(4.0, 20.1, 1.0), 8.0, 3.2, margin=3.0, maxrange=1.2, wo=0.04, ws=0.004,
-                 s_ref=7392, avoid=USED)
+import race_assets as RA     # realistic event assets (race_assets.py); its modelled grandstand replaces this bleacher
+best = None if RA.REPLACES_BLEACHER else flat_spot(7392 - 60, 7392 + 60, 3, np.arange(4.0, 20.1, 1.0), 8.0, 3.2, margin=3.0, maxrange=1.2,
+                                                   wo=0.04, ws=0.004, s_ref=7392, avoid=USED)
 if best:
     _, x, y, j, side, s, off, r = best
     t = tangent(j); nn = normal(j) * side               # nn points away from the road
@@ -394,7 +395,7 @@ if best:
     USED.append((x, y, 8.0))
     LOG.append(f"bleacher + catch fence s={s:.0f} {'L' if side > 0 else 'R'} {off:.0f} m past shoulder (ground range {r[0]:.2f} m)")
 else:
-    LOG.append("bleacher: no flat spot near the summit gate, skipped")
+    LOG.append("bleacher: replaced by the race_assets grandstand" if RA.REPLACES_BLEACHER else "bleacher: no flat spot near the summit gate, skipped")
 
 # ================================================================== corner barriers in front of steep drops
 Fe = json.load(open(DER / "features.geojson"))["features"]
@@ -411,13 +412,23 @@ for p in drops:
     kk = road.k[a:b]
     outside = -kk.min() if side == "left" else kk.max()
     kmax = float(np.abs(kk).max())
-    cand.append((-(kmax + 0.5 * max(outside, 0)) * (1 + 0.02 * p["length_m"]), s0, s1, side, kmax))
+    # dev4: rank by racing-line exposure (either direction): line speed where the drop is on the outside of the
+    # line's curvature or the line runs out to within 0.6 m of that edge (real organisers protect fast exits)
+    import racing_line as _RLb
+    _rl = _RLb.compute(road); expo = 0.0
+    for _d in _rl.values():
+        _k = _d["k"][a:b]; _g = (_d["gap_l"] if side == "left" else _d["gap_r"])[a:b]
+        _out = ((_k < -0.004) if side == "left" else (_k > 0.004)) | (_g < 0.6)
+        expo = max(expo, float(np.max(np.where(_out, _d["v"][a:b], 0))) * 3.6)
+    if expo < 70:
+        continue                                    # slow / inside-only drop: a real event would not barrier it
+    cand.append((-(expo / 100) ** 2 * (1 + 2 * kmax / 0.03) * (1 + 0.02 * p["length_m"]), s0, s1, side, max(kmax, 0.0151)))
 cand.sort()
 picked = []
 for sc, s0, s1, side, kmax in cand:
-    if len(picked) >= 8: break
+    if len(picked) >= 18: break                     # dev4: every fast exposed drop (racing-line ranked), not just 8
     if kmax < 0.015: continue
-    if all(abs(s0 - q[0]) > 400 for q in picked):
+    if all(abs(s0 - q[0]) > 150 for q in picked):
         picked.append((s0, s1, side, kmax))
 picked.sort()
 KINDS = ("tyre_belt", "tecpro", "jersey")
@@ -479,6 +490,12 @@ for l in range(1, nl + 1):
 # dev4: boards at the braking points of the racing-line speed profile (racing_line.py, config/racing_line.yaml):
 # 150/100/50 m before the TURN-IN of the heaviest braking zones (kinetic energy scrubbed), outside of the approach
 import racing_line as _RLm
+def runwide(dname, s_, side):
+    """True where cars running wide after an exit would hit a board (exit kerb +25 m, or line within 0.45 m of the edge)"""
+    if any(k["dir"] == dname and k["type"] == "exit" and k["side"] == side and k["s0"] - 5 <= s_ <= k["s1"] + 25 for k in meta.get("kerbs", [])):
+        return True
+    g_ = _RL[dname]["gap_l" if side == "left" else "gap_r"]; j_ = idx(s_)
+    return bool(g_[max(j_ - 10, 0):j_ + 10].min() < 0.45)
 _RLC = _RLm.cfg(); _RL = _RLm.compute(road)
 NB = _RLC["boards_per_direction"]; _BD = _RLC["board_distances_m"]
 BOARDED = []
@@ -507,17 +524,20 @@ for dname, sd in (("nb", 1), ("sb", -1)):
             j = idx(s_b); runv = sd * tangent(j)
             best = None
             for side in (-inner, inner):                                    # prefer the outside of the corner
-                for off in (0.9, 0.5):
+                # never in the run-wide zone of an exit (exit kerb / run-off of this direction, or the line out at the edge)
+                rw = runwide(dname, s_b, "left" if side > 0 else "right")
+                for off in ((3.2, 3.6) if rw else (0.9, 0.5)):
                     x, y = road.xy(j, side * (road.outer(j, side) + off))
                     ze_ = road.surface_z(j, side * (road.outer(j, side)), noise=False)
                     zz = gz(x, y, ze_)
                     if abs(zz - ze_) < 0.8:
-                        best = (x, y, zz); break
+                        best = (x, y, zz); b_off = (off, side); break
                 if best: break
             if not best:
                 side = -inner; x, y = road.xy(j, side * (road.outer(j, side) + 0.3))
-                best = (x, y, road.surface_z(j, side * (road.outer(j, side)), noise=False) - 0.1)
+                best = (x, y, road.surface_z(j, side * (road.outer(j, side)), noise=False) - 0.1); b_off = (0.3, side)
             x, y, zz = best
+            meta["brake_boards"][dname][-1].setdefault("placed", []).append(dict(s=float(s_b), off_m=float(b_off[0]), side="left" if b_off[1] > 0 else "right"))
             R_ = np.array([runv[1], -runv[0]])                          # breakaway style: two thin posts, notched
             for o_ in (-0.25, 0.25):
                 box(np.array([x, y]) + R_ * o_, runv, 0.04, 0.04, zz - 0.4, zz + 0.25, UVT["dark"])
@@ -596,6 +616,7 @@ Pc = np.concatenate(CP); Tc = np.concatenate(CT)
 G["dressing"].append(dict(name="1WALL_dressing", material="invisible", P=Pc, T=Tc, UV=np.zeros((len(Pc), 2)),
                           N=vertex_normals(Pc, Tc), visible=False, renderable=False, cast_shadows=False))
 assert len(Pc) < 65535, len(Pc)
+RA.build(globals())          # grandstands, paddocks, gazebos, crowd barriers, bales, cones ... -> G["dressing"] (+1WALL_race)
 meta["dressing"] = LOG
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 print("\n".join(LOG))

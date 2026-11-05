@@ -27,7 +27,7 @@ min_kerb_length_m: 6               # drop shorter pieces
 taper_m: 3.0                       # smoothstep taper of height AND width at both ends
 taper_min_width_frac: 0.25         # width at the very ends (fraction of full width)
 lift_m: 0.004                      # base lift above the road-plane/shoulder (no z-fighting); inner edge stays at 0
-max_above_shoulder_m: 0.05         # base continues the road plane, but at most this far above a falling shoulder
+max_above_shoulder_m: 0.012        # base continues the road plane, but at most this far above a falling shoulder
 skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
 
 # Profiles: profile_t = fraction of the width from the road edge (0) outward (1); profile_h = fraction of height_m.

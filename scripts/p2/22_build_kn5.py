@@ -465,6 +465,9 @@ MATS = {
 }
 # track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
 T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
+# race event assets (race_assets.py, called from 21b): Poly Haven CC0 diffuse maps + procedural tiles in one atlas. Mixed
+# light/dark tiles authored at plausible albedo, so (like roadside.png) NOT run through albedo_calibrate.
+T["race_assets.png"] = (BUILD / "race_assets_atlas.png").read_bytes()
 # roadside atlas (fences, walls, poles, signs, buildings, cypress): written by 21c_roadside_assets.py. It mixes white signs with dark
 # poles, so it is NOT run through albedo_calibrate (a single mean-luminance target would wash out one or the other); tiles are
 # authored at plausible albedo already.
@@ -484,11 +487,44 @@ for _k in ("paint_white", "paint_yellow", "paint_yellow_dbl"):   # crisp, unworn
 MATS["road_edge"] = Material("road_edge", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.55, "ksAlphaRef": 0.5}, {"txDiffuse": "road_edge.png"}, alpha_tested=True)
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
+MATS["race_assets"] = Material("race_assets", "ksPerPixelAT", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "race_assets.png"}, alpha_tested=True)
 MATS["roadside"] = Material("roadside", "ksPerPixelAT", {**BASE, "ksSpecular": 0.06, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "roadside.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
 MATS["tree_leaves"] = Material("tree_leaves", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": "tree_leaves.png"}, alpha_tested=True)
+
+
+# ---- terrain macro colour layer (scripts/p2/terrain_macro.py): per-chunk unique macro x tiled class detail (ksPerPixelMultiMap)
+import terrain_macro as _TM
+_TMP = {**BASE, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "fresnelC": 0.0, "fresnelEXP": 1.0, "fresnelMaxLevel": 0.0,
+        "isAdditive": 0.0, "useDetail": 1.0, "detailUVMultiplier": 1.0, "shadowBiasMult": 1.0}
+T["ter_flat_n.png"] = png(solid((128, 128, 255)))
+T["ter_maps.png"] = png(solid((20, 0, 0)))
+for _c, _f in (("ground", "ground_d.png"), ("bank", "bank_d.png"), ("litter", "litter_d.png")):
+    T[f"ter_{_c}_det.png"] = png(_TM.detail_from(T[_f]))
+_rd, _rdet = _TM.rock_textures(T["rock_d.png"])
+T["ter_rock_d.png"], T["ter_rock_det.png"] = png(_rd), png(_rdet)
+MATS["rock"] = Material("rock", "ksPerPixelMultiMap", {**_TMP, "detailUVMultiplier": _TM.ROCK_DETAIL_MULT},
+                        {"txDiffuse": "ter_rock_d.png", "txNormal": "ter_flat_n.png", "txMaps": "ter_maps.png", "txDetail": "ter_rock_det.png"})
+_ortho = _TM.Ortho(DER / "ortho_r100.tif", json.load(open(ROOT / "config/origin.json")))
+_tile = _TM.tile_gray_from(jpg_tex("Ground048", "Color"))
+_macro = {}
+for _m in G.get("terrain", []):
+    mc = _m.get("macro")
+    if not mc:
+        continue
+    c = mc["chunk"]
+    if c not in _macro:
+        _macro[c] = f"ter_macro_{c:02d}.png"
+        T[_macro[c]] = png(_TM.macro_map(mc, _ortho, PAL, _lab, _rgb, _tile, seed=1000 + c))
+    if _m["material"] not in MATS:
+        MATS[_m["material"]] = Material(_m["material"], "ksPerPixelMultiMap",
+                                        {**_TMP, "detailUVMultiplier": round(mc["size"] / _TM.DETAIL_PERIOD[mc["cls"]], 3)},
+                                        {"txDiffuse": _macro[c], "txNormal": "ter_flat_n.png", "txMaps": "ter_maps.png",
+                                         "txDetail": f"ter_{mc['cls']}_det.png"})
+del _ortho
+print(f"  terrain macro: {len(_macro)} chunk maps, {sum(k.startswith('ter_') for k in MATS)} terrain materials")
 
 
 def merge_by(meshes, key):

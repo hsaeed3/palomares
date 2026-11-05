@@ -20,7 +20,13 @@ for lay in (sys.argv[1:] or ["road_full", "track_full"]):
             tex = m["textures"].get("txDiffuse")
             if tex and not (out / tex).exists():
                 (out / tex).write_bytes(k["textures"][tex])
-            mats.append(dict(name=m["name"], tex=tex, alpha=bool(m["alpha_tested"])))
+            ent_m = dict(name=m["name"], tex=tex, alpha=bool(m["alpha_tested"]))
+            det = m["textures"].get("txDetail")
+            if det and m["shader"] == "ksPerPixelMultiMap" and m["props"].get("useDetail", [0])[0] > 0:
+                if not (out / det).exists():
+                    (out / det).write_bytes(k["textures"][det])
+                ent_m.update(det=det, dmul=float(m["props"]["detailUVMultiplier"][0]))   # AC: diffuse * detail where diffuse alpha = 0
+            mats.append(ent_m)
         for m in k["meshes"]:
             if m["name"].startswith("1WALL") or m["material"] + base >= len(mats) or mats[m["material"] + base]["name"] == "invisible":
                 continue

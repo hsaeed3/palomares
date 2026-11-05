@@ -116,6 +116,85 @@ else:
             np.add.at(N, T[:, k], fn)
         m["N"] = N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12)
 
+# ------------------------------------------------------------------ 1b. fill terrain holes near the road
+# Open terrain edges within QA_R of the drivable edge (the gaps between the terrain and the road END rows at
+# s=0 / s=end): chains of open edges whose ends sit on the road stitch are closed along the road end row and
+# triangulated into an extra terrain mesh 1GRASS_hole_fill (idempotent; same material as the neighbour).
+def fill_holes():
+    from shapely.geometry import Polygon, Point
+    from matplotlib.tri import Triangulation
+    G["terrain"] = [m for m in G["terrain"] if m["name"] != "1GRASS_hole_fill"]
+    TM_ = [m for m in G["terrain"] if m["name"].startswith("1GRASS_t")]
+    aP = np.concatenate([m["P"] for m in TM_]); ky = np.round(aP[:, :2], 3)
+    uk_, inv_ = np.unique(ky, axis=0, return_inverse=True); inv_ = inv_.ravel()
+    zz = np.zeros(len(uk_)); zz[inv_] = aP[:, 2]
+    of = np.cumsum([0] + [len(m["P"]) for m in TM_])
+    Tg_ = np.concatenate([inv_[m["T"].reshape(-1, 3) + o] for m, o in zip(TM_, of[:-1])])
+    rP = np.concatenate([m["P"] for m in road_ms])
+    rk_ = {tuple(r) for r in np.round(rP[:, :2], 3)}
+    pin = np.array([tuple(r) in rk_ for r in uk_])
+    de, _ = cKDTree(edge_xy).query(uk_, workers=4)
+    ee_ = np.sort(np.r_[Tg_[:, [0, 1]], Tg_[:, [1, 2]], Tg_[:, [2, 0]]], 1)
+    ue, cn = np.unique(ee_, axis=0, return_counts=True)
+    op = ue[(cn == 1) & ~(pin[ue[:, 0]] & pin[ue[:, 1]])]
+    op = op[de[op].min(1) < QA_R]
+    if not len(op):
+        return 0, 0
+    adj = {}
+    for a, b in op:
+        adj.setdefault(a, []).append(b); adj.setdefault(b, []).append(a)
+    seen = set(); P_all, T_all = [], []; nfill = 0
+    rkd = cKDTree(rP[:, :2])
+    for start in [v for v in adj if len(adj[v]) == 1 and pin[v]] + list(adj):
+        if start in seen:
+            continue
+        chain = [start]; seen.add(start); cur = start
+        while True:
+            nx_ = [w for w in adj[cur] if w not in seen]
+            if not nx_:
+                break
+            cur = nx_[0]; chain.append(cur); seen.add(cur)
+        if len(chain) < 3:
+            continue
+        pts = [np.r_[uk_[v], zz[v]] for v in chain]
+        a2, b2 = uk_[chain[-1]], uk_[chain[0]]
+        if pin[chain[0]] and pin[chain[-1]]:
+            # close along the road end row: road/shoulder vertices on the segment end -> start
+            seg = b2 - a2; L2 = float(seg @ seg)
+            cand = rkd.query_ball_point((a2 + b2) / 2, np.sqrt(L2) / 2 + 0.05)
+            q = rP[cand]; t = ((q[:, :2] - a2) @ seg) / L2
+            dist = np.abs((q[:, 0] - a2[0]) * seg[1] - (q[:, 1] - a2[1]) * seg[0]) / np.sqrt(L2)
+            q = q[(dist < 0.02) & (t > 1e-3) & (t < 1 - 1e-3)]; t = ((q[:, :2] - a2) @ seg) / L2
+            _, uu = np.unique(np.round(q[:, :2], 3), axis=0, return_index=True); q, t = q[uu], t[uu]
+            pts += [p_ for _, p_ in sorted(zip(t, list(q)), key=lambda z_: z_[0])]
+        pts = np.array(pts)
+        poly = Polygon(pts[:, :2])
+        if not poly.is_valid or poly.area > 400:
+            print(f"  hole near {pts[0, :2].round(1)}: polygon invalid/too big (area {poly.area:.0f} m2) - not filled"); continue
+        tri = Triangulation(pts[:, 0], pts[:, 1])
+        keep = [t_ for t_ in tri.triangles if poly.buffer(1e-4).contains(Point(pts[t_, :2].mean(0)))]
+        T_ = np.array(keep)
+        if not len(T_):
+            continue
+        cr = np.cross(pts[T_[:, 1]] - pts[T_[:, 0]], pts[T_[:, 2]] - pts[T_[:, 0]])[:, 2]
+        T_[cr < 0] = T_[cr < 0][:, [0, 2, 1]]
+        T_all.append(T_ + sum(len(p_) for p_ in P_all)); P_all.append(pts); nfill += 1
+        print(f"  filled terrain hole near ({pts[0, 0]:.0f}, {pts[0, 1]:.0f}): {len(chain)} open-edge vertices, {len(T_)} tris, {poly.area:.1f} m2")
+    if P_all:
+        P = np.concatenate(P_all); T = np.concatenate(T_all)
+        m0 = TM_[0]
+        fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]]); N = np.zeros_like(P)
+        for k in range(3):
+            np.add.at(N, T[:, k], fn)
+        G["terrain"].append(dict(name="1GRASS_hole_fill", material=m0["material"], P=P, T=T, UV=P[:, :2] / 4.0,
+                                 N=N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12),
+                                 **{k: v for k, v in m0.items() if k not in ("name", "material", "P", "T", "UV", "N")}))
+    return len(op), nfill
+
+
+n_open, n_fill = fill_holes()
+print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill} holes filled (1GRASS_hole_fill)")
+
 # ------------------------------------------------------------------ 2. trees
 renamed = 0
 for m in G["trees"]:
@@ -164,6 +243,7 @@ _prev = geo["meta"].get("physics", {})
 geo["meta"]["physics"] = dict(terrain_before=_prev.get("terrain_before") if TERRAIN_DONE else before,
                               terrain_after=_prev.get("terrain_after") if TERRAIN_DONE else after,
                               open_edges_near=_prev.get("open_edges_near") if TERRAIN_DONE else open_near,
+                              open_edges_near_filled=n_open, holes_filled=n_fill,
                               tree_colliders=ntree, walls_thickened=nw)
 geo["meta"]["physics_21d_done"] = True
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))

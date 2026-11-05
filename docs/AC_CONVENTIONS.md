@@ -55,3 +55,21 @@ Status: scripts/p2/kn5.py writes the 16 floats in this order, and `locator()` in
 | Every kn5 in models_<layout>.ini is loaded, physics included (our road/terrain physics already come from separate kn5s and drive). No per-mesh physics triangle limit is documented; the only hard limit is 16-bit indices (≤65535 verts/mesh). | dev2 driving test; AcTools reader | partly verified |
 | Terrain: dev2 1GRASS_t* was the raw CDT of the LiDAR DTM: within 25 m of the edge, adjacent-face creases up to 153 deg (fold-overs) and 5.4 m vertex spikes, which is what "glitching into hills" was. 21d smooths heights (Taubin + local crease clamp, stitch pinned). | reports/qa_physics.json | measured |
 | Trees had **no collision** (tree meshes non-physical), so the car drove into the trunk/crown and down a steep bank. 21d adds 8-sided closed trunk prisms `1WALL_tree_NN` (≤25 m from the edge). | 21d | fixed |
+
+## AI / ideal line (v0.2.0-dev4, scripts/p2/racing_line.py, ai_spline.py)
+
+- File: `<layout>/ai/fast_lane.ai` per layout (layout folder, next to `data/`), version 7. Layout (little endian):
+  4 x i32 header (version=7, point count, lap time, sample count), per point 3 x f32 position (AC world: x, up, -north),
+  f32 cumulative length, i32 id; then i32 count and 18 x f32 per point (speed **m/s**, gas, brake, unused lat-g,
+  radius, distance to left / right edge, camber, direction, normal xyz, length, forward xyz, tag, grade); then
+  i32 hasGrid = 0. Verified against gro-ove/actools `AcTools/AiFile/AiSpline.cs`, `AiPoint.cs`, `AiPointExtra.cs`,
+  `AiSplineGrid.cs` and the AC-evo converter (`converter/docs/FORMATS.md`, `src/ac1/ai.rs`: "speed (m/s)",
+  "Later data (game caches) is ignored"). Every file is read back and checked in 22 (`ai_spline.read`).
+- Point-to-point: the spline runs in the run direction from 30 m before the start gate (covers the spawn) to 30 m
+  past the finish gate; speeds are a standing-start GG profile. lapTime/sampleCount 0 (not a recording); AC builds
+  its own lookup grid (hasGrid 0). **Not verified in game**: whether AC recomputes the speed/brake payload;
+  if the ideal line colours look wrong, re-record in game (AI app) and keep ours as a fallback.
+- No `pit_lane.ai` (one pit box, p2p: AC runs without one on many community p2p tracks) and no `ai_hints.ini`
+  (CSP-only, optional). Not verified in game.
+- Kerbs and brake boards of the `track_*` layouts are derived from the same line (config/kerbs.yaml `placement`,
+  config/racing_line.yaml); plots in reports/racing_line/.

@@ -93,7 +93,8 @@ def export_layouts(track_dir, layouts, road, log=print):
         i0 = int(np.argmin(np.abs(road.s - L_["s_from"]))); i1 = int(np.argmin(np.abs(road.s - L_["s_to"])))
         sd = 1 if i1 > i0 else -1
         # cover the spawn (before the start gate) and a little past the finish so the AI never runs off the spline
-        a = int(np.clip(i0 - sd * 30, 0, len(road.s) - 1)); b = int(np.clip(i1 + sd * 30, 0, len(road.s) - 1))
+        # (kept >= 6 m inside the road ends: the end-of-world 1WALL_start / 1WALL_end caps sit at s=0 / s=end)
+        a = int(np.clip(i0 - sd * 30, 6, len(road.s) - 7)); b = int(np.clip(i1 + sd * 30, 6, len(road.s) - 7))
         D = R["nb" if sd > 0 else "sb"]
         P, Ln, ex, idx = layout_spline(D, road, a, b, C)
         p = track_dir / lay / "ai"; p.mkdir(parents=True, exist_ok=True)

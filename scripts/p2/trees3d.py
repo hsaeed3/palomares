@@ -66,16 +66,16 @@ class _B:
 # droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m, near; far x FAR_LS),
 # trunk radius / height, crown volume: base / top as fraction of H, edge droop (fraction of H), lobe irregularity
 _SP = {
-    "oak": dict(limbs=(4, 6), ang=(50, 74), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(118, 34), ls=(2.1, 3.4), r0=0.034,
+    "oak": dict(limbs=(4, 6), ang=(50, 74), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(64, 16), ls=(2.6, 4.0), r0=0.034,
                 cz=(0.26, 1.0), cdroop=0.20, lobe=0.18),
-    "bay": dict(limbs=(4, 6), ang=(8, 26), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(104, 30), ls=(2.0, 3.1), r0=0.014,
+    "bay": dict(limbs=(4, 6), ang=(8, 26), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(56, 14), ls=(2.4, 3.7), r0=0.014,
                 cz=(0.05, 1.0), cdroop=0.04, lobe=0.12),
-    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(64, 20), ls=(1.9, 3.0), r0=0.020,
+    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(36, 10), ls=(2.3, 3.5), r0=0.020,
                 cz=(0.34, 1.0), cdroop=0.06, lobe=0.22),
-    "syc": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(84, 24), ls=(2.0, 3.2), r0=0.022,
+    "syc": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(46, 12), ls=(2.4, 3.8), r0=0.022,
                 cz=(0.22, 1.0), cdroop=0.08, lobe=0.18),
 }
-FAR_LS = 1.85
+FAR_LS = 2.0
 PE = 2.6  # crown superellipsoid exponent (fuller, rounder-shouldered crowns than an ellipsoid)
 
 
@@ -104,7 +104,8 @@ def make_proto(kind, seed, lod=0):
                 d = _unit(d + _UP * 0.08)
             p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.45 * (i + 1) / nsub))
         if depth <= 1:  # small branches are hidden inside the leaf clusters: no tubes
-            tubes.append((np.array(pts), rr, (4 if not lod else 3)))
+            if not lod or kind == "bay":  # far LOD: trunk only (bay: its stems), limbs hidden in the big clusters
+                tubes.append((np.array(pts), rr, (4 if not lod else 3)))
             ends.append(p.copy())
         if depth >= maxd:
             tips.append(p.copy()); return
@@ -127,7 +128,7 @@ def make_proto(kind, seed, lod=0):
         lean = math.radians(r.uniform(0, 10)); laz = r.uniform(0, 2 * math.pi)
         d0 = np.array([math.sin(lean) * math.cos(laz), math.sin(lean) * math.sin(laz), math.cos(lean)])
         top = d0 * H * S["trunk"] + np.array([0, 0, -0.3])
-        trunk = (np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 6 if not lod else 4)
+        trunk = (np.array([[0, 0, -0.3], top * 0.5, top]), [rt * 1.25, rt * 1.05, rt * 0.95], 5 if not lod else 4)
         nl = r.integers(S["limbs"][0], S["limbs"][1] + 1)
         for i in range(nl):
             az = 2 * math.pi * i / nl + r.normal(0, 0.35); a = math.radians(r.uniform(*S["ang"]))
