@@ -188,8 +188,20 @@ base = G[rr, cc]
 with open(DER / "trees.csv", "w") as f:
     f.write("id,x_utm,y_utm,x_local,y_local,ground_z,height_m,crown_radius_m,dist_to_centerline_m,s_m,offset_m\n")
     tf = []
+    moved = 0; dropped = 0
     for i in range(len(px)):
         s, d, _ = station(px[i], py[i])
+        # no trunks on the carriageway: a CHM peak over the road is overhanging canopy -> move the trunk
+        # to just outside the nearer edge (same station) so the crown still overhangs realistically
+        j0 = int(np.clip(round(s), 0, len(S) - 1)); edge_ = WL[j0] if d >= 0 else WR[j0]
+        if abs(d) < edge_ + 1.0:
+            side_ = 1 if d >= 0 else -1; dn = side_ * (edge_ + 1.5 + 0.3 * crown[i])
+            nrm = np.array([-T[j0, 1], T[j0, 0]]); px[i], py[i] = XY[j0] + nrm * dn
+            base[i] = float(G[rasterio.transform.rowcol(gz.transform, px[i], py[i])])
+            s, d, _ = station(px[i], py[i]); moved += 1
+            j1 = int(np.clip(round(s), 0, len(S) - 1))
+            if abs(d) < (WL[j1] if d >= 0 else WR[j1]) + 1.0:
+                dropped += 1; continue          # hairpin: moved trunk lands on the other leg -> drop
         f.write(f"{i},{px[i]:.2f},{py[i]:.2f},{px[i]-o['x0']:.2f},{py[i]-o['y0']:.2f},{base[i]:.2f},{ph[i]:.1f},{crown[i]:.1f},{dist[i]:.1f},{s:.1f},{d:.1f}\n")
         lon, lat = T_UTM_LL.transform(px[i], py[i])
         tf.append({"type": "Feature", "properties": {"id": i, "height_m": round(float(ph[i]), 1), "crown_radius_m": round(float(crown[i]), 1), "s_m": round(s, 1)},
@@ -200,4 +212,4 @@ feats.append({"type": "Feature", "properties": {"kind": "summit", "s_m": float(S
               "geometry": {"type": "Point", "coordinates": [lon, lat, float(ZC[summit])]}})
 json.dump({"type": "FeatureCollection", "features": feats}, open(DER / "features.geojson", "w"), indent=0)
 import collections
-print(collections.Counter(f["properties"]["kind"] for f in feats), "trees", len(px), "gaps", len(gaps))
+print(collections.Counter(f["properties"]["kind"] for f in feats), "trees", len(px), "moved off road", moved, "dropped", dropped, "gaps", len(gaps))

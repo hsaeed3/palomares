@@ -10,7 +10,8 @@ python3 04_dtm.py                 # DTMs 0.5 m / 1 m, DSM, CHM, ground-distance 
 python3 05a_straight_rasters.py   # road-aligned diagnostic rasters along OSM
 python3 05b_fetch_imagery.py      # USGS imagery 1 m + 3DEP 10 m backdrop DEM
 python3 06_refine_centerline.py   # snap centerline to the real road surface
-python3 07_cross_sections.py      # per-metre width/camber/edge environment -> centerline.csv/geojson
+python3 07_cross_sections.py      # per-metre width/edge environment -> centerline.csv/geojson
+python3 07b_surface_fit.py        # high-precision z/camber/grade from raw ground returns
 python3 08_features.py            # features, gaps, markings, trees
 python3 09_viewer.py              # reports/viewer.html
 python3 10_report.py              # reports/phase1_report.md
