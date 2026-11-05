@@ -1,14 +1,51 @@
-# Automatic kerb placement for the track_* layouts (scripts/p2/21_build_track.py).
+# Race kerbs + painted run-off for the track_* layouts (scripts/p2/kerbs.py, called from 21_build_geometry.py).
 # Curvature is |1/R| of the refined centerline, smoothed with a Gaussian (sigma_m).
 sigma_m: 6.0
 curvature_threshold_1pm: 0.0167    # R < 60 m counts as a corner
 min_corner_length_m: 10            # ignore shorter curvature blips
-apex_entry_m: 6                    # inside kerb starts this far before the curvature peak
-inside_exit_m: 14                  # inside kerb extends this far after the peak
-outside_exit_start_m: 4            # outside (exit) kerb starts this far after the peak
+apex_entry_m: 6                    # apex kerb starts this far before the curvature peak (run direction)
+inside_exit_m: 14                  # ... and ends this far after it
+outside_exit_start_m: 4            # exit kerb (outside) starts this far after the peak
 outside_exit_length_m: 20          # ... and runs this long
-merge_gap_m: 6                     # merge kerbs on the same side closer than this
-width_m: 0.8                       # must equal the shoulder width (kerb sits on the shoulder)
-height_m: 0.04                     # standard low AC rumble-strip profile peak
-stripe_length_m: 1.0               # red/white block length (texture repeat)
+merge_gap_m: 6                     # merge kerbs of the same type on the same side closer than this
+min_kerb_length_m: 6               # drop shorter pieces
+taper_m: 3.0                       # smoothstep taper of height AND width at both ends
+taper_min_width_frac: 0.25         # width at the very ends (fraction of full width)
+lift_m: 0.004                      # base lift above the road-plane/shoulder (no z-fighting); inner edge stays at 0
 skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
+
+# Profiles: profile_t = fraction of the width from the road edge (0) outward (1); profile_h = fraction of height_m.
+# Inner column is the road-edge vertex itself (h must be 0 there); outer column sinks 2 mm into the shoulder.
+# u0/u1 = horizontal range in the kerb texture atlas (left half apex, right half exit). Width <= 0.8 m (shoulder).
+types:
+  apex:                            # narrow, rounded, ridged rumble strip (normal-mapped transverse ridges)
+    width_m: 0.60
+    height_m: 0.025
+    stripe_length_m: 1.2           # red / white block length
+    profile_t: [0.0, 0.06, 0.18, 0.35, 0.5, 0.65, 0.82, 0.94, 1.0]
+    profile_h: [0.0, 0.30, 0.75, 0.97, 1.0, 0.97, 0.75, 0.30, 0.0]
+    u0: 0.01
+    u1: 0.49
+  exit:                            # wide, flat-topped, low exit kerb
+    width_m: 0.80
+    height_m: 0.015
+    stripe_length_m: 1.5
+    profile_t: [0.0, 0.08, 0.2, 0.5, 0.8, 0.92, 1.0]
+    profile_h: [0.0, 0.55, 0.95, 1.0, 0.95, 0.55, 0.0]
+    u0: 0.51
+    u1: 0.99
+
+# Painted run-off strip (green, physics 1RUNOFF_*, surfaces.ini key RUNOFF) outside exit kerbs, on the terrain
+# beyond the shoulder. Only where the verge type allows it and no guardrail; draped on the built terrain mesh.
+runoff:
+  enabled: true
+  width_m: 2.0
+  columns: 6
+  allowed_env: [flat]              # centerline.csv env_left/env_right values (skip drop_off, cut_bank, walls, ditch)
+  min_length_m: 8
+  taper_m: 3.0
+  lift_inner_m: 0.004              # at the shoulder/terrain seam (meets the exit kerb outer edge)
+  lift_m: 0.025                    # over the terrain mesh
+  max_step_across_m: 0.20          # reject rows rougher than this between columns
+  max_rise_m: 0.35                 # ... or rising/falling more than this across the strip
+  tex_m: 2.0                       # texture repeat

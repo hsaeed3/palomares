@@ -215,6 +215,10 @@ def _tree_card(kind, seed, W=512, H=1024):
     noise = _vnoise(r, H, W, 4) * 0.6 + _vnoise(r, H, W, 24) * 0.4
     thr = {"oak": 0.60, "bay": 0.58, "euc": 0.63, "syc": 0.65}[kind]
     alpha = (m * (0.7 + 0.55 * noise)) > thr
+    # porous canopy: clumped leaf masses with sky/sun holes (~15-30 % of the crown) and ragged edges, so light gets through
+    holes = (_vnoise(r, H, W, 22) * 0.65 + _vnoise(r, H, W, 6) * 0.35) > {"oak": 0.60, "bay": 0.63, "euc": 0.58, "syc": 0.57}[kind]
+    crown = m > 0.3
+    alpha = alpha & ~(holes & crown)
     leaves = photo_fill(H, W, r).astype(float)
     if kind == "syc":
         leaves = leaves * np.array([1.08, 1.12, 0.85])  # fresh yellow-green spring sycamore leaf
@@ -280,16 +284,14 @@ def solid(rgb, size=16):
 
 
 def kerb_tex():
-    im = Image.new("RGB", (64, 128)); d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, 64, 64], fill=(200, 30, 30)); d.rectangle([0, 64, 64, 128], fill=(235, 235, 235))
-    return im
+    """apex (ridged) | exit (flat) kerb atlas + normal map: scripts/p2/race_tex.py (procedural)"""
+    import race_tex as RT
+    return RT.kerb_atlas()
 
 
 def guardrail_tex():
-    a = np.full((64, 256, 3), 165, np.uint8)
-    a[:, :, :] = (np.asarray(jpg_tex("Asphalt026C", "Roughness", 256).resize((256, 64)))[..., :1] * 0.3 + 140).astype(np.uint8)
-    a[20:24] -= 40; a[40:44] -= 40
-    return Image.fromarray(a)
+    import race_tex as RT
+    return RT.guardrail_wbeam()
 
 
 import rasterio
@@ -326,7 +328,8 @@ T = {
     "backdrop_d.png": png(backdrop_img),
     "tree_oak.png": png(foliage("oak", 1)), "tree_bay.png": png(foliage("bay", 2)), "tree_euc.png": png(foliage("euc", 3)),
     "tree_syc.png": png(foliage("syc", 4)), "tree_trunk.png": png(trunk_atlas()),
-    "kerb.png": png(kerb_tex()), "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
+    **dict(zip(("kerb_d.png", "kerb_n.png"), map(png, kerb_tex()))), "runoff_d.png": png(__import__("race_tex").runoff_tex()),
+    "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
     **road_surface_tex(),
 }
 BASE = {"ksAmbient": 0.45, "ksDiffuse": 0.45, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
@@ -348,13 +351,15 @@ MATS = {
     "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
     "rpm_yellow": Material("rpm_yellow", "ksPerPixel", {**BASE, "ksSpecular": 0.5, "ksSpecularEXP": 60.0}, {"txDiffuse": "rpm.png"}),
     "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksSpecular": 0.2, "ksSpecularEXP": 35.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
-    "kerb": Material("kerb", "ksPerPixel", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0}, {"txDiffuse": "kerb.png"}),
+    "kerb": Material("kerb", "ksPerPixelNM", {**BASE, "ksSpecular": 0.18, "ksSpecularEXP": 24.0}, {"txDiffuse": "kerb_d.png", "txNormal": "kerb_n.png"}),
+    "runoff": Material("runoff", "ksPerPixel", {**BASE, "ksSpecular": 0.08, "ksSpecularEXP": 15.0}, {"txDiffuse": "runoff_d.png"}),
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),
     "invisible": Material("invisible", "ksPerPixel", dict(BASE), {"txDiffuse": "black.png"}),
 }
 # track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
 T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
-MATS["dressing"] = Material("dressing", "ksPerPixel", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"})
+# RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
+MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
@@ -424,6 +429,8 @@ write("palomares_lines_road.kn5", ["lines_road"], merge={"lines_road": line_key}
 write("palomares_kerbs_nb.kn5", ["kerbs_nb"])
 write("palomares_kerbs_sb.kn5", ["kerbs_sb"])
 write("palomares_dressing.kn5", ["dressing"])
+write("palomares_dressing_nb.kn5", ["dressing_nb"])   # direction-specific: distance boards face the run direction
+write("palomares_dressing_sb.kn5", ["dressing_sb"])
 SEG = meta["segments"]
 for seg, sd in SEG.items():
     L = sd["loc"]
@@ -437,7 +444,7 @@ LAYOUTS = {}
 for seg, sd in SEG.items():
     sgn = 1 if sd["s_to"] > sd["s_from"] else -1
     for sty, (sname, sdesc, sfiles) in STY.items():
-        files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5", "palomares_dressing.kn5"] if sty == "track" else [])
+        files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5", "palomares_dressing.kn5", f"palomares_dressing_{'nb' if sgn > 0 else 'sb'}.kn5"] if sty == "track" else [])
         LAYOUTS[f"{sty}_{seg}"] = dict(files=files, seg=seg, s_from=sd["s_from"], s_to=sd["s_to"], sgn=sgn,
                                        name=f"Palomares Road — {sd['name']} ({sname})",
                                        desc=f"Palomares Road, Alameda County CA: {sd['name']}, point to point. {sdesc}")
@@ -504,6 +511,22 @@ SIN_LENGTH=0
 IS_PITLANE=0
 VIBRATION_GAIN=0
 VIBRATION_LENGTH=0
+
+[SURFACE_4]
+KEY=RUNOFF
+FRICTION=0.82
+DAMPING=0
+WAV=
+WAV_PITCH=0
+FF_EFFECT=NULL
+DIRT_ADDITIVE=0
+IS_VALID_TRACK=0
+BLACK_FLAG=0
+SIN_HEIGHT=0
+SIN_LENGTH=0
+IS_PITLANE=0
+VIBRATION_GAIN=0.05
+VIBRATION_LENGTH=0.3
 """
 LIGHT = "[LIGHTING]\nSUN_PITCH_ANGLE=45\nSUN_HEADING_ANGLE=200\n"
 

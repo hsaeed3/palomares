@@ -549,60 +549,10 @@ for c in range(nchunks):
 
 _tick("markings + decals")
 # ------------------------------------------------------------------ kerbs (track layouts)
+# apex / exit kerbs + painted run-off: scripts/p2/kerbs.py, parameters in config/kerbs.yaml
+import kerbs as KB
 K = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
-ks = gaussian_filter1d(road.k, K["sigma_m"])
-KERBS = []
-for dname, sgn_dir in (("nb", 1), ("sb", -1)):
-    spans = {"left": [], "right": []}
-    lab, nl = label(np.abs(ks) > K["curvature_threshold_1pm"])
-    for l in range(1, nl + 1):
-        idx = np.nonzero(lab == l)[0]
-        if len(idx) < K["min_corner_length_m"]:
-            continue
-        apex = idx[np.argmax(np.abs(ks[idx]))]
-        inner = "left" if ks[apex] > 0 else "right"
-        outer = "right" if inner == "left" else "left"
-        sa = road.s[apex]
-        if sgn_dir > 0:   # northbound (s increasing): exit lies at larger s
-            spans[inner].append((sa - K["apex_entry_m"], sa + K["inside_exit_m"]))
-            spans[outer].append((sa + K["outside_exit_start_m"], sa + K["outside_exit_start_m"] + K["outside_exit_length_m"]))
-        else:             # southbound: corner turns the other way for the driver, but the inside/outside sides are the same
-            spans[inner].append((sa - K["inside_exit_m"], sa + K["apex_entry_m"]))
-            spans[outer].append((sa - K["outside_exit_start_m"] - K["outside_exit_length_m"], sa - K["outside_exit_start_m"]))
-    for side in spans:
-        sp = sorted(spans[side]); merged = []
-        for a, b in sp:
-            if any(lo <= a <= hi or lo <= b <= hi for lo, hi in K["skip_s_ranges"]):
-                continue
-            if merged and a - merged[-1][1] < K["merge_gap_m"]:
-                merged[-1][1] = max(merged[-1][1], b)
-            else:
-                merged.append([a, b])
-        for a, b in merged:
-            i = np.arange(max(int(a), 1), min(int(b), N - 2) + 1)
-            if len(i) < 3:
-                continue
-            sgn = 1 if side == "left" else -1
-            e = road.el[i] if side == "left" else road.er[i]
-            prof_d = np.array([0.0, 0.15, 0.35, 0.55, 0.75, 1.0]) * K["width_m"]
-            prof_h = np.array([0.003, 0.02, 1.0 * K["height_m"], 1.0 * K["height_m"], 0.6 * K["height_m"], 0.003])
-            if side == "right":
-                prof_d, prof_h = prof_d[::-1], prof_h[::-1]
-            dd = sgn * (e[:, None] + prof_d[None, :])
-            rr_ = np.repeat(i[:, None], len(prof_d), 1)
-            x, y = road.xy(rr_, dd)
-            # base: the shoulder surface (piecewise linear over its 3 columns) so the kerb's outer edge lands on the
-            # shoulder/terrain seam with no step; inner edge = road edge
-            SZ = SLZ if side == "left" else SRZ
-            t = np.clip((np.abs(dd) - e[:, None]) / (SHOULDER_W / 2), 0, 2)
-            z0, z1, z2 = SZ[rr_, 0], SZ[rr_, 1], SZ[rr_, 2]
-            base = np.where(t <= 1, z0 + (z1 - z0) * t, z1 + (z2 - z1) * (t - 1))
-            ramp = np.clip(np.minimum(np.arange(len(i)), np.arange(len(i))[::-1]) / 2.0, 0, 1)  # 2 m taper at kerb ends
-            z = base + 0.003 + (prof_h[None, :] - 0.003) * ramp[:, None]
-            P = np.stack([x, y, z], -1).reshape(-1, 3)
-            UV = np.stack([np.tile(np.linspace(0, 1, len(prof_d)), (len(i), 1)), np.repeat(road.s[i, None], len(prof_d), 1) / (2 * K["stripe_length_m"])], -1).reshape(-1, 2)
-            add(f"kerbs_{dname}", f"1KERB_{dname.upper()}{side[0].upper()}{len(KERBS):03d}", "kerb", P, grid_tris(len(i), len(prof_d)), UV, cast_shadows=False)
-            KERBS.append(dict(s0=float(road.s[i[0]]), s1=float(road.s[i[-1]]), side=side, dir=dname))
+KERBS, _corners = KB.build(road, K, RX, RY, RZ, {"left": (SLX, SLY, SLZ), "right": (SRX, SRY, SRZ)}, P3, TT, GR, add, chunk_of, SHOULDER_W)
 print("kerbs", len(KERBS))
 
 # ------------------------------------------------------------------ timing / spawn locators
