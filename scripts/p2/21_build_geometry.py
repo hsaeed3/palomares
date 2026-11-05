@@ -494,8 +494,8 @@ for c in range(nchunks):
     while s < sb - 1:
         crk = np.interp(s, _ss, _scr); i = int(s)
         if drng.random() < 0.4 + 0.5 * crk:
-            full = drng.random() < 0.4; side = drng.choice([1, -1])
-            a, b = (-road.er[i] + 0.3, road.el[i] - 0.3) if full else ((0.1, road.el[i] - 0.3) if side > 0 else (-road.er[i] + 0.3, -0.1))
+            fullw = drng.random() < 0.4; side = drng.choice([1, -1])
+            a, b = (-road.er[i] + 0.3, road.el[i] - 0.3) if fullw else ((0.1, road.el[i] - 0.3) if side > 0 else (-road.er[i] + 0.3, -0.1))
             # sprite is 6 m long: map its length across the road, 0.6 m along
             for k0 in np.arange(a, b - 0.5, RS.SEAL_CELL_M[1]):
                 decal(acc, s - 0.3, s + 0.3, k0, min(k0 + RS.SEAL_CELL_M[1], b), RS.CELLS["seal"][drng.integers(8)], RS.LIFT["seal"] + 0.001, rot=True)
