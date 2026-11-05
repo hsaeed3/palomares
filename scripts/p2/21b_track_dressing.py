@@ -476,22 +476,34 @@ for l in range(1, nl + 1):
     ix = np.nonzero(lab == l)[0]
     if len(ix) >= KCFG["min_corner_length_m"]:
         corners.append((float(np.abs(ks[ix]).max()), ix[0], ix[-1], 1 if ks[ix[np.argmax(np.abs(ks[ix]))]] > 0 else -1))
-NB = 8
+# dev4: boards at the braking points of the racing-line speed profile (racing_line.py, config/racing_line.yaml):
+# 150/100/50 m before the TURN-IN of the heaviest braking zones (kinetic energy scrubbed), outside of the approach
+import racing_line as _RLm
+_RLC = _RLm.cfg(); _RL = _RLm.compute(road)
+NB = _RLC["boards_per_direction"]; _BD = _RLC["board_distances_m"]
 BOARDED = []
+meta["brake_boards"] = {}
 for dname, sd in (("nb", 1), ("sb", -1)):
     cur = B[f"dressing_{dname}"]; placed = []
-    for kpk, i0, i1, inner in sorted(corners, reverse=True):
+    zones = _RL[dname]["zones"]
+    meta["brake_boards"][dname] = []
+    for z_ in sorted(zones, key=lambda q: -q["energy"]):
         if len(placed) >= NB: break
-        entry = road.s[i0] if sd > 0 else road.s[i1]
-        st = [entry - sd * 150, entry - sd * 100, entry - sd * 50]
-        if min(st) < 40 or max(st) > road.s[-1] - 40 or any(abs(entry - p) < 300 for p in placed):
+        entry = z_["s_turn_in"]
+        inner = (1 if z_["side"] == "left" else -1) * sd                # station side of the corner's inside
+        st = [entry - sd * d_ for d_ in _BD]
+        if min(st) < 40 or max(st) > road.s[-1] - 40 or any(abs(entry - p) < _RLC["board_min_spacing_m"] for p in placed):
             continue
-        # skip if another (sharp) corner sits between the board and the corner (boards would be misleading)
-        if any(c[0] > 0.6 * kpk and ((sd > 0 and st[0] < road.s[c[2]] < entry - 5) or (sd < 0 and entry + 5 < road.s[c[1]] < st[0]))
-               for c in corners):
+        # another real braking zone between the first board and this turn-in would make the boards misleading
+        if any(q is not z_ and q["energy"] > 0.3 * z_["energy"] and min(st[0], entry) + 5 < q["s_turn_in"] < max(st[0], entry) - 5 for q in zones):
             continue
+        i0 = i1 = idx(entry)
+        meta["brake_boards"][dname].append(dict(s_turn_in=entry, s_onset=z_["s_onset"], s_apex=z_["s_apex"], boards=st,
+                                                v_entry_kmh=round(z_["v_entry"] * 3.6), v_apex_kmh=round(z_["v_apex"] * 3.6),
+                                                outside="left" if inner < 0 else "right"))
+        kpk = abs(_RL[dname]["k"][idx(z_["s_apex"])]) + 1e-4
         placed.append(entry)
-        for s_b, txt in zip(st, ("150", "100", "50")):
+        for s_b, txt in zip(st, [str(d_) for d_ in _BD]):
             j = idx(s_b); runv = sd * tangent(j)
             best = None
             for side in (-inner, inner):                                    # prefer the outside of the corner

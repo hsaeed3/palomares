@@ -20,6 +20,8 @@ PACKAGE = [
     ("25_package.py", "Packaging zip"),
 ]
 FULL = PACKAGE[:7] + [
+    ("racing_line_plot.py", "Racing-line plots (reports/racing_line)"),
+    ("qa_drive.py", "Drive simulation + safety QA (reports/safety_qa.md)"),
     ("qa_collisions.py", "Collision QA (every barrier has 1WALL)"),
     ("23_qa.py", "Independent QA"),
     ("24_visual_export.py", "Visual export (kn5 round-trip)"),

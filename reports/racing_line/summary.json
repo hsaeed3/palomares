@@ -1,0 +1,22 @@
+{
+ "nb": {
+  "flying_time_full_s": 382.1,
+  "vmax_kmh": 209,
+  "vmin_kmh": 61,
+  "braking_zones": 64,
+  "kerbs": 61,
+  "boards": [],
+  "touch_frac_l": 0.113,
+  "touch_frac_r": 0.093
+ },
+ "sb": {
+  "flying_time_full_s": 381.9,
+  "vmax_kmh": 209,
+  "vmin_kmh": 60,
+  "braking_zones": 59,
+  "kerbs": 60,
+  "boards": [],
+  "touch_frac_l": 0.104,
+  "touch_frac_r": 0.087
+ }
+}
