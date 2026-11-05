@@ -156,11 +156,11 @@ def read_kn5(path):
         if cls == 1:
             m = rd("16f"); dummies.append((name, m))
         else:
-            cs, vis, tr = rd("???"); (nv,) = rd("I")
+            fb = b[o[0]:o[0] + 3]; cs, vis, tr = rd("???"); (nv,) = rd("I")
             vb = np.frombuffer(b, "<f4", nv * 11, o[0]).reshape(nv, 11); o[0] += nv * 44
             (ni,) = rd("I"); ib = np.frombuffer(b, "<u2", ni, o[0]); o[0] += ni * 2
-            mid, layer, li, lo = rd("IIff"); bs = rd("4f?")
-            meshes.append(dict(name=name, active=_act, cast_shadows=cs, visible=vis, transparent=tr, renderable=bs[4], pos=vb[:, :3].copy(), nrm=vb[:, 3:6].copy(), uv=vb[:, 6:8].copy(), idx=ib.astype(np.int64), material=mid, lod_out=lo))
+            mid, layer, li, lo = rd("IIff"); rb = b[o[0] + 16:o[0] + 17]; bs = rd("4f?")
+            meshes.append(dict(name=name, active=_act, flag_bytes=fb, renderable_byte=rb, layer=layer, lod_in=li, cast_shadows=cs, visible=vis, transparent=tr, renderable=bs[4], pos=vb[:, :3].copy(), nrm=vb[:, 3:6].copy(), uv=vb[:, 6:8].copy(), idx=ib.astype(np.int64), material=mid, lod_out=lo))
         for _ in range(nch): rnode()
     rnode()
     assert o[0] == len(b), f"trailing bytes {len(b) - o[0]}"

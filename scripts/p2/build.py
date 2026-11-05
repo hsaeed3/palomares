@@ -15,17 +15,18 @@ PACKAGE = [
     ("21_build_geometry.py", "Building geometry (road, terrain, trees)"),
     ("21b_track_dressing.py", "Track dressing (gantries, huts, barriers)"),
     ("21c_roadside_assets.py", "Roadside assets (fences, guardrails, poles, signs) + robust collision"),
+    ("21d_physics.py", "Physics post-process (terrain smoothing, tree + wall colliders)"),
     ("22_build_kn5.py", "Writing kn5 files + AC track folder"),
     ("25_package.py", "Packaging zip"),
 ]
-FULL = PACKAGE[:6] + [
+FULL = PACKAGE[:7] + [
     ("qa_collisions.py", "Collision QA (every barrier has 1WALL)"),
     ("23_qa.py", "Independent QA"),
     ("24_visual_export.py", "Visual export (kn5 round-trip)"),
     (["node", "24_visual_render.js", "road_summit"], "Rendering road_summit"),
     (["node", "24_visual_render.js", "track_summit"], "Rendering track_summit"),
     ("26_contact_sheet.py", "Contact sheet"),
-    PACKAGE[6],
+    PACKAGE[7],
 ]
 
 TTY = sys.stdout.isatty() and os.environ.get("NO_COLOR") is None

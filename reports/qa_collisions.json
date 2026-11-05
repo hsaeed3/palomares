@@ -1,7 +1,7 @@
 {
  "kn5_files": 17,
- "physics_meshes": 66,
- "collision_triangles": 78304,
+ "physics_meshes": 129,
+ "collision_triangles": 213120,
  "solid_items": 469,
  "uncovered_items": 0,
  "per_type": {

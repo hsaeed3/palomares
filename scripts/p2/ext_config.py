@@ -43,7 +43,7 @@ CAR_LIGHTS_LIT_MULT = 1
 
 [GRASS_FX]
 GRASS_MATERIALS = ground, bank, litter
-OCCLUDING_MATERIALS = road_asphalt, shoulder_dirt, rock, kerb, paint_white, paint_yellow, paint_yellow_dbl, road_decal
+OCCLUDING_MATERIALS = road_asphalt, road_asphalt_fresh, shoulder_dirt, rock, kerb, paint_white, paint_yellow, paint_yellow_dbl, road_decal
 OCCLUDING_MATERIALS_ALPHA =
 MASK_BLUR = 1
 SHAPE_SIZE = 1.2, 1.6
@@ -52,8 +52,8 @@ SHAPE_CUT = 0.2
 SHAPE_WIDTH = 1
 
 [RAIN_FX]
-PUDDLES_MATERIALS = road_asphalt, road_decal, shoulder_dirt
-SOAKING_MATERIALS = road_asphalt, road_decal, shoulder_dirt, litter, rock
+PUDDLES_MATERIALS = road_asphalt, road_asphalt_fresh, road_decal, shoulder_dirt
+SOAKING_MATERIALS = road_asphalt, road_asphalt_fresh, road_decal, shoulder_dirt, litter, rock
 ROUGH_MATERIALS = ground, bank, litter
 SMOOTH_MATERIALS = guardrail, dressing, rpm_yellow
 LINES_MATERIALS = paint_white, paint_yellow, paint_yellow_dbl

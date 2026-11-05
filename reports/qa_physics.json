@@ -10,12 +10,12 @@
  },
  "terrain_after": {
   "pairs_near": 1641797,
-  "max_crease_deg": 59.99707024501332,
-  "p99_crease_deg": 24.882611423355247,
-  "n_crease_over": 15471,
-  "max_spike_m": 0.15869535639296828,
-  "n_spike_over": 911,
-  "max_slope_deg": 76.38770918417326
+  "max_crease_deg": 60.34409993782684,
+  "p99_crease_deg": 24.78234174083241,
+  "n_crease_over": 15017,
+  "max_spike_m": 0.12333711970765648,
+  "n_spike_over": 2,
+  "max_slope_deg": 76.2068988772828
  },
  "open_edges_near": 9,
  "tree_colliders": 4213,

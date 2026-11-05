@@ -90,8 +90,15 @@ for c in range(nchunks):
     i0 = int(c * CHUNK); i1 = min(int((c + 1) * CHUNK), N - 1)
     rows = np.arange(i0, i1 + 1); nr = len(rows)
     P = np.stack([RX[rows], RY[rows], RZ[rows]], -1).reshape(-1, 3)
-    UV = np.stack([D_ROAD[rows] / 3.5, np.repeat(road.s[rows, None], 13, 1) / 3.5], -1).reshape(-1, 2)
-    add("road", f"1ROAD_{c:02d}", "road_asphalt", P, grid_tris(nr, 13), UV)
+    import road_surface as _RS   # road UV = 12 m asphalt atlas: u = 0.5 + d/12, v = s/12
+    UV = np.stack([0.5 + D_ROAD[rows] / _RS.ATLAS_M, np.repeat(road.s[rows, None] / _RS.ATLAS_M, 13, 1)], -1).reshape(-1, 2)
+    # freshly repaved spans (config/surface_overrides.yaml) -> separate 1ROADF_NN mesh / road_asphalt_fresh. The joint is
+    # the station row at the span end (straight transverse); both meshes share that row's vertex positions, so no step.
+    Tg_ = grid_tris(nr, 13); fq = road.fresh[rows][Tg_[:, 0] // 13]
+    for nm_, mat_, Tm in ((f"1ROAD_{c:02d}", "road_asphalt", Tg_[~fq]), (f"1ROADF_{c:02d}", "road_asphalt_fresh", Tg_[fq])):
+        if len(Tm):
+            used, inv = np.unique(Tm, return_inverse=True)
+            add("road", nm_, mat_, P[used], inv.reshape(-1, 3), UV[used])
     for side, (X, Y, Z) in (("L", (SLX, SLY, SLZ)), ("R", (SRX[:, ::-1], SRY[:, ::-1], SRZ[:, ::-1]))):
         # columns must increase to the left: L = edge->out, R = out->edge. One mesh per edge material
         # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROADAP_{side}NN), quads take the material of their first row.
@@ -120,10 +127,10 @@ for c in range(nchunks):
         e_ = road.el if side == "L" else road.er
         acc = dict(P=[], UV=[], T=[], n=0)
         rows_all = np.arange(i0, i1 + 1)
-        brk = np.nonzero(mat_[rows_all[1:]] != mat_[rows_all[:-1]])[0] + 1
+        brk = np.nonzero((mat_[rows_all[1:]] != mat_[rows_all[:-1]]) | (road.fresh[rows_all[1:]] != road.fresh[rows_all[:-1]]))[0] + 1
         for run in np.split(rows_all, brk):
             mname = mat_[run[0]]
-            if mname not in EDGE_ROW:
+            if mname not in EDGE_ROW or road.fresh[run[0]]:   # fresh pavement: crisp edge, no ragged strip
                 continue
             run = np.r_[run, run[-1] + 1] if run[-1] + 1 <= i1 else run      # close the gap to the next run
             if len(run) < 2:
@@ -496,12 +503,17 @@ EW = RS.EDGE_RIBBON
 for c in range(nchunks):
     ic = idx_all[(idx_all >= c * CHUNK) & (idx_all <= (c + 1) * CHUNK)]
     # edge line centre 0.25 m inside the pavement edge (GoPro: ~20-30 cm of asphalt outside the line)
-    ribbon("lines_road", f"line_edgeL_{c:02d}", "paint_white", ic[ledge[ic]], road.el - road.line_in_l, EW)   # inset 0.15-0.8 m (edge_profile.py)
-    ribbon("lines_road", f"line_edgeR_{c:02d}", "paint_white", ic[redge[ic]], -road.er + road.line_in_r, EW)
-    dy = ic[ctype[ic] == "double_yellow"]
-    ribbon("lines_road", f"line_cdy_{c:02d}", "paint_yellow_dbl", dy, 0.0, RS.DY_RIBBON, cols=(0.0, 0.5, 1.0))
-    br = ic[np.isin(ctype[ic], ["broken_yellow", "broken"])]
-    ribbon("lines_road", f"line_cbr_{c:02d}", "paint_yellow", br, 0.0, EW, dash=RS.BROKEN, cols=(0.0, 0.5, 1.0))
+    for fz, sfx in ((False, ""), (True, "f")):   # fresh pavement: crisp unworn paint (paint_*_fresh)
+        icf = ic[road.fresh[ic] == fz]
+        if fz and len(icf):                      # include the old row before each fresh run: no 1 m gap at the joint
+            icf = np.intersect1d(np.union1d(icf, icf - 1), ic)
+        mf = "_fresh" if fz else ""
+        ribbon("lines_road", f"line_edgeL{sfx}_{c:02d}", "paint_white" + mf, icf[ledge[icf]], road.el - road.line_in_l, EW)   # inset 0.15-0.8 m (edge_profile.py)
+        ribbon("lines_road", f"line_edgeR{sfx}_{c:02d}", "paint_white" + mf, icf[redge[icf]], -road.er + road.line_in_r, EW)
+        dy = icf[ctype[icf] == "double_yellow"]
+        ribbon("lines_road", f"line_cdy{sfx}_{c:02d}", "paint_yellow_dbl" + mf, dy, 0.0, RS.DY_RIBBON, cols=(0.0, 0.5, 1.0))
+        br = icf[np.isin(ctype[icf], ["broken_yellow", "broken"])]
+        ribbon("lines_road", f"line_cbr{sfx}_{c:02d}", "paint_yellow" + mf, br, 0.0, EW, dash=RS.BROKEN, cols=(0.0, 0.5, 1.0))
 
 # raised pavement markers: yellow, every 24 m, one each side of the double yellow (GoPro frames 166-176;
 # survey B section of the road, i.e. the northern half). Thin low frustums, non-physical, no shadows.
@@ -511,6 +523,9 @@ RPM_S0 = float(_svs[min(_n_a, len(_svs) - 1)]) if len(_svs) > _n_a else 0.0
 _SSF = DER / "surface_spans.json"      # written by 21c_roadside_assets.py from the roadside survey (surface entries)
 SURF_SPANS = json.load(open(_SSF)) if _SSF.exists() else []
 RPM_SPANS = [(sp["s0"], sp["s1"]) for sp in SURF_SPANS if sp["kind"] == "rpm_present"]
+import edge_profile as _EP
+RPM_SPANS += _EP.fresh_spans()              # freshly repaved: new yellow RPMs throughout
+SURF_SPANS = SURF_SPANS + [dict(kind="fresh_overlay", s0=a, s1=b) for a, b in _EP.fresh_spans()]
 def rpm_box(sf, d):
     c = surf_pt(sf, d); i = int(round(min(sf, N - 1)))
     t = np.array([road.tx[i], road.ty[i], 0]); n = np.array([road.nx[i], road.ny[i], 0])
@@ -543,11 +558,7 @@ for c in range(nchunks):
 # Road UV: u = 0.5 + d/12, v = s/12 (lateral features of the 12 m procedural asphalt atlas stay registered to the
 # centre line). Decals: black crack-seal bands (longitudinal at the centre joint / wheel paths / edges, transverse),
 # patch repairs (grey newer asphalt + fresh black), alligator cracking; density from the GoPro survey condition.
-for m in G["road"]:
-    if m["name"].startswith("1ROAD_"):
-        c = int(m["name"].split("_")[1]); i0 = int(c * CHUNK); i1 = min(int((c + 1) * CHUNK), N - 1)
-        rows = np.arange(i0, i1 + 1)
-        m["UV"] = np.stack([0.5 + D_ROAD[rows] / RS.ATLAS_M, np.repeat(road.s[rows, None] / RS.ATLAS_M, 13, 1)], -1).reshape(-1, 2)
+# (1ROAD_/1ROADF_ UVs are already set in this atlas mapping when the road meshes are built)
 _ss, _scr, _spa = RS.survey_condition(ROOT, road.s[-1])
 _scr = gaussian_filter1d(_scr, 3); _spa = gaussian_filter1d(_spa, 3)
 if SURF_SPANS:   # observed condition spans override the evenly-spaced survey heuristic (densify to 5 m so short spans register)
@@ -566,6 +577,8 @@ drng = np.random.default_rng(1234)
 
 def decal(acc, s0, s1, d0, d1, cell, lift, rot=False):
     """quad grid on the road surface between stations s0..s1 (m) and offsets d0..d1; rot: sprite v runs across"""
+    if road.fresh[int(np.clip(s0, 0, N - 1)):int(np.clip(s1, 0, N - 1)) + 1].any():
+        return                                   # freshly repaved: no crack-seal / patch / crack decals
     nr = max(2, int(math.ceil((s1 - s0) / 1.0)) + 1)
     dl = [d0, d1] if not (d0 < 0 < d1) else [d0, 0.0, d1]
     dl = np.unique(np.concatenate([np.linspace(dl[k], dl[k + 1], max(2, int(math.ceil((dl[k + 1] - dl[k]) / 0.7)) + 1)) for k in range(len(dl) - 1)]))

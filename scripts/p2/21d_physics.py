@@ -29,6 +29,8 @@ TREE_R = 25.0
 
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
 G = geo["groups"]
+if geo["meta"].get("physics_21d_done"):
+    print("21d: geometry.pkl already post-processed (rerun 21 to start fresh) - skipping"); raise SystemExit(0)
 road_ms = [m for m in G["road"] if m["name"].startswith(("1ROAD", "1GRASS"))]
 road_xy = np.concatenate([m["P"][:, :2] for m in G["road"] if m["name"].startswith("1ROAD")])
 road_kd = cKDTree(road_xy)
@@ -157,6 +159,7 @@ print(f"walls: {nw} 1WALL meshes thickened to {CO.WALL_DEPTH} m away from the ro
 
 geo["meta"]["physics"] = dict(terrain_before=before, terrain_after=after, open_edges_near=open_near,
                               tree_colliders=ntree, walls_thickened=nw)
+geo["meta"]["physics_21d_done"] = True
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 (ROOT / "reports").mkdir(exist_ok=True)
 json.dump(geo["meta"]["physics"], open(ROOT / "reports" / "qa_physics.json", "w"), indent=1)

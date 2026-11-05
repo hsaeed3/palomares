@@ -373,7 +373,23 @@ def road_surface_tex():
     return {"asphalt_d.png": png(d), "asphalt_n.png": png(n), "asphalt_maps.png": png(mp),
             "paint_white.png": png(RS.line_tex("single", wht, asph, 5)), "paint_yellow.png": png(RS.line_tex("single", yel, asph, 6)),
             "paint_yellow_dbl.png": png(RS.line_tex("double", yel, asph, 7)), "rpm.png": png(RS.rpm_tex(yel)),
-            "road_decal.png": png(RS.decal_atlas(patch_rgb))}
+            "road_decal.png": png(RS.decal_atlas(patch_rgb)),
+            # freshly repaved span (config/surface_overrides.yaml): dark, fine uniform aggregate, crisp paint
+            "asphalt_fresh_d.png": png(fresh_asphalt(asph)),
+            "paint_white_fresh.png": png(RS.line_tex("single", wht, (24, 24, 25), 15, fresh=True)),
+            "paint_yellow_fresh.png": png(RS.line_tex("single", yel, (24, 24, 25), 16, fresh=True)),
+            "paint_yellow_dbl_fresh.png": png(RS.line_tex("double", yel, (24, 24, 25), 17, fresh=True))}
+
+
+def fresh_asphalt(asph, size=2048, seed=41):
+    """new black asphalt: the CC0 tile at low contrast, 3 m per tile (same 12 m atlas UVs as the old road), plus fine
+    uniform aggregate speckle; no wear lanes, cracks or patches. Overall level set by albedo_calibrate (~0.07)."""
+    g = np.asarray(graded("Asphalt026C", "asphalt_dry", 512, contrast=0.25, dL=-30).resize((size // 4, size // 4)), float)
+    a = np.tile(g, (4, 4, 1))
+    r = np.random.default_rng(seed)
+    a += r.normal(0, 7, a.shape[:2])[..., None] * np.array([1, 1, 1.03])
+    a = 0.85 * a + 0.15 * a.mean((0, 1))
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8))
 
 
 T = {
@@ -453,6 +469,13 @@ albedo_calibrate(T)
 import edge_tex as _ET
 T["road_edge.png"] = png(_ET.edge_atlas({k: Image.open(io.BytesIO(T[f])) for k, f in
                                          (("litter", "litter_d.png"), ("dirt", "dirt_d.png"), ("grass", "ground_d.png"), ("ivy", "bank_d.png"))}))
+MATS["road_asphalt_fresh"] = Material("road_asphalt_fresh", "ksPerPixelMultiMap",
+    {**MATS["road_asphalt"].props, "ksSpecular": 0.2, "ksSpecularEXP": 40.0, "fresnelMaxLevel": 0.18} if hasattr(MATS["road_asphalt"], "props") else
+    {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.6, "ksSpecular": 0.2, "ksSpecularEXP": 40.0, "fresnelC": 0.0, "fresnelEXP": 2.0, "fresnelMaxLevel": 0.18,
+     "isAdditive": 0.0, "useDetail": 0.0, "detailUVMultiplier": 1.0, "shadowBiasMult": 1.0},
+    {"txDiffuse": "asphalt_fresh_d.png", "txNormal": "asphalt_n.png", "txMaps": "asphalt_maps.png", "txDetail": "asphalt_fresh_d.png"})
+for _k in ("paint_white", "paint_yellow", "paint_yellow_dbl"):   # crisp, unworn, slightly glossier new paint
+    MATS[_k + "_fresh"] = Material(_k + "_fresh", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.16, "ksSpecularEXP": 30.0}, {"txDiffuse": _k + "_fresh.png"}, alpha_tested=True)
 MATS["road_edge"] = Material("road_edge", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.55, "ksAlphaRef": 0.5}, {"txDiffuse": "road_edge.png"}, alpha_tested=True)
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)

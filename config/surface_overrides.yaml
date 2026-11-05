@@ -1,0 +1,7 @@
+# Surface overrides confirmed by the user (read by scripts/p2/edge_profile.py -> Road.fresh, used by 21/22).
+# fresh_overlay: freshly repaved asphalt. Boundaries are straight transverse paving joints at these stations (m).
+# Inside: material road_asphalt_fresh, no crack/seal/patch decals, crisp unworn paint, RPMs, crisp edge + gravel backfill.
+fresh_overlay:
+  - s0: 10870     # GoPro 164 (s~10799) still old grey; 165 (s~10880) fresh black
+    s1: 12250     # GoPro 177 (s~12231) fresh; 178 (s~12359) transitional
+    note: "frames 165-177, user-confirmed new pavement (not rain)"

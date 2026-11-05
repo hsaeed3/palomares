@@ -85,12 +85,34 @@ def main():
             if T.max() >= len(P) or T.min() < 0: fail(f"{f}:{m['name']} index out of range")
             if not m["visible"] or m["renderable"]:
                 fail(f"{f}:{m['name']} flags visible={m['visible']} renderable={m['renderable']} (want True/False)")
+            # raw bytes vs the verified convention (AcTools Kn5Writer field order: castShadows, isVisible, isTransparent
+            # ... materialId, layer, lodIn, lodOut, bsphere, isRenderable): 00 01 00 ... 00, active node, no LOD, layer 0
+            if m["flag_bytes"] != b"\x00\x01\x00" or m["renderable_byte"] != b"\x00" or not m["active"] or m["lod_in"] != 0 or m["lod_out"] != 0 or m["layer"] != 0:
+                fail(f"{f}:{m['name']} raw flags {m['flag_bytes'].hex()} r={m['renderable_byte'].hex()} active={m['active']} lod={m['lod_in']},{m['lod_out']} layer={m['layer']}")
+            stats["flag_bytes_ok"] += 1
+            fnr = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]]); fa = np.linalg.norm(fnr, axis=1); ok_ = fa > 1e-9
+            agree = (fnr[ok_] / fa[ok_, None] * m["nrm"][T[ok_, 0]]).sum(1)
+            if (agree < 0.9).mean() > 0.001: fail(f"{f}:{m['name']} {100 * (agree < 0.9).mean():.1f}% triangles whose winding disagrees with the normal")
+            if m["name"].startswith("1WALL_tree"):
+                stats["tree_colliders_tris"] += len(T)
             ln = np.linalg.norm(m["nrm"], axis=1)
             if (np.abs(ln - 1) > 0.05).mean() > 0.001: fail(f"{f}:{m['name']} {100 * (np.abs(ln - 1) > 0.05).mean():.1f}% non-unit vertex normals")
             area = 0.5 * np.linalg.norm(np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]]), axis=1)
             if (area < 1e-7).mean() > 0.001: fail(f"{f}:{m['name']} {int((area < 1e-7).sum())} degenerate triangles")
             stats["collision_tris"] += len(T)
             clouds.append(sample_tris(local(P), T))
+    # physical names: digit prefix => must be 1<KEY> with KEY in surfaces.ini; no visual tree mesh may be physical
+    keys = set(re.findall(r"KEY=(\S+)", open(next(iter(glob.glob(str(TRACK / "*/data/surfaces.ini"))))).read()))
+    for f in files_all:
+        for m in kn[f]["meshes"]:
+            n = m["name"]
+            if n[:1].isdigit() and not any(re.match(rf"\d{k}", n) for k in keys):
+                fail(f"{f}:{n} digit-prefixed name with no surfaces.ini KEY")
+            if f == "palomares_trees.kn5" and n[:1].isdigit() and not n.startswith("1WALL_tree"):
+                fail(f"{f}:{n} tree mesh with a physical name")
+    if stats["tree_colliders_tris"] == 0:
+        fail("no 1WALL_tree trunk colliders")
+    print(f"  raw flag bytes OK on {stats['flag_bytes_ok']} physics meshes; trunk collider tris {stats['tree_colliders_tris']}")
     cloud = np.concatenate(clouds); tree = cKDTree(cloud)
     print(f"  {stats['physics_meshes']} physics meshes, {stats['collision_tris']} triangles, {len(cloud)} surface samples")
 

@@ -5,6 +5,10 @@
 # soil/litter 0.15-0.25; rock 0.2-0.3; leaves 0.08-0.15; white paint 0.6-0.7.
 albedo:
   asphalt_d.png: 0.13
+  asphalt_fresh_d.png: 0.07     # freshly repaved span (config/surface_overrides.yaml)
+  paint_white_fresh.png: 0.66
+  paint_yellow_fresh.png: 0.40
+  paint_yellow_dbl_fresh.png: 0.40
   dirt_d.png: 0.18
   litter_d.png: 0.17
   ground_d.png: 0.18

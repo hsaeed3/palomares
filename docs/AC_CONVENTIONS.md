@@ -43,3 +43,15 @@ Sources:
 - AC sets the initial heading from these dummies alone. The layouts ship no ai/fast_lane.ai or spawn ini that could override it.
 
 Status: scripts/p2/kn5.py writes the 16 floats in this order, and `locator()` in scripts/p2/22_build_kn5.py puts the run-direction vector in row 3 (+Z). A re-read of every palomares_timing_*.kn5 shows that row 3 points at the start-gate midpoint (dot >= 0.98) on all 6 segments, northbound and *_rev, and that AB gate L lies on the car's left. **v0.1 (-Z) was backwards. v0.2.0-dev1 (+Z) is correct by every source above.** A further "backwards" report on v0.2 therefore points at the install (an old track folder or CM cache, or the wrong zip) rather than the convention. Ask for a screenshot and the layout name before flipping again.
+
+## Physics meshes (v0.2.0-dev3, scripts/p2/21d_physics.py, collide.py, qa_collisions.py)
+
+| Finding | Source | Status |
+|---|---|---|
+| Mesh node byte order: class, name, nChildren, active; castShadows, isVisible, isTransparent; vertices (pos, nrm, uv, tangent = 11 f32); u16 indices; materialId, layer, lodIn, lodOut, bsphere centre+radius, **isRenderable**. Our kn5.py matches field-for-field. | gro-ove/actools `AcTools/Kn5File/Kn5Writer.cs` / `Kn5Basic.cs` (read) | verified (code) |
+| Physical = name `<digit><KEY>` with KEY in surfaces.ini; plain `WALL…` is not physical. Collision-only walls: separate simple meshes, **renderable=false** (we keep isVisible=true, castShadows=false, lod 0/0, layer 0, a material assigned). | assettocorsamods.net "BIG PROBLEM WITH WALLS" (thread 2061) | community; not tested in-game |
+| Wall normals must point **outward / toward the car**; inverted normals let cars drive through; walls should be the simplest geometry, complex physics geometry gets cars stuck. | same thread; Steam RTB discussion (collisions with many polys give odd results) | community |
+| Cars bounce off walls side-on but pass through head-on: consistent with penetration resolution along the nearest face. Our dev2 walls were 0.14 m closed boxes, so >7 cm penetration exits through the back face. Fix: away-from-road faces moved 1.2 m back (`collide.thicken_away`), road-side face stays at the visual barrier. | assettocorsamods.net thread 2061 report + our analysis | inferred; please verify in-game |
+| Every kn5 in models_<layout>.ini is loaded, physics included (our road/terrain physics already come from separate kn5s and drive). No per-mesh physics triangle limit is documented; the only hard limit is 16-bit indices (≤65535 verts/mesh). | dev2 driving test; AcTools reader | partly verified |
+| Terrain: dev2 1GRASS_t* was the raw CDT of the LiDAR DTM: within 25 m of the edge, adjacent-face creases up to 153 deg (fold-overs) and 5.4 m vertex spikes, which is what "glitching into hills" was. 21d smooths heights (Taubin + local crease clamp, stitch pinned). | reports/qa_physics.json | measured |
+| Trees had **no collision** (tree meshes non-physical), so the car drove into the trunk/crown and down a steep bank. 21d adds 8-sided closed trunk prisms `1WALL_tree_NN` (≤25 m from the edge). | 21d | fixed |

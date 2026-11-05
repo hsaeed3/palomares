@@ -14,6 +14,9 @@ package:
 roadside:
 	python3 scripts/p2/21c_roadside_assets.py
 
+physics:
+	python3 scripts/p2/21d_physics.py
+
 qa-collisions:
 	python3 scripts/p2/qa_collisions.py
 

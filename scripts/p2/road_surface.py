@@ -157,7 +157,7 @@ def asphalt_atlas(base_rgb, base_nrm, base_rough, size=2048, seed=11):
 
 
 # ------------------------------------------------------------------ markings
-def line_tex(kind, rgb, asphalt_rgb, seed, W=128, H=2048):
+def line_tex(kind, rgb, asphalt_rgb, seed, W=128, H=2048, fresh=False):
     """RGBA, alpha-tested. u across the ribbon, v along (LINE_PERIOD_M). kind 'single' (EDGE_RIBBON) or 'double'
     (DY_RIBBON: line / gap / line). Worn paint: breakup holes concentrated in the wheel-crossed zones,
     feathered soft edges (paint colour blends to asphalt over the outer 1-2 cm), faint dirt on the paint."""
@@ -173,14 +173,14 @@ def line_tex(kind, rgb, asphalt_rgb, seed, W=128, H=2048):
     e = edge[None, :] + ragged
     cov = np.clip(0.5 - e / 0.008, 0, 1)                          # soft 8 mm feather
     wear = pnoise((H, W), 10, seed + 1) + 0.6 * pnoise((H, W), 40, seed + 2, aniso=(0.4, 1))
-    holes = wear > 2.0                                            # ~2-3 % paint lost
+    holes = wear > (9.0 if fresh else 2.0)                        # ~2-3 % paint lost (fresh: none)
     alpha = (cov > 0.5) & ~holes
     # colour: paint, dirtied, edge pixels mixed toward asphalt
-    tint = (1 - 0.06 * np.clip(pnoise((H, W), 18, seed + 3), -2, 2) - 0.04)[..., None]
+    tint = (1 - (0.02 if fresh else 0.06) * np.clip(pnoise((H, W), 18, seed + 3), -2, 2) - (0.0 if fresh else 0.04))[..., None]
     pr = np.array(rgb, float)[None, None] * tint
     a_rgb = np.array(asphalt_rgb, float)[None, None]
     mix = np.clip(cov, 0, 1)[..., None] ** 0.7
-    thin = (wear > 1.3)[..., None] * 0.30                          # worn-thin paint shows asphalt through
+    thin = (wear > 1.3)[..., None] * (0.0 if fresh else 0.30)      # worn-thin paint shows asphalt through
     c = pr * mix * (1 - thin) + a_rgb * (1 - mix * (1 - thin))
     c += r.normal(0, 4, c.shape)
     out = np.dstack([c.clip(0, 255), alpha * 255]).astype(np.uint8)

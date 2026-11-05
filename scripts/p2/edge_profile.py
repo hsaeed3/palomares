@@ -10,6 +10,7 @@ Output arrays (length N, index = 1 m station), attached to geom.Road as attribut
   sh_mat_l, sh_mat_r  'litter' | 'dirt' | 'grass' | 'ivy' | 'paved'
   ditch_l, ditch_r    depth (m) of a shallow V at the shoulder mid column (0 = none)
   line_in_l, line_in_r  white edge-line centre inset from the asphalt edge (m), 0.15 .. 0.8
+  fresh               bool, station inside a fresh_overlay span (config/surface_overrides.yaml)
   strip_in_l, strip_in_r  how far the ragged edge / debris strip reaches onto the asphalt (m), 0.12 .. 0.9
 Variation: sums of sines at 5-40 m wavelengths (deterministic per side), abrupt changes at env / survey / apron
 boundaries (only a 0.8 m Gaussian, so a 1.5 m change happens over ~3 m).
@@ -61,8 +62,19 @@ def _aprons():
     return out
 
 
+def fresh_spans():
+    """[(s0, s1)] freshly repaved spans from config/surface_overrides.yaml"""
+    import yaml
+    f = DER.parents[1] / "config/surface_overrides.yaml"
+    d = (yaml.safe_load(open(f)) or {}) if f.exists() else {}
+    return [(float(e["s0"]), float(e["s1"])) for e in d.get("fresh_overlay", [])]
+
+
 def compute(road):
     s = road.s; N = len(s)
+    fresh = np.zeros(N, bool)
+    for a0, a1 in fresh_spans():
+        fresh |= (s >= a0) & (s <= a1)
     ss, rows = _survey()
     aprons = _aprons()
     out = {}
@@ -129,7 +141,11 @@ def compute(road):
         si = np.where(wash & np.isin(mat, ["dirt", "litter"]), si + 0.4, si)
         si = np.where(mat == "grass", si * 0.6, si)
         si = np.minimum(gaussian_filter1d(si, 1.0, mode="nearest"), np.maximum(li - 0.02, 0.12) + 0.5)
+        # freshly repaved spans: crisp pavement edge, clean gravel / dirt backfill (grass verges kept), no wash-out
+        mat = np.where(fresh & (mat != "grass") & (mat != "paved"), "dirt", mat)
+        si = np.where(fresh, 0.12, si)
         k = side[0]
         out[f"sh_w_{k}"] = w; out[f"sh_mat_{k}"] = mat; out[f"ditch_{k}"] = dz
         out[f"line_in_{k}"] = li; out[f"strip_in_{k}"] = si
+    out["fresh"] = fresh
     return out
