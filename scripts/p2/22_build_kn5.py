@@ -234,6 +234,9 @@ MATS = {
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),
     "invisible": Material("invisible", "ksPerPixel", dict(BASE), {"txDiffuse": "black.png"}),
 }
+# track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
+T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
+MATS["dressing"] = Material("dressing", "ksPerPixel", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"})
 for sp in ("oak", "bay", "euc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 
@@ -300,6 +303,7 @@ write("palomares_lines_road.kn5", ["lines_road"], merge={"lines_road": line_key}
 # lines_track retired: track layouts keep the real markings (user request)
 write("palomares_kerbs_nb.kn5", ["kerbs_nb"])
 write("palomares_kerbs_sb.kn5", ["kerbs_sb"])
+write("palomares_dressing.kn5", ["dressing"])
 SEG = meta["segments"]
 for seg, sd in SEG.items():
     L = sd["loc"]
@@ -313,7 +317,7 @@ LAYOUTS = {}
 for seg, sd in SEG.items():
     sgn = 1 if sd["s_to"] > sd["s_from"] else -1
     for sty, (sname, sdesc, sfiles) in STY.items():
-        files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5"] if sty == "track" else [])
+        files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5", "palomares_dressing.kn5"] if sty == "track" else [])
         LAYOUTS[f"{sty}_{seg}"] = dict(files=files, seg=seg, s_from=sd["s_from"], s_to=sd["s_to"], sgn=sgn,
                                        name=f"Palomares Road — {sd['name']} ({sname})",
                                        desc=f"Palomares Road, Alameda County CA: {sd['name']}, point to point. {sdesc}")

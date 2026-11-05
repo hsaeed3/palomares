@@ -329,6 +329,9 @@ for nm, i in (("start", 1), ("end", N - 2)):
     add("barriers", f"1WALL_{nm}", "invisible", P, T, np.zeros((16, 2)), visible=False, renderable=False, cast_shadows=False)
 
 # ------------------------------------------------------------------ road markings
+# MUTCD dimensions, worn-paint textures and RPMs: see scripts/p2/road_surface.py. Non-physical (names don't start
+# with 1ROAD/1KERB...), lifted >= 2.3 cm, shared by road and track layouts (group lines_road).
+import road_surface as RS
 mk = list(csv.DictReader(open(DER / "markings.csv")))
 def mk_at(s):
     for r in mk:
@@ -336,26 +339,35 @@ def mk_at(s):
             return r
     return mk[-1]
 
-def ribbon(group, name, mat, i, d_center, width, dash=None):
-    """paint strip along station indices i at offset d_center (array), lifted 6 mm."""
+def surf_pt(sf, d):
+    """road surface point at fractional station sf (index units, 1 m) and offset d, linear along s like the mesh"""
+    sf = np.clip(np.asarray(sf, float), 0, N - 1.001); i0 = np.floor(sf).astype(int); f = sf - i0
+    x0, y0 = road.xy(i0, d); x1, y1 = road.xy(i0 + 1, d)
+    z0 = road.surface_z(i0, d); z1 = road.surface_z(i0 + 1, d)
+    return np.stack([x0 + (x1 - x0) * f, y0 + (y1 - y0) * f, z0 + (z1 - z0) * f], -1)
+
+def ribbon(group, name, mat, i, d_center, width, dash=None, cols=(0.0, 1.0), vper=RS.LINE_PERIOD_M, lift=RS.LIFT["line"]):
+    """paint strip along station indices i at offset d_center (array); cols = fractions across (include the crown
+    when the strip straddles d=0); u across, v = s / vper."""
     if dash:
         on, period = dash
         i = i[((road.s[i] % period) < on)]
     if len(i) < 2:
         return
-    # split into continuous runs
     runs = np.split(i, np.nonzero(np.diff(i) > 1)[0] + 1)
+    cols = np.asarray(cols); nc = len(cols)
     P, T, UV = [], [], []
     for r in runs:
         if len(r) < 2:
             continue
         dc = d_center[r] if np.ndim(d_center) else np.full(len(r), d_center)
-        dd = np.stack([dc - width / 2, dc + width / 2], 1)
-        rr_ = np.repeat(r[:, None], 2, 1)
-        x, y = road.xy(rr_, dd); z = road.surface_z(rr_, dd) + 0.006
+        dd = dc[:, None] - width / 2 + width * cols[None, :]
+        rr_ = np.repeat(r[:, None], nc, 1)
+        x, y = road.xy(rr_, dd); z = road.surface_z(rr_, dd) + lift
         b = len(P)
-        P += list(np.stack([x, y, z], -1).reshape(-1, 3)); UV += [(0, 0), (1, 0)] * len(r)
-        Tq = grid_tris(len(r), 2, b); T += list(Tq)
+        P += list(np.stack([x, y, z], -1).reshape(-1, 3))
+        UV += list(np.stack([np.tile(cols, len(r)), np.repeat(road.s[r] / vper, nc)], -1))
+        T += list(grid_tris(len(r), nc, b))
     if T:
         add(group, name, mat, np.array(P), np.array(T), np.array(UV), cast_shadows=False)
 
@@ -363,16 +375,133 @@ idx_all = np.arange(2, N - 2)
 ctype = np.array([mk_at(s)["assumed_center_type"] for s in road.s])
 ledge = np.array([mk_at(s)["left_edge_line"] in ("likely", "possible") for s in road.s])
 redge = np.array([mk_at(s)["right_edge_line"] in ("likely", "possible") for s in road.s])
+EW = RS.EDGE_RIBBON
 for c in range(nchunks):
     ic = idx_all[(idx_all >= c * CHUNK) & (idx_all <= (c + 1) * CHUNK)]
-    for grp in ("lines_road", "lines_track"):
-        ribbon(grp, f"line_edgeL_{c:02d}", "paint_white", ic[ledge[ic]], road.el - 0.25, 0.10)
-        ribbon(grp, f"line_edgeR_{c:02d}", "paint_white", ic[redge[ic]], -road.er + 0.25, 0.10)
+    # edge line centre 0.25 m inside the pavement edge (GoPro: ~20-30 cm of asphalt outside the line)
+    ribbon("lines_road", f"line_edgeL_{c:02d}", "paint_white", ic[ledge[ic]], road.el - 0.25, EW)
+    ribbon("lines_road", f"line_edgeR_{c:02d}", "paint_white", ic[redge[ic]], -road.er + 0.25, EW)
     dy = ic[ctype[ic] == "double_yellow"]
-    ribbon("lines_road", f"line_cdyL_{c:02d}", "paint_yellow", dy, 0.10, 0.10)
-    ribbon("lines_road", f"line_cdyR_{c:02d}", "paint_yellow", dy, -0.10, 0.10)
+    ribbon("lines_road", f"line_cdy_{c:02d}", "paint_yellow_dbl", dy, 0.0, RS.DY_RIBBON, cols=(0.0, 0.5, 1.0))
     br = ic[np.isin(ctype[ic], ["broken_yellow", "broken"])]
-    ribbon("lines_road", f"line_cbr_{c:02d}", "paint_yellow", br, 0.0, 0.10, dash=(3, 12))
+    ribbon("lines_road", f"line_cbr_{c:02d}", "paint_yellow", br, 0.0, EW, dash=RS.BROKEN, cols=(0.0, 0.5, 1.0))
+
+# raised pavement markers: yellow, every 24 m, one each side of the double yellow (GoPro frames 166-176;
+# survey B section of the road, i.e. the northern half). Thin low frustums, non-physical, no shadows.
+_svs, _, _ = RS.survey_condition(ROOT, road.s[-1])
+_n_a = 110  # frames 1-110 = survey A, 111-219 = survey B
+RPM_S0 = float(_svs[min(_n_a, len(_svs) - 1)]) if len(_svs) > _n_a else 0.0
+def rpm_box(sf, d):
+    c = surf_pt(sf, d); i = int(round(min(sf, N - 1)))
+    t = np.array([road.tx[i], road.ty[i], 0]); n = np.array([road.nx[i], road.ny[i], 0])
+    lo, hi = 0.05, 0.035; h0, h1 = RS.LIFT["rpm"] - 0.008, RS.LIFT["rpm"] + 0.012
+    q = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
+    bot = [c + t * a * lo + n * b * lo + [0, 0, h0] for a, b in q]
+    top = [c + t * a * hi + n * b * hi + [0, 0, h1] for a, b in q]
+    P, T = [], []
+    def quad(a, b, cc, dd):
+        k = len(P); P.extend([a, b, cc, dd]); T.extend([(k, k + 1, k + 2), (k, k + 2, k + 3)])
+    quad(*top)
+    for j in range(4):
+        quad(bot[j], bot[(j + 1) % 4], top[(j + 1) % 4], top[j])
+    return P, T
+for c in range(nchunks):
+    P, T = [], []
+    for s in np.arange(math.ceil(max(c * CHUNK, RPM_S0, 3) / RS.RPM_SPACING) * RS.RPM_SPACING, min((c + 1) * CHUNK, road.s[-1] - 3), RS.RPM_SPACING):
+        i = int(s)
+        if ctype[i] != "double_yellow":
+            continue
+        for d in (-(RS.DY_RIBBON / 2 + 0.07), RS.DY_RIBBON / 2 + 0.07):
+            p, t = rpm_box(s, d); T += [tuple(np.array(x) + len(P)) for x in t]; P += p
+    if T:
+        P = np.array(P); UV = np.tile([[0.1, 0.4], [0.9, 0.4], [0.9, 0.6], [0.1, 0.6]], (len(P) // 4, 1))
+        add("lines_road", f"rpm_{c:02d}", "rpm_yellow", P, np.array(T), UV, N_=None, cast_shadows=False)
+
+# ------------------------------------------------------------------ asphalt decals + road UV atlas
+# Road UV: u = 0.5 + d/12, v = s/12 (lateral features of the 12 m procedural asphalt atlas stay registered to the
+# centre line). Decals: black crack-seal bands (longitudinal at the centre joint / wheel paths / edges, transverse),
+# patch repairs (grey newer asphalt + fresh black), alligator cracking; density from the GoPro survey condition.
+for m in G["road"]:
+    if m["name"].startswith("1ROAD_"):
+        c = int(m["name"].split("_")[1]); i0 = int(c * CHUNK); i1 = min(int((c + 1) * CHUNK), N - 1)
+        rows = np.arange(i0, i1 + 1)
+        m["UV"] = np.stack([0.5 + D_ROAD[rows] / RS.ATLAS_M, np.repeat(road.s[rows, None] / RS.ATLAS_M, 13, 1)], -1).reshape(-1, 2)
+_ss, _scr, _spa = RS.survey_condition(ROOT, road.s[-1])
+_scr = gaussian_filter1d(_scr, 3); _spa = gaussian_filter1d(_spa, 3)
+drng = np.random.default_rng(1234)
+
+def decal(acc, s0, s1, d0, d1, cell, lift, rot=False):
+    """quad grid on the road surface between stations s0..s1 (m) and offsets d0..d1; rot: sprite v runs across"""
+    nr = max(2, int(math.ceil((s1 - s0) / 1.0)) + 1)
+    dl = [d0, d1] if not (d0 < 0 < d1) else [d0, 0.0, d1]
+    dl = np.unique(np.concatenate([np.linspace(dl[k], dl[k + 1], max(2, int(math.ceil((dl[k + 1] - dl[k]) / 0.7)) + 1)) for k in range(len(dl) - 1)]))
+    S_ = np.linspace(s0, s1, nr); Dg, Sg = np.meshgrid(dl, S_)
+    p = surf_pt(Sg.ravel(), Dg.ravel()); p[:, 2] += lift
+    u0, v0, u1, v1 = cell
+    fu = ((Dg - d0) / (d1 - d0)).ravel(); fv = ((Sg - s0) / (s1 - s0)).ravel()
+    if rot:
+        fu, fv = fv, fu
+    uv = np.stack([u0 + (u1 - u0) * fu, v0 + (v1 - v0) * fv], -1)
+    k = len(acc["P"]); acc["P"].append(p); acc["UV"].append(uv); acc["T"].append(grid_tris(nr, len(dl), k)); acc["n"] = k + len(p)
+
+for c in range(nchunks):
+    acc = dict(P=[], UV=[], T=[], n=0)
+    sa, sb = c * CHUNK + 3, min((c + 1) * CHUNK, road.s[-1] - 3)
+    if sb - sa < 5:
+        continue
+    for side in (1, -1):
+        e_of = lambda i: road.el[i] if side > 0 else road.er[i]
+        # longitudinal crack seal: centre joint, wheel paths, near the edge; chained 6 m sprites with gaps
+        for dbase, rate in ((0.30, 1 / 22), (0.80, 1 / 40), (2.30, 1 / 45), (None, 1 / 35)):
+            s = sa + drng.uniform(0, 20)
+            while s < sb - 2:
+                i = int(s); crk = np.interp(s, _ss, _scr)
+                if drng.random() < min(0.9, rate * 25 * (0.5 + 1.5 * crk)):
+                    L = drng.uniform(4, 30); dd = (dbase if dbase is not None else e_of(i) - 0.55) + drng.normal(0, 0.08)
+                    t = s
+                    while t < min(s + L, sb - 1):
+                        ln = min(RS.SEAL_CELL_M[1], sb - t)
+                        if ln < 1.0:
+                            break
+                        di = side * dd
+                        decal(acc, t, t + ln, di - 0.3, di + 0.3, RS.CELLS["seal"][drng.integers(8)], RS.LIFT["seal"])
+                        t += ln; dd += drng.normal(0, 0.05)
+                    s += L + drng.uniform(3, 25)
+                else:
+                    s += drng.uniform(8, 30)
+        # patches
+        s = sa + drng.uniform(0, 30)
+        while s < sb - 3:
+            pat = np.interp(s, _ss, _spa); i = int(s)
+            if drng.random() < 0.25 + 0.6 * pat:
+                L = drng.uniform(1.5, 7.0); W = drng.uniform(0.9, min(2.8, e_of(i) - 0.4))
+                d_in = drng.uniform(0.25, max(0.3, e_of(i) - 0.35 - W))
+                cell = RS.CELLS["patch"][3 if drng.random() < 0.3 else drng.integers(3)]
+                a, b = sorted((side * d_in, side * (d_in + W)))
+                decal(acc, s, min(s + L, sb), a, b, cell, RS.LIFT["patch"])
+                s += L
+            s += drng.uniform(25, 90) / (1 + 1.5 * pat)
+        # alligator / block cracking in the wheel paths
+        s = sa + drng.uniform(0, 40)
+        while s < sb - 3:
+            crk = np.interp(s, _ss, _scr)
+            if drng.random() < 0.15 + 0.7 * crk:
+                L = drng.uniform(1.8, 4.0); dc = side * drng.choice([0.8, 1.6, 2.3])
+                decal(acc, s, min(s + L, sb), dc - L / 2, dc + L / 2, RS.CELLS["network"][drng.integers(4)], RS.LIFT["network"])
+            s += drng.uniform(15, 60) / (1 + 2 * crk)
+    # transverse crack seal (thermal cracks), lane or full width
+    s = sa + drng.uniform(0, 15)
+    while s < sb - 1:
+        crk = np.interp(s, _ss, _scr); i = int(s)
+        if drng.random() < 0.4 + 0.5 * crk:
+            full = drng.random() < 0.4; side = drng.choice([1, -1])
+            a, b = (-road.er[i] + 0.3, road.el[i] - 0.3) if full else ((0.1, road.el[i] - 0.3) if side > 0 else (-road.er[i] + 0.3, -0.1))
+            # sprite is 6 m long: map its length across the road, 0.6 m along
+            for k0 in np.arange(a, b - 0.5, RS.SEAL_CELL_M[1]):
+                decal(acc, s - 0.3, s + 0.3, k0, min(k0 + RS.SEAL_CELL_M[1], b), RS.CELLS["seal"][drng.integers(8)], RS.LIFT["seal"] + 0.001, rot=True)
+        s += drng.uniform(6, 30) / (1 + crk)
+    if acc["P"]:
+        add("lines_road", f"decal_{c:02d}", "road_decal", np.concatenate(acc["P"]), np.concatenate(acc["T"]), np.concatenate(acc["UV"]), cast_shadows=False)
 
 # ------------------------------------------------------------------ kerbs (track layouts)
 K = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
