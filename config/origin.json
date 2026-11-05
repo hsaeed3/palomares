@@ -1,0 +1,7 @@
+{
+  "crs": "EPSG:26910",
+  "x0": 590839.8,
+  "y0": 4167042.5,
+  "z0": 0.0,
+  "note": "Local origin = midpoint (by length) of full OSM Palomares Rd. FIXED for all phases. local = utm - (x0,y0); z = NAVD88 m."
+}

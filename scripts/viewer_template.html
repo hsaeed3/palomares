@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palomares Corridor Viewer</title>
+<style>
+  :root { --bg:#0f1418; --panel:rgba(16,22,27,.88); --fg:#e8edf0; --muted:#9aa7b0; --accent:#f2c14e; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:13px/1.4 system-ui,-apple-system,Segoe UI,sans-serif; overflow:hidden; }
+  #c { position:fixed; inset:0; }
+  #ui { position:fixed; left:12px; top:12px; max-width:min(360px,calc(100vw - 24px)); background:var(--panel); padding:10px 12px; border-radius:8px; }
+  #ui h1 { font-size:14px; margin:0 0 6px; }
+  #ui .row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:6px 0; }
+  #ui input[type=range] { width:100%; }
+  button { background:#24313a; color:var(--fg); border:1px solid #3a4a55; border-radius:5px; padding:4px 8px; cursor:pointer; font:inherit; }
+  button.on { background:var(--accent); color:#111; border-color:var(--accent); }
+  #info { color:var(--muted); font-variant-numeric:tabular-nums; }
+  #legend { position:fixed; right:12px; bottom:12px; background:var(--panel); padding:8px 10px; border-radius:8px; font-size:12px; }
+  #legend span { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+  .hide-ui #ui, .hide-ui #legend { display:none; }
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <h1>Palomares Road corridor (Phase 1)</h1>
+  <div class="row"><button id="bOrbit" class="on">Orbit</button><button id="bDrive">Driver's eye</button><button id="bPlay">Play</button>
+    <button id="bColor">Road: plain</button><button id="bOv" class="on">Overlays</button></div>
+  <div class="row"><input id="sl" type="range" min="0" max="15500" step="1" value="0"></div>
+  <div id="info"></div>
+  <div class="row" style="color:var(--muted)">S = SR-84 / Niles Canyon end. Markers every 500 m. Drag to orbit, scroll to zoom.</div>
+</div>
+<div id="legend">
+  <div><span style="background:#ff3b30"></span>steep face / wall (cut)</div>
+  <div><span style="background:#ff9f0a"></span>steep drop</div>
+  <div><span style="background:#c7ccd1"></span>guardrail candidate</div>
+  <div><span style="background:#d63cf0"></span>LiDAR gap / sparse</div>
+  <div><span style="background:#33c6ff"></span>bridge / stream crossing</div>
+  <div><span style="background:#ffd60a"></span>junction / driveway</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+/*DATA*/
+const dec = (s, T) => { const b = atob(s), u = new Uint8Array(b.length); for (let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return new T(u.buffer); };
+const ZB = 200; // vertical offset for precision
+const renderer = new THREE.WebGLRenderer({canvas:document.getElementById('c'), antialias:true, preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth, innerHeight);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xbfd3e0); scene.fog = new THREE.Fog(0xbfd3e0, 500, 6000);
+const cam = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.3, 20000);
+scene.add(new THREE.HemisphereLight(0xdfefff, 0x6a5a40, 1.6));
+const sun = new THREE.DirectionalLight(0xfff2dd, 1.6); sun.position.set(-800, 1500, 600); scene.add(sun);
+const W = (x, y, z) => new THREE.Vector3(x, z - ZB, -y);
+
+// ---- terrain (ortho-draped, detail-textured) ----
+const TL = new THREE.TextureLoader();
+const ldTex = (uri, rep=true, srgb=false) => { const t = TL.load(uri); if (rep){ t.wrapS = t.wrapT = THREE.RepeatWrapping; } t.anisotropy = 4; if (srgb) t.colorSpace = THREE.SRGBColorSpace; return t; };
+const tGrass = ldTex(TEX.grass), tRock = ldTex(TEX.rock), tLitter = ldTex(TEX.litter);
+const SUN = new THREE.Vector3(-0.45, 0.8, 0.35).normalize();
+function terrainMat(o, detail){
+  return new THREE.ShaderMaterial({ side: THREE.DoubleSide,
+    uniforms: { ortho:{value:ldTex(o.uri,false)}, ob:{value:new THREE.Vector4(o.x0,o.y1,o.w,o.h)}, grass:{value:tGrass}, rock:{value:tRock}, litter:{value:tLitter},
+      sun:{value:SUN}, fogc:{value:new THREE.Color(0xbfd3e0)}, fogr:{value:new THREE.Vector2(500,6000)}, detail:{value:detail} },
+    vertexShader: `varying vec3 vW; varying vec3 vN; varying float vD;
+      void main(){ vec4 w = modelMatrix*vec4(position,1.); vW=w.xyz; vN=normal; vec4 mv=viewMatrix*w; vD=-mv.z; gl_Position=projectionMatrix*mv; }`,
+    fragmentShader: `uniform sampler2D ortho, grass, rock, litter; uniform vec4 ob; uniform vec3 sun, fogc; uniform vec2 fogr; uniform float detail;
+      varying vec3 vW; varying vec3 vN; varying float vD;
+      void main(){
+        vec2 lp = vec2(vW.x, -vW.z);
+        vec2 uv = vec2((lp.x-ob.x)/ob.z, (lp.y-(ob.y-ob.w))/ob.w);
+        vec3 base = texture2D(ortho, uv).rgb;
+        vec3 N = normalize(vN); if (N.y < 0.) N = -N;
+        float slope = 1. - N.y;
+        float rockW = smoothstep(0.30, 0.55, slope);
+        float lum = dot(base, vec3(.333));
+        float canopyW = smoothstep(0.02, 0.08, base.g - base.r) * smoothstep(0.45, 0.25, lum);
+        float fade = detail * (1. - smoothstep(60., 400., vD));
+        float g = texture2D(grass, lp/2.5).r, r = texture2D(rock, lp/5.).r, l = texture2D(litter, lp/2.).r;
+        float det = mix(mix(g, l, canopyW), r, rockW) * 2.;
+        vec3 c = base;
+        c = mix(c, vec3(0.30,0.24,0.16)*1.3, canopyW*0.55*fade);          // leaf litter / shade under canopy
+        c = mix(c, vec3(0.50,0.46,0.40), rockW*0.65);                      // exposed rock / cut faces
+        c *= mix(1., det, fade*0.85);
+        float ndl = max(dot(N, sun), 0.);
+        c *= 0.62 + 0.55*ndl;
+        gl_FragColor = vec4(mix(c, fogc, smoothstep(fogr.x, fogr.y, vD)), 1.);
+      }` });
+}
+function gridMesh(G, mat){
+  const r = dec(G.r, Uint16Array), c = dec(G.c, Uint16Array), z = dec(G.z, Int16Array);
+  const n = r.length, idx = new Map(); const pos = new Float32Array(n*3);
+  for (let i=0;i<n;i++){ idx.set(r[i]*G.nx + c[i], i);
+    pos[3*i] = G.x0 + (c[i]+.5)*G.step; pos[3*i+1] = z[i]/10 - ZB; pos[3*i+2] = -(G.y0 - (r[i]+.5)*G.step); }
+  const tri = [];
+  for (let i=0;i<n;i++){ const k=r[i]*G.nx+c[i]; const a=idx.get(k+1), b=idx.get(k+G.nx), d=idx.get(k+G.nx+1);
+    if (a!==undefined && b!==undefined) tri.push(i,b,a); if (a!==undefined && b!==undefined && d!==undefined) tri.push(a,b,d); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos,3)); g.setIndex(tri); g.computeVertexNormals();
+  return new THREE.Mesh(g, mat);
+}
+const tileMats = ORTHO.tiles.map(t => terrainMat(t, 1.0));
+const fallbackMat = terrainMat(BORTHO, 0.6);
+function tileOf(x, y){ const c = Math.floor((x - ORTHO.x0)/ORTHO.ts), r = Math.floor((ORTHO.y1 - y)/ORTHO.ts); const k = ORTHO.index[r+'_'+c]; return k===undefined ? -1 : k; }
+function tiled(g){   // regroup triangles by ortho tile, one material per tile
+  const idx = g.index.array, pos = g.attributes.position.array, buckets = new Map();
+  for (let t=0;t<idx.length;t+=3){ const a=idx[t], b=idx[t+1], c=idx[t+2];
+    const x=(pos[3*a]+pos[3*b]+pos[3*c])/3, y=-(pos[3*a+2]+pos[3*b+2]+pos[3*c+2])/3; const k=tileOf(x,y);
+    if (!buckets.has(k)) buckets.set(k, []); buckets.get(k).push(a,b,c); }
+  const all=[]; const mats=[]; let start=0;
+  for (const [k, arr] of buckets){ for (const v of arr) all.push(v); g.addGroup(start, arr.length, mats.length); mats.push(k<0?fallbackMat:tileMats[k]); start+=arr.length; }
+  g.setIndex(all); return new THREE.Mesh(g, mats);
+}
+const BDM = gridMesh(BACKDROP, terrainMat(BORTHO, 0.4)); BDM.name='backdrop'; scene.add(BDM);
+{ const m = gridMesh(TERRAIN, null); scene.add(tiled(m.geometry)); }
+for (const side of ['L','R']){
+  const x = dec(SKIRT[side].x, Float32Array), y = dec(SKIRT[side].y, Float32Array), z = dec(SKIRT[side].z, Float32Array);
+  const nr = SKIRT.nr, nc = SKIRT.nc, pos = new Float32Array(nr*nc*3), tri = [];
+  for (let i=0;i<nr*nc;i++){ pos[3*i]=x[i]; pos[3*i+1]=z[i]-ZB; pos[3*i+2]=-y[i]; }
+  for (let r=0;r<nr-1;r++) for (let c=0;c<nc-1;c++){ const a=r*nc+c; tri.push(a,a+nc,a+1, a+1,a+nc,a+nc+1); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos,3)); g.setIndex(tri); g.computeVertexNormals();
+  scene.add(tiled(g));
+}
+// ---- road ribbon ----
+const R = {}; for (const k of ['x','y','z','wl','wr','cfl','cfr','s','g']) R[k] = dec(ROAD[k], Float32Array);
+const N = R.x.length;
+const tang = i => { const a=Math.max(0,i-1), b=Math.min(N-1,i+1); const dx=R.x[b]-R.x[a], dy=R.y[b]-R.y[a], l=Math.hypot(dx,dy); return [dx/l, dy/l]; };
+const edgePt = (i, d) => { const [tx,ty]=tang(i); const cf = d>0 ? R.cfl[i] : R.cfr[i]; return [R.x[i]-ty*d, R.y[i]+tx*d, R.z[i]+cf*d]; };
+let roadMesh; const tAsphalt = ldTex(TEX.asphalt, true, true);
+function buildRoad(mode){
+  if (roadMesh) scene.remove(roadMesh);
+  const pos = new Float32Array(N*2*3), col = new Float32Array(N*2*3), uv = new Float32Array(N*2*2), tri=[];
+  for (let i=0;i<N;i++){
+    const L=edgePt(i, R.wl[i]), Rr=edgePt(i, -R.wr[i]);
+    pos.set([L[0], L[2]-ZB+0.03, -L[1], Rr[0], Rr[2]-ZB+0.03, -Rr[1]], 6*i); uv.set([R.wl[i]/3.5, R.s[i]/3.5, -R.wr[i]/3.5, R.s[i]/3.5], 4*i);
+    let c=[1,1,1];
+    if (mode===1){ const g=Math.min(1,Math.abs(R.g[i])/0.14); c=[0.2+0.8*g, 0.8-0.6*g, 0.25]; }
+    if (mode===2){ const w=Math.min(1,Math.max(0,(R.wl[i]+R.wr[i]-5)/4)); c=[0.2, 0.3+0.6*w, 0.9-0.6*w]; }
+    col.set([...c,...c], 6*i);
+    if (i<N-1) tri.push(2*i,2*i+1,2*i+2, 2*i+1,2*i+3,2*i+2);
+  }
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('color',new THREE.BufferAttribute(col,3)); g.setAttribute('uv',new THREE.BufferAttribute(uv,2)); g.setIndex(tri); g.computeVertexNormals();
+  roadMesh = new THREE.Mesh(g, new THREE.MeshLambertMaterial({vertexColors:true, map:tAsphalt, side:THREE.DoubleSide, polygonOffset:true, polygonOffsetFactor:-4, polygonOffsetUnits:-4}));
+  scene.add(roadMesh);
+}
+buildRoad(0);
+// centre line + edge lines (thin ribbons)
+function strip(offset, w, color, s0=0, s1=1e9, lift=0.06, parent=scene){
+  const pts=[], tri=[]; let n=0;
+  for (let i=0;i<N;i++){ if (R.s[i]<s0||R.s[i]>s1) continue; const off = typeof offset==='function'?offset(i):offset;
+    const a=edgePt(i, off+w/2), b=edgePt(i, off-w/2); pts.push(a[0],a[2]-ZB+lift,-a[1], b[0],b[2]-ZB+lift,-b[1]);
+    if (n>0) tri.push(2*n-2,2*n-1,2*n, 2*n-1,2*n+1,2*n); n++; }
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(pts),3)); g.setIndex(tri);
+  const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color, side:THREE.DoubleSide, polygonOffset:true, polygonOffsetFactor:-8, polygonOffsetUnits:-8})); parent.add(m); return m;
+}
+strip(0.12, 0.1, 0xe8c62e); strip(-0.12, 0.1, 0xe8c62e);
+strip(i=>R.wl[i]-0.3, 0.1, 0xdddddd); strip(i=>-R.wr[i]+0.3, 0.1, 0xdddddd);
+// ---- features (data overlays) ----
+const OV = new THREE.Group(); scene.add(OV);
+const idxAt = s => Math.max(0, Math.min(N-1, Math.round(s/2)));
+const fcol = {steep_face:0xff3b30, steep_drop:0xff9f0a, guardrail_candidate:0xc7ccd1, lidar_gap:0xd63cf0, lidar_sparse:0xb070c0,
+  bridge_osm:0x33c6ff, bridge_lidar_class17:0x33c6ff, stream_crossing:0x33c6ff, junction:0xffd60a, driveway:0xffd60a, sign:0xff2d55, summit:0xffffff};
+for (const f of FEATS){
+  const c = fcol[f.k]; if (c===undefined) continue;
+  if (f.s1 > f.s0 + 1){
+    const side = f.side==='left'?1:(f.side==='right'?-1:0);
+    if (f.k==='guardrail_candidate'){ strip(i=>side*(side>0?R.wl[i]+0.4:R.wr[i]+0.4), 0.25, c, f.s0, f.s1, 0.75, OV); }
+    else if (side) strip(i=>side*(side>0?R.wl[i]+0.6:R.wr[i]+0.6), 0.6, c, f.s0, f.s1, 0.3, OV);
+    else strip(0, 2.5, c, f.s0, f.s1, 0.25, OV);
+  } else {
+    const i=idxAt(f.s0); const p=edgePt(i, f.off||0);
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4, f.k==='summit'?30:6, 8), new THREE.MeshBasicMaterial({color:c}));
+    m.position.copy(W(p[0],p[1],p[2]+(f.k==='summit'?15:3))); OV.add(m);
+  }
+}
+// ---- distance markers ----
+function label(txt, scale=1){
+  const cv=document.createElement('canvas'); cv.width=256; cv.height=96; const x=cv.getContext('2d');
+  x.fillStyle='rgba(15,20,24,.85)'; x.fillRect(0,0,256,96); x.fillStyle='#f2c14e'; x.font='bold 56px system-ui'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(txt,128,50);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv), depthTest:false})); sp.scale.set(16*scale,6*scale,1); sp.renderOrder=10; return sp;
+}
+for (let s=0; s<=META.length; s+=500){ const i=idxAt(s); const p=edgePt(i,-R.wr[i]-1.5);
+  const post=new THREE.Mesh(new THREE.BoxGeometry(0.25,2.5,0.25), new THREE.MeshBasicMaterial({color:0xf2c14e})); post.position.copy(W(p[0],p[1],p[2]+1.25)); OV.add(post);
+  const l=label((s/1000).toFixed(1)+' km'); l.position.copy(W(p[0],p[1],p[2]+9)); OV.add(l); }
+{ const i=idxAt(META.summit_s); const l=label('SUMMIT '+META.summit_z.toFixed(0)+' m',1.4); const p=edgePt(i,0); l.position.copy(W(p[0],p[1],p[2]+36)); OV.add(l); }
+// ---- trees: LiDAR position/height/crown; procedural branching trunk + alpha leaf-cluster cards; colour from imagery ----
+let rs = 12345; const rnd = () => (rs = (rs*16807) % 2147483647) / 2147483647;
+function treeTemplate(kind){
+  // unit tree: height 1, crown radius 1 (scaled per instance); returns {wood, leaves}
+  const wood=[], leaves=[];
+  const trunkTop = kind==='euc' ? 0.55 : (kind==='bay' ? 0.3 : 0.38);
+  const cyl = (p0, p1, r0, r1) => { const d=new THREE.Vector3().subVectors(p1,p0); const L=d.length();
+    const g=new THREE.CylinderGeometry(r1, r0, L, 6, 1, true); g.translate(0, L/2, 0);
+    g.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0), d.normalize())); g.translate(p0.x,p0.y,p0.z); wood.push(g); };
+  const base=new THREE.Vector3(0,0,0), top=new THREE.Vector3(0,trunkTop,0);
+  cyl(base, top, 0.035, 0.025);
+  const nb = kind==='euc' ? 4 : 6; const tips=[];
+  for (let i=0;i<nb;i++){ const a=i/nb*6.283+rnd(); const r=kind==='euc'?0.45:0.75; const up=kind==='euc'?0.42:0.45;
+    const tip=new THREE.Vector3(Math.cos(a)*r*(0.6+0.4*rnd()), trunkTop+up*(0.5+0.5*rnd()), Math.sin(a)*r*(0.6+0.4*rnd()));
+    cyl(top, tip, 0.02, 0.006); tips.push(tip); }
+  // crown volume: ellipsoid between trunkTop and 1
+  const cy=(trunkTop+1)/2+0.05, ry=(1-trunkTop)/2+0.03;
+  const n = kind==='euc' ? 70 : 95;
+  for (let i=0;i<n;i++){
+    let p; do { p=new THREE.Vector3(rnd()*2-1, rnd()*2-1, rnd()*2-1); } while (p.length()>1);
+    if (kind!=='euc' && rnd()<0.6) p.multiplyScalar(0.75+0.25/Math.max(0.3,p.length()));   // bias to shell
+    p.set(p.x, cy+p.y*ry, p.z);
+    const sz = kind==='euc' ? 0.34 : 0.42;
+    const g=new THREE.PlaneGeometry(sz, sz*(1/ (kind==='euc'?0.5:1)) * (kind==='euc'?0.5:1));
+    g.rotateY(rnd()*6.283); g.rotateX((rnd()-0.5)*1.2); g.translate(p.x,p.y,p.z);
+    // normals point outward from crown centre -> soft, volumetric lighting
+    const nrm=g.attributes.normal; for (let v=0;v<nrm.count;v++){ const o=new THREE.Vector3(p.x, (p.y-cy)*1.5, p.z).normalize(); nrm.setXYZ(v,o.x,o.y+0.3,o.z); }
+    leaves.push(g); }
+  return { wood: mergeGeometries(wood), leaves: mergeGeometries(leaves) };
+}
+{
+  const tx=dec(TREES.x,Float32Array), ty=dec(TREES.y,Float32Array), tz=dec(TREES.z,Float32Array), th=dec(TREES.h,Float32Array), tc=dec(TREES.cr,Float32Array), rgb=dec(TREES.rgb,Uint8Array);
+  const tLeaf = TL.load(TEX.leafcard); tLeaf.colorSpace = THREE.SRGBColorSpace;
+  const tBark = ldTex(TEX.bark, true, true);
+  const leafMat = new THREE.MeshLambertMaterial({map:tLeaf, alphaTest:0.45, side:THREE.DoubleSide});
+  const woodMat = new THREE.MeshLambertMaterial({map:tBark, color:0x7d7468});
+  const kinds = ['oak','oak2','bay','euc'];
+  const tmpl = {}; for (const k of kinds) tmpl[k] = treeTemplate(k==='oak2'?'oak':k);
+  const kindOf = i => { const r=th[i]/Math.max(1,tc[i]); if (th[i]>26 && r>4.5) return 'euc'; if (r>3.2) return 'bay'; return (i%2)?'oak':'oak2'; };
+  const lists = {}; for (const k of kinds) lists[k]=[];
+  for (let i=0;i<TREES.n;i++) lists[kindOf(i)].push(i);
+  const m=new THREE.Matrix4(), q=new THREE.Quaternion(), sc=new THREE.Vector3(), col=new THREE.Color(), up=new THREE.Vector3(0,1,0);
+  for (const k of kinds){ const L=lists[k]; if (!L.length) continue;
+    const leaf=new THREE.InstancedMesh(tmpl[k].leaves, leafMat, L.length), wood=new THREE.InstancedMesh(tmpl[k].wood, woodMat, L.length);
+    L.forEach((i,j)=>{ const h=th[i], cr=Math.max(1.8, tc[i]*1.1);
+      q.setFromAxisAngle(up, i*2.399); m.compose(W(tx[i],ty[i],tz[i]-0.2), q, sc.set(cr, h, cr));
+      leaf.setMatrixAt(j,m); wood.setMatrixAt(j,m);
+      col.setRGB(rgb[3*i]/255, rgb[3*i+1]/255, rgb[3*i+2]/255, THREE.SRGBColorSpace).multiplyScalar(1.35); leaf.setColorAt(j,col); });
+    scene.add(leaf); scene.add(wood); }
+}
+// ---- roadside dry grass tufts (crossed alpha cards) ----
+{
+  const gx=dec(GRASS.x,Float32Array), gy=dec(GRASS.y,Float32Array), gz=dec(GRASS.z,Float32Array), grgb=dec(GRASS.rgb,Uint8Array);
+  const a=new THREE.PlaneGeometry(1,1); a.translate(0,0.5,0); const b=a.clone(); b.rotateY(Math.PI/2); const c=a.clone(); c.rotateY(Math.PI/4);
+  const geo=mergeGeometries([a,b,c]); const nrm=geo.attributes.normal; for (let v=0;v<nrm.count;v++) nrm.setXYZ(v,0,1,0);
+  const tG=TL.load(TEX.grasscard); tG.colorSpace=THREE.SRGBColorSpace;
+  const im=new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({map:tG, alphaTest:0.4, side:THREE.DoubleSide}), GRASS.n);
+  const m=new THREE.Matrix4(), q=new THREE.Quaternion(), sc=new THREE.Vector3(), col=new THREE.Color(), up=new THREE.Vector3(0,1,0);
+  for (let i=0;i<GRASS.n;i++){ const s=0.55+0.5*((i*0.618)%1); q.setFromAxisAngle(up,i*1.7);
+    m.compose(W(gx[i],gy[i],gz[i]-0.05), q, sc.set(s*1.3, s*0.75, s*1.3)); im.setMatrixAt(i,m);
+    col.setRGB(grgb[3*i]/255, grgb[3*i+1]/255, grgb[3*i+2]/255, THREE.SRGBColorSpace).multiplyScalar(1.5); im.setColorAt(i,col); }
+  scene.add(im);
+}
+// ---- camera / modes ----
+const controls = new OrbitControls(cam, renderer.domElement);
+let mode='orbit', cur=0, playing=false;
+const sl=document.getElementById('sl'); sl.max=Math.floor(META.length);
+function placeOrbit(s){ const i=idxAt(s); const p=W(R.x[i],R.y[i],R.z[i]); controls.target.copy(p); cam.position.copy(p).add(new THREE.Vector3(70,95,90)); controls.update(); }
+function driver(s, back=false){
+  const i=idxAt(s), j=idxAt(s+(back?-25:25)); const [tx,ty]=tang(i);
+  const off = back ? R.wl[i]/2 : -R.wr[i]/2;  // right-hand lane in travel direction
+  const p=edgePt(i, off), q=edgePt(j, off);
+  cam.position.copy(W(p[0],p[1],p[2]+1.15)); cam.lookAt(W(q[0],q[1],q[2]+0.6)); }
+function info(s){ const i=idxAt(s); document.getElementById('info').textContent =
+  `s = ${s.toFixed(0)} m · z = ${R.z[i].toFixed(1)} m · width ${(R.wl[i]+R.wr[i]).toFixed(1)} m · grade ${(R.g[i]*100).toFixed(1)}%`; }
+function setView(s, m){ cur=s; mode=m||mode; sl.value=s; controls.enabled = mode==='orbit';
+  document.getElementById('bOrbit').classList.toggle('on',mode==='orbit'); document.getElementById('bDrive').classList.toggle('on',mode==='drive');
+  if (mode==='orbit') placeOrbit(s); else driver(s); info(s); if (STATIC) renderer.render(scene,cam); }
+window.setView=setView; window.dbg=()=>({cam:cam.position.toArray(), tgt:controls.target.toArray(), n:scene.children.length, kids:scene.children.map(c=>c.type+':'+(c.name||'')+':'+(c.geometry?c.geometry.attributes.position.count:0)).slice(0,30)});
+sl.oninput=()=>setView(+sl.value);
+document.getElementById('bOrbit').onclick=()=>setView(cur,'orbit');
+document.getElementById('bDrive').onclick=()=>setView(cur,'drive');
+document.getElementById('bPlay').onclick=e=>{ playing=!playing; e.target.classList.toggle('on',playing); if(playing) setView(cur,'drive'); };
+let cm=0; document.getElementById('bColor').onclick=e=>{ cm=(cm+1)%3; buildRoad(cm); e.target.textContent='Road: '+['plain','grade','width'][cm]; };
+const P=new URLSearchParams(location.search); const STATIC=P.has('static');
+if (P.has('noui')) document.body.classList.add('hide-ui');
+if (P.has('clean')) { OV.visible=false; document.getElementById('bOv').classList.remove('on'); }
+document.getElementById('bOv').onclick=e=>{ OV.visible=!OV.visible; e.target.classList.toggle('on',OV.visible); };
+setView(+(P.get('s')||0), P.get('mode')||'orbit');
+if (P.has('top')){ const i=idxAt(cur); const p=W(R.x[i],R.y[i],R.z[i]); controls.target.copy(p); cam.position.copy(p).add(new THREE.Vector3(0,+P.get('top')||150,0.01)); controls.update(); }
+addEventListener('resize',()=>{ cam.aspect=innerWidth/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+let last=performance.now();
+if (STATIC){ THREE.DefaultLoadingManager.onLoad=()=>{ renderer.render(scene,cam); window.__ready=true; }; }
+else renderer.setAnimationLoop(t=>{ const dt=(t-last)/1000; last=t;
+  if (playing){ cur=Math.min(META.length-30, cur+dt*20); sl.value=cur; driver(cur); info(cur); }
+  if (mode==='orbit') controls.update(); renderer.render(scene,cam); window.__ready=true; });
+</script>
+</body>
+</html>
