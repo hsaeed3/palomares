@@ -3,7 +3,7 @@ Written into <track>/extension/ext_config.ini (CSP reads this when no repo confi
 Vanilla AC ignores the folder, so the track still works without CSP."""
 from pathlib import Path
 
-TREES = "tree_oak, tree_bay, tree_euc"
+TREES = "tree_oak, tree_bay, tree_euc, tree_syc"
 
 
 def ext_config(materials):
@@ -19,7 +19,8 @@ IGNORE_OTHER_CONFIGS = 0
 MATERIALS = {TREES}
 SHADER = ksTree
 CULL_MODE = DOUBLESIDED
-PROP_0 = ksAmbient, 0.45
+CAST_SHADOWS = 1
+PROP_0 = ksAmbient, 0.5
 PROP_1 = ksDiffuse, 0.55
 PROP_2 = ksAlphaRef, 0.5
 
@@ -27,7 +28,8 @@ PROP_2 = ksAlphaRef, 0.5
 MATERIALS = shrub
 SHADER = ksTree
 CULL_MODE = DOUBLESIDED
-PROP_0 = ksAmbient, 0.45
+CAST_SHADOWS = 0
+PROP_0 = ksAmbient, 0.5
 PROP_1 = ksDiffuse, 0.5
 PROP_2 = ksAlphaRef, 0.5
 

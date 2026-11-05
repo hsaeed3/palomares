@@ -235,8 +235,8 @@ for (c, sp), ks in sorted(tree_buckets.items()):
                 b = len(P); P += q; UV += [(u0, 0), (u0 + du, 0), (u0 + du, 1), (u0, 1)]
                 T += [(b, b + 1, b + 2), (b, b + 2, b + 3)] if not back else [(b, b + 2, b + 1), (b, b + 3, b + 2)]
     P = np.array(P); T = np.array(T)
-    # upward-biased normals give softer, more natural lighting on cards
-    Nn = vertex_normals(P, T); Nn[:, 2] += 0.8; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
+    # mild upward bias only: strong bias (0.8) flattened N.L and killed CSP backlight/translucency
+    Nn = vertex_normals(P, T); Nn[:, 2] += 0.3; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
     add("trees", f"tree_{sp}_{c:02d}", f"tree_{sp}", P, T, np.array(UV), N_=Nn, cast_shadows=True, transparent=False, lod_out=900.0)
 
 for c, items in sorted(trunk_buckets.items()):

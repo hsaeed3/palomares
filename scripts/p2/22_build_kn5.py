@@ -335,22 +335,22 @@ T = {
 BASE = {"ksAmbient": 0.45, "ksDiffuse": 0.45, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
 MATS = {
     "road_asphalt": Material("road_asphalt", "ksPerPixelMultiMap",
-                             {**BASE, "ksSpecular": 0.15, "ksSpecularEXP": 30.0, "fresnelC": 0.0, "fresnelEXP": 2.0, "fresnelMaxLevel": 0.15,
+                             {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.6, "ksSpecular": 0.15, "ksSpecularEXP": 30.0, "fresnelC": 0.0, "fresnelEXP": 2.0, "fresnelMaxLevel": 0.15,
                               "isAdditive": 0.0, "useDetail": 0.0, "detailUVMultiplier": 1.0, "shadowBiasMult": 1.0},
                              {"txDiffuse": "asphalt_d.png", "txNormal": "asphalt_n.png", "txMaps": "asphalt_maps.png", "txDetail": "asphalt_d.png"}),
-    "shoulder_dirt": Material("shoulder_dirt", "ksPerPixel", dict(BASE), {"txDiffuse": "dirt_d.png"}),
+    "shoulder_dirt": Material("shoulder_dirt", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.55}, {"txDiffuse": "dirt_d.png"}),
     "ground": Material("ground", "ksPerPixel", dict(BASE), {"txDiffuse": "ground_d.png"}),
     "rock": Material("rock", "ksPerPixel", dict(BASE), {"txDiffuse": "rock_d.png"}),
-    "litter": Material("litter", "ksPerPixel", dict(BASE), {"txDiffuse": "litter_d.png"}),
+    "litter": Material("litter", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.55}, {"txDiffuse": "litter_d.png"}),
     "bank": Material("bank", "ksPerPixel", dict(BASE), {"txDiffuse": "bank_d.png"}),
-    "shrub": Material("shrub", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": "shrub.png"}, alpha_tested=True),
+    "shrub": Material("shrub", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": "shrub.png"}, alpha_tested=True),
     "backdrop": Material("backdrop", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.35}, {"txDiffuse": "backdrop_d.png"}),
     # markings + decals: alpha-tested (worn breakup), non-physical, slightly glossier than asphalt
-    "paint_white": Material("paint_white", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_white.png"}, alpha_tested=True),
-    "paint_yellow": Material("paint_yellow", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow.png"}, alpha_tested=True),
-    "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
+    "paint_white": Material("paint_white", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_white.png"}, alpha_tested=True),
+    "paint_yellow": Material("paint_yellow", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow.png"}, alpha_tested=True),
+    "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
     "rpm_yellow": Material("rpm_yellow", "ksPerPixel", {**BASE, "ksSpecular": 0.5, "ksSpecularEXP": 60.0}, {"txDiffuse": "rpm.png"}),
-    "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksSpecular": 0.2, "ksSpecularEXP": 35.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
+    "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.2, "ksSpecularEXP": 35.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
     "kerb": Material("kerb", "ksPerPixelNM", {**BASE, "ksSpecular": 0.18, "ksSpecularEXP": 24.0}, {"txDiffuse": "kerb_d.png", "txNormal": "kerb_n.png"}),
     "runoff": Material("runoff", "ksPerPixel", {**BASE, "ksSpecular": 0.08, "ksSpecularEXP": 15.0}, {"txDiffuse": "runoff_d.png"}),
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),
@@ -361,7 +361,7 @@ T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
-    MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
+    MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
 
 
