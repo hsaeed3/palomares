@@ -1,0 +1,23 @@
+# Diffuse albedo targets (mean linear luminance of opaque texels, sRGB-decoded) applied after
+# photo grading in scripts/p2/22_build_kn5.py (albedo_calibrate). Photo hue/contrast are kept;
+# only overall level is rescaled. Raise/lower to tune brightness in game (CSP/Pure).
+# Reference: real-world albedo ~ fresh asphalt 0.05-0.08, worn 0.10-0.18; grass 0.15-0.25;
+# soil/litter 0.15-0.25; rock 0.2-0.3; leaves 0.08-0.15; white paint 0.6-0.7.
+albedo:
+  asphalt_d.png: 0.13
+  dirt_d.png: 0.18
+  litter_d.png: 0.17
+  ground_d.png: 0.18
+  bank_d.png: 0.17
+  rock_d.png: 0.24
+  backdrop_d.png: 0.14
+  tree_oak.png: 0.11
+  tree_bay.png: 0.10
+  tree_euc.png: 0.12
+  tree_syc.png: 0.13
+  shrub.png: 0.10
+  tree_trunk.png: 0.12
+  paint_white.png: 0.62
+  paint_yellow.png: 0.38
+  paint_yellow_dbl.png: 0.38
+  kerb.png: 0.40
