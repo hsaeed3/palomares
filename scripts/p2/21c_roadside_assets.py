@@ -18,6 +18,7 @@ import numpy as np
 from scipy.ndimage import gaussian_filter1d
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from geom import Road, Raster, ROOT, DER, BUILD, CFG, SHOULDER_W
+from geom import build_lock; build_lock()  # one build/ writer at a time
 import collide as CO
 import roadside_tex as RX
 

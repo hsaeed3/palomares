@@ -1,9 +1,9 @@
 {
  "kn5_files": 17,
  "physics_meshes": 130,
- "collision_triangles": 212972,
+ "collision_triangles": 213574,
  "solid_items": 469,
- "uncovered_items": 6,
+ "uncovered_items": 1,
  "per_type": {
   "guardrail_candidate": {
    "items": 12,
@@ -12,8 +12,8 @@
   },
   "guardrail_wbeam": {
    "items": 50,
-   "uncovered": 1,
-   "uncovered_m": 5.0
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "road_sign": {
    "items": 67,
@@ -27,13 +27,13 @@
   },
   "chainlink_fence": {
    "items": 27,
-   "uncovered": 1,
-   "uncovered_m": 31.0
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "gate_estate": {
    "items": 12,
-   "uncovered": 1,
-   "uncovered_m": 3.5
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "mailbox_cluster": {
    "items": 24,
@@ -77,13 +77,13 @@
   },
   "wood_split_rail_fence": {
    "items": 21,
-   "uncovered": 2,
-   "uncovered_m": 6.5
+   "uncovered": 1,
+   "uncovered_m": 0.5
   },
   "white_rail_fence": {
    "items": 18,
-   "uncovered": 1,
-   "uncovered_m": 3.0
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "bridge_parapet_stone": {
    "items": 5,
@@ -112,7 +112,7 @@
   }
  },
  "failures": [
-  "6 solid items lack collision within 0.3 m / 1.25 m height"
+  "1 solid items lack collision within 0.3 m / 1.25 m height"
  ],
  "tolerance_m": 0.3,
  "min_height_m": 1.25

@@ -37,3 +37,38 @@ blown out), ksAlphaRef (0.5; raise for more holes in the crowns), and the tree P
 
 ### Night: road decals glowed under headlights (fixed in dev3)
 `road_decal` (crack-seal and patch overlays) was listed in RainFX `LINES_MATERIALS`, so CSP treated it as retroreflective road paint, and it had a higher specular than the asphalt. It now sits in `PUDDLES`/`SOAKING` with the asphalt, with specular 0.06 / exp 20. Only `paint_*` count as lines.
+
+## dev-next: terrain macro layer + GrassFX that actually spawns
+
+**Why GrassFX showed nothing:** GrassFX only spawns where the *surface colour* passes its mask, and the defaults expect
+green-ish texels with luminance 0.02-0.35 (`MASK_MAIN_THRESHOLD 0.5`, `MASK_RED_THRESHOLD 0.05`, `MASK_MIN/MAX_LUMINANCE
+0.02/0.35`; CSP docs "Tracks - Grass FX", and e.g. ks_highlands `MASK_MAX_LUMINANCE 0.105`). Our albedo-calibrated textures sit at
+sRGB ~0.4-0.5 and litter/bank are olive-brown, so almost nothing passed. Also, `ground/bank/litter` are reused by the shoulder
+strips, so grass would have grown on the shoulder.
+No special shader is needed (GrassFX works on any listed material; `USE_MULTILAYER_MASK` / `USE_MULTIMAP_DETAIL_MASK` are optional
+extras for ksMultilayer txMask / multimap diffuse alpha). `ORIGINAL_GRASS_MATERIALS =` is left empty on purpose (we have no
+ksGrass meshes; an empty value means "hide nothing").
+
+**Now (ext_config.ini, scripts/p2/ext_config.py):**
+- `GRASS_MATERIALS` = only terrain `ter_ground_NN, ter_bank_NN, ter_litter_NN`. Masks opened (`MASK_MAIN_THRESHOLD -1`,
+  `MASK_MIN/MAX_LUMINANCE -1/1`); density/shape come from configurations: A ground = tall wild spring grass (`SHAPE_SIZE 2.6`,
+  untidy), B bank = medium (1.9), slightly patchy, C litter = short sparse tufts (1.4). Blade colour is taken from the surface.
+- `OCCLUDING_MATERIALS` = road, fresh asphalt, decals, shoulder strips (ground/bank/litter/shoulder_dirt/road_edge), rock, kerb,
+  runoff and all paint, so nothing grows on the road, shoulder, kerbs, rock or markings.
+- No track-level tree/bush instancing exists in CSP configs (checked acc-extension-config); trees stay our own meshes.
+
+**Terrain no longer tiles (scripts/p2/terrain_macro.py, 21 terrain material/UV, 22):** grass/bank/litter are
+`ksPerPixelMultiMap` per 250 m chunk: `txDiffuse` = unique 1024 px macro map over the chunk (USGS ortho regraded to the spring
+GoPro palette: open -> grass, canopy -> litter, plus fbm at 6/20/60 m), alpha 0; `txDetail` = the class texture at ~5-6 m via
+`detailUVMultiplier`. AC multiplies detail into diffuse where diffuse alpha is 0 (Kunos car workflow), so mean albedo is kept.
+Rock: multimap with a 20 m base tile x 4.65 m detail. Physics names `1GRASS_t*` unchanged; no extra draw calls.
+
+### In-game GrassFX check
+1. CM > Settings > Custom Shaders Patch > **Grass FX: Active** (also check its quality/distance slider is not at minimum).
+   GrassFX is a CSP module; with Pure it is unchanged. Track config must show "loaded from track folder" (Tracks tab).
+2. Expect: dense, knee-high, untidy bright green grass on open (non-canopy) slopes either side,
+   shorter mixed tufts on cut banks, and sparse short tufts on the leaf-litter verge under the oaks. Grass fades out at a few
+   tens of metres (CSP spawns around the camera); the macro map carries the colour beyond that.
+3. Never: grass through asphalt, on the shoulder strip, on kerbs, rock faces or paint. Report the distance marker if seen.
+4. If grass is too tall/dense: lower SHAPE_SIZE in A/B/C; too uniform: raise MASK_MAIN_THRESHOLD in B/C towards 0.2-0.5.
+5. Terrain without CSP: no visible 6 m repeat from the driver's seat; colour patches follow the real meadows/canopy.

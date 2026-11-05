@@ -20,6 +20,7 @@ from scipy.spatial import cKDTree
 import scipy.sparse as sp
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from geom import ROOT, BUILD
+from geom import build_lock; build_lock()  # one build/ writer at a time
 import collide as CO
 
 NEAR, FAR = 30.0, 55.0

@@ -17,6 +17,7 @@ from scipy.ndimage import gaussian_filter1d, label
 from matplotlib.path import Path as MPath
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, CFG, SHOULDER_W, Road, Raster, load_centerline, vertex_normals, grid_tris
+from geom import build_lock; build_lock()  # one build/ writer at a time
 from progress import bar, Section
 import time as _time
 _T0 = _time.time()
@@ -92,16 +93,16 @@ for c in range(nchunks):
     P = np.stack([RX[rows], RY[rows], RZ[rows]], -1).reshape(-1, 3)
     import road_surface as _RS   # road UV = 12 m asphalt atlas: u = 0.5 + d/12, v = s/12
     UV = np.stack([0.5 + D_ROAD[rows] / _RS.ATLAS_M, np.repeat(road.s[rows, None] / _RS.ATLAS_M, 13, 1)], -1).reshape(-1, 2)
-    # freshly repaved spans (config/surface_overrides.yaml) -> separate 1ROADF_NN mesh / road_asphalt_fresh. The joint is
+    # freshly repaved spans (config/surface_overrides.yaml) -> separate 1ROAD_FNN mesh / road_asphalt_fresh. The joint is
     # the station row at the span end (straight transverse); both meshes share that row's vertex positions, so no step.
     Tg_ = grid_tris(nr, 13); fq = road.fresh[rows][Tg_[:, 0] // 13]
-    for nm_, mat_, Tm in ((f"1ROAD_{c:02d}", "road_asphalt", Tg_[~fq]), (f"1ROADF_{c:02d}", "road_asphalt_fresh", Tg_[fq])):
+    for nm_, mat_, Tm in ((f"1ROAD_{c:02d}", "road_asphalt", Tg_[~fq]), (f"1ROAD_F{c:02d}", "road_asphalt_fresh", Tg_[fq])):
         if len(Tm):
             used, inv = np.unique(Tm, return_inverse=True)
             add("road", nm_, mat_, P[used], inv.reshape(-1, 3), UV[used])
     for side, (X, Y, Z) in (("L", (SLX, SLY, SLZ)), ("R", (SRX[:, ::-1], SRY[:, ::-1], SRZ[:, ::-1]))):
         # columns must increase to the left: L = edge->out, R = out->edge. One mesh per edge material
-        # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROADAP_{side}NN), quads take the material of their first row.
+        # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROAD_AP{side}NN), quads take the material of their first row.
         P = np.stack([X[rows], Y[rows], Z[rows]], -1).reshape(-1, 3)
         Wc = (road.sh_w_l if side == "L" else road.sh_w_r)[rows]
         ucol = np.array([0, 0.5, 1.0]) if side == "L" else np.array([1.0, 0.5, 0])
@@ -111,7 +112,7 @@ for c in range(nchunks):
             Tm = Tg_[mrow == mname]
             if len(Tm):
                 used, inv = np.unique(Tm, return_inverse=True)
-                nm_ = f"1ROADAP_{side}{c:02d}" if mname == "paved" else f"1GRASS_sh{side}{mname}{c:02d}"
+                nm_ = f"1ROAD_AP{side}{c:02d}" if mname == "paved" else f"1GRASS_sh{side}{mname}{c:02d}"
                 add("road", nm_, EDGE_MAT[mname], P[used], inv.reshape(-1, 3), UV[used])
 
 # ragged asphalt edge: non-physical alpha-tested strip over the pavement edge (edge_<mat> rows of road_edge.png, built
@@ -575,7 +576,7 @@ for c in range(nchunks):
 # Road UV: u = 0.5 + d/12, v = s/12 (lateral features of the 12 m procedural asphalt atlas stay registered to the
 # centre line). Decals: black crack-seal bands (longitudinal at the centre joint / wheel paths / edges, transverse),
 # patch repairs (grey newer asphalt + fresh black), alligator cracking; density from the GoPro survey condition.
-# (1ROAD_/1ROADF_ UVs are already set in this atlas mapping when the road meshes are built)
+# (1ROAD_ / 1ROAD_F UVs are already set in this atlas mapping when the road meshes are built)
 _ss, _scr, _spa = RS.survey_condition(ROOT, road.s[-1])
 _scr = gaussian_filter1d(_scr, 3); _spa = gaussian_filter1d(_spa, 3)
 if SURF_SPANS:   # observed condition spans override the evenly-spaced survey heuristic (densify to 5 m so short spans register)

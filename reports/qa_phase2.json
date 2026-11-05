@@ -24,18 +24,18 @@
    "problems": [],
    "n_problems": 0,
    "draw_calls": {
-    "road_full": 1194,
-    "road_full_rev": 1194,
-    "road_north": 1194,
-    "road_north_rev": 1194,
-    "road_summit": 1194,
-    "road_summit_rev": 1194,
-    "track_full": 1226,
-    "track_full_rev": 1230,
-    "track_north": 1226,
-    "track_north_rev": 1230,
-    "track_summit": 1226,
-    "track_summit_rev": 1230
+    "road_full": 1267,
+    "road_full_rev": 1267,
+    "road_north": 1267,
+    "road_north_rev": 1267,
+    "road_summit": 1267,
+    "road_summit_rev": 1267,
+    "track_full": 1302,
+    "track_full_rev": 1302,
+    "track_north": 1302,
+    "track_north_rev": 1302,
+    "track_summit": 1302,
+    "track_summit_rev": 1302
    },
    "note": "draw calls = all meshes in layout kn5s (reader does not expose visible flag; upper bound)"
   },
@@ -87,459 +87,549 @@
   },
   "3a_vertical_steps": {
    "status": "FAIL",
-   "n_boundary_vertices_checked": 452463,
-   "n_with_overlap_surface": 449210,
-   "n_steps_over_2cm": 478,
-   "max_step": 0.08084480024689356,
-   "coincident_vertex_max_dz": 0.06900787353515625,
-   "n_coincident_over_2cm": 754,
+   "n_boundary_vertices_checked": 458458,
+   "n_with_overlap_surface": 455226,
+   "n_steps_over_2cm": 1283,
+   "max_step": 0.5721628622864614,
+   "coincident_vertex_max_dz": 0.04180908203125,
+   "n_coincident_over_2cm": 483,
    "by_mesh_pair": {
-    "1KERB_NB_/1KERB_SB_": {
-     "n": 269,
-     "max_dz": 0.081
+    "1KERB_NB_m/1KERB_SB_m": {
+     "n": 391,
+     "max_dz": 0.053
     },
-    "1GRASS_shL/1KERB_SB_": {
-     "n": 65,
-     "max_dz": 0.078
+    "1GRASS_tl/1KERB_NB_m": {
+     "n": 231,
+     "max_dz": 0.182
     },
-    "1GRASS_shL/1KERB_NB_": {
-     "n": 51,
-     "max_dz": 0.054
+    "1GRASS_tb/1KERB_NB_m": {
+     "n": 138,
+     "max_dz": 0.288
     },
-    "1GRASS_shR/1KERB_NB_": {
-     "n": 51,
+    "1GRASS_tb/1KERB_SB_m": {
+     "n": 135,
+     "max_dz": 0.572
+    },
+    "1GRASS_tl/1KERB_SB_m": {
+     "n": 99,
+     "max_dz": 0.182
+    },
+    "1GRASS_shRlitter/1KERB_NB_m": {
+     "n": 45,
+     "max_dz": 0.052
+    },
+    "1GRASS_shRdirt/1KERB_SB_m": {
+     "n": 34,
      "max_dz": 0.049
     },
-    "1GRASS_shR/1KERB_SB_": {
-     "n": 42,
-     "max_dz": 0.069
+    "1KERB_NB_m/1KERB_SB_": {
+     "n": 34,
+     "max_dz": 0.043
+    },
+    "1GRASS_shRdirt/1KERB_NB_m": {
+     "n": 33,
+     "max_dz": 0.049
+    },
+    "1GRASS_shLdirt/1KERB_NB_m": {
+     "n": 29,
+     "max_dz": 0.047
+    },
+    "1GRASS_shLlitter/1KERB_NB_m": {
+     "n": 21,
+     "max_dz": 0.043
+    },
+    "1GRASS_tl/1KERB_SB_": {
+     "n": 17,
+     "max_dz": 0.181
+    },
+    "1GRASS_shRlitter/1KERB_SB_m": {
+     "n": 14,
+     "max_dz": 0.048
+    },
+    "1GRASS_tb/1KERB_SB_": {
+     "n": 11,
+     "max_dz": 0.195
+    },
+    "1GRASS_shRivy/1KERB_NB_m": {
+     "n": 11,
+     "max_dz": 0.04
+    },
+    "1KERB_NB_/1KERB_SB_": {
+     "n": 9,
+     "max_dz": 0.043
+    },
+    "1GRASS_shLgrass/1KERB_NB_m": {
+     "n": 6,
+     "max_dz": 0.043
+    },
+    "1GRASS_shRdirt/1KERB_SB_": {
+     "n": 6,
+     "max_dz": 0.029
+    },
+    "1GRASS_shLlitter/1KERB_SB_m": {
+     "n": 4,
+     "max_dz": 0.035
+    },
+    "1GRASS_shRgrass/1KERB_NB_m": {
+     "n": 4,
+     "max_dz": 0.032
+    },
+    "1GRASS_tr/1KERB_SB_m": {
+     "n": 3,
+     "max_dz": 0.413
+    },
+    "1GRASS_shLdirt/1KERB_SB_m": {
+     "n": 3,
+     "max_dz": 0.035
+    },
+    "1GRASS_shLdirt/1KERB_SB_": {
+     "n": 2,
+     "max_dz": 0.031
+    },
+    "1GRASS_shRlitter/1KERB_NB_": {
+     "n": 1,
+     "max_dz": 0.044
+    },
+    "1GRASS_shRdirt/1KERB_NB_": {
+     "n": 1,
+     "max_dz": 0.044
+    },
+    "1GRASS_tl/1KERB_NB_": {
+     "n": 1,
+     "max_dz": 0.023
     }
    },
-   "road_or_kerb_steps_n": 478,
+   "road_or_kerb_steps_n": 1283,
    "worst": [
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14585.98,
-     "off": 4.8,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14679.98,
-     "off": 4.1,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14689.98,
-     "off": 4.1,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 4275.99,
-     "off": 4.0,
-     "a": "1KERB_NB_17",
-     "b": "1KERB_SB_17"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 13840.98,
+     "dz": 0.572,
+     "signed_this_minus_other": -0.572,
+     "s": 2917.99,
      "off": 3.8,
-     "a": "1KERB_NB_55",
-     "b": "1KERB_SB_55"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 7437.99,
-     "off": 4.9,
-     "a": "1KERB_SB_29",
-     "b": "1KERB_NB_29"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 1180.0,
-     "off": 3.0,
-     "a": "1KERB_NB_04",
-     "b": "1KERB_SB_04"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 1756.0,
+     "dz": 0.498,
+     "signed_this_minus_other": -0.498,
+     "s": 2918.99,
      "off": 3.8,
-     "a": "1KERB_NB_07",
-     "b": "1KERB_SB_07"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14575.98,
-     "off": 4.6,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 4207.99,
+     "dz": 0.413,
+     "signed_this_minus_other": -0.413,
+     "s": 2916.99,
      "off": 3.8,
-     "a": "1KERB_NB_16",
-     "b": "1KERB_SB_16"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 7427.99,
-     "off": 4.7,
-     "a": "1KERB_NB_29",
-     "b": "1KERB_SB_29"
+     "dz": 0.385,
+     "signed_this_minus_other": -0.385,
+     "s": 2919.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.079,
-     "signed_this_minus_other": -0.079,
-     "s": 7142.99,
-     "off": 4.0,
-     "a": "1KERB_SB_28",
-     "b": "1KERB_NB_28"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 7132.99,
-     "off": 4.0,
-     "a": "1KERB_NB_28",
-     "b": "1KERB_SB_28"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 13850.98,
+     "dz": 0.315,
+     "signed_this_minus_other": -0.315,
+     "s": 2920.99,
      "off": 3.7,
-     "a": "1KERB_SB_55",
-     "b": "1KERB_NB_55"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 1750.0,
-     "off": 4.1,
-     "a": "1GRASS_shL06",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 1750.0,
-     "off": 4.1,
-     "a": "1GRASS_shL07",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.077,
-     "signed_this_minus_other": -0.077,
-     "s": 12529.98,
-     "off": 3.9,
-     "a": "1KERB_SB_50",
-     "b": "1KERB_NB_50"
-    },
-    {
-     "dz": 0.07,
-     "signed_this_minus_other": -0.07,
-     "s": 1755.0,
-     "off": 3.8,
-     "a": "1KERB_NB_07",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 4285.99,
+     "dz": 0.312,
+     "signed_this_minus_other": -0.312,
+     "s": 2921.99,
      "off": 3.7,
-     "a": "1KERB_SB_17",
-     "b": "1KERB_NB_17"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 1750.0,
-     "off": 4.7,
-     "a": "1GRASS_shR07",
-     "b": "1KERB_SB_06"
+     "dz": 0.288,
+     "signed_this_minus_other": -0.288,
+     "s": 5107.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
     },
     {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 1750.0,
-     "off": 4.7,
-     "a": "1GRASS_shR06",
-     "b": "1KERB_SB_06"
+     "dz": 0.279,
+     "signed_this_minus_other": -0.279,
+     "s": 2622.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14678.98,
-     "off": 4.0,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
+     "dz": 0.264,
+     "signed_this_minus_other": -0.264,
+     "s": 2922.99,
+     "off": 3.7,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14690.98,
-     "off": 4.0,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
+     "dz": 0.264,
+     "signed_this_minus_other": -0.264,
+     "s": 2624.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14574.98,
-     "off": 4.5,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
+     "dz": 0.262,
+     "signed_this_minus_other": -0.262,
+     "s": 2915.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 1179.0,
-     "off": 2.9,
-     "a": "1KERB_NB_04",
-     "b": "1KERB_SB_04"
+     "dz": 0.262,
+     "signed_this_minus_other": -0.262,
+     "s": 2623.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
+    },
+    {
+     "dz": 0.231,
+     "signed_this_minus_other": -0.231,
+     "s": 1104.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.214,
+     "signed_this_minus_other": -0.214,
+     "s": 1102.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.214,
+     "signed_this_minus_other": -0.214,
+     "s": 5103.99,
+     "off": 3.6,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.21,
+     "signed_this_minus_other": -0.21,
+     "s": 2625.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
+    },
+    {
+     "dz": 0.209,
+     "signed_this_minus_other": -0.209,
+     "s": 1101.0,
+     "off": 4.2,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.201,
+     "signed_this_minus_other": -0.201,
+     "s": 2914.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
+    },
+    {
+     "dz": 0.197,
+     "signed_this_minus_other": -0.197,
+     "s": 1105.0,
+     "off": 4.4,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.195,
+     "signed_this_minus_other": -0.195,
+     "s": 9399.98,
+     "off": 5.3,
+     "a": "1KERB_SB_37",
+     "b": "1GRASS_tb37"
+    },
+    {
+     "dz": 0.194,
+     "signed_this_minus_other": -0.194,
+     "s": 5106.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.193,
+     "signed_this_minus_other": -0.193,
+     "s": 1958.0,
+     "off": 4.4,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb07"
+    },
+    {
+     "dz": 0.193,
+     "signed_this_minus_other": -0.193,
+     "s": 5104.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.189,
+     "signed_this_minus_other": -0.189,
+     "s": 1103.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.182,
+     "signed_this_minus_other": -0.182,
+     "s": 708.0,
+     "off": 3.4,
+     "a": "1KERB_NB_m00",
+     "b": "1GRASS_tl02"
     }
    ],
    "worst_road_or_kerb": [
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14585.98,
-     "off": 4.8,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14679.98,
-     "off": 4.1,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14689.98,
-     "off": 4.1,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 4275.99,
-     "off": 4.0,
-     "a": "1KERB_NB_17",
-     "b": "1KERB_SB_17"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 13840.98,
+     "dz": 0.572,
+     "signed_this_minus_other": -0.572,
+     "s": 2917.99,
      "off": 3.8,
-     "a": "1KERB_NB_55",
-     "b": "1KERB_SB_55"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 7437.99,
-     "off": 4.9,
-     "a": "1KERB_SB_29",
-     "b": "1KERB_NB_29"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 1180.0,
-     "off": 3.0,
-     "a": "1KERB_NB_04",
-     "b": "1KERB_SB_04"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 1756.0,
+     "dz": 0.498,
+     "signed_this_minus_other": -0.498,
+     "s": 2918.99,
      "off": 3.8,
-     "a": "1KERB_NB_07",
-     "b": "1KERB_SB_07"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 14575.98,
-     "off": 4.6,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
-    },
-    {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 4207.99,
+     "dz": 0.413,
+     "signed_this_minus_other": -0.413,
+     "s": 2916.99,
      "off": 3.8,
-     "a": "1KERB_NB_16",
-     "b": "1KERB_SB_16"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.081,
-     "signed_this_minus_other": -0.081,
-     "s": 7427.99,
-     "off": 4.7,
-     "a": "1KERB_NB_29",
-     "b": "1KERB_SB_29"
+     "dz": 0.385,
+     "signed_this_minus_other": -0.385,
+     "s": 2919.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.079,
-     "signed_this_minus_other": -0.079,
-     "s": 7142.99,
-     "off": 4.0,
-     "a": "1KERB_SB_28",
-     "b": "1KERB_NB_28"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 7132.99,
-     "off": 4.0,
-     "a": "1KERB_NB_28",
-     "b": "1KERB_SB_28"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 13850.98,
+     "dz": 0.315,
+     "signed_this_minus_other": -0.315,
+     "s": 2920.99,
      "off": 3.7,
-     "a": "1KERB_SB_55",
-     "b": "1KERB_NB_55"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 1750.0,
-     "off": 4.1,
-     "a": "1GRASS_shL06",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.078,
-     "signed_this_minus_other": -0.078,
-     "s": 1750.0,
-     "off": 4.1,
-     "a": "1GRASS_shL07",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.077,
-     "signed_this_minus_other": -0.077,
-     "s": 12529.98,
-     "off": 3.9,
-     "a": "1KERB_SB_50",
-     "b": "1KERB_NB_50"
-    },
-    {
-     "dz": 0.07,
-     "signed_this_minus_other": -0.07,
-     "s": 1755.0,
-     "off": 3.8,
-     "a": "1KERB_NB_07",
-     "b": "1KERB_SB_07"
-    },
-    {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 4285.99,
+     "dz": 0.312,
+     "signed_this_minus_other": -0.312,
+     "s": 2921.99,
      "off": 3.7,
-     "a": "1KERB_SB_17",
-     "b": "1KERB_NB_17"
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 1750.0,
-     "off": 4.7,
-     "a": "1GRASS_shR07",
-     "b": "1KERB_SB_06"
+     "dz": 0.288,
+     "signed_this_minus_other": -0.288,
+     "s": 5107.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
     },
     {
-     "dz": 0.069,
-     "signed_this_minus_other": -0.069,
-     "s": 1750.0,
-     "off": 4.7,
-     "a": "1GRASS_shR06",
-     "b": "1KERB_SB_06"
+     "dz": 0.279,
+     "signed_this_minus_other": -0.279,
+     "s": 2622.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14678.98,
-     "off": 4.0,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
+     "dz": 0.264,
+     "signed_this_minus_other": -0.264,
+     "s": 2922.99,
+     "off": 3.7,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tr11"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14690.98,
-     "off": 4.0,
-     "a": "1KERB_SB_58",
-     "b": "1KERB_NB_58"
+     "dz": 0.264,
+     "signed_this_minus_other": -0.264,
+     "s": 2624.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 14574.98,
-     "off": 4.5,
-     "a": "1KERB_NB_58",
-     "b": "1KERB_SB_58"
+     "dz": 0.262,
+     "signed_this_minus_other": -0.262,
+     "s": 2915.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
     },
     {
-     "dz": 0.068,
-     "signed_this_minus_other": -0.068,
-     "s": 1179.0,
-     "off": 2.9,
-     "a": "1KERB_NB_04",
-     "b": "1KERB_SB_04"
+     "dz": 0.262,
+     "signed_this_minus_other": -0.262,
+     "s": 2623.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
+    },
+    {
+     "dz": 0.231,
+     "signed_this_minus_other": -0.231,
+     "s": 1104.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.214,
+     "signed_this_minus_other": -0.214,
+     "s": 1102.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.214,
+     "signed_this_minus_other": -0.214,
+     "s": 5103.99,
+     "off": 3.6,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.21,
+     "signed_this_minus_other": -0.21,
+     "s": 2625.99,
+     "off": 3.5,
+     "a": "1KERB_NB_m02",
+     "b": "1GRASS_tb10"
+    },
+    {
+     "dz": 0.209,
+     "signed_this_minus_other": -0.209,
+     "s": 1101.0,
+     "off": 4.2,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.201,
+     "signed_this_minus_other": -0.201,
+     "s": 2914.99,
+     "off": 3.8,
+     "a": "1KERB_SB_m02",
+     "b": "1GRASS_tb11"
+    },
+    {
+     "dz": 0.197,
+     "signed_this_minus_other": -0.197,
+     "s": 1105.0,
+     "off": 4.4,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.195,
+     "signed_this_minus_other": -0.195,
+     "s": 9399.98,
+     "off": 5.3,
+     "a": "1KERB_SB_37",
+     "b": "1GRASS_tb37"
+    },
+    {
+     "dz": 0.194,
+     "signed_this_minus_other": -0.194,
+     "s": 5106.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.193,
+     "signed_this_minus_other": -0.193,
+     "s": 1958.0,
+     "off": 4.4,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb07"
+    },
+    {
+     "dz": 0.193,
+     "signed_this_minus_other": -0.193,
+     "s": 5104.99,
+     "off": 3.7,
+     "a": "1KERB_NB_m05",
+     "b": "1GRASS_tb20"
+    },
+    {
+     "dz": 0.189,
+     "signed_this_minus_other": -0.189,
+     "s": 1103.0,
+     "off": 4.3,
+     "a": "1KERB_SB_m01",
+     "b": "1GRASS_tb04"
+    },
+    {
+     "dz": 0.182,
+     "signed_this_minus_other": -0.182,
+     "s": 708.0,
+     "off": 3.4,
+     "a": "1KERB_NB_m00",
+     "b": "1GRASS_tl02"
     }
    ],
    "road_vs_terrain": []
   },
   "3b_holes": {
    "status": "PASS",
-   "n_boundary_edges_union": 7883,
-   "n_open_boundary_edges": 4985,
+   "n_boundary_edges_union": 9234,
+   "n_open_boundary_edges": 4944,
    "n_open_edges_within_road_plus3m": 0,
    "stations_road_holes": [],
    "n_open_edges_within_30m": 0,
    "stations_within_30m": [],
-   "n_nonmanifold_edges": 8306,
+   "n_nonmanifold_edges": 11172,
    "note": "T-junction gaps where another surface covers both sides are not counted (probe 5 cm either side)"
   },
   "3c_normals": {
-   "status": "PASS",
+   "status": "FAIL",
    "vertex_normals_with_negative_up": 0,
-   "triangles_winding_a": 0,
-   "triangles_winding_b": 2367541,
-   "minority_winding_triangles": 0,
-   "meshes_with_mixed_winding": [],
+   "triangles_winding_a": 5,
+   "triangles_winding_b": 2386939,
+   "minority_winding_triangles": 5,
+   "meshes_with_mixed_winding": [
+    {
+     "mesh": "1GRASS_hole_fill",
+     "a": 5,
+     "b": 46
+    }
+   ],
    "min_vertex_normal_up": 0.07113625854253769
   },
   "3d_grade_crossfall": {
@@ -595,51 +685,51 @@
    ],
    "ui": {
     "road_full": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Road) v0.2.0-dev3",
      "length": "15543"
     },
     "road_full_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Road) v0.2.0-dev3",
      "length": "15543"
     },
     "road_north": {
-     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Road) v0.2.0-dev3",
      "length": "8171"
     },
     "road_north_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Road) v0.2.0-dev3",
      "length": "8171"
     },
     "road_summit": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Road) v0.2.0-dev3",
      "length": "7372"
     },
     "road_summit_rev": {
-     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Road) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Road) v0.2.0-dev3",
      "length": "7372"
     },
     "track_full": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Track) v0.2.0-dev3",
      "length": "15543"
     },
     "track_full_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Track) v0.2.0-dev3",
      "length": "15543"
     },
     "track_north": {
-     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Track) v0.2.0-dev3",
      "length": "8171"
     },
     "track_north_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Track) v0.2.0-dev3",
      "length": "8171"
     },
     "track_summit": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Track) v0.2.0-dev3",
      "length": "7372"
     },
     "track_summit_rev": {
-     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Track) v0.2.0-dev2",
+     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Track) v0.2.0-dev3",
      "length": "7372"
     }
    },
@@ -840,5 +930,5 @@
    }
   }
  },
- "runtime_s": 93.3
+ "runtime_s": 118.3
 }

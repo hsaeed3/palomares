@@ -120,3 +120,22 @@ def grid_tris(nrow, ncol, offset=0):
     # rows = forward, cols = left: (a, dd, b) and (a, cc, dd) are CCW seen from +z (QA checks normals)
     T = np.concatenate([np.stack([a, dd, b], -1).reshape(-1, 3), np.stack([a, cc, dd], -1).reshape(-1, 3)])
     return T + offset
+
+
+def build_lock(name="build"):
+    """Serialise pipeline steps that write build/ (21*, 22, 25): concurrent runs clobbered each other's outputs.
+    Blocks until the lock is free; held for the life of the process."""
+    import fcntl, os, sys, time
+    BUILD.mkdir(exist_ok=True)
+    fh = open(BUILD / f".{name}.lock", "w")
+    t0 = time.time()
+    while True:
+        try:
+            fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB); break
+        except BlockingIOError:
+            if time.time() - t0 < 1:
+                print(f"[lock] waiting for another pipeline step holding build/.{name}.lock ...", file=sys.stderr)
+            time.sleep(5)
+    fh.write(f"{os.getpid()} {' '.join(sys.argv)}\n"); fh.flush()
+    globals()["_LOCK_FH"] = fh
+    return fh

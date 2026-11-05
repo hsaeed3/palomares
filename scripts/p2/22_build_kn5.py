@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, CFG
+from geom import build_lock; build_lock()  # one build/ writer at a time
 from kn5 import Material, Mesh, Dummy, write_kn5, ac_from_local
 
 VERSION = (ROOT / "VERSION").read_text().strip()

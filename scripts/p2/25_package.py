@@ -3,6 +3,7 @@ import shutil, zipfile, sys, pathlib
 from PIL import Image
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from geom import ROOT, BUILD
+from geom import build_lock; build_lock()  # one build/ writer at a time
 V = (ROOT / "VERSION").read_text().strip()
 TRACK = BUILD / "palomares_road"
 for lay in sorted(d.name for d in (TRACK / "ui").iterdir() if d.is_dir()):

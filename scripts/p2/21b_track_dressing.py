@@ -22,6 +22,7 @@ from scipy.ndimage import gaussian_filter1d, label
 from scipy.spatial import cKDTree
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, SHOULDER_W, Road, Raster, vertex_normals
+from geom import build_lock; build_lock()  # one build/ writer at a time
 
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
 G, meta = geo["groups"], geo["meta"]
