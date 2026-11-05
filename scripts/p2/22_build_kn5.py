@@ -332,7 +332,34 @@ T = {
     "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
     **road_surface_tex(),
 }
-BASE = {"ksAmbient": 0.45, "ksDiffuse": 0.45, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
+
+def albedo_calibrate(T, cfg=ROOT / "config" / "materials.yaml"):
+    """Rescale photo-graded textures to plausible diffuse albedo (camera exposure != albedo; Pure/CSP blow
+    out over-bright albedo at midday). Mean linear luminance of opaque texels -> target; hue/contrast kept."""
+    import yaml
+    tgt = (yaml.safe_load(open(cfg)) or {}).get("albedo", {})
+    rep = {}
+    for name, a in tgt.items():
+        if name not in T:
+            continue
+        im = Image.open(io.BytesIO(T[name])); mode = im.mode
+        arr = np.asarray(im.convert("RGBA")).astype(np.float32) / 255.0
+        lin = np.where(arr[..., :3] <= 0.04045, arr[..., :3] / 12.92, ((arr[..., :3] + 0.055) / 1.055) ** 2.4)
+        m = arr[..., 3] > 0.5
+        if not m.any():
+            continue
+        Y = lin @ np.array([0.2126, 0.7152, 0.0722], np.float32)
+        y0 = float(Y[m].mean()); lin = np.clip(lin * (a / max(y0, 1e-4)), 0, 1)
+        srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * lin ** (1 / 2.4) - 0.055)
+        arr[..., :3] = srgb
+        out = Image.fromarray((arr * 255 + 0.5).astype(np.uint8), "RGBA")
+        T[name] = png(out if mode == "RGBA" else out.convert("RGB"))
+        rep[name] = (round(y0, 3), a)
+    (BUILD / "albedo_calibration.json").write_text(json.dumps(rep, indent=1))
+    print("  albedo (before -> target):", ", ".join(f"{k} {v[0]}->{v[1]}" for k, v in rep.items()))
+
+
+BASE = {"ksAmbient": 0.5, "ksDiffuse": 0.5, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
 MATS = {
     "road_asphalt": Material("road_asphalt", "ksPerPixelMultiMap",
                              {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.6, "ksSpecular": 0.15, "ksSpecularEXP": 30.0, "fresnelC": 0.0, "fresnelEXP": 2.0, "fresnelMaxLevel": 0.15,
@@ -358,6 +385,7 @@ MATS = {
 }
 # track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
 T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
+albedo_calibrate(T)
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
