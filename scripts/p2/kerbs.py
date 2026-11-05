@@ -122,7 +122,7 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     zsh = np.where(u <= 1, z0 + (z1 - z0) * u, z1 + (z2 - z1) * (u - 1))
                     zpl = RZ[i, col][:, None] + slope_all[i][:, None] * (dd - e[:, None])
                     fade = 1 - smoothstep((t - 0.75) / 0.25)[None, :]
-                    base = zsh + np.clip(zpl - zsh, 0, None) * fade
+                    base = zsh + np.clip(zpl - zsh, 0, K["max_above_shoulder_m"]) * fade
                     lift = np.where(t > 0, K["lift_m"], 0.0)[None, :] * np.ones((n, 1))
                     z = base + lift + P_["height_m"] * hp[None, :] * tap[:, None]
                     z[:, -1] = zsh[:, -1] - 0.002                             # outer edge sinks into the shoulder
