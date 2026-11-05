@@ -336,7 +336,7 @@ def posts_on(acc, ln, a, b, sp, w, top, rect, below=0.35, ref_arr=None):
 
 def collide_line(acc, ln, a, b, z0=-0.7, h=None, half=0.07, kind="", s0=0, s1=0, zarr=None, minh=CO.MIN_TOP):
     """closed thin box along the line a..b; top >= minh above the reference z"""
-    ar, x, y, z = ln.poly(a, b, 1.0)
+    ar, x, y, z = ln.poly(max(a - 0.5, 0.0), min(b + 0.5, ln.L), 1.0)   # dev4: 0.5 m past each end (end posts were uncovered)
     top = max(minh, h or 0)
     acc.col.ribbon(x, y, z + z0, z + top, half)
     need_col(kind, zip(x, y), z, False, s0, s1)

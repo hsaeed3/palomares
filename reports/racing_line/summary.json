@@ -4,19 +4,587 @@
   "vmax_kmh": 209,
   "vmin_kmh": 61,
   "braking_zones": 64,
-  "kerbs": 61,
-  "boards": [],
+  "kerbs": 84,
+  "boards": [
+   {
+    "s_turn_in": 12483.98,
+    "s_onset": 12352.98,
+    "s_apex": 12511.98,
+    "boards": [
+     12333.98,
+     12383.98,
+     12433.98
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 72,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 12333.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 12383.98,
+      "off_m": 0.5,
+      "side": "right"
+     },
+     {
+      "s": 12433.98,
+      "off_m": 0.5,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 1146.0,
+    "s_onset": 1045.0,
+    "s_apex": 1171.0,
+    "boards": [
+     996.0,
+     1046.0,
+     1096.0
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 98,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 996.0,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 1046.0,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 1096.0,
+      "off_m": 0.9,
+      "side": "left"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 15580.98,
+    "s_onset": 15461.98,
+    "s_apex": 15582.98,
+    "boards": [
+     15430.98,
+     15480.98,
+     15530.98
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 108,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 15430.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 15480.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 15530.98,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 13742.98,
+    "s_onset": 13694.98,
+    "s_apex": 13829.98,
+    "boards": [
+     13592.98,
+     13642.98,
+     13692.98
+    ],
+    "v_entry_kmh": 194,
+    "v_apex_kmh": 96,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 13592.98,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 13642.98,
+      "off_m": 0.3,
+      "side": "left"
+     },
+     {
+      "s": 13692.98,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 11902.98,
+    "s_onset": 11812.98,
+    "s_apex": 11941.98,
+    "boards": [
+     11752.98,
+     11802.98,
+     11852.98
+    ],
+    "v_entry_kmh": 200,
+    "v_apex_kmh": 108,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 11752.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 11802.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 11852.98,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 14545.98,
+    "s_onset": 14461.98,
+    "s_apex": 14568.98,
+    "boards": [
+     14395.98,
+     14445.98,
+     14495.98
+    ],
+    "v_entry_kmh": 183,
+    "v_apex_kmh": 81,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 14395.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 14445.98,
+      "off_m": 3.2,
+      "side": "left"
+     },
+     {
+      "s": 14495.98,
+      "off_m": 0.9,
+      "side": "left"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 11484.98,
+    "s_onset": 11484.98,
+    "s_apex": 11583.98,
+    "boards": [
+     11334.98,
+     11384.98,
+     11434.98
+    ],
+    "v_entry_kmh": 202,
+    "v_apex_kmh": 123,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 11334.98,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 11384.98,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 11434.98,
+      "off_m": 0.9,
+      "side": "left"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 6655.99,
+    "s_onset": 6582.99,
+    "s_apex": 6676.99,
+    "boards": [
+     6505.99,
+     6555.99,
+     6605.99
+    ],
+    "v_entry_kmh": 209,
+    "v_apex_kmh": 140,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 6505.99,
+      "off_m": 0.5,
+      "side": "left"
+     },
+     {
+      "s": 6555.99,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 6605.99,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   }
+  ],
   "touch_frac_l": 0.113,
   "touch_frac_r": 0.093
  },
  "sb": {
   "flying_time_full_s": 381.9,
   "vmax_kmh": 209,
-  "vmin_kmh": 60,
+  "vmin_kmh": 59,
   "braking_zones": 59,
-  "kerbs": 60,
-  "boards": [],
-  "touch_frac_l": 0.104,
+  "kerbs": 88,
+  "boards": [
+   {
+    "s_turn_in": 118.0,
+    "s_onset": 263.0,
+    "s_apex": 91.0,
+    "boards": [
+     268.0,
+     218.0,
+     168.0
+    ],
+    "v_entry_kmh": 209,
+    "v_apex_kmh": 59,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 268.0,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 218.0,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 168.0,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 14724.98,
+    "s_onset": 14833.98,
+    "s_apex": 14700.98,
+    "boards": [
+     14874.98,
+     14824.98,
+     14774.98
+    ],
+    "v_entry_kmh": 209,
+    "v_apex_kmh": 89,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 14874.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 14824.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 14774.98,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 5449.99,
+    "s_onset": 5575.99,
+    "s_apex": 5422.99,
+    "boards": [
+     5599.99,
+     5549.99,
+     5499.99
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 92,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 5599.99,
+      "off_m": 0.5,
+      "side": "right"
+     },
+     {
+      "s": 5549.99,
+      "off_m": 0.5,
+      "side": "right"
+     },
+     {
+      "s": 5499.99,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 11242.98,
+    "s_onset": 11344.98,
+    "s_apex": 11218.98,
+    "boards": [
+     11392.98,
+     11342.98,
+     11292.98
+    ],
+    "v_entry_kmh": 204,
+    "v_apex_kmh": 92,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 11392.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 11342.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 11292.98,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 12098.98,
+    "s_onset": 12174.98,
+    "s_apex": 12049.98,
+    "boards": [
+     12248.98,
+     12198.98,
+     12148.98
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 110,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 12248.98,
+      "off_m": 0.5,
+      "side": "right"
+     },
+     {
+      "s": 12198.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 12148.98,
+      "off_m": 0.5,
+      "side": "left"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 9464.98,
+    "s_onset": 9580.98,
+    "s_apex": 9438.98,
+    "boards": [
+     9614.98,
+     9564.98,
+     9514.98
+    ],
+    "v_entry_kmh": 208,
+    "v_apex_kmh": 123,
+    "outside": "left",
+    "placed": [
+     {
+      "s": 9614.98,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 9564.98,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 9514.98,
+      "off_m": 0.9,
+      "side": "left"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 7536.99,
+    "s_onset": 7595.99,
+    "s_apex": 7451.99,
+    "boards": [
+     7686.99,
+     7636.99,
+     7586.99
+    ],
+    "v_entry_kmh": 188,
+    "v_apex_kmh": 91,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 7686.99,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 7636.99,
+      "off_m": 0.9,
+      "side": "right"
+     },
+     {
+      "s": 7586.99,
+      "off_m": 0.9,
+      "side": "right"
+     }
+    ]
+   },
+   {
+    "s_turn_in": 3955.99,
+    "s_onset": 4041.99,
+    "s_apex": 3928.99,
+    "boards": [
+     4105.99,
+     4055.99,
+     4005.99
+    ],
+    "v_entry_kmh": 187,
+    "v_apex_kmh": 89,
+    "outside": "right",
+    "placed": [
+     {
+      "s": 4105.99,
+      "off_m": 0.9,
+      "side": "left"
+     },
+     {
+      "s": 4055.99,
+      "off_m": 0.5,
+      "side": "right"
+     },
+     {
+      "s": 4005.99,
+      "off_m": 0.5,
+      "side": "right"
+     }
+    ]
+   }
+  ],
+  "touch_frac_l": 0.105,
   "touch_frac_r": 0.087
+ },
+ "ai_lines": {
+  "road_summit": {
+   "points": 7417,
+   "length_m": 7382.0087890625,
+   "vmax_kmh": 208.8,
+   "est_time_s": 203.456285106125,
+   "bytes": 682388
+  },
+  "track_summit": {
+   "points": 7417,
+   "length_m": 7382.0087890625,
+   "vmax_kmh": 208.8,
+   "est_time_s": 203.456285106125,
+   "bytes": 682388
+  },
+  "road_summit_rev": {
+   "points": 7417,
+   "length_m": 7384.1689453125,
+   "vmax_kmh": 208.8,
+   "est_time_s": 202.67957857087464,
+   "bytes": 682388
+  },
+  "track_summit_rev": {
+   "points": 7417,
+   "length_m": 7384.1689453125,
+   "vmax_kmh": 208.8,
+   "est_time_s": 202.67957857087464,
+   "bytes": 682388
+  },
+  "road_north": {
+   "points": 8216,
+   "length_m": 8193.880859375,
+   "vmax_kmh": 208.8,
+   "est_time_s": 182.58570196986125,
+   "bytes": 755896
+  },
+  "track_north": {
+   "points": 8216,
+   "length_m": 8193.880859375,
+   "vmax_kmh": 208.8,
+   "est_time_s": 182.58570196986125,
+   "bytes": 755896
+  },
+  "road_north_rev": {
+   "points": 8216,
+   "length_m": 8194.9111328125,
+   "vmax_kmh": 208.8,
+   "est_time_s": 184.83132255419662,
+   "bytes": 755896
+  },
+  "track_north_rev": {
+   "points": 8216,
+   "length_m": 8194.9111328125,
+   "vmax_kmh": 208.8,
+   "est_time_s": 184.83132255419662,
+   "bytes": 755896
+  },
+  "road_full": {
+   "points": 15572,
+   "length_m": 15515.693359375,
+   "vmax_kmh": 208.8,
+   "est_time_s": 381.43150847472873,
+   "bytes": 1432648
+  },
+  "track_full": {
+   "points": 15572,
+   "length_m": 15515.693359375,
+   "vmax_kmh": 208.8,
+   "est_time_s": 381.43150847472873,
+   "bytes": 1432648
+  },
+  "road_full_rev": {
+   "points": 15572,
+   "length_m": 15519.1904296875,
+   "vmax_kmh": 208.8,
+   "est_time_s": 382.91259466781077,
+   "bytes": 1432648
+  },
+  "track_full_rev": {
+   "points": 15572,
+   "length_m": 15519.1904296875,
+   "vmax_kmh": 208.8,
+   "est_time_s": 382.91259466781077,
+   "bytes": 1432648
+  }
  }
 }

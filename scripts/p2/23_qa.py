@@ -211,6 +211,24 @@ for i, (fn, nm, p, t, n) in enumerate(drv_items):
     bverts.append(np.unique(be.ravel()) + int(np.sum([len(x[2]) for x in drv_items[:i]])))
 bv = np.concatenate(bverts)
 zo, to = drv.sample(P[bv, :2], exclude_owner=vown[bv], eps=1e-4)
+# kerbs of the other run direction are never loaded together (palomares_kerbs_nb.kn5 / _sb.kn5 per layout):
+# re-sample boundary vertices of nb kerbs without sb kerbs (and vice versa), and of non-kerb meshes without
+# the sb kerbs (the nb set is checked; sb is the mirror case, covered by qa_drive on track_*_rev)
+_kd = np.array(["_NB_" in it[1] if it[1].startswith("1KERB") else False for it in drv_items])
+_ks = np.array(["_SB_" in it[1] if it[1].startswith("1KERB") else False for it in drv_items])
+for _mine, _other in ((_kd, _ks), (_ks, _kd), (~(_kd | _ks), _ks)):
+    _sel = _mine[vown[bv]]
+    if not _sel.any():
+        continue
+    _items = [it for k_, it in enumerate(drv_items) if not _other[k_]]
+    _idx = np.nonzero(~_other)[0]
+    _sub = TriSet(_items); _remap = {int(o): n_ for n_, o in enumerate(_idx)}
+    _ex = np.array([_remap.get(int(o), -1) for o in vown[bv][_sel]])
+    _z, _t = _sub.sample(P[bv[_sel], :2], exclude_owner=_ex, eps=1e-4)
+    zo[_sel] = _z
+    _own_full = np.where(_t >= 0, _idx[_sub.own[np.maximum(_t, 0)]], -1)
+    _first = np.r_[0, np.cumsum([len(it[3]) for it in drv_items])[:-1]]   # first triangle of each owner in drv
+    to[_sel] = np.where(_own_full >= 0, _first[np.maximum(_own_full, 0)], -1)
 d = np.abs(zo - P[bv, 2]); has = ~np.isnan(d)
 def station_of(xy):
     tr = cKDTree(np.stack([CX, CY], 1)); dd, ii = tr.query(xy); return S[ii], dd
@@ -318,7 +336,12 @@ for lay, files in layouts.items():
             if kk not in j: pk.append(f"{lay}: ui_track.json missing {kk}")
         uij[lay] = dict(name=j.get("name"), length=j.get("length"))
         L = float(re.sub(r"[^\d.]", "", str(j.get("length", "0"))) or 0)
-        if abs(L - (FINISH - START_GATE)) > 30: pk.append(f"{lay}: length {L} vs gate-to-gate {FINISH-START_GATE}")
+        # per-layout gate-to-gate length (config/layouts.yaml segments; layout = <style>_<segment>)
+        try:
+            _sg = ly["segments"][lay.split("_", 1)[1]]; _exp = abs(ly[_sg["to"]] - ly[_sg["from"]])
+        except Exception:
+            _exp = FINISH - START_GATE
+        if abs(L - _exp) > 30: pk.append(f"{lay}: length {L} vs gate-to-gate {_exp}")
         for a in ("OpenStreetMap", "USGS"):
             if a not in j.get("description", ""): pk.append(f"{lay}: attribution {a} missing")
     except Exception as e: pk.append(f"{lay}: ui_track.json invalid ({e})")

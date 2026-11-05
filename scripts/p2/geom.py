@@ -29,6 +29,18 @@ class Road:
         self.x = gaussian_filter1d(c["x_local"], 1.5, mode="nearest")
         self.y = gaussian_filter1d(c["y_local"], 1.5, mode="nearest")
         self.z = gaussian_filter1d(c["z_navd88"], 2.0, mode="nearest")
+        # dev4: extra local smoothing where the grade changes > ~0.5 %/m (23_qa 3d spike at s=7866: centreline
+        # 0.8 %/m + surface noise > 1 %/m); blends toward a sigma-5 profile only there
+        for _ in range(60):
+            _d2 = self.z[2:] - 2 * self.z[1:-1] + self.z[:-2]
+            _bad = np.nonzero(np.abs(_d2) > 0.006)[0] + 1
+            if not len(_bad):
+                break
+            _m = np.zeros(len(self.z), bool)
+            for _o in (-2, -1, 0, 1, 2):
+                _m[np.clip(_bad + _o, 1, len(self.z) - 2)] = True
+            _zs = self.z.copy(); _zs[1:-1] = 0.25 * self.z[:-2] + 0.5 * self.z[1:-1] + 0.25 * self.z[2:]
+            self.z = np.where(_m, _zs, self.z)
         self.el = gaussian_filter1d(np.clip(c["edge_left_m"], 2.4, 6.0), 6, mode="nearest")
         self.er = gaussian_filter1d(np.clip(c["edge_right_m"], 2.4, 6.0), 6, mode="nearest")
         self.cl = gaussian_filter1d(np.clip(c["crossfall_left"], -0.10, 0.10), 5, mode="nearest")

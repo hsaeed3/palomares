@@ -178,6 +178,7 @@ def fill_holes():
         if not len(T_):
             continue
         cr = np.cross(pts[T_[:, 1]] - pts[T_[:, 0]], pts[T_[:, 2]] - pts[T_[:, 0]])[:, 2]
+        T_ = T_[np.abs(cr) > 1e-4]; cr = cr[np.abs(cr) > 1e-4]        # drop slivers along the collinear road end row
         T_[cr < 0] = T_[cr < 0][:, [0, 2, 1]]
         T_all.append(T_ + sum(len(p_) for p_ in P_all)); P_all.append(pts); nfill += 1
         print(f"  filled terrain hole near ({pts[0, 0]:.0f}, {pts[0, 1]:.0f}): {len(chain)} open-edge vertices, {len(T_)} tris, {poly.area:.1f} m2")

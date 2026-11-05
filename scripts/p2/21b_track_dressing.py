@@ -510,6 +510,9 @@ for dname, sd in (("nb", 1), ("sb", -1)):
         entry = z_["s_turn_in"]
         inner = (1 if z_["side"] == "left" else -1) * sd                # station side of the corner's inside
         st = [entry - sd * d_ for d_ in _BD]
+        _lc = yaml.safe_load(open(ROOT / "config/layouts.yaml"))
+        if not (_lc["start_gate_m"] + 40 < entry < _lc["north_gate_m"] - 10):
+            continue                                                    # turn-in outside the timed road (past a finish gate)
         if min(st) < 40 or max(st) > road.s[-1] - 40 or any(abs(entry - p) < _RLC["board_min_spacing_m"] for p in placed):
             continue
         # another real braking zone between the first board and this turn-in would make the boards misleading

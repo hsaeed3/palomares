@@ -54,7 +54,7 @@ const srv = http.createServer((q, s) => { const p = path.join(dir, decodeURIComp
   const p = await b.newPage({ viewport: { width: 1280, height: 720 } });
   p.on('console', m => { if (m.type() === 'error') console.log('console:', m.text()); });
   await p.goto('http://localhost:8851/');
-  await p.waitForFunction(() => window.__ready === true, null, { timeout: 600000 });
+  await p.waitForFunction(() => window.__ready === true, null, { timeout: 2400000 });
   const n = await p.evaluate(() => window.ncams);
   for (let i = 0; i < n; i++) {
     const s = await p.evaluate(i => window.shot(i), i);

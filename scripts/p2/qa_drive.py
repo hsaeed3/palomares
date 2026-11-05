@@ -349,7 +349,17 @@ FIXES = [
     "Event barriers (21b): unprotected steep drops ranked by racing-line exposure (speed where the drop is on the outside of the "
     "line or the line runs within 0.6 m of it, either direction); slow / inside-only drops (< 70 km/h) are no longer barriered.",
     "Terrain holes (21d `fill_holes`): the open terrain edges near the road (gaps between terrain and the road end rows at s=0 "
-    "and s=end) are closed along the road end row (1GRASS_hole_fill).",
+    "and s=end) are closed along the road end row (1GRASS_hole_fill); sliver triangles on the collinear end row dropped (23_qa 3c).",
+    "Kerbs: max_above_shoulder_m 0.05 -> 0.012 (kerb top was up to 79-92 mm above a falling verge; now <= ~41 mm) and kerb width "
+    "clipped to the shoulder (no overhang onto terrain / cut banks: the 0.2-0.57 m kerb/terrain steps in 23_qa 3a).",
+    "AI splines stop 6 m inside the road ends (they touched the 1WALL_start / 1WALL_end caps).",
+    "Walls (21d): 'away from the road' for wall thickening measured from the centreline, not 1ROAD vertices (with wide shoulders "
+    "the fence line sat on road vertices and whole collision boxes were pushed 0.3 m out: qa_collisions chainlink s=3500, "
+    "guardrail 3490, fences/gate s=13625-14385).",
+    "Race assets: grandstand site search penalises ground height off road level (summit stand was perched on the cut bank), "
+    "spectator areas skip run-wide zones of exit kerbs, ROAD CLOSED barricades skipped where a surveyed gate/chain-link closes the mouth.",
+    "Road profile (geom.Road): local smoothing where grade changes > 0.6 %/m (23_qa 3d spike s=7866), <= 4 cm change.",
+    "Draw calls (22): lines merged per 500 m, edge strips L+R per 500 m, kerbs per 1 km.",
 ]
 sev_rank = {"HIGH": 0, "MED": 1, "LOW": 2, "INFO": 3}
 F.sort(key=lambda f: (sev_rank[f["severity"]], f["kind"], f["layout"], f["s"]))

@@ -105,7 +105,7 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     t = np.array(P_["profile_t"], float); hp = np.array(P_["profile_h"], float)
                     e = e_all[i]
                     if isinstance(shoulder_w, dict):   # kerb fits on the real shoulder (>= 0.35 m; it covers the edge strip)
-                        w = np.minimum(w, np.maximum(shoulder_w[side][i], 0.35))
+                        w = np.minimum(w, np.maximum(shoulder_w[side][i] - 0.02, 0.10))   # dev4: never overhang the shoulder onto terrain / cut banks (23_qa 3a)
                     dd = e[:, None] + w[:, None] * t[None, :]                 # outward distance from centre
                     rr = np.repeat(i[:, None], len(t), 1)
                     x, y = road.xy(rr, sgn * dd)
