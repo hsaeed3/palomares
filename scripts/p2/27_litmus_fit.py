@@ -108,13 +108,15 @@ def score(p, cam, ph):
 LO = np.array([-1e9, -0.8, 1.0, -0.30, -0.20, -0.07]); HI = np.array([1e9, 3.2, 1.7, 0.30, 0.10, 0.07])
 
 
-def fit(f, cam, s0, win=250, ph=None):
+def fit(f, cam, s0, win=None, ph=None):
+    """win=None: search the whole Phase-2 road; frame-number prior only as a weak tie-break (0.03 per km)"""
     ph = ph or seg_photo(f)
     best = []
-    for s in np.arange(max(s0 - win, 7), min(s0 + win, len(S) - 170), 4.0):
+    lo, hi = (7, S_MAX - 10) if win is None else (max(s0 - win, 7), min(s0 + win, len(S) - 170))
+    for s in np.arange(lo, hi, 4.0 if win else 6.0):
         for lat in (0.3, 1.5):
             for yaw in (-0.12, 0, 0.12):
-                p = np.array([s, lat, 1.35, yaw, -0.05, 0.0]); best.append((score(p, cam, ph)[2], p))
+                p = np.array([s, lat, 1.35, yaw, -0.05, 0.0]); best.append((score(p, cam, ph)[2] + 0.03e-3 * abs(s - s0), p))
     best.sort(key=lambda t: t[0]); res = []
     for _, p0 in best[:4]:
         fn = lambda q: score(np.clip(q, LO, HI), cam, ph)[2] + 0.01 * abs(q[1] - 1.5) + 0.05 * abs(q[2] - 1.35)
@@ -155,22 +157,25 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=8); ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--min-iou", type=float, default=0.80); ap.add_argument("--max-yellow", type=float, default=40.0)
     ap.add_argument("--cam", type=float, nargs=2, help="skip calibration: f_rel lam"); a = ap.parse_args()
-    elig = [f for f in range(1, 220) if anchor_s(f) < S_MAX - 200 and f > 3]   # frames 1-3: junction mouth, wide apron
+    # frames are hand-picked screenshots (irregular spacing): anchors are only a prior; bridge at s~9199 is frame 137,
+    # so frames 4..125 may lie below the summit; the fitted station decides (must be < S_MAX - 30)
+    elig = list(range(4, 126))
     rng = np.random.default_rng(a.seed)
     if a.cam:
         CAM = tuple(a.cam); calib = None
     else:
         # lens: one global (f_rel, lam), grid search on 6 calibration frames, then fixed for all frames
         cal = sorted(rng.choice(elig, 6, replace=False).tolist()); phs = {f: seg_photo(f) for f in cal}
+        loc = {f: fit(f, (0.7, 1.0), anchor_s(f), ph=phs[f])["p"][0] for f in cal}; print("calib stations", loc, flush=True)
         grid = []
-        for lam in (1.0, 0.75, 0.5, 0.25):
-            for fr in (0.45, 0.55, 0.65, 0.8):
-                rs = [fit(f, (fr, lam), anchor_s(f), ph=phs[f]) for f in cal]
+        for lam in (1.0, 0.8, 0.6):
+            for fr in (0.55, 0.65, 0.75, 0.85, 0.95):
+                rs = [fit(f, (fr, lam), loc[f], win=60, ph=phs[f]) for f in cal]
                 sc = np.mean(sorted(r["iou"] - 0.5 * r["yellow_res_px"] / 480 for r in rs)[1:])
                 grid.append((sc, fr, lam)); print(f"f_rel {fr} lam {lam}: score {sc:.3f} IoU {np.mean([r['iou'] for r in rs]):.3f}", flush=True)
         _, fr, lam = max(grid)
         o = optimize.minimize(lambda q: -np.mean(sorted(r["iou"] - 0.5 * r["yellow_res_px"] / 480 for r in
-                              [fit(f, (q[0], q[1]), anchor_s(f), win=120, ph=phs[f]) for f in cal])[1:]),
+                              [fit(f, (q[0], q[1]), loc[f], win=40, ph=phs[f]) for f in cal])[1:]),
                               [fr, lam], method="Nelder-Mead", options=dict(initial_simplex=[[fr, lam], [fr + .05, lam], [fr, lam + .1]], maxiter=14))
         CAM = (float(o.x[0]), float(min(max(o.x[1], 0.05), 1.0))); calib = dict(frames=cal, grid=[list(map(float, g)) for g in grid])
     va, ha = edge_angles(CAM); print("lens f_rel=%.3f lam=%.3f -> photo FOV %.1f deg vertical, %.1f deg horizontal" % (CAM[0], CAM[1], 2 * va, 2 * ha))
