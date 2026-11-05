@@ -1,0 +1,56 @@
+frame,s_m,confidence,lateral_m,height_m,yaw_rel_deg,pitch_deg,roll_deg,fov_v_deg,iou,evidence
+111,7085,med,-1.89,1.44,3.4,5.7,0.6,64.0,0.81,"right bend, guardrail ahead R (gr 7109), dirt pullout L"
+112,7110,med,-2.21,1.7,-2.8,5.7,4.0,64.0,0.84,"right bend, chevrons, bank L; just past guardrail 7109"
+113,7136,low,-2.12,1.35,-3.9,0.2,4.0,64.0,0.73,"junction 7147 dirt apron L, right bend (curv -15)"
+114,7156.0,low,-1.98,1.63,-2.5,5.7,4.0,64.0,0.82,"straight after bend, chevron R"
+115,7238.8,low,-1.12,1.36,2.3,5.7,-1.3,64.0,0.85,"left bend start, valley view R, bank L"
+116,7374.2,med,-0.01,1.08,10.7,5.7,1.8,64.0,0.76,"left bend, grass bank L, guardrail R (pre-summit)"
+117,7393.1,med,-2.46,1.54,-7.7,-1.2,-0.1,64.0,0.85,"left bend near crest, guardrail R"
+118,7451.8,high,-1.68,1.42,-1.3,-2.0,-4.0,64.0,0.77,"summit crest 7392 region, chevron R, bank L"
+119,7506.9,high,-1.73,1.35,3.3,-5.3,-1.4,64.0,0.86,"left bend, bank L; render curve matches"
+120,7579.5,high,-1.9,1.63,6.1,-5.3,-0.4,64.0,0.88,"left bend ahead, bank L; render matches"
+121,7645,low,0.04,1.56,6.9,-4.5,-2.2,64.0,0.25,white rail fence R; override est (iou low)
+122,7720,low,-0.5,1.7,4.1,-3.9,3.4,64.0,0.52,wood fence R; est only
+123,7829.1,med,-0.09,1.69,5.5,-1.2,-4.0,64.0,0.86,fit+survey (cut_bank_vegetated|driveway_yard)
+124,7856.6,med,-1.91,1.56,-6.5,-3.5,1.8,64.0,0.82,fit+survey (cut_bank_vegetated|driveway_yard)
+125,7916.7,med,-1.72,1.42,-0.3,-3.0,1.8,64.0,0.82,fit+survey (cut_bank_vegetated|drop_off_trees)
+126,8038.6,med,-0.39,1.36,5.1,-1.8,-0.0,64.0,0.81,fit+survey (flat_grass|pasture_open)
+127,8099.9,low,-1.56,1.56,-2.5,-4.7,-2.0,64.0,0.76,fit+survey (cut_bank_vegetated|pasture_open)
+128,8212.6,med,-1.71,1.41,1.1,-2.5,0.7,64.0,0.85,fit+survey (drop_off_trees|cut_bank_vegetated)
+129,8275.5,med,-1.88,1.56,0.4,-3.2,3.4,64.0,0.8,fit+survey (driveway_yard|cut_bank_vegetated)
+130,8438.4,med,-1.65,1.35,0.1,-3.0,1.2,64.0,0.84,fit+survey (drop_off_trees|cut_bank_vegetated)
+131,8552.3,med,-1.19,1.43,6.0,-1.0,1.3,64.0,0.83,fit+survey (flat_grass|cut_bank_vegetated)
+132,8632.7,med,-1.68,1.47,-7.5,-2.0,1.1,64.0,0.84,fit+survey (drop_off_trees|driveway_yard)
+133,8705.7,med,-1.33,1.55,2.9,-4.4,4.0,64.0,0.86,fit+survey (drop_off_trees|cut_bank_vegetated)
+134,8842.0,med,-2.08,1.7,-1.4,-1.7,4.0,64.0,0.86,fit+survey (cut_bank_vegetated|flat_grass)
+135,8875.9,low,0.48,1.26,13.3,1.9,4.0,64.0,0.82,est + weak fit
+136,9094.8,low,-1.31,1.64,-0.2,-2.0,4.0,64.0,0.84,farm gate L; est + weak fit
+137,9157.4,high,-1.54,1.57,-1.1,-0.3,1.6,64.0,0.78,"MM 4.00 post, stone parapet R ahead of bridge 9193"
+138,9307.2,high,-0.63,1.7,8.0,2.9,4.0,64.0,0.84,"on approach to bridge 9307, guardrail L, parapet R"
+139,9345,med,-0.86,1.33,5.1,1.7,-4.0,64.0,0.84,post-bridge corral R; est
+140,9482.5,med,-0.12,1.48,5.1,0.9,-0.1,64.0,0.84,bare bank R (steep_face R 9474-9582)
+141,9541.4,low,-0.58,1.28,10.3,-0.0,0.9,64.0,0.85,"brick gate L (junction 9556), bank R"
+142,9604.8,med,-1.02,1.63,-2.8,-2.8,3.9,64.0,0.87,"guardrail L, right curve ahead"
+143,9612.8,med,-1.54,1.42,4.2,0.1,1.5,64.0,0.84,guardrail+wood fence L
+144,9703.1,med,0.32,1.29,7.7,-1.5,1.4,64.0,0.89,fit+survey (driveway_yard|flat_grass)
+145,9745.4,med,-1.15,1.48,2.4,1.8,1.1,64.0,0.86,fit+survey (driveway_yard|cut_bank_vegetated)
+146,9834.9,med,-1.67,1.33,-4.2,0.1,2.0,64.0,0.85,fit+survey (driveway_yard|flat_grass)
+147,9842.9,med,-1.69,1.36,-6.0,-1.2,0.4,64.0,0.86,fit+survey (driveway_yard|flat_grass)
+148,9906.9,med,-1.15,1.29,4.9,1.5,4.0,64.0,0.79,fit+survey (driveway_yard|flat_grass)
+149,9915.2,low,-0.44,1.14,7.1,1.7,4.0,64.0,0.67,fit+survey (driveway_yard|cut_bank_vegetated)
+150,9993.0,med,-1.09,1.42,4.1,2.1,3.1,64.0,0.84,fit+survey (pasture_open|flat_grass)
+151,10106.5,low,-1.89,1.35,-7.0,3.0,4.0,64.0,0.84,fit+survey (pasture_open|flat_grass)
+152,10114.5,med,-1.62,1.62,-9.0,2.3,2.7,64.0,0.87,fit+survey (drop_off_trees|cut_bank_vegetated)
+153,10202.1,low,-2.47,1.52,-4.4,3.0,3.4,64.0,0.77,fit+survey (driveway_yard|cut_bank_vegetated)
+154,10252.6,low,-2.14,1.69,-12.5,-0.1,4.0,64.0,0.79,fit+survey (driveway_yard|flat_grass)
+155,10260.6,low,-1.94,1.7,1.1,1.3,4.0,64.0,0.75,fit+survey (driveway_yard|cut_bank_bare_dirt)
+156,10357.4,low,-1.51,1.7,1.5,5.7,4.0,64.0,0.61,fit+survey (flat_grass|cut_bank_vegetated)
+157,10365.4,low,0.15,1.7,-1.8,4.0,-4.0,64.0,0.75,fit+survey (flat_grass|cut_bank_vegetated)
+158,10465.2,med,-1.17,1.7,-0.1,2.4,4.0,64.0,0.85,fit+survey (driveway_yard|cut_bank_vegetated)
+159,10529.0,med,-1.16,1.69,2.9,-0.9,4.0,64.0,0.84,fit+survey (drop_off_trees|cut_bank_vegetated)
+160,10537.0,low,0.15,1.3,11.7,-4.4,0.9,64.0,0.78,fit+survey (drop_off_trees|driveway_yard)
+161,10572.7,med,-1.71,1.67,1.8,-1.9,1.1,64.0,0.86,fit+survey (drop_off_trees|flat_grass)
+162,10642.9,med,-1.09,1.46,-6.9,-0.5,-0.8,64.0,0.84,fit+survey (drop_off_trees|driveway_yard)
+163,10727.0,med,-0.48,1.28,1.0,3.6,-4.0,64.0,0.79,small creek bridge ~ stream 10721; chevrons both sides
+164,10798.8,low,-1.33,1.4,8.4,-0.1,1.2,64.0,0.86,"black patch, iron fence R; est"
+165,10880.8,med,-1.3,1.4,-2.3,-0.1,3.7,64.0,0.88,fresh asphalt starts; est
