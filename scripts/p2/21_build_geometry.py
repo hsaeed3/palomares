@@ -204,7 +204,32 @@ tr = list(csv.DictReader(open(DER / "trees.csv")))
 tx_, ty_, tz_, th_, tcr_, ts_ = (np.array([float(t[k]) for t in tr]) for k in ("x_local", "y_local", "ground_z", "height_m", "crown_radius_m", "s_m"))
 d_tc, j_tc = bt.query(np.c_[tx_, ty_])
 hw_t = np.maximum(road.el, road.er)[j_tc]
-sel = (ts_ <= S_END + 60) & (d_tc > hw_t + 1.2)
+sel = (ts_ <= S_END + 60) & (d_tc > hw_t + SHOULDER_W + 1.3)  # trunk clear of road + shoulder + 0.5 m margin
+# road clearance envelope: nothing of a tree below CLEAR_H above the road inside road + shoulder + 0.5 m
+CLEAR_H, CLEAR_M = 5.5, 0.5
+def env_violation(P):
+    """bool per vertex: inside the road clearance envelope"""
+    d, j = bt.query(P[:, :2])
+    side = (P[:, 0] - road.x[j]) * road.nx[j] + (P[:, 1] - road.y[j]) * road.ny[j]
+    lim = np.where(side >= 0, road.el[j], road.er[j]) + SHOULDER_W + CLEAR_M
+    return (np.abs(side) < lim) & (d < lim + 1.0) & (P[:, 2] < road.z[j] + CLEAR_H), road.z[j] + CLEAR_H
+def clear_instance(inst):
+    """leaf quads touching the envelope are pruned; bark vertices in it are lifted to the clearance height
+    (limbs arch up over the road like the real canopy tunnel)"""
+    P, N, UV, T = inst["bark"]
+    bad, zc = env_violation(P)
+    if bad.any():
+        P = P.copy(); P[bad, 2] = zc[bad] + 0.05; inst["bark"] = (P, N, UV, T)
+    P, N, UV, T = inst["leaf"]
+    if len(P):
+        bad, _ = env_violation(P)
+        if bad.any():
+            keep = ~bad.reshape(-1, 4).any(1); nq = int(keep.sum())
+            P = P.reshape(-1, 4, 3)[keep].reshape(-1, 3); N = N.reshape(-1, 4, 3)[keep].reshape(-1, 3)
+            UV = UV.reshape(-1, 4, 2)[keep].reshape(-1, 2)
+            T = (np.array([(0, 1, 2), (0, 2, 3), (0, 2, 1), (0, 3, 2)])[None] + 4 * np.arange(nq)[:, None, None]).reshape(-1, 3)
+            inst["leaf"] = (P, N, UV, T)
+    return inst
 print("trees used", sel.sum(), "of", len(tr))
 ratio = tcr_ / np.maximum(th_, 1)
 species = np.where((th_ > 24) & (ratio < 0.3), "euc", np.where(ratio > 0.42, "oak", "bay"))
@@ -222,10 +247,11 @@ for k in np.nonzero(sel)[0]:
     pr = PROTOS[(sp, int(_h[k] * 997) % T3.N_PROTO, lod)]
     jr = j_tc[k]; to_road = np.array([road.x[jr] - tx_[k], road.y[jr] - ty_[k]]); to_road /= np.linalg.norm(to_road) + 1e-9
     if sp == "oak" and lod == 0:
-        lean_dir, lean = to_road, trng.uniform(0.05, 0.22)   # roadside oaks reach out over the road
+        # roadside oaks reach out over the road, but only as far as keeps the trunk out of the envelope below 5.5 m
+        lean_dir, lean = to_road, min(trng.uniform(0.05, 0.22), max(0.0, (d_tc[k] - hw_t[k] - SHOULDER_W - CLEAR_M - 0.8) / CLEAR_H))
     else:
         a = trng.uniform(0, 2 * np.pi); lean_dir, lean = np.array([math.cos(a), math.sin(a)]), trng.uniform(0, 0.06)
-    inst = T3.instance(pr, tx_[k], ty_[k], tz_[k], th_[k], tcr_[k], sp, trng.uniform(0, 2 * np.pi), lean_dir, lean)
+    inst = clear_instance(T3.instance(pr, tx_[k], ty_[k], tz_[k], th_[k], tcr_[k], sp, trng.uniform(0, 2 * np.pi), lean_dir, lean))
     for key, mat in (("bark", "tree_trunk"), ("leaf", "tree_leaves")):
         tree_acc.setdefault((c, lod, mat), []).append(inst[key])
 _tv = {}
@@ -274,6 +300,10 @@ for i in bar(range(0, N, 2), "shrubs"):
             u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
             # small 3D clump of 4 leaf quads (no + cross), spherical normals
             cP, cN, cUV, cT = T3.shrub_clump(x, y, z - 0.25, h, w, u0, srng)
+            _keep = ~env_violation(np.array(cP))[0].reshape(-1, 4).any(1)  # shrub quads never inside the road envelope
+            cP = [q for qi, q in enumerate(cP) if _keep[qi // 4]]; cN = [q for qi, q in enumerate(cN) if _keep[qi // 4]]
+            cUV = [q for qi, q in enumerate(cUV) if _keep[qi // 4]]
+            cT = [tt for tt in cT[:4 * int(_keep.sum())]]
             b = len(SH_P)
             SH_P += cP; SH_N += cN; SH_UV += cUV; SH_T += [(t0 + b, t1 + b, t2 + b) for (t0, t1, t2) in cT]
             SH_C += [chunk_of(i)] * len(cP)
@@ -288,6 +318,10 @@ for c in range(nchunks):
     add("trees", f"shrub_{c:02d}", "shrub", P, T, SH_UV[used], N_=Nn, cast_shadows=False, lod_out=250.0)
 print("shrub clumps", len(SH_T) // 16, "vertices", len(SH_P))
 
+# build check: no tree / shrub vertex inside the road clearance envelope
+_nviol = sum(int(env_violation(m["P"])[0].sum()) for m in G["trees"] if m["material"] in ("tree_trunk", "tree_leaves", "shrub"))
+print("road clearance envelope (5.5 m over road + shoulder + 0.5 m): violating tree/shrub vertices =", _nviol)
+assert _nviol == 0, f"{_nviol} tree/shrub vertices inside the road clearance envelope"
 _tick("shrubs")
 # ------------------------------------------------------------------ barriers
 feats = json.load(open(DER / "features.geojson"))["features"]
