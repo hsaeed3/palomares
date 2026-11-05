@@ -199,11 +199,24 @@ with rasterio.open(DER / "backdrop_dem_r10.tif") as r:
     bd_shape = r.shape
 backdrop_img = Image.fromarray(o).resize((4096, int(4096 * o.shape[0] / o.shape[1]))).filter(ImageFilter.GaussianBlur(0.6))
 
+def road_surface_tex():
+    """12 m procedural asphalt atlas, worn-paint line textures, RPM and decal atlas (scripts/p2/road_surface.py)"""
+    import road_surface as RS
+    base = graded("Asphalt026C", "asphalt_dry", contrast=0.55, dL=-6)
+    d, n, mp = RS.asphalt_atlas(base, jpg_tex("Asphalt026C", "NormalDX"), Image.open(TEX / "Asphalt026C" / "Asphalt026C_1K-JPG_Roughness.jpg"))
+    yel, wht = RS.paint_colours(ROOT)
+    asph = tuple(int(v) for v in np.asarray(base, float).reshape(-1, 3).mean(0))
+    def patch_rgb(k, size):  # newer asphalt: darker, finer, less oxidised; k=3 fresh black patch
+        g = graded("Asphalt026C", "asphalt_dry", 512, contrast=0.35 if k < 3 else 0.25, dL=(-11, -15, -8, -34)[k])
+        return np.roll(np.asarray(g.resize((size, size)), float), 97 * k, (0, 1))
+    return {"asphalt_d.png": png(d), "asphalt_n.png": png(n), "asphalt_maps.png": png(mp),
+            "paint_white.png": png(RS.line_tex("single", wht, asph, 5)), "paint_yellow.png": png(RS.line_tex("single", yel, asph, 6)),
+            "paint_yellow_dbl.png": png(RS.line_tex("double", yel, asph, 7)), "rpm.png": png(RS.rpm_tex(yel)),
+            "road_decal.png": png(RS.decal_atlas(patch_rgb))}
+
+
 T = {
     # dry-asphalt grade; AC lighting is brighter than the overcast photos, so pull L down a little
-    "asphalt_d.png": png(graded("Asphalt026C", "asphalt_dry", contrast=0.55, dL=-6)),
-    "asphalt_n.png": png(jpg_tex("Asphalt026C", "NormalDX")),
-    "asphalt_maps.png": png(maps_from_rough("Asphalt026C", 0.3).resize((1024, 1024))),
     "ground_d.png": png(graded("Grass004", "grass", contrast=0.8, dL=4, chroma=1.35)),  # vivid spring grass
     "rock_d.png": png(graded("Rock030", "dirt_cut", contrast=0.9, dL=-4, chroma=0.6)),
     "dirt_d.png": png(graded("Ground048", "litter", contrast=0.7)),          # road shoulder: oak leaf litter + gravel
@@ -212,8 +225,8 @@ T = {
     "shrub.png": png(shrub_atlas()),
     "backdrop_d.png": png(backdrop_img),
     "tree_oak.png": png(foliage("oak", 1)), "tree_bay.png": png(foliage("bay", 2)), "tree_euc.png": png(foliage("euc", 3)),
-    "paint_white.png": png(solid((230, 230, 225))), "paint_yellow.png": png(solid((225, 180, 40))),
     "kerb.png": png(kerb_tex()), "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
+    **road_surface_tex(),
 }
 BASE = {"ksAmbient": 0.45, "ksDiffuse": 0.45, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
 MATS = {
@@ -228,8 +241,12 @@ MATS = {
     "bank": Material("bank", "ksPerPixel", dict(BASE), {"txDiffuse": "bank_d.png"}),
     "shrub": Material("shrub", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": "shrub.png"}, alpha_tested=True),
     "backdrop": Material("backdrop", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.35}, {"txDiffuse": "backdrop_d.png"}),
-    "paint_white": Material("paint_white", "ksPerPixel", dict(BASE), {"txDiffuse": "paint_white.png"}),
-    "paint_yellow": Material("paint_yellow", "ksPerPixel", dict(BASE), {"txDiffuse": "paint_yellow.png"}),
+    # markings + decals: alpha-tested (worn breakup), non-physical, slightly glossier than asphalt
+    "paint_white": Material("paint_white", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_white.png"}, alpha_tested=True),
+    "paint_yellow": Material("paint_yellow", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow.png"}, alpha_tested=True),
+    "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
+    "rpm_yellow": Material("rpm_yellow", "ksPerPixel", {**BASE, "ksSpecular": 0.5, "ksSpecularEXP": 60.0}, {"txDiffuse": "rpm.png"}),
+    "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksSpecular": 0.2, "ksSpecularEXP": 35.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
     "kerb": Material("kerb", "ksPerPixel", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0}, {"txDiffuse": "kerb.png"}),
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),
     "invisible": Material("invisible", "ksPerPixel", dict(BASE), {"txDiffuse": "black.png"}),

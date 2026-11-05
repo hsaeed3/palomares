@@ -169,18 +169,18 @@ def line_tex(kind, rgb, asphalt_rgb, seed, W=128, H=2048):
     else:
         cl = [0.0]
     edge = np.min([np.abs(x - c) for c in cl], 0) - LINE_W / 2   # <0 inside a line
-    ragged = 0.006 * pnoise((H, W), 6, seed, aniso=(1, 0.3))     # +-6 mm ragged edge
+    ragged = 0.004 * pnoise((H, W), 6, seed, aniso=(1, 0.3))     # +-4 mm ragged edge
     e = edge[None, :] + ragged
     cov = np.clip(0.5 - e / 0.008, 0, 1)                          # soft 8 mm feather
     wear = pnoise((H, W), 10, seed + 1) + 0.6 * pnoise((H, W), 40, seed + 2, aniso=(0.4, 1))
-    holes = wear > 1.55                                           # ~8 % paint lost
+    holes = wear > 2.0                                            # ~2-3 % paint lost
     alpha = (cov > 0.5) & ~holes
     # colour: paint, dirtied, edge pixels mixed toward asphalt
     tint = (1 - 0.06 * np.clip(pnoise((H, W), 18, seed + 3), -2, 2) - 0.04)[..., None]
     pr = np.array(rgb, float)[None, None] * tint
     a_rgb = np.array(asphalt_rgb, float)[None, None]
     mix = np.clip(cov, 0, 1)[..., None] ** 0.7
-    thin = (wear > 1.0)[..., None] * 0.35                          # worn-thin paint shows asphalt through
+    thin = (wear > 1.3)[..., None] * 0.30                          # worn-thin paint shows asphalt through
     c = pr * mix * (1 - thin) + a_rgb * (1 - mix * (1 - thin))
     c += r.normal(0, 4, c.shape)
     out = np.dstack([c.clip(0, 255), alpha * 255]).astype(np.uint8)
@@ -211,10 +211,12 @@ def decal_atlas(patch_rgb_fn, tar_rgb=(40, 40, 42), size=2048, seed=21):
         if r.random() < 0.6:                                   # a branch
             j = int(r.uniform(20, 90)); bx, by = pts[j]
             br = _walk(r, bx, by, math.pi / 2 + r.choice([-0.5, 0.5]), 25, 0.08 * pxm_v, 0.15)
-            br = [(np.clip(a, 8, cw - 8), b) for a, b in br]
-            dr.line(br, fill=255, width=max(4, w // 2))
+            k_ = next((q for q, (a, b) in enumerate(br) if not (12 < a < cw - 12 and 12 < b < ch - 12)), len(br))
+            br = br[:k_]
+            if len(br) > 1:
+                dr.line(br, fill=255, width=max(4, w // 2))
         mm = np.asarray(m.filter(ImageFilter.GaussianBlur(2.5)), float) / 255
-        mm = mm + 0.25 * pnoise((ch, cw), 4, seed + k)
+        mm = mm + 0.25 * pnoise((ch, cw), 4, seed + k) * (mm > 0.15)
         # strip ends taper so chained strips don't show seams
         yy = np.linspace(0, 1, ch)[:, None]
         mm *= np.clip(np.minimum(yy, 1 - yy) / 0.04, 0, 1)
