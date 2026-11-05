@@ -108,6 +108,28 @@ print("  surface spans:", dict(collections.Counter(s["kind"] for s in SPANS)))
 
 
 # ================================================================== geometry helpers
+# Offsets in the survey are from the asphalt edge. Ground-referenced assets are kept at least on the shoulder's
+# outer edge (road.sh_w_l/r, edge_profile.py) and never sunk into a ditch / drop: if the DTM at the requested offset
+# is more than DROP_MAX below the road edge, the asset is pulled in toward the edge until the ground is within range
+# (else it stands on the shoulder's outer lip). LOW_ASSETS collects any base still > DROP_MAX below the road edge.
+DROP_MAX = 0.6
+CLAMP_MAX_OFF = 6.0   # roadside furniture only; buildings / tree rows further out keep their surveyed offset
+LOW_ASSETS = []
+
+
+def clamp_off(i, sgn, e, off, zr):
+    """per-sample offset from the asphalt edge (arrays): >= shoulder width, ground within DROP_MAX of the road edge"""
+    i = np.atleast_1d(i); e = np.atleast_1d(e); zr = np.atleast_1d(zr)
+    sw = road.sh_w(i, sgn); off = np.maximum(np.broadcast_to(np.asarray(off, float), i.shape), sw)
+    fr = np.linspace(1.0, 0.0, 9)                                    # candidates: off -> shoulder edge
+    cand = sw[:, None] + (off - sw)[:, None] * fr[None, :]
+    x, y = road.xy(np.repeat(i[:, None], 9, 1), sgn * (e[:, None] + cand))
+    zg = ground(x, y)
+    ok = np.isfinite(zg) & (zg >= zr[:, None] - DROP_MAX)
+    ok[:, -1] = True
+    return cand[np.arange(len(i)), ok.argmax(1)]
+
+
 class Pt:
     def __init__(self, s, side, off, ref="ground"):
         sgn = 1 if side == "left" else -1
@@ -116,16 +138,22 @@ class Pt:
         X, Y = float(np.interp(s, road.s, road.x)), float(np.interp(s, road.s, road.y))
         nx, ny = float(np.interp(s, road.s, road.nx)), float(np.interp(s, road.s, road.ny)); nn = math.hypot(nx, ny); nx, ny = nx / nn, ny / nn
         tx, ty = float(np.interp(s, road.s, road.tx)), float(np.interp(s, road.s, road.ty)); tn = math.hypot(tx, ty); tx, ty = tx / tn, ty / tn
+        i = int(round(s)); i = min(max(i, 0), N - 1)
+        zr = float(road.surface_z(i, sgn * e, noise=False))
+        sw = float(road.sh_w(i, sgn))
+        if ref != "road" and off <= CLAMP_MAX_OFF:
+            off = float(clamp_off(i, sgn, e, off, zr)[0])
         d = sgn * (e + off)
         self.x, self.y = X + nx * d, Y + ny * d
         self.t = np.array([tx, ty]); self.out = np.array([nx * sgn, ny * sgn])      # outward = away from the road
-        i = int(round(s)); i = min(max(i, 0), N - 1)
-        zr = float(road.surface_z(i, sgn * e, noise=False)); zs = float(road.surface_z(i, sgn * (e + min(off, SHOULDER_W)), noise=False))
+        zs = float(road.surface_z(i, sgn * (e + min(off, sw)), noise=False))
         if ref == "road":
             self.z = zr
         else:
-            zg = float(ground(self.x, self.y)); w = min(max((off - 0.8) / 1.2, 0), 1)
+            zg = float(ground(self.x, self.y)); w = min(max((off - sw) / 1.2, 0), 1)
             self.z = zs * (1 - w) + zg * w if np.isfinite(zg) else zs
+            if self.z < zr - DROP_MAX and off <= CLAMP_MAX_OFF:
+                LOW_ASSETS.append(dict(s=round(s, 1), side=side, off=round(off, 2), drop=round(zr - self.z, 2)))
         self.zr = zr; self.s = s; self.e = e; self.sgn = sgn; self.i = i
 
 
@@ -136,16 +164,25 @@ class Line:
         n = max(2, int(math.ceil((s1 - s0) / step)) + 1); ss = np.linspace(s0, s1, n); sgn = 1 if side == "left" else -1
         e = np.interp(ss, road.s, road.el if sgn > 0 else road.er)
         nx, ny = np.interp(ss, road.s, road.nx), np.interp(ss, road.s, road.ny); nn = np.hypot(nx, ny); nx, ny = nx / nn, ny / nn
-        d = sgn * (e + off)
-        self.x = np.interp(ss, road.s, road.x) + nx * d; self.y = np.interp(ss, road.s, road.y) + ny * d
         idx = np.clip(np.round(ss).astype(int), 0, N - 1)
         zr = road.surface_z(idx, sgn * e, noise=False)
-        zs = road.surface_z(idx, sgn * (e + min(off, SHOULDER_W)), noise=False)
+        sw = road.sh_w(idx, sgn)
+        if ref != "road" and off <= CLAMP_MAX_OFF:   # per-sample clamp, smoothed so a fence line bends gently in toward the edge
+            offv = clamp_off(idx, sgn, e, off, zr)
+            offv = np.maximum(gaussian_filter1d(offv, max(1.0, 2.5 / step), mode="nearest"), sw)
+        else:
+            offv = np.full(n, float(off))
+        d = sgn * (e + offv)
+        self.x = np.interp(ss, road.s, road.x) + nx * d; self.y = np.interp(ss, road.s, road.y) + ny * d
+        zs = road.surface_z(idx, sgn * (e + np.minimum(offv, sw)), noise=False)
         if ref == "road":
             z = zr
         else:
-            zg = ground(self.x, self.y); w = min(max((off - 0.8) / 1.2, 0), 1)
+            zg = ground(self.x, self.y); w = np.clip((offv - sw) / 1.2, 0, 1)
             z = np.where(np.isfinite(zg), zs * (1 - w) + zg * w, zs)
+            lo = (z < zr - DROP_MAX) & (offv <= CLAMP_MAX_OFF)
+            if lo.any():
+                LOW_ASSETS.append(dict(s=round(float(ss[lo][0]), 1), side=side, off=round(float(offv[lo][0]), 2), drop=round(float((zr - z)[lo].max()), 2), n=int(lo.sum())))
         self.z = gaussian_filter1d(z, max(0.7, 1.5 / step), mode="nearest"); self.zr = gaussian_filter1d(zr, max(0.7, 1.5 / step), mode="nearest")
         self.ss, self.sgn, self.side = ss, sgn, side
         self.cum = np.r_[0, np.cumsum(np.hypot(np.diff(self.x), np.diff(self.y)))]; self.L = float(self.cum[-1])
@@ -666,11 +703,11 @@ for wi, w in enumerate(meta["walls"]):
     sgn = 1 if w["side"] == "left" else -1
     idx = np.arange(int(round(w["s0"])), int(round(w["s1"])) + 1); idx = np.clip(idx, 0, N - 1)
     e_ = road.el[idx] if sgn > 0 else road.er[idx]
-    x, y = road.xy(idx, sgn * (e_ + SHOULDER_W + 1.2)); zb = road.surface_z(idx, sgn * e_, noise=False)
+    x, y = road.xy(idx, sgn * (e_ + road.sh_w(idx, sgn) + 1.2)); zb = road.surface_z(idx, sgn * e_, noise=False)
     ACC[chunk_of(w["s0"])].col.ribbon(x, y, zb - 1.0, zb + 4.0, 0.1)
 for nm, i in (("1WALL_start", 1), ("1WALL_end", N - 2)):
     c = CO.Collider(nm)
-    d = np.linspace(-road.er[i] - SHOULDER_W - 1.8, road.el[i] + SHOULDER_W + 1.8, 9)
+    d = np.linspace(-road.outer(i, -1) - 1.8, road.outer(i, 1) + 1.8, 9)
     x, y = road.xy(np.full(9, i), d); c.ribbon(x, y, road.z[i] - 2.0, road.z[i] + 4.0, 0.15)
     ENDM = G.setdefault("roadside", []); ENDM += c.meshes()
 
@@ -720,6 +757,9 @@ for c in sorted(ACC):
 print(f"  collision flags fixed on {CO.fix_wall_flags(G)} 1WALL meshes (visible=True, renderable=False)")
 (BUILD / "roadside_atlas.png").write_bytes(ATLAS.png())
 json.dump(SOLID, open(BUILD / "roadside_solid.json", "w"))
+json.dump(LOW_ASSETS, open(BUILD / "roadside_low_assets.json", "w"), indent=0)
+print(f"  check: ground-referenced asset samples with base > {DROP_MAX} m below the road edge: {len(LOW_ASSETS)}"
+      + (f" (first: {LOW_ASSETS[:3]})" if LOW_ASSETS else ""))
 meta["roadside"] = dict(files=FILES, counts=dict(CNT), n_visual_meshes=sum(1 for m in out if m["material"] == "roadside"), verts=nv,
                         guardrail_pieces=n_kept, signs=dict(signs), collision_items=len(SOLID), skipped_far=dict(SKIPPED))
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))

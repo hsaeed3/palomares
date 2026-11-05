@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 V="${VERSION:-$(cat VERSION)}"
-F="dist/palomares_road_v${V}.zip"
+case "$V" in *-dev*) F="dist/palomares_road_dev${V##*-dev}_v${V}.zip";; *) F="dist/palomares_road_v${V}.zip";; esac
 BRANCH="${BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)}"
 is_zip() { [ -f "$1" ] && head -c 2 "$1" | grep -q PK; }
 

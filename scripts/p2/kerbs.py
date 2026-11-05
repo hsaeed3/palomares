@@ -113,11 +113,16 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     w = P_["width_m"] * (K["taper_min_width_frac"] + (1 - K["taper_min_width_frac"]) * tap)
                     t = np.array(P_["profile_t"], float); hp = np.array(P_["profile_h"], float)
                     e = e_all[i]
+                    if isinstance(shoulder_w, dict):   # kerb fits on the real shoulder (>= 0.35 m; it covers the edge strip)
+                        w = np.minimum(w, np.maximum(shoulder_w[side][i], 0.35))
                     dd = e[:, None] + w[:, None] * t[None, :]                 # outward distance from centre
                     rr = np.repeat(i[:, None], len(t), 1)
                     x, y = road.xy(rr, sgn * dd)
                     # shoulder surface under each column (piecewise linear edge -> mid -> out)
-                    u = np.clip((dd - e[:, None]) / (shoulder_w / 2), 0, 2)
+                    # shoulder_w: scalar (legacy) or {"left": sh_w_l, "right": sh_w_r} per-station arrays (edge_profile.py);
+                    # where the kerb is wider than the shoulder it continues on the shoulder's outer edge height (u clipped at 2)
+                    sw_ = shoulder_w[side][i] if isinstance(shoulder_w, dict) else np.full(n, float(shoulder_w))
+                    u = np.clip((dd - e[:, None]) / (sw_[:, None] / 2), 0, 2)
                     z0, z1, z2 = SZ[rr, 0], SZ[rr, 1], SZ[rr, 2]
                     zsh = np.where(u <= 1, z0 + (z1 - z0) * u, z1 + (z2 - z1) * (u - 1))
                     zpl = RZ[i, col][:, None] + slope_all[i][:, None] * (dd - e[:, None])

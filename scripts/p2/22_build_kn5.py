@@ -449,6 +449,11 @@ T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
 # authored at plausible albedo already.
 T["roadside.png"] = (BUILD / "roadside_atlas.png").read_bytes()
 albedo_calibrate(T)
+# ragged asphalt-edge strip atlas (edge_tex.py), from the calibrated shoulder textures so strip and shoulder match
+import edge_tex as _ET
+T["road_edge.png"] = png(_ET.edge_atlas({k: Image.open(io.BytesIO(T[f])) for k, f in
+                                         (("litter", "litter_d.png"), ("dirt", "dirt_d.png"), ("grass", "ground_d.png"), ("ivy", "bank_d.png"))}))
+MATS["road_edge"] = Material("road_edge", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.55, "ksAlphaRef": 0.5}, {"txDiffuse": "road_edge.png"}, alpha_tested=True)
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
 MATS["roadside"] = Material("roadside", "ksPerPixelAT", {**BASE, "ksSpecular": 0.06, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "roadside.png"}, alpha_tested=True)
@@ -544,7 +549,7 @@ for seg, sd in SEG.items():
     for sty, (sname, sdesc, sfiles) in STY.items():
         files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5", "palomares_dressing.kn5", f"palomares_dressing_{'nb' if sgn > 0 else 'sb'}.kn5"] if sty == "track" else [])
         LAYOUTS[f"{sty}_{seg}"] = dict(files=files, seg=seg, s_from=sd["s_from"], s_to=sd["s_to"], sgn=sgn,
-                                       name=f"Palomares Road — {sd['name']} ({sname})",
+                                       name=f"Palomares Road — {sd['name']} ({sname}) v{VERSION}",
                                        desc=f"Palomares Road, Alameda County CA: {sd['name']}, point to point. {sdesc}")
 SURF = """[SURFACE_0]
 KEY=ROAD

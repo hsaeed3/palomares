@@ -259,7 +259,7 @@ def gz(x, y, fallback):
 
 def clear_of_road(pts, margin):
     d, j = ctree.query(pts)
-    half = np.maximum(road.el[j], road.er[j]) + SHOULDER_W
+    half = np.maximum(road.outer(j, 1), road.outer(j, -1))   # per-station outer shoulder edge
     return bool(np.all(d >= half + margin))
 
 
@@ -279,7 +279,7 @@ def flat_spot(s0, s1, step, offs, L, W, sides=(1, -1), margin=1.5, maxrange=0.8,
         j = idx(s)
         for side in sides:
             for off in offs:
-                x, y = road.xy(j, side * (edge(j, side) + SHOULDER_W + off))
+                x, y = road.xy(j, side * (road.outer(j, side) + off))
                 if any(np.hypot(x - ax, y - ay) < ar for ax, ay, ar in avoid):
                     continue
                 r = footprint_ok(x, y, tangent(j), L, W, margin, maxrange)
@@ -295,7 +295,7 @@ USED = []   # (x, y, r) footprints already taken
 # ================================================================== gates
 for gi, sg in enumerate(GATES):
     i = idx(sg); t = tangent(i); n = normal(i)
-    dl = road.el[i] + SHOULDER_W + 1.0; drr = road.er[i] + SHOULDER_W + 1.0
+    dl = road.outer(i, 1) + 1.0; drr = road.outer(i, -1) + 1.0
     zroad = max(road.surface_z(i, d, noise=False) for d in np.linspace(-road.er[i], road.el[i], 9))
     zb = zroad + 5.6                                        # beam underside: >= 5.5 m clear of the crown
     legs = []
@@ -403,9 +403,9 @@ for r_i, (s0, s1, side, kmax) in enumerate(picked):
     ss = np.arange(sa, sb + 0.01, pitch)
     jj = np.array([idx(s) for s in ss])
     e = road.el[jj] if sgn > 0 else road.er[jj]
-    ze = road.surface_z(jj, sgn * (e + SHOULDER_W), noise=False)       # shoulder outer edge (barrier top reference)
+    ze = road.surface_z(jj, sgn * (e + road.sh_w(jj, sgn)), noise=False)       # shoulder outer edge (barrier top reference)
     setback = 0.6
-    dface = sgn * (e + SHOULDER_W + setback)                            # road-facing face line
+    dface = sgn * (e + road.sh_w(jj, sgn) + setback)                            # road-facing face line
     xf, yf = road.xy(jj, dface)
     zg = dtm(xf, yf); zg = np.where(np.isfinite(zg), zg, ze)
     zbase = np.minimum(zg, ze) - 0.12
@@ -468,15 +468,15 @@ for dname, sd in (("nb", 1), ("sb", -1)):
             best = None
             for side in (-inner, inner):                                    # prefer the outside of the corner
                 for off in (0.9, 0.5):
-                    x, y = road.xy(j, side * (edge(j, side) + SHOULDER_W + off))
-                    ze_ = road.surface_z(j, side * (edge(j, side) + SHOULDER_W), noise=False)
+                    x, y = road.xy(j, side * (road.outer(j, side) + off))
+                    ze_ = road.surface_z(j, side * (road.outer(j, side)), noise=False)
                     zz = gz(x, y, ze_)
                     if abs(zz - ze_) < 0.8:
                         best = (x, y, zz); break
                 if best: break
             if not best:
-                side = -inner; x, y = road.xy(j, side * (edge(j, side) + SHOULDER_W + 0.3))
-                best = (x, y, road.surface_z(j, side * (edge(j, side) + SHOULDER_W), noise=False) - 0.1)
+                side = -inner; x, y = road.xy(j, side * (road.outer(j, side) + 0.3))
+                best = (x, y, road.surface_z(j, side * (road.outer(j, side)), noise=False) - 0.1)
             x, y, zz = best
             box((x, y), runv, 0.06, 0.06, zz - 0.4, zz + 1.6, UVT["dark"])
             panel(np.array([x, y]) - runv * 0.04, zz + 1.0, zz + 1.75, runv, 0.75, UVT[f"board{txt}"], back=UVT["metal"])

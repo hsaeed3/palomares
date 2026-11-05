@@ -62,24 +62,28 @@ ii = np.repeat(np.arange(N)[:, None], D_ROAD.shape[1], 1)
 RX, RY = road.xy(ii, D_ROAD)
 RZ = road.surface_z(ii, D_ROAD)
 
-# shoulder: edge -> edge+0.4 -> edge+0.8, outer z pulled toward DTM but limited
+# shoulder: edge -> edge+w/2 -> edge+w, w = per-station width (edge_profile.py: road.sh_w_l/r, 0.15-2.6 m),
+# outer z pulled toward DTM but limited; mid column dips by road.ditch_l/r (shallow V ditch / gutter)
 def shoulder(side):
     sgn = 1 if side == "L" else -1
     e = road.el if side == "L" else road.er
+    W_ = road.sh_w_l if side == "L" else road.sh_w_r
+    DZ_ = road.ditch_l if side == "L" else road.ditch_r
     col = -1 if side == "L" else 0
     ex, ey, ez = RX[:, col], RY[:, col], RZ[:, col]
-    d_out = sgn * (e + SHOULDER_W)
+    d_out = sgn * (e + W_)
     ox, oy = road.xy(np.arange(N), d_out)
     zt = dtm(ox, oy)
     zt = np.where(np.isfinite(zt), zt, ez - 0.05)
     dz = gaussian_filter1d(np.clip(zt - ez, -0.30, 0.35), 2, mode="nearest")
     oz = ez + dz
-    mx, my = road.xy(np.arange(N), sgn * (e + SHOULDER_W / 2))
-    mz = ez + 0.5 * dz - 0.02            # slight dished edge
+    mx, my = road.xy(np.arange(N), sgn * (e + W_ / 2))
+    mz = ez + 0.5 * dz - np.minimum(0.02, 0.1 * W_) - DZ_   # slight dished edge / ditch V
     return np.stack([ex, mx, ox], 1), np.stack([ey, my, oy], 1), np.stack([ez, mz, oz], 1)
 
 SLX, SLY, SLZ = shoulder("L")
 SRX, SRY, SRZ = shoulder("R")
+EDGE_MAT = {"litter": "litter", "dirt": "shoulder_dirt", "grass": "ground", "ivy": "bank", "paved": "road_asphalt"}
 
 nchunks = chunk_of(N - 1) + 1
 for c in range(nchunks):
@@ -89,10 +93,53 @@ for c in range(nchunks):
     UV = np.stack([D_ROAD[rows] / 3.5, np.repeat(road.s[rows, None], 13, 1) / 3.5], -1).reshape(-1, 2)
     add("road", f"1ROAD_{c:02d}", "road_asphalt", P, grid_tris(nr, 13), UV)
     for side, (X, Y, Z) in (("L", (SLX, SLY, SLZ)), ("R", (SRX[:, ::-1], SRY[:, ::-1], SRZ[:, ::-1]))):
-        # columns must increase to the left: L = edge->out, R = out->edge
+        # columns must increase to the left: L = edge->out, R = out->edge. One mesh per edge material
+        # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROAD_ap{side}NN), quads take the material of their first row.
         P = np.stack([X[rows], Y[rows], Z[rows]], -1).reshape(-1, 3)
-        UV = np.stack([np.tile(np.arange(3) * 0.2, nr), np.repeat(road.s[rows], 3) / 2.0], -1)
-        add("road", f"1GRASS_sh{side}{c:02d}", "shoulder_dirt", P, grid_tris(nr, 3), UV)
+        Wc = (road.sh_w_l if side == "L" else road.sh_w_r)[rows]
+        ucol = np.array([0, 0.5, 1.0]) if side == "L" else np.array([1.0, 0.5, 0])
+        UV = np.stack([(ucol[None, :] * Wc[:, None]).ravel() / 2.0, np.repeat(road.s[rows], 3) / 2.0], -1)
+        Tg_ = grid_tris(nr, 3); mrow = (road.sh_mat_l if side == "L" else road.sh_mat_r)[rows][Tg_[:, 0] // 3]
+        for mname in EDGE_MAT:
+            Tm = Tg_[mrow == mname]
+            if len(Tm):
+                used, inv = np.unique(Tm, return_inverse=True)
+                nm_ = f"1ROAD_ap{side}{c:02d}" if mname == "paved" else f"1GRASS_sh{side}{mname}{c:02d}"
+                add("road", nm_, EDGE_MAT[mname], P[used], inv.reshape(-1, 3), UV[used])
+
+# ragged asphalt edge: non-physical alpha-tested strip over the pavement edge (edge_<mat> rows of road_edge.png, built
+# by edge_tex.py in 22). Columns: road.strip_in inside the edge (debris / wash-out on the asphalt) -> asphalt edge ->
+# shoulder mid column (crumbled edge, missing chunks). v of the edge column is fixed at EDGE_V so the ragged mask lines up.
+EDGE_ROW = {"litter": 0, "dirt": 1, "grass": 2, "ivy": 3}
+EDGE_V = 0.55
+for c in range(nchunks):
+    i0 = int(c * CHUNK); i1 = min(int((c + 1) * CHUNK), N - 1)
+    for side, sgn, X, Y, Z in (("L", 1, SLX, SLY, SLZ), ("R", -1, SRX, SRY, SRZ)):
+        mat_ = road.sh_mat_l if side == "L" else road.sh_mat_r
+        si_ = road.strip_in_l if side == "L" else road.strip_in_r
+        e_ = road.el if side == "L" else road.er
+        acc = dict(P=[], UV=[], T=[], n=0)
+        rows_all = np.arange(i0, i1 + 1)
+        brk = np.nonzero(mat_[rows_all[1:]] != mat_[rows_all[:-1]])[0] + 1
+        for run in np.split(rows_all, brk):
+            mname = mat_[run[0]]
+            if mname not in EDGE_ROW:
+                continue
+            run = np.r_[run, run[-1] + 1] if run[-1] + 1 <= i1 else run      # close the gap to the next run
+            if len(run) < 2:
+                continue
+            di = sgn * (e_[run] - si_[run])
+            xi, yi = road.xy(run, di); zi = road.surface_z(run, di) + 0.012
+            cols = [(xi, yi, zi), (X[run, 0], Y[run, 0], Z[run, 0] + 0.012), (X[run, 1], Y[run, 1], Z[run, 1] + 0.010)]
+            if side == "R":
+                cols = cols[::-1]
+            Pm = np.stack([np.stack(cc_, -1) for cc_ in cols], 1).reshape(-1, 3)
+            r0 = EDGE_ROW[mname] / 4.0
+            vv = np.array([0.02, EDGE_V, 0.98]) if side == "L" else np.array([0.98, EDGE_V, 0.02])
+            UVm = np.stack([np.repeat(road.s[run] / 4.0, 3), np.tile(r0 + vv / 4.0, len(run))], -1)
+            k_ = acc["n"]; acc["P"].append(Pm); acc["UV"].append(UVm); acc["T"].append(grid_tris(len(run), 3, k_)); acc["n"] = k_ + len(Pm)
+        if acc["P"]:
+            add("road", f"edge_{side}{c:02d}", "road_edge", np.concatenate(acc["P"]), np.concatenate(acc["T"]), np.concatenate(acc["UV"]), cast_shadows=False)
 
 _tick("road + shoulders")
 # ------------------------------------------------------------------ terrain (constrained Delaunay)
@@ -119,7 +166,8 @@ pts = np.concatenate(pts)
 inside = road_poly.contains_points(pts)
 dmin_b, _ = cKDTree(bound).query(pts)
 bt = cKDTree(np.c_[road.x, road.y]); dc, jc = bt.query(pts)
-hw_b = np.maximum(road.el, road.er)[jc] + SHOULDER_W + 0.5
+_sd_b = (pts[:, 0] - road.x[jc]) * road.nx[jc] + (pts[:, 1] - road.y[jc]) * road.ny[jc]
+hw_b = road.outer(jc, np.where(_sd_b >= 0, 1, -1)) + 0.5     # per-side, per-station outer edge (variable shoulder)
 pts = pts[(~inside) & (dmin_b > 0.6) & ~(dc < hw_b)]
 pz = dtm(pts[:, 0], pts[:, 1])
 pts, pz = pts[np.isfinite(pz)], pz[np.isfinite(pz)]
@@ -204,14 +252,16 @@ tr = list(csv.DictReader(open(DER / "trees.csv")))
 tx_, ty_, tz_, th_, tcr_, ts_ = (np.array([float(t[k]) for t in tr]) for k in ("x_local", "y_local", "ground_z", "height_m", "crown_radius_m", "s_m"))
 d_tc, j_tc = bt.query(np.c_[tx_, ty_])
 hw_t = np.maximum(road.el, road.er)[j_tc]
-sel = (ts_ <= S_END + 60) & (d_tc > hw_t + SHOULDER_W + 1.3)  # trunk clear of road + shoulder + 0.5 m margin
+_sd_t = np.where((tx_ - road.x[j_tc]) * road.nx[j_tc] + (ty_ - road.y[j_tc]) * road.ny[j_tc] >= 0, 1, -1)
+sw_t = road.sh_w(j_tc, _sd_t)                                  # per-station shoulder width on the tree's side
+sel = (ts_ <= S_END + 60) & (d_tc > hw_t + sw_t + 1.3)  # trunk clear of road + shoulder + 0.5 m margin
 # road clearance envelope: nothing of a tree below CLEAR_H above the road inside road + shoulder + 0.5 m
 CLEAR_H, CLEAR_M = 5.5, 0.5
 def env_violation(P):
     """bool per vertex: inside the road clearance envelope"""
     d, j = bt.query(P[:, :2])
     side = (P[:, 0] - road.x[j]) * road.nx[j] + (P[:, 1] - road.y[j]) * road.ny[j]
-    lim = np.where(side >= 0, road.el[j], road.er[j]) + SHOULDER_W + CLEAR_M
+    lim = road.outer(j, np.where(side >= 0, 1, -1)) + CLEAR_M
     return (np.abs(side) < lim) & (d < lim + 1.0) & (P[:, 2] < road.z[j] + CLEAR_H), road.z[j] + CLEAR_H
 def clear_instance(inst):
     """leaf quads touching the envelope are pruned; bark vertices in it are lifted to the clearance height
@@ -248,7 +298,7 @@ for k in np.nonzero(sel)[0]:
     jr = j_tc[k]; to_road = np.array([road.x[jr] - tx_[k], road.y[jr] - ty_[k]]); to_road /= np.linalg.norm(to_road) + 1e-9
     if sp == "oak" and lod == 0:
         # roadside oaks reach out over the road, but only as far as keeps the trunk out of the envelope below 5.5 m
-        lean_dir, lean = to_road, min(trng.uniform(0.05, 0.22), max(0.0, (d_tc[k] - hw_t[k] - SHOULDER_W - CLEAR_M - 0.8) / CLEAR_H))
+        lean_dir, lean = to_road, min(trng.uniform(0.05, 0.22), max(0.0, (d_tc[k] - hw_t[k] - sw_t[k] - CLEAR_M - 0.8) / CLEAR_H))
     else:
         a = trng.uniform(0, 2 * np.pi); lean_dir, lean = np.array([math.cos(a), math.sin(a)]), trng.uniform(0, 0.06)
     inst = clear_instance(T3.instance(pr, tx_[k], ty_[k], tz_[k], th_[k], tcr_[k], sp, trng.uniform(0, 2 * np.pi), lean_dir, lean))
@@ -282,7 +332,7 @@ for i in bar(range(0, N, 2), "shrubs"):
         for _ in range(2):
             off = srng.uniform(2.2, 26.0) ** 1.0
             hw_i = road.el[i] if side > 0 else road.er[i]
-            d = side * (hw_i + SHOULDER_W + off)
+            d = side * (hw_i + road.sh_w(i, side) + off)
             x, y = _rx[i] + _rnx[i] * d, _ry[i] + _rny[i] * d
             x, y = x + srng.normal(0, 0.6), y + srng.normal(0, 0.6)
             sl = _slope.sample1(x, y)
@@ -376,7 +426,7 @@ for side, env in (("left", road.env_l), ("right", road.env_r)):
             continue
         sgn = 1 if side == "left" else -1
         e = road.el[idx] if side == "left" else road.er[idx]
-        x, y = road.xy(idx, sgn * (e + SHOULDER_W + 1.2))
+        x, y = road.xy(idx, sgn * (e + road.sh_w(idx, sgn) + 1.2))
         zb = road.surface_z(idx, sgn * e, noise=False)
         P = np.concatenate([np.c_[x, y, zb - 1.0], np.c_[x, y, zb + 4.0]])
         n = len(idx); a = np.arange(n - 1)
@@ -387,7 +437,7 @@ for side, env in (("left", road.env_l), ("right", road.env_r)):
 
 # end walls at s=0 (behind the pit spot) and at the end of the built road
 for nm, i in (("start", 1), ("end", N - 2)):
-    d = np.linspace(-road.er[i] - SHOULDER_W - 1, road.el[i] + SHOULDER_W + 1, 8)
+    d = np.linspace(-road.outer(i, -1) - 1, road.outer(i, 1) + 1, 8)
     x, y = road.xy(np.full(8, i), d); zb = road.z[i]
     P = np.concatenate([np.c_[x, y, np.full(8, zb - 2)], np.c_[x, y, np.full(8, zb + 4)]])
     a = np.arange(7); T1 = np.c_[a, a + 1, a + 9]; T2 = np.c_[a, a + 9, a + 8]
@@ -446,8 +496,8 @@ EW = RS.EDGE_RIBBON
 for c in range(nchunks):
     ic = idx_all[(idx_all >= c * CHUNK) & (idx_all <= (c + 1) * CHUNK)]
     # edge line centre 0.25 m inside the pavement edge (GoPro: ~20-30 cm of asphalt outside the line)
-    ribbon("lines_road", f"line_edgeL_{c:02d}", "paint_white", ic[ledge[ic]], road.el - 0.25, EW)
-    ribbon("lines_road", f"line_edgeR_{c:02d}", "paint_white", ic[redge[ic]], -road.er + 0.25, EW)
+    ribbon("lines_road", f"line_edgeL_{c:02d}", "paint_white", ic[ledge[ic]], road.el - road.line_in_l, EW)   # inset 0.15-0.8 m (edge_profile.py)
+    ribbon("lines_road", f"line_edgeR_{c:02d}", "paint_white", ic[redge[ic]], -road.er + road.line_in_r, EW)
     dy = ic[ctype[ic] == "double_yellow"]
     ribbon("lines_road", f"line_cdy_{c:02d}", "paint_yellow_dbl", dy, 0.0, RS.DY_RIBBON, cols=(0.0, 0.5, 1.0))
     br = ic[np.isin(ctype[ic], ["broken_yellow", "broken"])]
@@ -592,7 +642,7 @@ _tick("markings + decals")
 # apex / exit kerbs + painted run-off: scripts/p2/kerbs.py, parameters in config/kerbs.yaml
 import kerbs as KB
 K = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
-KERBS, _corners = KB.build(road, K, RX, RY, RZ, {"left": (SLX, SLY, SLZ), "right": (SRX, SRY, SRZ)}, P3, TT, GR, add, chunk_of, SHOULDER_W)
+KERBS, _corners = KB.build(road, K, RX, RY, RZ, {"left": (SLX, SLY, SLZ), "right": (SRX, SRY, SRZ)}, P3, TT, GR, add, chunk_of, {"left": road.sh_w_l, "right": road.sh_w_r})
 print("kerbs", len(KERBS))
 
 # ------------------------------------------------------------------ timing / spawn locators

@@ -65,10 +65,10 @@ class _B:
 # species parameters: n main limbs, limb angle from vertical (deg), trunk fraction, recursion depth, kids, spread,
 # droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m), trunk radius / height
 _SP = {
-    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(26, 12), ls=(2.8, 4.2), r0=0.040),
-    "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(24, 11), ls=(2.4, 3.6), r0=0.016),
-    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(14, 7), ls=(2.2, 3.4), r0=0.022),
-    "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(16, 8), ls=(2.4, 3.6), r0=0.024),
+    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(54, 16), ls=(2.8, 4.2), r0=0.040),
+    "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(48, 14), ls=(2.4, 3.6), r0=0.016),
+    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(28, 9), ls=(2.2, 3.4), r0=0.022),
+    "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(32, 10), ls=(2.4, 3.6), r0=0.024),
 }
 
 
@@ -92,7 +92,7 @@ def make_proto(kind, seed, lod=0):
                 d = _unit(d + _UP * 0.08)
             p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.35 * (i + 1) / nsub))
         sides = (6, 4, 3, 3)[min(depth, 3)]
-        if not (lod and depth >= 2):  # far LOD: small branches hidden in the clusters, no tubes
+        if depth <= 1:  # small branches are hidden inside the leaf clusters: no tubes
             B.tube(np.array(pts), rr, sides, STRIP[kind])
         end_r = rr[-1]
         if depth >= maxd:
@@ -132,10 +132,16 @@ def make_proto(kind, seed, lod=0):
     # branches -> dense clumped crown hiding the twigs, gaps come from the cluster texture holes + spacing
     nlv = S["nl"][1 if lod else 0]
     order = r.permutation(len(tips))
+    tp = np.array([p for p, _ in tips]); trx = max(np.percentile(np.hypot(tp[:, 0], tp[:, 1]), 90), 1.0)
+    tz0, tz1 = np.percentile(tp[:, 2], 5), tp[:, 2].max(); tzc, tzh = (tz0 + tz1) / 2, max((tz1 - tz0) / 2, 1.0)
     for i in range(nlv):
-        p, d = tips[order[i % len(tips)]]
-        q = p + d * r.uniform(-0.3, 0.5) + r.normal(0, 0.7, 3)
-        B.leaf(q, r.uniform(*S["ls"]) * (1.3 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
+        if i % 2 == 0:  # on the outer branches
+            p, d = tips[order[(i // 2) % len(tips)]]
+            q = p + d * r.uniform(-0.3, 0.5) + r.normal(0, 0.7, 3)
+        else:  # filling the crown volume (outer-shell biased) so trunks/limbs disappear into the canopy
+            v = r.normal(0, 1, 3); v /= np.linalg.norm(v); u = r.uniform() ** 0.35
+            q = np.array([v[0] * trx * u, v[1] * trx * u, tzc + v[2] * tzh * u * 1.1])
+        B.leaf(q, r.uniform(*S["ls"]) * (1.5 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
     # normalise: crown radius R0 (90th pct of leaf distance), height H
     lp = np.array(B.lP); bp = np.array(B.bP)
     rx = np.percentile(np.hypot(lp[:, 0], lp[:, 1]), 90) if len(lp) else R0[kind]

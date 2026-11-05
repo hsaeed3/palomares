@@ -7,7 +7,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DER = ROOT / "data/derived"
 BUILD = ROOT / "build"
 CFG = yaml.safe_load(open(ROOT / "config/layouts.yaml"))
-SHOULDER_W = 0.8
+SHOULDER_W = 0.8          # nominal default only; per-station widths: Road.sh_w_l / sh_w_r (edge_profile.py)
 
 
 def load_centerline(s_end=None):
@@ -39,6 +39,23 @@ class Road:
         h = np.unwrap(np.arctan2(self.ty, self.tx))
         self.k = gaussian_filter1d(np.gradient(h), 2, mode="nearest")   # signed curvature, + = left turn
         self.env_l, self.env_r = c["env_left"], c["env_right"]
+        import edge_profile   # per-station shoulder width / material / ditch / edge-line inset (scripts/p2/edge_profile.py)
+        for k_, v_ in edge_profile.compute(self).items():
+            setattr(self, k_, v_)
+
+    def sh_w(self, i, side):
+        """shoulder width at station index i (array ok); side: +1/'left'/'L' or -1/'right'/'R'"""
+        left = side in (1, "left", "L", "l") if not isinstance(side, np.ndarray) else None
+        if left is None:
+            return np.where(side > 0, self.sh_w_l[i], self.sh_w_r[i])
+        return (self.sh_w_l if left else self.sh_w_r)[i]
+
+    def outer(self, i, side):
+        """distance from the centreline to the shoulder's outer edge (asphalt half-width + shoulder)"""
+        if isinstance(side, np.ndarray):
+            return np.where(side > 0, self.el[i] + self.sh_w_l[i], self.er[i] + self.sh_w_r[i])
+        left = side in (1, "left", "L", "l")
+        return (self.el[i] + self.sh_w_l[i]) if left else (self.er[i] + self.sh_w_r[i])
 
     def noise(self, s, d):
         # deterministic, low-amplitude (<= ~4 mm), long-wavelength (>= 3 m) surface undulation
