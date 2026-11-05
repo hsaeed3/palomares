@@ -63,12 +63,12 @@ class _B:
 
 
 # species parameters: n main limbs, limb angle from vertical (deg), trunk fraction, recursion depth, kids, spread,
-# droop (oak limbs arc out and down), leaf clusters per tip, cluster size (m)
+# droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m), trunk radius / height
 _SP = {
-    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=3, kids=(2, 3), spread=0.65, droop=0.10, lpt=4, ls=(1.0, 1.8), r0=0.030),
-    "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=3, kids=(2, 3), spread=0.45, droop=0.0, lpt=3, ls=(0.8, 1.4), r0=0.012),
-    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=3, kids=(2, 3), spread=0.55, droop=0.03, lpt=4, ls=(0.9, 1.6), r0=0.017),
-    "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=3, kids=(2, 2), spread=0.6, droop=0.0, lpt=4, ls=(0.8, 1.5), r0=0.018),
+    "oak": dict(limbs=(3, 5), ang=(48, 72), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(26, 12), ls=(2.8, 4.2), r0=0.040),
+    "bay": dict(limbs=(3, 6), ang=(8, 25), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(24, 11), ls=(2.4, 3.6), r0=0.016),
+    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(14, 7), ls=(2.2, 3.4), r0=0.022),
+    "syc": dict(limbs=(2, 3), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(16, 8), ls=(2.4, 3.6), r0=0.024),
 }
 
 
@@ -128,13 +128,14 @@ def make_proto(kind, seed, lod=0):
                 d = _unit(d0 + _UP)
             grow(top, d, ln, rt * (0.85 if nl == 1 else 0.65) * r.uniform(0.85, 1.0), 1)
     # leaf clusters at tips; ~20 % dropped at random -> real sky/sun holes between clumps
-    keep = 1.0
-    for (p, d) in tips:
-        if r.uniform() > keep or r.uniform() < 0.18:
-            continue
-        for _ in range(S["lpt"] + 1):
-            q = p + d * r.uniform(0, 0.6) + r.normal(0, 0.55, 3)
-            B.leaf(q, r.uniform(*S["ls"]) * (1.6 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
+    # few, big textured clusters (each cell of tree_leaves.png shows hundreds of leaves) spread evenly over the outer
+    # branches -> dense clumped crown hiding the twigs, gaps come from the cluster texture holes + spacing
+    nlv = S["nl"][1 if lod else 0]
+    order = r.permutation(len(tips))
+    for i in range(nlv):
+        p, d = tips[order[i % len(tips)]]
+        q = p + d * r.uniform(-0.3, 0.5) + r.normal(0, 0.7, 3)
+        B.leaf(q, r.uniform(*S["ls"]) * (1.3 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
     # normalise: crown radius R0 (90th pct of leaf distance), height H
     lp = np.array(B.lP); bp = np.array(B.bP)
     rx = np.percentile(np.hypot(lp[:, 0], lp[:, 1]), 90) if len(lp) else R0[kind]
@@ -167,7 +168,7 @@ def instance(proto, x, y, z, h, cr, kind, yaw, lean_dir=None, lean=0.0):
     return out
 
 
-def shrub_clump(x, y, z, h, w, u0, rng, nq=4):
+def shrub_clump(x, y, z, h, w, u0, rng, nq=3):
     """small 3D clump of shrub leaf quads (shrub.png atlas, two styles in u halves); spherical normals"""
     P, N, UV, T = [], [], [], []
     c = np.array([x, y, z + h * 0.45])

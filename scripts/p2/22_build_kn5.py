@@ -254,12 +254,12 @@ def _leaf_cell(kind, seed, S=512):
     r = np.random.default_rng(500 + seed)
     mask = Image.new("L", (S, S), 0); lum = Image.new("L", (S, S), 128)
     dm, dl = ImageDraw.Draw(mask), ImageDraw.Draw(lum)
-    c = S / 2; R = S * 0.44
+    c = S / 2; R = S * 0.47
     # 3-6 sub-clumps -> clumped masses with gaps between them
-    subs = [(c + r.normal(0, R * 0.35), c + r.normal(0, R * 0.35), R * r.uniform(0.35, 0.6)) for _ in range(r.integers(3, 7))]
-    holes = _vnoise(r, S, S, 40) > 0.66
+    subs = [(c + r.normal(0, R * 0.35), c + r.normal(0, R * 0.35), R * r.uniform(0.45, 0.7)) for _ in range(r.integers(4, 7))]
+    holes = _vnoise(r, S, S, 40) > 0.74  # ~15-25 % sky holes inside the clump
     lo, hi = LEAF_SIZE[kind]
-    for _ in range(1400):
+    for _ in range(3000):
         sx, sy, sr = subs[r.integers(len(subs))]
         a = r.uniform(0, 2 * np.pi); q = math.sqrt(r.uniform())
         x, y = sx + math.cos(a) * sr * q, sy + math.sin(a) * sr * q
