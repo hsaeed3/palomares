@@ -297,19 +297,26 @@ write("palomares_terrain.kn5", ["terrain", "backdrop"])
 write("palomares_trees.kn5", ["trees"])
 write("palomares_barriers.kn5", ["barriers"], merge={"barriers": gr_key})
 write("palomares_lines_road.kn5", ["lines_road"], merge={"lines_road": line_key})
-write("palomares_lines_track.kn5", ["lines_track"], merge={"lines_track": line_key})
-write("palomares_kerbs.kn5", ["kerbs"])
-L = meta["locators"]
-write("palomares_timing.kn5", [], extra_nodes=[locator(n, L[n]) for n in sorted(L)])
+# lines_track retired: track layouts keep the real markings (user request)
+write("palomares_kerbs_nb.kn5", ["kerbs_nb"])
+write("palomares_kerbs_sb.kn5", ["kerbs_sb"])
+SEG = meta["segments"]
+for seg, sd in SEG.items():
+    L = sd["loc"]
+    write(f"palomares_timing_{seg}.kn5", [], extra_nodes=[locator(n, L[n]) for n in sorted(L)])
 
 # ------------------------------------------------------------------ AC folder
-SHARED = ["palomares_road.kn5", "palomares_terrain.kn5", "palomares_trees.kn5", "palomares_barriers.kn5", "palomares_timing.kn5"]
-LAYOUTS = {
-    "road_summit": dict(files=SHARED + ["palomares_lines_road.kn5"], name="Palomares Road — Hill Climb (Road)",
-                        desc="Palomares Road, Alameda County CA, from Niles Canyon Rd (SR-84) up to the summit. The road as it really is: real width, center and edge lines, no kerbs."),
-    "track_summit": dict(files=SHARED + ["palomares_lines_track.kn5", "palomares_kerbs.kn5"], name="Palomares Road — Hill Climb (Track)",
-                         desc="Palomares Road from Niles Canyon Rd (SR-84) up to the summit, race-prepared: same geometry, no center line, kerbs on corner apexes and exits."),
-}
+SHARED = ["palomares_road.kn5", "palomares_terrain.kn5", "palomares_trees.kn5", "palomares_barriers.kn5"]
+STY = {"road": ("Road", "The road as it really is: real width, center and edge lines, no kerbs.", ["palomares_lines_road.kn5"]),
+       "track": ("Track", "Same road surface and markings, plus red/white kerbs on apexes and exits and light circuit dressing at the gates.", ["palomares_lines_road.kn5"])}
+LAYOUTS = {}
+for seg, sd in SEG.items():
+    sgn = 1 if sd["s_to"] > sd["s_from"] else -1
+    for sty, (sname, sdesc, sfiles) in STY.items():
+        files = SHARED + [f"palomares_timing_{seg}.kn5"] + sfiles + ([f"palomares_kerbs_{'nb' if sgn > 0 else 'sb'}.kn5"] if sty == "track" else [])
+        LAYOUTS[f"{sty}_{seg}"] = dict(files=files, seg=seg, s_from=sd["s_from"], s_to=sd["s_to"], sgn=sgn,
+                                       name=f"Palomares Road — {sd['name']} ({sname})",
+                                       desc=f"Palomares Road, Alameda County CA: {sd['name']}, point to point. {sdesc}")
 SURF = """[SURFACE_0]
 KEY=ROAD
 FRICTION=0.99
@@ -380,7 +387,7 @@ LIGHT = "[LIGHTING]\nSUN_PITCH_ANGLE=45\nSUN_HEADING_ANGLE=200\n"
 road = G["road"]
 cl = np.concatenate([m["P"][:, :2] for m in road if m["name"].startswith("1ROAD")])
 import csv as _csv
-rows = [r for r in _csv.DictReader(open(DER / "centerline.csv")) if float(r["s_m"]) <= meta["s_end"]]
+rows = [r for r in _csv.DictReader(open(DER / "centerline.csv")) if float(r["s_m"]) <= meta["s_end"] + 1]
 xy = np.array([[float(r["x_local"]), float(r["y_local"])] for r in rows])
 acx, acz = xy[:, 0], -xy[:, 1]
 SCALE = 2.0; MARGIN = 20
@@ -388,27 +395,28 @@ W = int((acx.max() - acx.min()) / SCALE + 2 * MARGIN); Hh = int((acz.max() - acz
 XO = -acx.min() + MARGIN * SCALE; ZO = -acz.min() + MARGIN * SCALE
 mp = Image.new("RGBA", (W, Hh), (0, 0, 0, 0)); d = ImageDraw.Draw(mp)
 pts = [((x + XO) / SCALE, (z + ZO) / SCALE) for x, z in zip(acx[::3], acz[::3])]
-d.line(pts, fill=(255, 255, 255, 255), width=6, joint="curve")
+d.line(pts, fill=(255, 255, 255, 140), width=6, joint="curve")
 MAPINI = f"[PARAMETERS]\nWIDTH={W}\nHEIGHT={Hh}\nMARGIN={MARGIN}\nSCALE_FACTOR={SCALE}\nX_OFFSET={XO:.3f}\nZ_OFFSET={ZO:.3f}\nDRAWING_SIZE=10\nMAX_SIZE=1600\n"
 
 
-def cams():
-    # simple replay cameras every ~400 m, 6 m off the right edge, 4 m up
+def cams(L_):
+    # simple replay cameras every ~400 m along the run, 8 m off the road, 4 m up; IN/OUT are run fractions
     out = ["[HEADER]\nVERSION=3\nCAMERA_COUNT={n}\nSET_NAME=Palomares\n"]
     k = 0
-    for s in range(100, int(CFG["finish_gate_m"]), 400):
+    a_, b_ = sorted((int(L_["s_from"]), int(L_["s_to"]))); runlen = b_ - a_
+    for s in range(a_ + 80, b_ - 20, 400):
+        fr_ = (s - a_) / runlen if L_["sgn"] > 0 else (b_ - s) / runlen
         r = rows[s]
         x, y, z = float(r["x_local"]), float(r["y_local"]), float(r["z_navd88"])
         tx = float(rows[s + 1]["x_local"]) - x; ty = float(rows[s + 1]["y_local"]) - y
         n = math.hypot(tx, ty); tx, ty = tx / n, ty / n
         cx, cy, cz = x + ty * 8, y - tx * 8, z + 4
-        out.append(f"[CAMERA_{k}]\nNAME=cam{k}\nPOSITION={cx:.2f},{cz:.2f},{-cy:.2f}\nFORWARD={-ty:.3f},-0.2,{-tx:.3f}\nUP=0,1,0\nMIN_FOV=10\nMAX_FOV=50\nIN_POINT={max(0, (s - 200) / meta['s_end']):.4f}\nOUT_POINT={min(1, (s + 200) / meta['s_end']):.4f}\nSHADOW_SPLIT0=50\nSHADOW_SPLIT1=200\nSHADOW_SPLIT2=600\nNEAR_PLANE=1\nFAR_PLANE=5000\nMIN_EXPOSURE=0\nMAX_EXPOSURE=10000\nDOF_FACTOR=10\nDOF_RANGE=10000\nDOF_FOCUS=0\nDOF_MANUAL=0\nSPLINE=\nSPLINE_ROTATION=0\nFOV_GAMMA=0\nSPLINE_ANIMATION_LENGTH=0\nIS_FIXED=0\n")
+        out.append(f"[CAMERA_{k}]\nNAME=cam{k}\nPOSITION={cx:.2f},{cz:.2f},{-cy:.2f}\nFORWARD={-ty:.3f},-0.2,{-tx:.3f}\nUP=0,1,0\nMIN_FOV=10\nMAX_FOV=50\nIN_POINT={max(0, fr_ - 200 / runlen):.4f}\nOUT_POINT={min(1, fr_ + 200 / runlen):.4f}\nSHADOW_SPLIT0=50\nSHADOW_SPLIT1=200\nSHADOW_SPLIT2=600\nNEAR_PLANE=1\nFAR_PLANE=5000\nMIN_EXPOSURE=0\nMAX_EXPOSURE=10000\nDOF_FACTOR=10\nDOF_RANGE=10000\nDOF_FOCUS=0\nDOF_MANUAL=0\nSPLINE=\nSPLINE_ROTATION=0\nFOV_GAMMA=0\nSPLINE_ANIMATION_LENGTH=0\nIS_FIXED=0\n")
         k += 1
     out[0] = out[0].format(n=k)
     return "\n".join(out)
 
 
-length_m = CFG["finish_gate_m"] - CFG["start_gate_m"]
 ATTR = ("Data: centerline from OpenStreetMap contributors (ODbL, openstreetmap.org/copyright); "
         "terrain from USGS 3DEP LiDAR CA_AlamedaCounty_2021_B21 and USGS imagery (public domain); "
         "textures ambientCG (CC0). Fan-made, not affiliated with Alameda County.")
@@ -417,17 +425,23 @@ for lay, L_ in LAYOUTS.items():
     dd = TRACK / lay / "data"; dd.mkdir(parents=True)
     (dd / "surfaces.ini").write_text(SURF)
     (dd / "lighting.ini").write_text(LIGHT)
-    (dd / "cameras.ini").write_text(cams())
+    (dd / "cameras.ini").write_text(cams(L_))
     (dd / "map.ini").write_text(MAPINI)
     (dd / "groove.ini").write_text("[HEADER]\nGROOVES_NUMBER=0\n")
     (dd / "audio_sources.ini").write_text("")
-    mp.save(TRACK / lay / "map.png")
+    # map: full road dim, this layout's run bright, start dot green / finish red
+    mpl = mp.copy(); dl = ImageDraw.Draw(mpl)
+    a_, b_ = sorted((int(L_["s_from"]), int(L_["s_to"])))
+    dl.line(pts[a_ // 3:b_ // 3 + 1], fill=(255, 210, 60, 255), width=8, joint="curve")
+    for s_, col in ((L_["s_from"], (40, 220, 60, 255)), (L_["s_to"], (230, 40, 40, 255))):
+        px, pz = pts[min(int(s_) // 3, len(pts) - 1)]; dl.ellipse([px - 9, pz - 9, px + 9, pz + 9], fill=col)
+    mpl.save(TRACK / lay / "map.png"); mp_l = mpl
     ui = TRACK / "ui" / lay; ui.mkdir(parents=True)
     json.dump({"name": L_["name"], "description": L_["desc"] + " " + ATTR, "tags": ["hillclimb", "point to point", "usa", "touge", "lidar"],
                "geotags": ["37.5978 N", "121.9469 W"], "country": "USA", "city": "Sunol / Castro Valley, CA",
-               "length": f"{length_m:.0f}", "width": "5-8", "pitboxes": "1", "run": "clockwise",
+               "length": f"{abs(L_['s_to'] - L_['s_from']):.0f}", "width": "5-8", "pitboxes": "1", "run": "point to point",
                "author": "palomares pipeline", "version": VERSION, "url": ""},
               open(ui / "ui_track.json", "w"), indent=2, ensure_ascii=False)
     # outline.png: same line on transparent 1000 px
-    ol = mp.copy(); ol.thumbnail((1000, 1000)); ol.save(ui / "outline.png")
+    ol = mp_l.copy(); ol.thumbnail((1000, 1000)); ol.save(ui / "outline.png")
 print("track folder ->", TRACK)

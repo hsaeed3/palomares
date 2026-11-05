@@ -377,53 +377,58 @@ for c in range(nchunks):
 # ------------------------------------------------------------------ kerbs (track layouts)
 K = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
 ks = gaussian_filter1d(road.k, K["sigma_m"])
-spans = {"left": [], "right": []}
-lab, nl = label(np.abs(ks) > K["curvature_threshold_1pm"])
-for l in range(1, nl + 1):
-    idx = np.nonzero(lab == l)[0]
-    if len(idx) < K["min_corner_length_m"]:
-        continue
-    apex = idx[np.argmax(np.abs(ks[idx]))]
-    inner = "left" if ks[apex] > 0 else "right"
-    outer = "right" if inner == "left" else "left"
-    spans[inner].append((road.s[apex] - K["apex_entry_m"], road.s[apex] + K["inside_exit_m"]))
-    s0 = road.s[apex] + K["outside_exit_start_m"]
-    spans[outer].append((s0, s0 + K["outside_exit_length_m"]))
 KERBS = []
-for side in spans:
-    sp = sorted(spans[side]); merged = []
-    for a, b in sp:
-        if any(lo <= a <= hi or lo <= b <= hi for lo, hi in K["skip_s_ranges"]):
+for dname, sgn_dir in (("nb", 1), ("sb", -1)):
+    spans = {"left": [], "right": []}
+    lab, nl = label(np.abs(ks) > K["curvature_threshold_1pm"])
+    for l in range(1, nl + 1):
+        idx = np.nonzero(lab == l)[0]
+        if len(idx) < K["min_corner_length_m"]:
             continue
-        if merged and a - merged[-1][1] < K["merge_gap_m"]:
-            merged[-1][1] = max(merged[-1][1], b)
-        else:
-            merged.append([a, b])
-    for a, b in merged:
-        i = np.arange(max(int(a), 1), min(int(b), N - 2) + 1)
-        if len(i) < 3:
-            continue
-        sgn = 1 if side == "left" else -1
-        e = road.el[i] if side == "left" else road.er[i]
-        prof_d = np.array([0.0, 0.15, 0.35, 0.55, 0.75, 1.0]) * K["width_m"]
-        prof_h = np.array([0.003, 0.02, 1.0 * K["height_m"], 1.0 * K["height_m"], 0.6 * K["height_m"], 0.003])
-        if side == "right":
-            prof_d, prof_h = prof_d[::-1], prof_h[::-1]
-        dd = sgn * (e[:, None] + prof_d[None, :])
-        rr_ = np.repeat(i[:, None], len(prof_d), 1)
-        x, y = road.xy(rr_, dd)
-        # base: the shoulder surface (piecewise linear over its 3 columns) so the kerb's outer edge lands on the
-        # shoulder/terrain seam with no step; inner edge = road edge
-        SZ = SLZ if side == "left" else SRZ
-        t = np.clip((np.abs(dd) - e[:, None]) / (SHOULDER_W / 2), 0, 2)
-        z0, z1, z2 = SZ[rr_, 0], SZ[rr_, 1], SZ[rr_, 2]
-        base = np.where(t <= 1, z0 + (z1 - z0) * t, z1 + (z2 - z1) * (t - 1))
-        ramp = np.clip(np.minimum(np.arange(len(i)), np.arange(len(i))[::-1]) / 2.0, 0, 1)  # 2 m taper at kerb ends
-        z = base + 0.003 + (prof_h[None, :] - 0.003) * ramp[:, None]
-        P = np.stack([x, y, z], -1).reshape(-1, 3)
-        UV = np.stack([np.tile(np.linspace(0, 1, len(prof_d)), (len(i), 1)), np.repeat(road.s[i, None], len(prof_d), 1) / (2 * K["stripe_length_m"])], -1).reshape(-1, 2)
-        add("kerbs", f"1KERB_{side[0].upper()}{len(KERBS):03d}", "kerb", P, grid_tris(len(i), len(prof_d)), UV, cast_shadows=False)
-        KERBS.append(dict(s0=float(road.s[i[0]]), s1=float(road.s[i[-1]]), side=side))
+        apex = idx[np.argmax(np.abs(ks[idx]))]
+        inner = "left" if ks[apex] > 0 else "right"
+        outer = "right" if inner == "left" else "left"
+        sa = road.s[apex]
+        if sgn_dir > 0:   # northbound (s increasing): exit lies at larger s
+            spans[inner].append((sa - K["apex_entry_m"], sa + K["inside_exit_m"]))
+            spans[outer].append((sa + K["outside_exit_start_m"], sa + K["outside_exit_start_m"] + K["outside_exit_length_m"]))
+        else:             # southbound: corner turns the other way for the driver, but the inside/outside sides are the same
+            spans[inner].append((sa - K["inside_exit_m"], sa + K["apex_entry_m"]))
+            spans[outer].append((sa - K["outside_exit_start_m"] - K["outside_exit_length_m"], sa - K["outside_exit_start_m"]))
+    for side in spans:
+        sp = sorted(spans[side]); merged = []
+        for a, b in sp:
+            if any(lo <= a <= hi or lo <= b <= hi for lo, hi in K["skip_s_ranges"]):
+                continue
+            if merged and a - merged[-1][1] < K["merge_gap_m"]:
+                merged[-1][1] = max(merged[-1][1], b)
+            else:
+                merged.append([a, b])
+        for a, b in merged:
+            i = np.arange(max(int(a), 1), min(int(b), N - 2) + 1)
+            if len(i) < 3:
+                continue
+            sgn = 1 if side == "left" else -1
+            e = road.el[i] if side == "left" else road.er[i]
+            prof_d = np.array([0.0, 0.15, 0.35, 0.55, 0.75, 1.0]) * K["width_m"]
+            prof_h = np.array([0.003, 0.02, 1.0 * K["height_m"], 1.0 * K["height_m"], 0.6 * K["height_m"], 0.003])
+            if side == "right":
+                prof_d, prof_h = prof_d[::-1], prof_h[::-1]
+            dd = sgn * (e[:, None] + prof_d[None, :])
+            rr_ = np.repeat(i[:, None], len(prof_d), 1)
+            x, y = road.xy(rr_, dd)
+            # base: the shoulder surface (piecewise linear over its 3 columns) so the kerb's outer edge lands on the
+            # shoulder/terrain seam with no step; inner edge = road edge
+            SZ = SLZ if side == "left" else SRZ
+            t = np.clip((np.abs(dd) - e[:, None]) / (SHOULDER_W / 2), 0, 2)
+            z0, z1, z2 = SZ[rr_, 0], SZ[rr_, 1], SZ[rr_, 2]
+            base = np.where(t <= 1, z0 + (z1 - z0) * t, z1 + (z2 - z1) * (t - 1))
+            ramp = np.clip(np.minimum(np.arange(len(i)), np.arange(len(i))[::-1]) / 2.0, 0, 1)  # 2 m taper at kerb ends
+            z = base + 0.003 + (prof_h[None, :] - 0.003) * ramp[:, None]
+            P = np.stack([x, y, z], -1).reshape(-1, 3)
+            UV = np.stack([np.tile(np.linspace(0, 1, len(prof_d)), (len(i), 1)), np.repeat(road.s[i, None], len(prof_d), 1) / (2 * K["stripe_length_m"])], -1).reshape(-1, 2)
+            add(f"kerbs_{dname}", f"1KERB_{dname.upper()}{side[0].upper()}{len(KERBS):03d}", "kerb", P, grid_tris(len(i), len(prof_d)), UV, cast_shadows=False)
+            KERBS.append(dict(s0=float(road.s[i[0]]), s1=float(road.s[i[-1]]), side=side, dir=dname))
 print("kerbs", len(KERBS))
 
 # ------------------------------------------------------------------ timing / spawn locators
@@ -433,23 +438,40 @@ def frame(s, d=0.0, lift=0.0):
     return dict(p=(float(x), float(y), float(road.surface_z(i, d, noise=False) + lift)),
                 fwd=(float(road.tx[i]), float(road.ty[i]), float(road.tz) if hasattr(road, "tz") else 0.0))
 
-loc = {}
-for nm, s in (("AC_START_0", CFG["spawn_m"]), ("AC_HOTLAP_START_0", CFG["spawn_m"]), ("AC_PIT_0", CFG["pit_m"])):
-    loc[nm] = frame(s, 0.0, 0.0)
-for nm, s in (("AB_START", CFG["start_gate_m"]), ("AB_FINISH", CFG["finish_gate_m"])):
-    i = int(round(s))
-    loc[f"AC_{nm}_L"] = frame(s, road.el[i] + 1.0, 0.5)
-    loc[f"AC_{nm}_R"] = frame(s, -road.er[i] - 1.0, 0.5)
+def frame_dir(s, d, lift, sgn):
+    f = frame(s, d, lift); f["fwd"] = tuple(sgn * v for v in f["fwd"]); return f
+
+
+def layout_locators(s_from, s_to):
+    """spawn/pit before the start gate, gates across the road, all facing the run direction"""
+    sgn = 1 if s_to > s_from else -1
+    L = {}
+    for nm, back in (("AC_START_0", CFG["spawn_back_m"]), ("AC_HOTLAP_START_0", CFG["spawn_back_m"]), ("AC_PIT_0", CFG["pit_back_m"])):
+        L[nm] = frame_dir(float(np.clip(s_from - sgn * back, 1, N - 2)), 0.0, 0.0, sgn)
+    for nm, s_ in (("AB_START", s_from), ("AB_FINISH", s_to)):
+        i = int(round(s_))
+        # L/R are relative to the driver: for a southbound run the driver's left is the road's right
+        dl, dr = (road.el[i] + 1.0, -road.er[i] - 1.0) if sgn > 0 else (-road.er[i] - 1.0, road.el[i] + 1.0)
+        L[f"AC_{nm}_L"] = frame_dir(s_, dl, 0.5, sgn)
+        L[f"AC_{nm}_R"] = frame_dir(s_, dr, 0.5, sgn)
+    return L
+
+
+LAYLOC = {}
+for seg, sd in CFG["segments"].items():
+    LAYLOC[seg] = dict(s_from=CFG[sd["from"]], s_to=CFG[sd["to"]], name=sd["name"],
+                       loc=layout_locators(CFG[sd["from"]], CFG[sd["to"]]))
+loc = LAYLOC["summit"]["loc"]  # legacy
 
 BUILD.mkdir(exist_ok=True)
-meta = dict(s_end=float(road.s[-1]), nchunks=nchunks, guardrails=GR, walls=WALLS, kerbs=KERBS, locators=loc,
+meta = dict(segments=LAYLOC, s_end=float(road.s[-1]), nchunks=nchunks, guardrails=GR, walls=WALLS, kerbs=KERBS, locators=loc,
             n_trees=int(sel.sum()))
 pickle.dump(dict(groups=G, meta=meta), open(BUILD / "geometry.pkl", "wb"))
 
 # stations for visual checks (every 250 m)
 with open(ROOT / "reports/visual_check_stations.csv", "w") as f:
     w = csv.writer(f); w.writerow(["station_m", "lat", "lon", "heading_deg_true", "z_navd88"])
-    for s in np.arange(0, CFG["finish_gate_m"] + 1, 250):
+    for s in np.arange(0, CFG["build_end_m"], 250):
         i = int(s); hd = (math.degrees(math.atan2(road.tx[i], road.ty[i])) + 360) % 360  # grid north ~ true north (+/-0.7 deg)
         w.writerow([int(s), f"{full['lat'][i]:.7f}", f"{full['lon'][i]:.7f}", f"{hd:.0f}", f"{road.z[i]:.1f}"])
 for g, ms in G.items():

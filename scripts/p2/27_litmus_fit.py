@@ -15,7 +15,8 @@ from scipy import ndimage, optimize
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 W, H = 256, 186            # analysis resolution (photo is 2042x1486)
-S_MAX = 7392.0             # Phase 2 summit
+# fit range: whole road once the full build exists (build/vis/road_full), else the modelled Phase-2 part
+S_MAX = 15574.0 if (ROOT / "build/vis/road_full/scene.json").exists() else 7640.0
 # frame -> station anchors (frame 1 = SR-84; 54 first bridge s~3509 (LiDAR cl.17); 91 bridge_osm + junction 4388;
 # 137/138 bridges 9193/9307; 171 bridge 11344; 219 Palo Verde Rd 15586)
 ANCH = [(1, 0.0), (54, 3509.0), (91, 4388.0), (137, 9199.0), (138, 9313.0), (171, 11352.0), (219, 15586.0)]
@@ -108,15 +109,17 @@ def score(p, cam, ph):
 LO = np.array([-1e9, -0.8, 1.0, -0.30, -0.20, -0.07]); HI = np.array([1e9, 3.2, 1.7, 0.30, 0.10, 0.07])
 
 
-def fit(f, cam, s0, win=None, ph=None):
-    """win=None: search the whole Phase-2 road; frame-number prior only as a weak tie-break (0.03 per km)"""
+def fit(f, cam, s0, win=600, ph=None):
+    """search s0 +- win (s0 = rough landmark/frame prior; a whole-road search aliases onto look-alike straights),
+    prior penalty 0.15 per km off s0; win=None searches the whole fit range"""
     ph = ph or seg_photo(f)
     best = []
-    lo, hi = (7, S_MAX - 10) if win is None else (max(s0 - win, 7), min(s0 + win, len(S) - 170))
+    s0 = min(s0, S_MAX - 60)
+    lo, hi = (7, S_MAX - 10) if win is None else (max(s0 - win, 7), min(s0 + win, S_MAX - 10))
     for s in np.arange(lo, hi, 4.0 if win else 6.0):
         for lat in (0.3, 1.5):
             for yaw in (-0.12, 0, 0.12):
-                p = np.array([s, lat, 1.35, yaw, -0.05, 0.0]); best.append((score(p, cam, ph)[2] + 0.03e-3 * abs(s - s0), p))
+                p = np.array([s, lat, 1.35, yaw, -0.05, 0.0]); best.append((score(p, cam, ph)[2] + 0.15e-3 * abs(s - s0), p))
     best.sort(key=lambda t: t[0]); res = []
     for _, p0 in best[:4]:
         fn = lambda q: score(np.clip(q, LO, HI), cam, ph)[2] + 0.01 * abs(q[1] - 1.5) + 0.05 * abs(q[2] - 1.35)
@@ -153,13 +156,19 @@ def undistort(img, cam, vfov, out_wh):
     return Image.fromarray(out.clip(0, 255).astype(np.uint8))
 
 
+def _spread_ok(f, chosen, elig, n):
+    # one frame per frame-number bin, so the 8 picks spread along the whole drive
+    b = lambda x: min(int((x - elig[0]) * n / (elig[-1] - elig[0] + 1)), n - 1)
+    return b(f) not in {b(r["frame"]) for r in chosen}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=8); ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--min-iou", type=float, default=0.80); ap.add_argument("--max-yellow", type=float, default=40.0)
     ap.add_argument("--cam", type=float, nargs=2, help="skip calibration: f_rel lam"); a = ap.parse_args()
-    # frames are hand-picked screenshots (irregular spacing): anchors are only a prior; bridge at s~9199 is frame 137,
-    # so frames 4..125 may lie below the summit; the fitted station decides (must be < S_MAX - 30)
-    elig = list(range(4, 126))
+    # frames are hand-picked screenshots (irregular spacing): anchors are only a prior, the fitted station decides
+    elig = [f for f in range(4, 219) if S_MAX > 8000 or anchor_s(f) < S_MAX + 800]
+    print("fit range s <", S_MAX, "; candidate frames", len(elig), flush=True)
     rng = np.random.default_rng(a.seed)
     if a.cam:
         CAM = tuple(a.cam); calib = None
@@ -183,6 +192,7 @@ if __name__ == "__main__":
     order = rng.permutation(elig).tolist(); chosen, rejected = [], []
     for f in order:
         if len(chosen) == a.n: break
+        if S_MAX > 8000 and len(chosen) < a.n and not _spread_ok(f, chosen, elig, a.n): continue
         r = fit(f, CAM, anchor_s(f)); print(f, round(anchor_s(f)), round(r["p"][0], 1), round(r["iou"], 3), round(r["yellow_res_px"], 1), flush=True)
         if r["iou"] >= a.min_iou and r["yellow_res_px"] <= a.max_yellow and r["p"][0] < S_MAX - 30: chosen.append(r)
         else: rejected.append(dict(frame=f, s=round(r["p"][0], 1), iou=round(r["iou"], 3), yellow_res_px=round(r["yellow_res_px"], 1)))

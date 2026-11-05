@@ -1,10 +1,10 @@
 // Litmus test, step 2: render each fitted GoPro pose (config/litmus_poses.json) from the round-tripped kn5 scene.
 // Same scene/lighting as 24_visual_render.js; pinhole camera with the pose's vertical fov, output = photo aspect.
-// Usage: node 27_litmus.js [layout=road_summit] [width=1280]   -> reports/litmus/render_<layout>_NNN.png
+// Usage: node 27_litmus.js [layout=road_full|road_summit fallback] [width=1280]   -> reports/litmus/render_<layout>_NNN.png
 const { chromium } = require('playwright');
 const http = require('http'), fs = require('fs'), path = require('path');
 const root = path.resolve(__dirname, '../..');
-const lay = process.argv[2] || 'road_summit';
+const lay = process.argv[2] || (fs.existsSync(path.join(root, 'build/vis/road_full/scene.json')) ? 'road_full' : 'road_summit');
 const dir = path.join(root, 'build/vis', lay);
 const cfg = JSON.parse(fs.readFileSync(path.join(root, 'config/litmus_poses.json')));
 const OW = parseInt(process.argv[3] || '1280'), OH = Math.round(OW * cfg.size[1] / cfg.size[0]);

@@ -7,7 +7,7 @@ from geom import ROOT, BUILD
 from kn5 import read_kn5
 
 TRACK = BUILD / "palomares_road"
-for lay in ("road_summit", "track_summit"):
+for lay in (sys.argv[1:] or ["road_full", "track_full"]):
     out = BUILD / "vis" / lay
     if out.exists(): shutil.rmtree(out)
     out.mkdir(parents=True)
@@ -33,7 +33,7 @@ for lay in ("road_summit", "track_summit"):
     # camera stations from the centerline (driver's eye, right lane)
     rows = list(csv.DictReader(open(ROOT / "data/derived/centerline.csv")))
     cams = []
-    for s in list(range(0, 7392, 250)) + [7385]:
+    for s in list(range(0, len(rows) - 30, 250)):
         s = max(s, 14)
         r = rows[s]; ra = rows[s + 25]
         x, y, z = float(r["x_local"]), float(r["y_local"]), float(r["z_navd88"])

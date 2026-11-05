@@ -2,13 +2,13 @@
 
 The GoPro frame is undistorted to the same pinhole camera the render uses (lens from config/litmus_poses.json),
 so both halves share exactly the same projection; areas outside the photo's field are black (letterbox).
-Usage: python3 28_litmus_sheet.py [layout=road_summit]   (after 27_litmus.js)
+Usage: python3 28_litmus_sheet.py [layout=road_full|road_summit fallback]   (after 27_litmus.js)
 """
 import html, importlib.util, json, pathlib, sys
 from PIL import Image, ImageDraw
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-lay = sys.argv[1] if len(sys.argv) > 1 else "road_summit"
+lay = sys.argv[1] if len(sys.argv) > 1 else ("road_full" if (ROOT / "build/vis/road_full/scene.json").exists() else "road_summit")
 spec = importlib.util.spec_from_file_location("fit", pathlib.Path(__file__).with_name("27_litmus_fit.py"))
 fit = importlib.util.module_from_spec(spec); spec.loader.exec_module(fit)
 cfg = json.load(open(ROOT / "config/litmus_poses.json"))
