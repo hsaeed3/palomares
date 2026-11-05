@@ -437,9 +437,14 @@ MATS = {
 }
 # track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
 T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
+# roadside atlas (fences, walls, poles, signs, buildings, cypress): written by 21c_roadside_assets.py. It mixes white signs with dark
+# poles, so it is NOT run through albedo_calibrate (a single mean-luminance target would wash out one or the other); tiles are
+# authored at plausible albedo already.
+T["roadside.png"] = (BUILD / "roadside_atlas.png").read_bytes()
 albedo_calibrate(T)
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
+MATS["roadside"] = Material("roadside", "ksPerPixelAT", {**BASE, "ksSpecular": 0.06, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "roadside.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
 MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
@@ -482,6 +487,9 @@ def locator(name, l):
     return Dummy(name, [float(v) for v in M])
 
 
+DRAWS = {}   # kn5 file -> renderable (non-physics) meshes = draw calls (before CSP shadow passes)
+
+
 def write(fname, groups, extra_nodes=(), merge=None):
     ms = []
     for g in groups:
@@ -493,6 +501,7 @@ def write(fname, groups, extra_nodes=(), merge=None):
     mats = [MATS[u] for u in used]
     texn = sorted({t for u in used for t in MATS[u].textures.values()})
     nodes = [to_kn5_mesh(m) for m in ms] + list(extra_nodes)
+    DRAWS[fname] = sum(-(-len(m["P"]) // 65535) for m in ms if m.get("renderable", True) and not m["name"].startswith("1WALL"))
     write_kn5(TRACK / fname, mats, {t: T[t] for t in texn}, nodes)
     write.n = getattr(write, "n", 0) + 1
     print(f"  [kn5 {write.n:2d}] {fname:28s} {len(nodes):4d} nodes  {(TRACK / fname).stat().st_size / 1e6:6.1f} MB")
@@ -505,6 +514,7 @@ write("palomares_road.kn5", ["road"])
 write("palomares_terrain.kn5", ["terrain", "backdrop"])
 write("palomares_trees.kn5", ["trees"])
 write("palomares_barriers.kn5", ["barriers"], merge={"barriers": gr_key})
+write("palomares_roadside.kn5", ["roadside"])     # 21c: guardrails, fences, walls, poles, signs, buildings + their 1WALL_rs_* collision
 write("palomares_lines_road.kn5", ["lines_road"], merge={"lines_road": line_key})
 # lines_track retired: track layouts keep the real markings (user request)
 write("palomares_kerbs_nb.kn5", ["kerbs_nb"])
@@ -518,7 +528,7 @@ for seg, sd in SEG.items():
     write(f"palomares_timing_{seg}.kn5", [], extra_nodes=[locator(n, L[n]) for n in sorted(L)])
 
 # ------------------------------------------------------------------ AC folder
-SHARED = ["palomares_road.kn5", "palomares_terrain.kn5", "palomares_trees.kn5", "palomares_barriers.kn5"]
+SHARED = ["palomares_road.kn5", "palomares_terrain.kn5", "palomares_trees.kn5", "palomares_barriers.kn5", "palomares_roadside.kn5"]
 STY = {"road": ("Road", "The road as it really is: real width, center and edge lines, no kerbs.", ["palomares_lines_road.kn5"]),
        "track": ("Track", "Same road surface and markings, plus red/white kerbs on apexes and exits and light circuit dressing at the gates.", ["palomares_lines_road.kn5"])}
 LAYOUTS = {}
@@ -672,6 +682,10 @@ for lay, L_ in LAYOUTS.items():
               open(ui / "ui_track.json", "w"), indent=2, ensure_ascii=False)
     # outline.png: same line on transparent 1000 px
     ol = mp_l.copy(); ol.thumbnail((1000, 1000)); ol.save(ui / "outline.png")
+_dc = {lay: sum(DRAWS.get(f, 0) for f in L_["files"]) for lay, L_ in LAYOUTS.items()}
+print("  draw calls (renderable meshes, per layout): max %d (%s), min %d; roadside kn5 = %d, budget 1500" % (
+    max(_dc.values()), max(_dc, key=_dc.get), min(_dc.values()), DRAWS.get("palomares_roadside.kn5", 0)))
+print("   by file:", {f: n for f, n in DRAWS.items() if n})
 from ext_config import write_ext_config
 print("  ext_config ->", write_ext_config(TRACK, MATS))
 print("track folder ->", TRACK)

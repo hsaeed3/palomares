@@ -236,66 +236,102 @@ def _txt(d, xy, s, sz, col, anchor="mm"):
     d.text(xy, s, fill=col, font=F(sz), anchor=anchor)
 
 
+def _canvas(w, h):
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); return im, ImageDraw.Draw(im)
+
+
+def _arrow(d, cx, cy, s, size, w=24):
+    """big straight arrow pointing left (s=-1) / right (s=+1)"""
+    d.line([(cx - s * size, cy), (cx + s * size * 0.55, cy)], fill=BLK, width=w)
+    d.polygon([(cx + s * size, cy), (cx + s * size * 0.35, cy - size * 0.55), (cx + s * size * 0.35, cy + size * 0.55)], fill=BLK)
+
+
 def sign_image(text, shape=None):
-    """returns (PIL image 256x256 RGBA, width_m, height_m) for a roadside text/shape description"""
-    t = (text or "").strip(); tl = t.lower(); shape = (shape or "").lower()
-    im = Image.new("RGBA", (256, 256), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-    if "stop" in tl and "stop ahead" not in tl:                               # R1-1
-        r = 120; cx = cy = 128
-        pts = [(cx + r * np.cos(np.pi / 8 + k * np.pi / 4), cy + r * np.sin(np.pi / 8 + k * np.pi / 4)) for k in range(8)]
-        d.polygon(pts, fill=WHT)
-        pts = [(cx + (r - 8) * np.cos(np.pi / 8 + k * np.pi / 4), cy + (r - 8) * np.sin(np.pi / 8 + k * np.pi / 4)) for k in range(8)]
-        d.polygon(pts, fill=RED); _txt(d, (128, 130), "STOP", 66, WHT)
+    """-> (RGBA image or None, width_m, height_m, key).  Classifies free-text survey descriptions into MUTCD designs
+    (public domain): R1-1 STOP, R2-1 SPEED LIMIT, W1-x curve / W1-8 chevron / W1-6 arrow, W8-1 HUMP, W5-2 narrow
+    bridge, D10 mile marker, OM3 object marker, street-name blade; everything unreadable gets a grey sign back."""
+    tl = ((text or "") + " " + (shape or "")).lower().strip()
+    W = lambda p: re.search(p, tl)
+    left = W(r"\bleft\b") is not None; right = W(r"\bright\b") is not None
+    dirn = "left" if left and not right else ("right" if right and not left else ("right" if right else None))
+    if W(r"\bcone\b"):
+        return None, 0, 0, "cone"
+    if W(r"back of|unreadable|\(reverse\)|\(back"):
+        dia = "diamond" in tl
+        im, d = _canvas(256, 256)
+        if dia:
+            d.polygon([(128, 0), (255, 128), (128, 255), (0, 128)], fill=(138, 140, 140, 255))
+        else:
+            d.rounded_rectangle((0, 20, 255, 236), 10, fill=(138, 140, 140, 255))
+        return im, 0.7 if dia else 0.6, 0.7 if dia else 0.5, "back_d" if dia else "back_r"
+    if W(r"\bstop\b") and not W(r"stop ahead|bus stop"):
+        im, d = _canvas(256, 256); r = 120; cx = cy = 128
+        d.polygon([(cx + r * np.cos(np.pi / 8 + k * np.pi / 4), cy + r * np.sin(np.pi / 8 + k * np.pi / 4)) for k in range(8)], fill=WHT)
+        d.polygon([(cx + (r - 8) * np.cos(np.pi / 8 + k * np.pi / 4), cy + (r - 8) * np.sin(np.pi / 8 + k * np.pi / 4)) for k in range(8)], fill=RED)
+        _txt(d, (128, 130), "STOP", 66, WHT)
         return im, 0.75, 0.75, "stop"
-    m = re.search(r"(\d{2})\s*(?:mph|m\.p\.h|mi/h)", tl) or re.search(r"speed\s*limit\D{0,6}(\d{2})", tl)
-    if m and "advisory" not in tl and "curve" not in tl:                      # R2-1
-        d.rectangle((0, 0, 255, 255), fill=WHT); d.rounded_rectangle((6, 6, 249, 249), 16, outline=BLK, width=7)
-        _txt(d, (128, 54), "SPEED", 50, BLK); _txt(d, (128, 106), "LIMIT", 50, BLK); _txt(d, (128, 190), m.group(1), 104, BLK)
-        return im, 0.6, 0.75, f"mph{m.group(1)}"
-    if "chevron" in tl or shape == "chevron":                                 # W1-8
-        d.rectangle((0, 0, 255, 255), fill=BLK); d.rectangle((8, 8, 247, 247), fill=YEL)
-        right = "right" in tl and "left" not in tl.replace("right-arrow", "right")
-        right = ("right" in tl) if "left" not in tl else False
-        s = 1 if right else -1
-        pts = [(128 - 70 * s, 44), (128 + 40 * s, 128), (128 - 70 * s, 212)]
-        d.line(pts, fill=BLK, width=34, joint="curve")
-        return im, 0.6, 0.75, "chev_r" if right else "chev_l"
-    if re.search(r"\bmile\b|\bmm\b|mile ?marker|milepost", tl):               # D10-1 style
-        n = re.search(r"(\d+(?:\.\d+)?)", tl)
-        d.rectangle((0, 0, 255, 255), fill=GRN); d.rounded_rectangle((8, 8, 247, 247), 12, outline=WHT, width=6)
-        _txt(d, (128, 70), "MILE", 56, WHT); _txt(d, (128, 160), n.group(1) if n else "", 88, WHT)
-        return im, 0.3, 0.45, "mile" + (n.group(1) if n else "")
-    if "hump" in tl or "bump" in tl or "dip" in tl:                           # W8-1/W17-1
+    if W(r"\b(hump|bump)\b"):
+        im, d = _canvas(256, 256)
         return _diamond(im, d, "HUMP", None), 0.75, 0.75, "hump"
-    if any(k in tl for k in ("curve", "turn", "winding", "bend", "reverse")) or shape == "diamond":
-        arrow = "left" if "left" in tl else ("right" if "right" in tl else None)
-        lab = "SLOW" if "slow" in tl else None
-        return _diamond(im, d, lab, arrow), 0.75, 0.75, f"curve_{arrow}_{lab}"
-    if "street" in tl or "blade" in tl or " rd" in tl or "road" in tl:       # street name blade
-        d.rectangle((0, 70, 255, 186), fill=GRN); d.rectangle((6, 76, 249, 180), outline=WHT, width=4)
-        nm = re.sub(r"\s*street name blade.*", "", t, flags=re.I)[:14].upper() or "PALOMARES RD"
-        _txt(d, (128, 128), nm.split(",")[0][:13], 38, WHT)
-        return im, 0.9, 0.22, "blade_" + nm[:8]
-    if "object marker" in tl or "om3" in tl or "hazard object" in tl:        # OM3
-        d.rectangle((0, 0, 255, 255), fill=YEL)
+    m = W(r"(\d{2})\s*(?:mph|m\.p\.h|mi/h)") or W(r"speed\s*limit\D{0,6}(\d{2})")
+    if m and not W(r"curve|diamond|advisory"):                                    # R2-1
+        im, d = _canvas(256, 320)
+        d.rounded_rectangle((0, 0, 255, 319), 18, fill=WHT); d.rounded_rectangle((8, 8, 247, 311), 14, outline=BLK, width=7)
+        _txt(d, (128, 68), "SPEED", 54, BLK); _txt(d, (128, 126), "LIMIT", 54, BLK); _txt(d, (128, 232), m.group(1), 112, BLK)
+        return im, 0.6, 0.75, f"mph{m.group(1)}"
+    if W(r"mile ?marker|milepost|\bmm\b|\bmile\b"):
+        n = re.search(r"(\d+(?:\.\d+)?)", tl)
+        im, d = _canvas(160, 240)
+        d.rounded_rectangle((0, 0, 159, 239), 8, fill=GRN); d.rounded_rectangle((6, 6, 153, 233), 6, outline=WHT, width=4)
+        _txt(d, (80, 60), "MILE", 40, WHT); _txt(d, (80, 150), (n.group(1) if n else ""), 52, WHT)
+        return im, 0.3, 0.45, "mile" + (n.group(1) if n else "")
+    if W(r"object marker|\bom3\b|hazard object"):
+        im, d = _canvas(128, 256); d.rectangle((0, 0, 127, 255), fill=YEL)
         for k in range(-6, 7):
             d.polygon([(k * 40, 255), (k * 40 + 20, 255), (k * 40 + 20 + 256, 0), (k * 40 + 256, 0)], fill=BLK)
-        return im, 0.3, 0.9, "om3"
-    if any(k in tl for k in ("fire access", "no parking", "private", "no trespass", "address", "mailbox", "number")):
-        d.rectangle((0, 40, 255, 216), fill=WHT); d.rectangle((6, 46, 249, 210), outline=BLK, width=4)
-        line = (t.split(",")[0])[:16].upper()
-        _txt(d, (128, 128), line, 34, BLK)
-        return im, 0.5, 0.35, "txt_" + line[:10]
-    # generic warning/info plate
-    d.rectangle((0, 0, 255, 255), fill=YEL); d.rounded_rectangle((8, 8, 247, 247), 14, outline=BLK, width=6)
-    lab = (t.split(",")[0].split("(")[0])[:18].upper() or "CAUTION"
-    parts = lab.split(" ", 1) if len(lab) > 9 else [lab]
-    for i, p in enumerate(parts):
-        _txt(d, (128, 128 + (i - (len(parts) - 1) / 2) * 62), p, 52 if len(p) < 8 else 38, BLK)
-    return im, 0.6, 0.6, "gen_" + lab[:10]
+        return im, 0.3, 0.6, "om3"
+    if W(r"street|blade|< ?\w.* rd ?>"):
+        nm = re.search(r"<\s*(.*?)\s*>", text or "")
+        nm = (nm.group(1) if nm else re.split(r"\s+street|\s+name|,", text or "", flags=re.I)[0]).strip().upper()[:14] or "PALOMARES RD"
+        im, d = _canvas(256, 80); d.rectangle((0, 0, 255, 79), fill=GRN); d.rectangle((4, 4, 251, 75), outline=WHT, width=3)
+        _txt(d, (128, 42), nm, int(min(36, 236 / (0.7 * max(len(nm), 1)))), WHT)
+        return im, 0.9, 0.28, "blade_" + nm
+    if W(r"chevron"):                                                            # W1-8
+        im, d = _canvas(192, 240); d.rounded_rectangle((0, 0, 191, 239), 8, fill=BLK); d.rounded_rectangle((6, 6, 185, 233), 6, fill=YEL)
+        s = 1 if dirn == "right" else -1
+        d.line([(96 - 52 * s, 44), (96 + 34 * s, 120), (96 - 52 * s, 196)], fill=BLK, width=30, joint="curve")
+        return im, 0.6, 0.75, "chev_" + ("r" if s > 0 else "l")
+    if W(r"narrow bridge"):
+        im, d = _canvas(256, 256)
+        return _diamond(im, d, "NARROW\nBRIDGE", None, 26), 0.75, 0.75, "narrowbridge"
+    if W(r"\barrow\b") and not W(r"bent|curve|turn|diamond"):                  # W1-6/W1-7 arrow plate
+        im, d = _canvas(256, 192); d.rounded_rectangle((0, 0, 255, 191), 8, fill=BLK); d.rounded_rectangle((6, 6, 249, 185), 6, fill=YEL)
+        _arrow(d, 128, 96, 1 if dirn == "right" else -1, 84, 30)
+        return im, 0.75, 0.56, "arrow_" + str(dirn)
+    if W(r"round|circle|mirror"):
+        im, d = _canvas(256, 256)
+        if "mirror" in tl:
+            d.ellipse((0, 0, 255, 255), fill=(236, 120, 24, 255)); d.ellipse((18, 18, 237, 237), fill=(150, 168, 180, 255))
+            return im, 0.6, 0.6, "mirror"
+        d.ellipse((0, 0, 255, 255), fill=WHT); d.ellipse((10, 10, 245, 245), outline=RED, width=24)
+        d.line((52, 52, 204, 204), fill=RED, width=22)
+        return im, 0.6, 0.6, "round_noslash"
+    if W(r"diamond|curve|\bturn\b|winding|\bbend\b|warning"):
+        im, d = _canvas(256, 256)
+        lab = "SLOW" if "slow" in tl else None
+        arrow = dirn if W(r"curve|turn|bend|arrow") else None
+        return _diamond(im, d, lab, arrow), 0.75, 0.75, f"dia_{arrow}_{lab}"
+    if W(r"no dumping|fire access|no parking|private|trespass"):
+        im, d = _canvas(256, 192); d.rounded_rectangle((0, 0, 255, 191), 8, fill=WHT); d.rounded_rectangle((6, 6, 249, 185), 6, outline=BLK, width=4)
+        lines = ["NO", "DUMPING"] if "dumping" in tl else (["FIRE", "ACCESS"] if "fire" in tl else ["NO", "PARKING"] if "parking" in tl else ["PRIVATE", "ROAD"])
+        for i, ln_ in enumerate(lines):
+            _txt(d, (128, 66 + i * 60), ln_, 46 if len(ln_) < 8 else 40, BLK)
+        return im, 0.6, 0.45, "txt_" + lines[-1]
+    im, d = _canvas(256, 192); d.rounded_rectangle((0, 0, 255, 191), 8, fill=WHT); d.rounded_rectangle((6, 6, 249, 185), 6, outline=BLK, width=4)
+    return im, 0.5, 0.38, "blank_white"
 
 
-def _diamond(im, d, label, arrow):
+def _diamond(im, d, label, arrow, fs=44):
     d.polygon([(128, 0), (255, 128), (128, 255), (0, 128)], fill=BLK)
     d.polygon([(128, 14), (241, 128), (128, 241), (14, 128)], fill=YEL)
     if arrow:                                                                  # W1-2 style bent arrow, simplified
@@ -303,7 +339,8 @@ def _diamond(im, d, label, arrow):
         d.line([(128, 214), (128, 140), (128 + 46 * s, 96)], fill=BLK, width=22, joint="curve")
         d.polygon([(128 + 66 * s, 76), (128 + 18 * s, 90), (128 + 52 * s, 126)], fill=BLK)
     if label:
-        _txt(d, (128, 128), label, 44, BLK)
+        for i, ln_ in enumerate(label.split("\n")):
+            _txt(d, (128, 128 + (i - (label.count("\n")) / 2) * (fs + 6)), ln_, fs, BLK)
     return im
 
 

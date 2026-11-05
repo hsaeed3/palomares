@@ -99,7 +99,7 @@ class Collider:
         per = 60000 // 4 * 2
         while start < len(T):
             tt = T[start:start + per]; used, inv = np.unique(tt, return_inverse=True)
-            out.append(dict(name=f"{self.prefix}_{k}" if (k or len(T) > per) else self.prefix, material="invisible", P=P[used], T=inv.reshape(-1, 3),
+            out.append(dict(name=self.prefix if k == 0 else f"{self.prefix}_{k}", material="invisible", P=P[used], T=inv.reshape(-1, 3),
                             UV=np.zeros((len(used), 2)), N=N[used], **WALL_FLAGS))
             start += per; k += 1
         return out
