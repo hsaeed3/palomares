@@ -12,7 +12,9 @@ Attribution: road geometry seed © OpenStreetMap contributors (ODbL). LiDAR, DEM
 
 ## Build the installable track (zip for Content Manager)
 
-The zip is not committed (`dist/*.zip` is gitignored), so build it once:
+**Prebuilt:** `dist/palomares_road_v<VERSION>.zip` is committed via Git LFS. Download it from the GitHub file page ("Download raw file"), or run `git lfs pull` after cloning. Without LFS, a plain clone only contains a small pointer file.
+
+To build it yourself:
 
 ```bash
 pip install -r requirements.txt
