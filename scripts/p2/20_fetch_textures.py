@@ -1,7 +1,8 @@
 """Phase 2: fetch CC0 textures from ambientCG (1K JPG) into data/raw/textures/<id>/. Idempotent."""
 import io, zipfile, pathlib, requests
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-IDS = {"asphalt": "Asphalt026C", "rock": "Rock030", "grass": "Grass004", "litter": "Ground048", "bank": "Ground068"}
+IDS = {"asphalt": "Asphalt026C", "rock": "Rock030", "grass": "Grass004", "litter": "Ground048", "bank": "Ground068",
+       "bark_oak": "Bark007", "bark_pale": "Bark012", "bark_grey": "Bark014"}
 for key, aid in IDS.items():
     d = ROOT / "data/raw/textures" / aid
     if d.exists() and any(d.glob("*Color.jpg")):

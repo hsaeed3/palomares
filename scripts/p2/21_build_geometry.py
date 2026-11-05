@@ -204,6 +204,16 @@ sel = (ts_ <= S_END + 60) & (d_tc > hw_t + 1.2)
 print("trees used", sel.sum(), "of", len(tr))
 ratio = tcr_ / np.maximum(th_, 1)
 species = np.where((th_ > 24) & (ratio < 0.3), "euc", np.where(ratio > 0.42, "oak", "bay"))
+# pale sycamore/alder: the creek-bottom trees (lowest ground within ~300 m along the road) and half of the tall narrow ones
+_zl = np.array([np.percentile(tz_[np.abs(ts_ - s) < 300], 25) if np.any(np.abs(ts_ - s) < 300) else -1e9 for s in ts_])
+_h = (np.arange(len(tr)) * 2654435761) % 1000 / 1000.0  # stable per-tree hash
+species = np.where(((species == "euc") & (_h < 0.5)) | ((species != "oak") & (tz_ < _zl) & (_h < 0.6)), "syc", species)
+# keep in sync with 22: TREE_VARIANTS, TREE_FORK, TREE_TW; trunk atlas strip order
+TREE_VARIANTS = 4
+TREE_FORK = {"oak": 0.16, "bay": 0.0, "euc": 0.42, "syc": 0.24}
+TREE_TW = {"oak": 26, "bay": 9, "euc": 12, "syc": 15}
+TRUNK_STRIP = {"oak": 0, "bay": 1, "euc": 2, "syc": 3}
+trunk_buckets = {}
 tree_buckets = {}
 for k in np.nonzero(sel)[0]:
     c = min(int(road.s[j_tc[k]] // CHUNK), nchunks - 1)
@@ -214,17 +224,36 @@ for (c, sp), ks in sorted(tree_buckets.items()):
         h = th_[k]; w = min(max(tcr_[k] * 2.0, 2.5), h * 1.1)
         z0 = tz_[k] - 0.3
         a0 = rng.uniform(0, np.pi)
+        u0 = int(_h[k] * 997) % TREE_VARIANTS / TREE_VARIANTS; du = 1.0 / TREE_VARIANTS
+        # solid 6-sided tapered trunk under the card for big trees near the road (cards look flat side-on)
+        if TREE_FORK[sp] > 0 and h > 9 and d_tc[k] < hw_t[k] + 20:
+            trunk_buckets.setdefault(c, []).append((tx_[k], ty_[k], z0, h * TREE_FORK[sp] + 0.3, TREE_TW[sp] / 512 * w, TRUNK_STRIP[sp]))
         for a in (a0, a0 + np.pi / 2):
             dx, dy = math.cos(a) * w / 2, math.sin(a) * w / 2
             q = [(tx_[k] - dx, ty_[k] - dy, z0), (tx_[k] + dx, ty_[k] + dy, z0), (tx_[k] + dx, ty_[k] + dy, z0 + h), (tx_[k] - dx, ty_[k] - dy, z0 + h)]
             for back in (False, True):
-                b = len(P); P += q; UV += [(0, 0), (1, 0), (1, 1), (0, 1)]
+                b = len(P); P += q; UV += [(u0, 0), (u0 + du, 0), (u0 + du, 1), (u0, 1)]
                 T += [(b, b + 1, b + 2), (b, b + 2, b + 3)] if not back else [(b, b + 2, b + 1), (b, b + 3, b + 2)]
     P = np.array(P); T = np.array(T)
     # upward-biased normals give softer, more natural lighting on cards
     Nn = vertex_normals(P, T); Nn[:, 2] += 0.8; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
     add("trees", f"tree_{sp}_{c:02d}", f"tree_{sp}", P, T, np.array(UV), N_=Nn, cast_shadows=True, transparent=False, lod_out=900.0)
 
+for c, items in sorted(trunk_buckets.items()):
+    P, T, UV = [], [], []
+    for (x0, y0, zb, ht, rad, st) in items:
+        rad = max(rad, 0.12); nseg = 6; b = len(P)
+        for j in range(nseg + 1):
+            ang = 2 * np.pi * j / nseg; ca, sa = math.cos(ang), math.sin(ang)
+            P += [(x0 + ca * rad * 1.15, y0 + sa * rad * 1.15, zb), (x0 + ca * rad * 0.85, y0 + sa * rad * 0.85, zb + ht)]
+            uu = (st + j / nseg) / 4.0
+            UV += [(uu, 0), (uu, ht / (2 * np.pi * rad))]  # bark strip ~square texels
+        for j in range(nseg):
+            i0 = b + 2 * j
+            T += [(i0, i0 + 2, i0 + 3), (i0, i0 + 3, i0 + 1)]
+    P = np.array(P); T = np.array(T)
+    add("trees", f"trunk_{c:02d}", "tree_trunk", P, T, np.array(UV), cast_shadows=True, lod_out=500.0)
+print("3D trunks", sum(len(v) for v in trunk_buckets.values()))
 _tick("trees")
 # ------------------------------------------------------------------ understory shrubs (GoPro: dense green brush on every
 # bank and drop-off between the trunks; LiDAR trees >= 4 m miss it). Non-physical crossed cards, 1 mesh per chunk.

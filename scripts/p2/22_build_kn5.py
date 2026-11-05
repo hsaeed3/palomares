@@ -101,49 +101,149 @@ def photo_fill(H, W, r, tint=None):
     return out
 
 
-def foliage(kind, seed):
-    """tree card (RGBA 512x1024): photo-leaf crown (GoPro crops) in a clumped alpha envelope, dark oak-bark trunk.
-    Shapes follow the frames: broad low crowns (oak), denser rounder (bay), tall open (euc/sycamore-ish)."""
+TREE_VARIANTS = 4          # card variants per species, side by side in one atlas (u = (v + u) / 4); 21 picks one per tree
+# card trunk geometry shared with 21's 3D trunks: fork height (fraction of card height) and trunk half-width (px of 512)
+TREE_FORK = {"oak": 0.16, "bay": 0.0, "euc": 0.42, "syc": 0.24}
+TREE_TW = {"oak": 26, "bay": 9, "euc": 12, "syc": 15}
+# bark colours sampled from the spring GoPro trunks (wet-ish overcast): mean sRGB, mottle sRGB, moss/lichen sRGB, moss amount
+BARK = {"oak": ((66, 60, 53), (92, 86, 76), (88, 98, 58), 0.45),      # coast live oak: dark grey-brown, mossy
+        "bay": ((104, 100, 92), (128, 124, 114), (96, 104, 70), 0.20),  # bay laurel: grey stems
+        "euc": ((150, 138, 118), (182, 172, 152), (120, 110, 90), 0.0),  # euc: tan/grey strips
+        "syc": ((196, 192, 178), (150, 140, 118), (170, 178, 150), 0.15)}  # sycamore/alder: pale mottled white/grey/tan
+BARK_ID = {"oak": "Bark007", "bay": "Bark014", "euc": "Bark012", "syc": "Bark014"}
+
+
+def _vnoise(r, H, W, cell):
+    g = r.uniform(0, 1, (max(2, H // cell + 2), max(2, W // cell + 2)))
+    return np.asarray(Image.fromarray((g * 255).astype(np.uint8)).resize((W, H), Image.BICUBIC), float) / 255
+
+
+def bark_tex(kind, H=512, W=512, seed=0):
+    """CC0 ambientCG bark relief, re-coloured to the GoPro trunk colours, with low-frequency mottle and moss/lichen"""
+    r = np.random.default_rng(100 + seed)
+    src = np.asarray(jpg_tex(BARK_ID[kind], "Color", 1024).convert("L").resize((W, H)), float)
+    lum = (src - src.mean()) / (src.std() + 1e-6)
+    base, mott, moss = (np.array(c, float) for c in BARK[kind][:3]); mamt = BARK[kind][3]
+    m1 = _vnoise(r, H, W, 48)
+    if kind == "syc":  # plane-tree patchwork: sharp-edged pale/tan/grey plates
+        m1 = (m1 > 0.5).astype(float) * 0.8 + 0.2 * _vnoise(r, H, W, 12)
+    col = base[None, None] * (1 - 0.6 * m1[..., None]) + mott[None, None] * 0.6 * m1[..., None]
+    col = col * (1 + 0.22 * lum[..., None])
+    if mamt > 0:  # moss in the crevices + lichen blotches
+        mm = np.clip((_vnoise(r, H, W, 64) - (1 - mamt)) * 3, 0, 1) * np.clip(0.6 - 0.25 * lum, 0, 1)
+        col = col * (1 - mm[..., None]) + moss[None, None] * (1 + 0.15 * lum[..., None]) * mm[..., None]
+    return col.clip(0, 255)
+
+
+def _branch(segs, tips, r, x, y, ang, ln, w, depth, kind):
+    """recursive tapered, sinuous limb: appends (x0,y0,x1,y1,w0,w1) segments; ang 0 = up"""
+    n = 6; wend = w * 0.62
+    curl = r.uniform(-0.12, 0.12)
+    for i in range(n):
+        ang += curl + r.normal(0, 0.10)
+        if kind == "oak" and depth <= 2:
+            ang += 0.05 * np.sign(ang)  # oak limbs droop outward and low
+        if abs(x - 256) > 200 and np.sign(math.sin(ang)) == np.sign(x - 256):
+            ang *= 0.6  # steer back inside the card
+        x1 = x + math.sin(ang) * ln / n; y1 = y - math.cos(ang) * ln / n
+        w1 = w + (wend - w) * (i + 1) / n
+        segs.append((x, y, x1, y1, w + (wend - w) * i / n, w1)); x, y = x1, y1
+    if depth == 0 or wend < 1.2:
+        tips.append((x, y)); return
+    kids = 2 if r.uniform() < 0.7 else 3
+    spread = {"oak": 0.75, "bay": 0.35, "euc": 0.45, "syc": 0.65}[kind]
+    for k in range(kids):
+        da = (k - (kids - 1) / 2) * spread + r.normal(0, 0.15)
+        _branch(segs, tips, r, x, y, ang + da, ln * r.uniform(0.6, 0.8), wend * (0.8 if k == 0 else 0.62), depth - 1, kind)
+
+
+def _tree_card(kind, seed, W=512, H=1024):
     r = np.random.default_rng(seed)
-    W, H = 512, 1024
-    mask = Image.new("L", (W, H), 0); d = ImageDraw.Draw(mask)
-    trunk_top = {"euc": 0.30, "oak": 0.22, "bay": 0.25}[kind]
-    tw = {"euc": 14, "oak": 30, "bay": 20}[kind]
-    bark = {"euc": (122, 114, 100), "oak": (74, 64, 56), "bay": (88, 78, 66)}[kind]
-    if kind == "euc":
-        cx, cy, rx, ry = W / 2, H * 0.40, W * 0.40, H * 0.38
-    elif kind == "oak":
-        cx, cy, rx, ry = W / 2, H * 0.44, W * 0.49, H * 0.40
+    segs, tips = [], []
+    fork = TREE_FORK[kind]; tw = TREE_TW[kind]; yf = H * (1 - fork)
+    if kind == "bay":  # multi-stem: 3-5 grey stems from the root crown
+        for k in range(r.integers(3, 6)):
+            _branch(segs, tips, r, W / 2 + r.uniform(-14, 14), H, r.normal(0, 0.18), H * r.uniform(0.32, 0.45), r.uniform(7, 11), 4, kind)
     else:
-        cx, cy, rx, ry = W / 2, H * 0.42, W * 0.45, H * 0.41
-    blobs = []
-    for _ in range(420):
+        segs.append((W / 2, H, W / 2, yf, tw, tw * 0.85))  # straight base (matches 21's 3D trunk)
+        if kind == "euc":
+            _branch(segs, tips, r, W / 2, yf, r.normal(0, 0.06), H * 0.30, tw * 0.85, 4, kind)
+        else:
+            nl = {"oak": r.integers(3, 5), "syc": r.integers(2, 4)}[kind]
+            for k in range(nl):
+                a = (k - (nl - 1) / 2) * (1.1 if kind == "oak" else 0.7) / max(nl - 1, 1) * 2 + r.normal(0, 0.15)
+                ln = H * (0.30 if kind == "oak" else 0.34) * r.uniform(0.8, 1.1)
+                _branch(segs, tips, r, W / 2, yf, a, ln, tw * 0.85 * r.uniform(0.7, 0.9), 4, kind)
+    # wood: three-pass shading (shadow side, mid, light from upper left) -> reads as round limbs
+    wm = Image.new("L", (W, H), 0); ws = Image.new("L", (W, H), 0)
+    dm, ds = ImageDraw.Draw(wm), ImageDraw.Draw(ws)
+
+    def quad(d, s, k, off, val):
+        x0, y0, x1, y1, w0, w1 = s
+        dx, dy = x1 - x0, y1 - y0; L_ = math.hypot(dx, dy) + 1e-6; nx, ny = -dy / L_, dx / L_
+        w0, w1 = w0 * k, w1 * k; o0, o1 = off * s[4], off * s[5]
+        p = [(x0 + nx * (w0 - o0), y0 + ny * (w0 - o0)), (x1 + nx * (w1 - o1), y1 + ny * (w1 - o1)),
+             (x1 - nx * (w1 + o1), y1 - ny * (w1 + o1)), (x0 - nx * (w0 + o0), y0 - ny * (w0 + o0))]
+        d.polygon(p, fill=val); d.ellipse([x1 - w1, y1 - w1, x1 + w1, y1 + w1], fill=val)
+    for s in segs:
+        quad(dm, s, 1.0, 0, 255); quad(ds, s, 1.0, 0, 70)
+    for s in segs:
+        quad(ds, s, 0.7, 0.25, 140)
+    for s in segs:
+        quad(ds, s, 0.35, 0.45, 215)
+    wa = np.asarray(wm) > 128
+    sh = np.asarray(ws.filter(ImageFilter.GaussianBlur(1.5)), float) / 160
+    bt = bark_tex(kind, 512, 512, seed)
+    bark = np.vstack([bt, bt])[:H, :W]  # bark tiles vertically along the card
+    wood = (bark * sh[..., None]).clip(0, 255)
+    # crown: leaf clusters on the branch tips + envelope fill; gaps let the limbs show through
+    mask = Image.new("L", (W, H), 0); d = ImageDraw.Draw(mask)
+    env = {"oak": (W / 2, H * 0.54, W * 0.49, H * 0.30), "bay": (W / 2, H * 0.40, W * 0.40, H * 0.36),
+           "euc": (W / 2, H * 0.32, W * 0.34, H * 0.30), "syc": (W / 2, H * 0.38, W * 0.44, H * 0.32)}[kind]
+    cx, cy, rx, ry = env
+    nb = {"oak": 650, "bay": 700, "euc": 420, "syc": 380}[kind]
+    for _ in range(nb):
         a = r.uniform(0, 2 * np.pi); q = math.sqrt(r.uniform(0, 1))
         x = cx + math.cos(a) * rx * q; y = cy + math.sin(a) * ry * q
-        s_ = r.uniform(14, 46) * (1.0 - 0.4 * q)
-        d.ellipse([x - s_, y - s_ * 0.85, x + s_, y + s_ * 0.85], fill=255); blobs.append((x, y, s_))
+        if kind == "oak":  # skirts reach down over the road at the sides
+            y += max(0, abs(x - cx) / rx - 0.45) * H * 0.22
+        s_ = r.uniform(10, 30) * (1.0 - 0.35 * q)
+        d.ellipse([x - s_, y - s_ * 0.8, x + s_, y + s_ * 0.8], fill=255)
+    for (x, y) in tips:
+        s_ = r.uniform(20, 40); d.ellipse([x - s_, y - s_ * 0.8, x + s_, y + s_ * 0.8], fill=255)
     m = np.asarray(mask.filter(ImageFilter.GaussianBlur(3)), float) / 255
-    # ragged leafy edge: threshold against leaf-scale noise
-    noise = np.asarray(Image.fromarray((r.uniform(0, 255, (H // 4, W // 4))).astype(np.uint8)).resize((W, H), Image.BICUBIC), float) / 255
-    alpha = (m * (0.75 + 0.5 * noise)) > 0.62
+    noise = _vnoise(r, H, W, 4) * 0.6 + _vnoise(r, H, W, 24) * 0.4
+    thr = {"oak": 0.60, "bay": 0.58, "euc": 0.63, "syc": 0.65}[kind]
+    alpha = (m * (0.7 + 0.55 * noise)) > thr
     leaves = photo_fill(H, W, r).astype(float)
-    # self-shadow: darker underneath and toward the trunk, lit crown top (overcast GoPro light)
+    if kind == "syc":
+        leaves = leaves * np.array([1.08, 1.12, 0.85])  # fresh yellow-green spring sycamore leaf
+    elif kind == "bay":
+        leaves = leaves * np.array([0.9, 0.95, 0.9])
     yy = (np.arange(H)[:, None] - (cy - ry)) / (2 * ry)
-    shade = np.clip(1.15 - 0.55 * yy, 0.45, 1.2)
+    shade = np.clip(1.15 - 0.5 * yy, 0.5, 1.2)
     rgb = (leaves * shade[..., None]).clip(0, 255)
-    wood = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dt = ImageDraw.Draw(wood)
-    y_top = H * (1 - trunk_top)
-    dt.polygon([(W / 2 - tw, H), (W / 2 + tw, H), (W / 2 + tw * 0.5, y_top), (W / 2 - tw * 0.5, y_top)], fill=bark + (255,))
-    for _ in range(7):
-        x1 = cx + r.uniform(-rx, rx) * 0.75; y1 = cy + r.uniform(-0.2, 0.6) * ry
-        dt.line([(W / 2, y_top + r.uniform(0, 40)), (x1, y1)], fill=bark + (255,), width=int(r.uniform(5, 11)))
-    w_ = np.asarray(wood).astype(float); wd = w_[..., :3] * 0.8  # limbs sit in crown shadow
-    lower = np.arange(H)[:, None] > cy + ry * 0.55  # trunk itself in front below the crown
-    front = alpha & ~(lower & (w_[..., 3] > 0))
-    rgb = np.where(front[..., None], rgb, np.where(np.arange(H)[:, None, None] > y_top, w_[..., :3], wd))
-    im = Image.fromarray(np.dstack([rgb, (front | (w_[..., 3] > 0)) * 255]).astype(np.uint8), "RGBA")
-    a_ = np.asarray(im).copy(); a_[..., 3] = np.where(a_[..., 3] > 128, 255, 0)
-    return Image.fromarray(a_)
+    # limbs inside the crown sit in leaf shadow; lower trunk is in front
+    yi = np.arange(H)[:, None]
+    in_shadow = np.clip(0.55 + 0.45 * (yi - (cy - ry)) / (2.2 * ry), 0.55, 1.0)
+    wood = wood * np.where(m[..., None] > 0.3, in_shadow[..., None] * 0.85, 1.0)
+    front_wood = wa & (yi > yf - H * 0.04)
+    leaf = alpha & ~front_wood
+    out = np.where(leaf[..., None], rgb, wood)
+    a = (leaf | wa) * 255
+    return np.dstack([out, a]).astype(np.uint8)
+
+
+def foliage(kind, seed):
+    """tree card atlas (RGBA, TREE_VARIANTS x 512 wide, 1024 high): per variant a recursively branched, tapered,
+    shaded limb system with graded CC0 bark (moss/lichen on oak), photo-leaf crown (GoPro crops) with gaps."""
+    cards = [_tree_card(kind, seed * 17 + v) for v in range(TREE_VARIANTS)]
+    return Image.fromarray(np.hstack(cards), "RGBA")
+
+
+def trunk_atlas():
+    """bark strips for 21's 3D trunks: u in [i/4,(i+1)/4] = oak, bay, euc, syc"""
+    return Image.fromarray(np.hstack([bark_tex(k, 512, 256, 7) for k in ("oak", "bay", "euc", "syc")]).astype(np.uint8))
 
 
 def bank_tex():
@@ -225,6 +325,7 @@ T = {
     "shrub.png": png(shrub_atlas()),
     "backdrop_d.png": png(backdrop_img),
     "tree_oak.png": png(foliage("oak", 1)), "tree_bay.png": png(foliage("bay", 2)), "tree_euc.png": png(foliage("euc", 3)),
+    "tree_syc.png": png(foliage("syc", 4)), "tree_trunk.png": png(trunk_atlas()),
     "kerb.png": png(kerb_tex()), "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
     **road_surface_tex(),
 }
@@ -254,8 +355,9 @@ MATS = {
 # track dressing (gantries, huts, bleacher, corner barriers): atlas written by 21b_track_dressing.py
 T["dressing.png"] = (BUILD / "dressing_atlas.png").read_bytes()
 MATS["dressing"] = Material("dressing", "ksPerPixel", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"})
-for sp in ("oak", "bay", "euc"):
+for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)
+MATS["tree_trunk"] = Material("tree_trunk", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.45}, {"txDiffuse": "tree_trunk.png"})
 
 
 def merge_by(meshes, key):
@@ -466,4 +568,6 @@ for lay, L_ in LAYOUTS.items():
               open(ui / "ui_track.json", "w"), indent=2, ensure_ascii=False)
     # outline.png: same line on transparent 1000 px
     ol = mp_l.copy(); ol.thumbnail((1000, 1000)); ol.save(ui / "outline.png")
+from ext_config import write_ext_config
+print("  ext_config ->", write_ext_config(TRACK, MATS))
 print("track folder ->", TRACK)
