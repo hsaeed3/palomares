@@ -185,11 +185,20 @@ b = tilebox(4, 4); dr.rectangle(b, fill=(14, 14, 14))
 for k, col in enumerate(((230, 30, 30), (230, 30, 30), (60, 20, 20), (30, 200, 60))):   # 2 red lit, amber off, green
     cy = b[1] + 34 + k * 62; dr.ellipse((b[0] + 98, cy - 26, b[0] + 158, cy + 26), fill=col)
 region("lights", *b)
-for k in range(8):                                  # marshal post numbers 1..8 (128 px plates in tiles 5..7 of row 4/5)
-    cx0 = 5 * TS + (k % 3) * 160; cy0 = 4 * TS + (k // 3) * 160
-    if cy0 + 150 > 5 * TS + 255: break
-    bb = (cx0, cy0, cx0 + 150, cy0 + 150); dr.rectangle(bb, fill=(240, 120, 20))
-    dr.text((cx0 + 75, cy0 + 78), f"{k + 1}", fill=WHITE, font=F(104), anchor="mm"); region(f"post{k + 1}", *bb)
+for k in range(12):                                 # marshal post numbers (row 5) and corner numbers T1..T12 (row 6)
+    for row, txt, bg, fg in ((5, f"{k + 1}", (240, 120, 20), WHITE), (6, f"T{k + 1}", (16, 30, 66), WHITE)):
+        cx0 = k * 168 + 4; cy0 = row * TS + 50
+        bb = (cx0, cy0, cx0 + 156, cy0 + 156); dr.rectangle(bb, fill=bg); dr.rectangle((cx0 + 6, cy0 + 6, cx0 + 150, cy0 + 150), outline=fg, width=5)
+        dr.text((cx0 + 78, cy0 + 80), txt, fill=fg, font=F(96 if len(txt) < 3 else 70), anchor="mm")
+        region(("post" if row == 5 else "turn") + f"{k + 1}", *bb)
+b7 = tilebox(0, 7); dr.rectangle(b7, fill=WHITE); dr.rectangle((8, 7 * TS + 8, TS - 9, 8 * TS - 9), outline=(20, 20, 20), width=10)
+dr.text((128, 7 * TS + 132), "150", fill=(15, 15, 15), font=F(120), anchor="mm"); region("board150", *b7)
+for c0, txt, bg in ((1, "START", (20, 120, 50)), (3, "FINISH", (15, 15, 15))):
+    bb = tilebox(c0, 7, 2, 1); dr.rectangle(bb, fill=bg)
+    if txt == "FINISH":
+        for i in range(16):
+            for j in range(2): dr.rectangle((bb[0] + i * 32, bb[1] + j * 32 + (0 if j == 0 else 192), bb[0] + i * 32 + 31, bb[1] + j * 32 + 31 + (0 if j == 0 else 160)), fill=WHITE if (i + j) % 2 else (15, 15, 15))
+    dr.text((bb[0] + 256, bb[1] + 128), txt, fill=WHITE, font=F(120), anchor="mm"); region(txt.lower(), *bb)
 A.transpose(Image.FLIP_TOP_BOTTOM).save(BUILD / "dressing_atlas.png")   # kn5 v runs bottom-up; UVT uses top-down
 
 # ================================================================== geometry helpers
@@ -253,6 +262,12 @@ def idx(s): return int(np.clip(np.searchsorted(road.s, s), 0, N - 1))
 def tangent(i): return np.array([road.tx[i], road.ty[i]])
 def normal(i): return np.array([road.nx[i], road.ny[i]])
 def edge(i, side): return road.el[i] if side > 0 else road.er[i]
+def shw(i, side):
+    """shoulder width at station i (variable per station if geom.Road provides sh_w_l / sh_w_r)"""
+    if hasattr(road, "sh_w"):
+        return float(np.asarray(road.sh_w(i, side)))
+    a = getattr(road, "sh_w_l" if side > 0 else "sh_w_r", None)
+    return float(a[i]) if a is not None else SHOULDER_W
 def gz(x, y, fallback):
     z = dtm(x, y); return float(z) if np.isfinite(z) else float(fallback)
 
@@ -337,6 +352,18 @@ for gi, sg in enumerate(GATES):
         CP_x = np.array([x, y]) + np.outer([-2, 2], tangent(j))
         strip_wall(CP_x[:, 0], CP_x[:, 1], np.full(2, r[1] - 0.3), np.full(2, r[2] + 1.35))
         USED.append((x, y, 3.0)); LOG.append(f"  hoarding s={s:.0f} {'L' if side > 0 else 'R'} +{off:.1f} m")
+    best = flat_spot(sg - 40, sg + 25, 3, np.arange(2.5, 6.1, 0.5), 12.0, 1.0, maxrange=0.8, s_ref=sg, avoid=USED)
+    if best:                                                # spectator area: 3 x 4 m catch-fence panels, 2 m tall
+        _, x, y, j, side, s, off, r = best
+        t_ = tangent(j)
+        for k in (-1, 0, 1):
+            c = np.array([x, y]) + t_ * 4.0 * k; zz = gz(*c, r[1])
+            for h in range(2):
+                panel(c, zz - 0.1 + h, zz + 0.9 + h, side * normal(j), 4.0, UVT["fence"], back=UVT["fence"])
+            box(c - t_ * 2.0, t_, 0.08, 0.08, zz - 0.3, zz + 2.0, UVT["dark"])
+        ends = np.array([x, y]) + np.outer([-6, 6], t_)
+        strip_wall(ends[:, 0], ends[:, 1], np.full(2, r[1] - 0.5), np.full(2, r[2] + 2.0))
+        USED.append((x, y, 7.0)); LOG.append(f"  spectator fence s={s:.0f} {'L' if side > 0 else 'R'} +{off:.1f} m")
     for (x, y, zg), d in zip(legs, (1, -1)):                # checker flag poles just outside the legs
         p = np.array([x, y]) + d * n * 0.9 - t * 1.0
         zz = gz(*p, road.z[i])
@@ -450,12 +477,13 @@ for l in range(1, nl + 1):
     if len(ix) >= KCFG["min_corner_length_m"]:
         corners.append((float(np.abs(ks[ix]).max()), ix[0], ix[-1], 1 if ks[ix[np.argmax(np.abs(ks[ix]))]] > 0 else -1))
 NB = 8
+BOARDED = []
 for dname, sd in (("nb", 1), ("sb", -1)):
     cur = B[f"dressing_{dname}"]; placed = []
     for kpk, i0, i1, inner in sorted(corners, reverse=True):
         if len(placed) >= NB: break
         entry = road.s[i0] if sd > 0 else road.s[i1]
-        st = [entry - sd * 100, entry - sd * 50]
+        st = [entry - sd * 150, entry - sd * 100, entry - sd * 50]
         if min(st) < 40 or max(st) > road.s[-1] - 40 or any(abs(entry - p) < 300 for p in placed):
             continue
         # skip if another (sharp) corner sits between the board and the corner (boards would be misleading)
@@ -463,7 +491,7 @@ for dname, sd in (("nb", 1), ("sb", -1)):
                for c in corners):
             continue
         placed.append(entry)
-        for s_b, txt in zip(st, ("100", "50")):
+        for s_b, txt in zip(st, ("150", "100", "50")):
             j = idx(s_b); runv = sd * tangent(j)
             best = None
             for side in (-inner, inner):                                    # prefer the outside of the corner
@@ -478,20 +506,56 @@ for dname, sd in (("nb", 1), ("sb", -1)):
                 side = -inner; x, y = road.xy(j, side * (road.outer(j, side) + 0.3))
                 best = (x, y, road.surface_z(j, side * (road.outer(j, side)), noise=False) - 0.1)
             x, y, zz = best
-            box((x, y), runv, 0.06, 0.06, zz - 0.4, zz + 1.6, UVT["dark"])
-            panel(np.array([x, y]) - runv * 0.04, zz + 1.0, zz + 1.75, runv, 0.75, UVT[f"board{txt}"], back=UVT["metal"])
+            R_ = np.array([runv[1], -runv[0]])                          # breakaway style: two thin posts, notched
+            for o_ in (-0.25, 0.25):
+                box(np.array([x, y]) + R_ * o_, runv, 0.04, 0.04, zz - 0.4, zz + 0.25, UVT["dark"])
+                box(np.array([x, y]) + R_ * o_, runv, 0.035, 0.035, zz + 0.27, zz + 1.75, UVT["metal"])
+            panel(np.array([x, y]) - runv * 0.03, zz + 1.0, zz + 1.75, runv, 0.75, UVT[f"board{txt}"], back=UVT["metal"])
+        BOARDED.append((entry, i0, i1, inner, best))
         LOG.append(f"  boards {dname} corner entry s={entry:.0f} (R~{1 / kpk:.0f} m)")
+    # corner numbers T1.. in run order, small plate at the corner entry on the outside
+    for tn, (entry, i0, i1, inner, _) in enumerate(sorted(BOARDED, key=lambda b_: sd * b_[0])):
+        j = idx(entry); runv = sd * tangent(j); side = -inner
+        x, y = road.xy(j, side * (edge(j, side) + shw(j, side) + 0.6))
+        zz = gz(x, y, road.surface_z(j, side * edge(j, side), noise=False))
+        ze_ = road.surface_z(j, side * (edge(j, side) + shw(j, side)), noise=False)
+        if abs(zz - ze_) > 0.8: zz = ze_ - 0.1
+        box((x, y), runv, 0.05, 0.05, zz - 0.4, zz + 1.3, UVT["dark"])
+        panel(np.array([x, y]) - runv * 0.03, zz + 0.85, zz + 1.3, runv, 0.45, UVT[f"turn{tn + 1}"], back=UVT["metal"])
+        LOG.append(f"  corner T{tn + 1} {dname} s={entry:.0f}")
+    BOARDED.clear()
+GATE_ROLE = {"nb": {20: "start", 7392: "finish", 15563: "finish"}, "sb": {15563: "start", 7392: "finish", 20: "finish"}}
+for dname, sd in (("nb", 1), ("sb", -1)):
+    cur = B[f"dressing_{dname}"]
+    for g, role in GATE_ROLE[dname].items():
+        s_b = g - sd * 6; j = idx(s_b); runv = sd * tangent(j)
+        side = -sd                                                      # driver's right
+        x, y = road.xy(j, side * (edge(j, side) + shw(j, side) + 0.9))
+        ze_ = road.surface_z(j, side * (edge(j, side) + shw(j, side)), noise=False)
+        zz = gz(x, y, ze_); zz = zz if abs(zz - ze_) < 0.8 else ze_ - 0.1
+        for o_ in (-0.7, 0.7):
+            box(np.array([x, y]) + np.array([runv[1], -runv[0]]) * o_, runv, 0.06, 0.06, zz - 0.4, zz + 2.0, UVT["dark"])
+        panel(np.array([x, y]) - runv * 0.04, zz + 1.3, zz + 2.0, runv, 1.6, UVT[role], back=UVT["metal"])
+        LOG.append(f"  {role.upper()} board {dname} s={s_b:.0f}")
 cur = B["dressing"]
 
 # ================================================================== marshal posts (shared)
-hard = sorted(corners, reverse=True)
+zs = gaussian_filter1d(road.z, 8); vc = np.gradient(np.gradient(zs))         # vertical curvature (1/m)
+crest_lab, ncr = label(vc < -0.0025)
+crests = sorted(((float(-vc[ix].min()), ix[np.argmin(vc[ix])]) for ix in (np.nonzero(crest_lab == l)[0] for l in range(1, ncr + 1))), reverse=True)
 targets = []
+for v_, ic in crests:
+    s_c = float(road.s[ic])
+    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1000 for t_ in targets) and all(abs(s_c - g) > 300 for g in GATES):
+        targets.append(s_c); LOG.append(f"  blind crest s={s_c:.0f} (vert. curvature {v_:.4f} 1/m)")
+    if len(targets) >= 6: break
+hard = sorted(corners, reverse=True)
 for kpk, i0, i1, inner in hard:
     s_c = float(road.s[(i0 + i1) // 2])
-    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1600 for t_ in targets) and all(abs(s_c - g) > 300 for g in GATES):
+    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1200 for t_ in targets) and len(targets) < 10 and all(abs(s_c - g) > 300 for g in GATES):
         targets.append(s_c)
 targets.sort()
-for k, s_c in enumerate(targets[:8]):
+for k, s_c in enumerate(targets[:10]):
     best = flat_spot(s_c - 60, s_c + 60, 3, np.arange(2.0, 8.1, 1.0), 2.0, 2.0, maxrange=0.6, s_ref=s_c, avoid=USED)
     if not best:
         LOG.append(f"  marshal post near s={s_c:.0f}: no flat spot"); continue

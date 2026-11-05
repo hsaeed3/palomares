@@ -136,6 +136,26 @@ def main():
                 P = local(m["pos"].astype(float)); mid = P.copy(); mid[:, 2] += 0.0
                 if not covered(P).all() and (~covered(P)).mean() > 0.02:
                     left += 1; fail(f"{f}:{m['name']} visible barrier mesh without collision ({100 * (~covered(P)).mean():.0f}% of vertices)")
+    # 7: sign faces (build/roadside_signs.json = the emitted front quads): not mirrored, facing the approaching driver
+    sg = json.load(open(BUILD / "roadside_signs.json")) if (BUILD / "roadside_signs.json").exists() else []
+    nbad = 0
+    for sgn in sg:
+        P = np.array(sgn["P"]); UV = np.array(sgn["UV"]); t = np.array(sgn["t"]); appr = t if sgn["nb"] else -t     # direction of travel
+        face = np.array(sgn["face"]); look = -appr                                    # the driver looks along +appr, i.e. at the face
+        right = np.array([appr[1], -appr[0]])                                         # driver's right (looking along appr)
+        bl, br, tr = P[0], P[1], P[2]                                                 # emitted order BL, BR, TR, TL
+        ok = (np.dot(face, appr) < -0.9                                               # normal points against the approach direction
+              and np.dot(np.array(sgn["N"][:2]), appr) < -0.9                         # emitted normal agrees (visible from the driver side)
+              and np.dot((br - bl)[:2], right) > 0.2                                  # BR is on the driver's right
+              and UV[1][0] > UV[0][0] and UV[2][0] > UV[3][0]                          # texture U increases to the right
+              and UV[3][1] < UV[0][1])                                                # texture top is up
+        if sgn["key"].startswith("chev") or sgn["key"].startswith("arrow") or (sgn["key"].startswith("dia_") and sgn["key"] not in ("dia_None_None", "dia_None_SLOW")):
+            want = sgn["cdir"]
+            if want and want not in sgn["key"].replace("chev_l", "left").replace("chev_r", "right") and not sgn["key"].endswith(("_" + want, want + "_None", want + "_SLOW")):
+                ok = False
+        if not ok:
+            nbad += 1; fail(f"sign s={sgn['s']:.0f} {sgn['key']}: mirrored / wrong-facing / wrong turn direction")
+    print(f"  sign faces checked: {len(sg)}; bad {nbad}")
     out = dict(kn5_files=len(kn), physics_meshes=stats["physics_meshes"], collision_triangles=stats["collision_tris"], solid_items=n_items,
                uncovered_items=n_bad, per_type={k: dict(items=v[0], uncovered=v[1], uncovered_m=round(v[2], 1)) for k, v in per_type.items()},
                failures=fails, tolerance_m=TOL, min_height_m=1.25)

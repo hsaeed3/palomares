@@ -261,6 +261,7 @@ class _Chunks(dict):
 
 
 ACC = _Chunks()
+SIGNCHK = []      # emitted sign-face quads, verified by qa_collisions.py (orientation / mirroring)
 SOLID = []         # sidecar for qa_collisions: every item that must have collision
 SKIPPED = collections.Counter()
 ATLAS = RX.base_atlas(); R = ATLAS.rect
@@ -483,21 +484,35 @@ def do_sign(e, side):
     txt = " ".join(str(a.get(k, "")) for k in ("text", "type_detail", "shape")).lower().strip() or str(a.get("note", "")).lower()
     off = float(e.get("offset_m") or 1.5); s = 0.5 * (float(e["s0"]) + float(e["s1"]))
     im, w, h, key = RX.sign_image(txt, None)
+    p = Pt(s, side, off)
+    # Approach direction: every readable sign faces northbound traffic (the survey drove S->N and only describes what a
+    # northbound driver reads); signs that are only seen from behind face southbound traffic.
+    nb = not key.startswith("back")
+    # Turn direction = how the ROAD turns ahead of an approaching driver (signed curvature road.k, + = left for s increasing;
+    # southbound drivers see the opposite sign).  Overrides the survey wording when the curve is real (> ~5 deg in 45 m).
+    i0 = min(max(int(round(s)), 0), N - 1)
+    dh = float(road.k[i0:i0 + 45].sum()) if nb else -float(road.k[max(i0 - 45, 0):i0 + 1].sum())
+    cdir = ("left" if dh > 0 else "right") if abs(dh) > 0.09 else None
+    if cdir and key.startswith(("chev", "dia_", "arrow")):
+        im, w, h, key = RX.sign_image(txt, None, dirn_override=cdir)
     if im is None:
         return "skipped"
     if max(im.size) > 160:
         k_ = 160 / max(im.size); im = im.resize((max(8, int(im.size[0] * k_)), max(8, int(im.size[1] * k_))))
     rect = ATLAS.put("sign_" + key, im)
-    p = Pt(s, side, off); acc = ACC[chunk_of(p.s)]
+    acc = ACC[chunk_of(p.s)]
     ht = float(e.get("height_m") or 2.0)
     zb = min(max(ht - h, 0.9), 1.9) if h < 0.5 else min(max(ht - h, 1.2), 2.1)
-    face = np.array(a.get("_face") or (-p.t if side == "right" else p.t)); face = face / np.linalg.norm(face)
+    face = -p.t if nb else p.t                                                      # normal points AGAINST the approach direction
     face = face * 0.97 + (-p.out) * 0.2; face /= np.linalg.norm(face)             # slightly angled toward the road
-    r = np.array([face[1], -face[0]])                                               # viewer's right
+    r = np.array([-face[1], face[0]])        # viewer's right: the viewer looks along -face (NOT along +face: that was the mirror bug)
     c = np.array([p.x, p.y]) + face * 0.05
     ztop = p.z + zb + h
     P4 = [[*(c - r * w / 2), p.z + zb], [*(c + r * w / 2), p.z + zb], [*(c + r * w / 2), ztop], [*(c - r * w / 2), ztop]]
     acc.quad(P4, rect, out=np.array([*face, 0]))
+    SIGNCHK.append(dict(s=float(p.s), key=key, nb=bool(nb), t=[float(p.t[0]), float(p.t[1])], face=[float(face[0]), float(face[1])],
+                        cdir=cdir, P=np.round(acc.P[-1], 3).tolist(), UV=np.round(acc.UV[-1], 5).tolist(), N=np.round(acc.N[-1][0], 3).tolist(),
+                        rect=[float(v) for v in rect]))
     acc.quad(P4, R["signback"], out=np.array([*(-face), 0]))
     acc.box(p.x, p.y, p.z - 0.3, ztop - (0.0 if h < 0.5 else 0.05), p.t, 0.07, 0.07, R["metal"])
     if off <= 5:
@@ -756,7 +771,7 @@ for c in sorted(ACC):
         out.append(cm)
 print(f"  collision flags fixed on {CO.fix_wall_flags(G)} 1WALL meshes (visible=True, renderable=False)")
 (BUILD / "roadside_atlas.png").write_bytes(ATLAS.png())
-json.dump(SOLID, open(BUILD / "roadside_solid.json", "w"))
+json.dump(SOLID, open(BUILD / "roadside_solid.json", "w")); json.dump(SIGNCHK, open(BUILD / "roadside_signs.json", "w"))
 json.dump(LOW_ASSETS, open(BUILD / "roadside_low_assets.json", "w"), indent=0)
 print(f"  check: ground-referenced asset samples with base > {DROP_MAX} m below the road edge: {len(LOW_ASSETS)}"
       + (f" (first: {LOW_ASSETS[:3]})" if LOW_ASSETS else ""))

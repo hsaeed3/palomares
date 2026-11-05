@@ -246,7 +246,7 @@ def _arrow(d, cx, cy, s, size, w=24):
     d.polygon([(cx + s * size, cy), (cx + s * size * 0.35, cy - size * 0.55), (cx + s * size * 0.35, cy + size * 0.55)], fill=BLK)
 
 
-def sign_image(text, shape=None):
+def sign_image(text, shape=None, dirn_override=None):
     """-> (RGBA image or None, width_m, height_m, key).  Classifies free-text survey descriptions into MUTCD designs
     (public domain): R1-1 STOP, R2-1 SPEED LIMIT, W1-x curve / W1-8 chevron / W1-6 arrow, W8-1 HUMP, W5-2 narrow
     bridge, D10 mile marker, OM3 object marker, street-name blade; everything unreadable gets a grey sign back."""
@@ -254,6 +254,8 @@ def sign_image(text, shape=None):
     W = lambda p: re.search(p, tl)
     left = W(r"\bleft\b") is not None; right = W(r"\bright\b") is not None
     dirn = "left" if left and not right else ("right" if right and not left else ("right" if right else None))
+    if dirn_override:                                   # road-geometry direction (21c) beats the survey wording
+        dirn = dirn_override
     if W(r"\bcone\b"):
         return None, 0, 0, "cone"
     if W(r"back of|unreadable|\(reverse\)|\(back"):
