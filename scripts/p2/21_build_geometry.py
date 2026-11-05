@@ -442,7 +442,7 @@ def decal(acc, s0, s1, d0, d1, cell, lift, rot=False):
     if rot:
         fu, fv = fv, fu
     uv = np.stack([u0 + (u1 - u0) * fu, v0 + (v1 - v0) * fv], -1)
-    k = len(acc["P"]); acc["P"].append(p); acc["UV"].append(uv); acc["T"].append(grid_tris(nr, len(dl), k)); acc["n"] = k + len(p)
+    k = acc["n"]; acc["P"].append(p); acc["UV"].append(uv); acc["T"].append(grid_tris(nr, len(dl), k)); acc["n"] = k + len(p)
 
 for c in range(nchunks):
     acc = dict(P=[], UV=[], T=[], n=0)
