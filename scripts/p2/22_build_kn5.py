@@ -245,7 +245,7 @@ def foliage(kind, seed):
     return Image.fromarray(np.hstack(cards), "RGBA")
 
 
-LEAF_TINT = {"oak": (0.92, 0.98, 0.88), "bay": (0.86, 0.94, 0.86), "euc": (0.95, 0.98, 0.92), "syc": (1.08, 1.12, 0.84)}
+LEAF_TINT = {"oak": (1.0, 1.08, 0.80), "bay": (0.80, 0.90, 0.82), "euc": (0.92, 0.98, 0.90), "syc": (1.08, 1.16, 0.76)}  # spring: lime new growth, darker bay
 LEAF_SIZE = {"oak": (7, 15), "bay": (9, 20), "euc": (8, 22), "syc": (12, 26)}  # px of a 512 cell (~1.2 m clump)
 
 
@@ -351,6 +351,13 @@ with rasterio.open(DER / "backdrop_ortho_r05.tif") as r:
     o = r.read()[:3].transpose(1, 2, 0)
 with rasterio.open(DER / "backdrop_dem_r10.tif") as r:
     bd_shape = r.shape
+# art direction = SPRING (GoPro frames): backdrop ortho is summer imagery -> grade golden/brown dry grass toward the GoPro
+# spring-grass palette; dark tree canopy (low L / already green) is left alone
+_ol = _lab(o.astype(float)); _gt = np.array(PAL["grass"]["lab_mean"])
+_gold = np.clip((_ol[..., 1] + 6) / 10, 0, 1) * np.clip((_ol[..., 2] - 6) / 12, 0, 1) * np.clip((_ol[..., 0] - 28) / 15, 0, 1)
+_ol[..., 1] += (_gt[1] - _ol[..., 1]) * _gold * 0.9; _ol[..., 2] += (_gt[2] - _ol[..., 2]) * _gold * 0.8
+_ol[..., 0] -= _gold * np.clip(_ol[..., 0] - _gt[0], 0, None) * 0.5  # dry grass is brighter than lush grass
+o = _rgb(_ol)
 backdrop_img = Image.fromarray(o).resize((4096, int(4096 * o.shape[0] / o.shape[1]))).filter(ImageFilter.GaussianBlur(0.6))
 
 def road_surface_tex():

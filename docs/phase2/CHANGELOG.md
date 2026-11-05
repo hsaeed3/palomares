@@ -11,6 +11,7 @@
 - Kerbs auto-placed from curvature (`config/kerbs.yaml`): 44 kerbs.
 
 ### Known issues / unverified
+- **Art direction: the target season is SPRING** (the user's GoPro reference frames: lush green hills, fresh lime oak/alder growth, darker bay), not summer. The USGS backdrop ortho and LiDAR-era imagery are summer-gold; 22_build_kn5.py grades the backdrop toward the GoPro spring-grass palette. Any remaining golden/brown summer cue is a bug.
 - **Spawn direction unverified.** Locators use the AC-Tools convention (Y up, −Z front). If you spawn facing downhill, report it: it's a one-line flip.
 - **A-B timing** uses `AC_AB_START_L/R` / `AC_AB_FINISH_L/R`. Not verified in vanilla AC; CSP is known to support it.
 - Guardrail positions come from low-confidence LiDAR candidates. Some may be missing or extra.
