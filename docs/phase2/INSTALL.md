@@ -1,6 +1,7 @@
 # Install — Palomares Road (Assetto Corsa)
 
-1. Unzip `palomares_road_vX.Y.Z.zip`.
+0. Build the zip if you only have the repo: `make package` (see README).
+1. **Content Manager:** drag `palomares_road_vX.Y.Z.zip` onto CM and click Install, then skip to step 3. **Manual:** unzip it.
 2. Copy the `palomares_road/` folder into `<Steam>/steamapps/common/assettocorsa/content/tracks/`.
 3. In Content Manager (or the AC launcher) pick **Palomares Road**, then a layout:
    - **road_summit**: the real road. Real width and center/edge lines, no kerbs.
