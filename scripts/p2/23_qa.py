@@ -126,7 +126,7 @@ class TriSet:
                 k = np.argmax(zz); z[i] = zz[k]; tri[i] = cs[j[k]]
         return z, tri
 
-road = TriSet([it for it in surf["ROAD"] if not it[1].startswith("1ROAD_ap")])   # carriageway only (paved driveway aprons 1ROAD_ap* excluded)
+road = TriSet([it for it in surf["ROAD"] if not it[1].startswith("1ROADAP")])   # carriageway only (paved driveway aprons 1ROADAP_* excluded)
 drv_items = surf["ROAD"] + surf["GRASS"] + surf["KERB"]
 drv = TriSet(drv_items)
 

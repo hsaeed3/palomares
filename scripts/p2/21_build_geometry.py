@@ -94,7 +94,7 @@ for c in range(nchunks):
     add("road", f"1ROAD_{c:02d}", "road_asphalt", P, grid_tris(nr, 13), UV)
     for side, (X, Y, Z) in (("L", (SLX, SLY, SLZ)), ("R", (SRX[:, ::-1], SRY[:, ::-1], SRZ[:, ::-1]))):
         # columns must increase to the left: L = edge->out, R = out->edge. One mesh per edge material
-        # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROAD_ap{side}NN), quads take the material of their first row.
+        # (1GRASS_sh{side}{mat}NN; paved aprons are 1ROADAP_{side}NN), quads take the material of their first row.
         P = np.stack([X[rows], Y[rows], Z[rows]], -1).reshape(-1, 3)
         Wc = (road.sh_w_l if side == "L" else road.sh_w_r)[rows]
         ucol = np.array([0, 0.5, 1.0]) if side == "L" else np.array([1.0, 0.5, 0])
@@ -104,7 +104,7 @@ for c in range(nchunks):
             Tm = Tg_[mrow == mname]
             if len(Tm):
                 used, inv = np.unique(Tm, return_inverse=True)
-                nm_ = f"1ROAD_ap{side}{c:02d}" if mname == "paved" else f"1GRASS_sh{side}{mname}{c:02d}"
+                nm_ = f"1ROADAP_{side}{c:02d}" if mname == "paved" else f"1GRASS_sh{side}{mname}{c:02d}"
                 add("road", nm_, EDGE_MAT[mname], P[used], inv.reshape(-1, 3), UV[used])
 
 # ragged asphalt edge: non-physical alpha-tested strip over the pavement edge (edge_<mat> rows of road_edge.png, built
