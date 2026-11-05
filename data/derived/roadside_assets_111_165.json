@@ -1,0 +1,2185 @@
+[
+ {
+  "type": "guardrail_wbeam",
+  "s0": 7109,
+  "s1": 7122,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 0.7,
+  "attrs": {
+   "posts": "unknown",
+   "note": "from station evidence only, frames not inspected"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 7374,
+  "s1": 7410,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 0.7,
+  "attrs": {
+   "note": "from station evidence only; pre-summit"
+  },
+  "frames": [
+   116,
+   117
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 9290,
+  "s1": 9318,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 0.7,
+  "attrs": {
+   "posts": "wood",
+   "note": "approach to creek bridge, rusty/brown steel rail, hazard marker at end"
+  },
+  "frames": [
+   138
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 9290,
+  "s1": 9318,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 0.7,
+  "attrs": {
+   "note": "bridge approach rail beside stone parapet"
+  },
+  "frames": [
+   138
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 9345,
+  "s1": 9395,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 0.7,
+  "attrs": {
+   "note": "rail ahead on right with chevron/hazard markers"
+  },
+  "frames": [
+   139
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 9575,
+  "s1": 9640,
+  "side": "left",
+  "offset_m": 1.2,
+  "height_m": 0.7,
+  "attrs": {
+   "posts": "wood",
+   "note": "rusty W-beam on wood posts; continues past gate 9556; wood plank fence behind it 9600-9640"
+  },
+  "frames": [
+   141,
+   142,
+   143
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 9570,
+  "s1": 9580,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.7,
+  "attrs": {
+   "note": "short rail end near brick gate"
+  },
+  "frames": [
+   141
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "bridge_parapet_concrete",
+  "s0": 9185,
+  "s1": 9200,
+  "side": "right",
+  "offset_m": 0.5,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "white concrete parapet/wingwall, narrow bridge 9193; MM 4.00 marker just before; no left parapet visible, wire fence left"
+  },
+  "frames": [
+   137
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "bridge_parapet_stone",
+  "s0": 9300,
+  "s1": 9325,
+  "side": "both",
+  "offset_m": 0.3,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "old stone/mortared parapets, mossy, guardrail in front; hazard object marker (yellow/black) at left end"
+  },
+  "frames": [
+   138
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "bridge_parapet_stone",
+  "s0": 10715,
+  "s1": 10740,
+  "side": "both",
+  "offset_m": 0.4,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "small creek bridge 10721; concrete/stone curb parapet right, timber rail fence on both sides, hazard markers both sides"
+  },
+  "frames": [
+   162,
+   163
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 9300,
+  "s1": 9300,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.2,
+  "attrs": {
+   "type_detail": "hazard object marker OM3 yellow-black stripes"
+  },
+  "frames": [
+   138
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10712,
+  "s1": 10712,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.2,
+  "attrs": {
+   "type_detail": "OM3 black-yellow stripes"
+  },
+  "frames": [
+   162,
+   163
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10730,
+  "s1": 10730,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.2,
+  "attrs": {
+   "type_detail": "OM3 black-yellow stripes"
+  },
+  "frames": [
+   163
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10728,
+  "s1": 10728,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.2,
+  "attrs": {
+   "type_detail": "OM3 black-yellow stripes (left end of bridge)"
+  },
+  "frames": [
+   163
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 9157,
+  "s1": 9157,
+  "side": "right",
+  "offset_m": 1.2,
+  "height_m": 1.5,
+  "attrs": {
+   "type_detail": "mile marker MM 4.00 white post"
+  },
+  "frames": [
+   137
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 9120,
+  "s1": 9120,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "warning diamond NARROW BRIDGE"
+  },
+  "frames": [
+   136,
+   137
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10600,
+  "s1": 10600,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "warning diamond NARROW BRIDGE (yellow diamond left of gate)"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10955,
+  "s1": 10955,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "speed limit 40 white rectangle"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10230,
+  "s1": 10230,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "speed limit 40 (R white rectangle ahead)"
+  },
+  "frames": [
+   155
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10300,
+  "s1": 10300,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.5,
+  "attrs": {
+   "type_detail": "gray diamond/rectangle sign far ahead, unreadable"
+  },
+  "frames": [
+   154,
+   155
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 9600,
+  "s1": 9600,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "white diamond sign (reverse) near brick gate; address sign 32457 FIRE ACCESS"
+  },
+  "frames": [
+   141
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10930,
+  "s1": 10930,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "type_detail": "gray diamond (back) + yellow diamond ahead"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10545,
+  "s1": 10545,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.5,
+  "attrs": {
+   "type_detail": "chevron/curve arrow ahead R across bend"
+  },
+  "frames": [
+   159
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7110,
+  "s1": 7140,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {
+   "type_detail": "chevrons (from station evidence)"
+  },
+  "frames": [
+   112,
+   114
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 8438,
+  "s1": 8470,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "white flexible posts with reflectors along left edge"
+  },
+  "frames": [
+   130,
+   131
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 8700,
+  "s1": 8800,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {},
+  "frames": [
+   133
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 9470,
+  "s1": 9560,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "white posts with black reflector band, ~15 m spacing"
+  },
+  "frames": [
+   140,
+   141
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 10530,
+  "s1": 10600,
+  "side": "right",
+  "offset_m": 1.2,
+  "height_m": 1.1,
+  "attrs": {},
+  "frames": [
+   159
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 10560,
+  "s1": 10640,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {},
+  "frames": [
+   158,
+   162
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 9100,
+  "s1": 9150,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "white posts along farm gate / drive"
+  },
+  "frames": [
+   136
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 8040,
+  "s1": 8040,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   126
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 8870,
+  "s1": 8870,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "yes - lines cross toward left ahead",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   135
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9094,
+  "s1": 9094,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   136
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9335,
+  "s1": 9335,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   138
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9690,
+  "s1": 9690,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "yes - several spans cross road, cross-arm pole + second pole",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   144
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9735,
+  "s1": 9735,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   145
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9820,
+  "s1": 9820,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   146
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9835,
+  "s1": 9835,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   147
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9990,
+  "s1": 9990,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   150
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10120,
+  "s1": 10120,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   151
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10195,
+  "s1": 10195,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   153
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10250,
+  "s1": 10250,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "yes - lines cross road",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   154
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10345,
+  "s1": 10345,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   156
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10630,
+  "s1": 10630,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   162
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10780,
+  "s1": 10780,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   163
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 10950,
+  "s1": 10950,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole; yellow reflector bands on right-side poles"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 8700,
+  "s1": 8700,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "no",
+   "note": "wood pole with black/yellow bands at base"
+  },
+  "frames": [
+   133
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 9590,
+  "s1": 9590,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": "yes",
+   "note": "cross-arm pole with yellow bands on right"
+  },
+  "frames": [
+   142,
+   143
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 8285,
+  "s1": 8285,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   129
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 9700,
+  "s1": 9700,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   144
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 9740,
+  "s1": 9740,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   145
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 9910,
+  "s1": 9910,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   148
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 10205,
+  "s1": 10205,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   153
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 10270,
+  "s1": 10270,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   155
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 10640,
+  "s1": 10640,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   162
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 10760,
+  "s1": 10760,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   163
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 10955,
+  "s1": 10955,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 8640,
+  "s1": 8640,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   132
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 9556,
+  "s1": 9575,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 2.4,
+  "attrs": {
+   "material": "brick pillars with iron arched gate, lanterns on pillars, gravel/asphalt apron; sign 32457 Fire Access",
+   "junction_osm": 9556
+  },
+  "frames": [
+   141
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 10560,
+  "s1": 10620,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 1.5,
+  "attrs": {
+   "material": "stucco/brick low wall with brick lattice and stone pillars, large stamped-pink concrete apron; address 29xxx"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 10860,
+  "s1": 10900,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.8,
+  "attrs": {
+   "material": "black iron fence+gate on right at s~10810"
+  },
+  "frames": [
+   164,
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 9094,
+  "s1": 9110,
+  "side": "left",
+  "offset_m": 5.0,
+  "height_m": 1.5,
+  "attrs": {
+   "material": "steel pipe farm gate, dirt ranch track"
+  },
+  "frames": [
+   136
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 9885,
+  "s1": 9925,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 3.0,
+  "attrs": {
+   "material": "white timber entry arch/gantry beside gravel drive, dark wood gate"
+  },
+  "frames": [
+   149
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 7140,
+  "s1": 7160,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 8265,
+  "s1": 8295,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "concrete"
+  },
+  "frames": [
+   129
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 8632,
+  "s1": 8660,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel_dirt"
+  },
+  "frames": [
+   132
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 9094,
+  "s1": 9115,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt"
+  },
+  "frames": [
+   136
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 9556,
+  "s1": 9590,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt+gravel"
+  },
+  "frames": [
+   141
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 9885,
+  "s1": 9925,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel"
+  },
+  "frames": [
+   149
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10195,
+  "s1": 10215,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt"
+  },
+  "frames": [
+   153
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10250,
+  "s1": 10275,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt"
+  },
+  "frames": [
+   154,
+   155
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10560,
+  "s1": 10625,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "stamped pink concrete"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10636,
+  "s1": 10660,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt"
+  },
+  "frames": [
+   162
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10640,
+  "s1": 10655,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt"
+  },
+  "frames": [
+   162
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 10790,
+  "s1": 10810,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved"
+  },
+  "frames": [
+   164
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 7645,
+  "s1": 7720,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "white rail then wood; from station evidence only"
+  },
+  "frames": [
+   121,
+   122
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 8040,
+  "s1": 8110,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "wire fence on wood posts along pasture right; white board fence ahead"
+  },
+  "frames": [
+   126
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 8110,
+  "s1": 8150,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "short white board fence visible at right distance"
+  },
+  "frames": [
+   126
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 8010,
+  "s1": 8040,
+  "side": "left",
+  "offset_m": 0.5,
+  "height_m": 0.6,
+  "attrs": {
+   "note": "low dry-stacked mossy stone wall at toe of cut bank / driveway left"
+  },
+  "frames": [
+   126
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 8830,
+  "s1": 8880,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "long mossy low stone wall along ditch left edge (cut face) - flat moss top"
+  },
+  "frames": [
+   134
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 8870,
+  "s1": 8920,
+  "side": "left",
+  "offset_m": 6.0,
+  "height_m": 1.5,
+  "attrs": {
+   "note": "wire fence above cut bank left with utility building, wire on steel posts"
+  },
+  "frames": [
+   135
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 9080,
+  "s1": 9115,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 1.4,
+  "attrs": {
+   "note": "steel t-post wire fence beside farm gate"
+  },
+  "frames": [
+   136
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 9120,
+  "s1": 9185,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.4,
+  "attrs": {
+   "note": "barbed wire on steel posts w/ white caps, left, approach to bridge"
+  },
+  "frames": [
+   137
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 9325,
+  "s1": 9390,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.4,
+  "attrs": {
+   "note": "barbed wire, steel posts with white tops, left"
+  },
+  "frames": [
+   139
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 9330,
+  "s1": 9390,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 1.5,
+  "attrs": {
+   "note": "black steel-pipe livestock corral/pens right beyond verge"
+  },
+  "frames": [
+   139
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 9600,
+  "s1": 9680,
+  "side": "left",
+  "offset_m": 1.8,
+  "height_m": 1.8,
+  "attrs": {
+   "note": "gray weathered plank fence, 1.8 m, directly behind guardrail posts, picket top; fence is behind rail not instead of it"
+  },
+  "frames": [
+   142,
+   143
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 9690,
+  "s1": 9740,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "2-rail wood fence near house/pole, left"
+  },
+  "frames": [
+   144
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 9740,
+  "s1": 9790,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "dark 3-rail with wire mesh, left; right bank green slope with fence posts"
+  },
+  "frames": [
+   145
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 9820,
+  "s1": 9850,
+  "side": "left",
+  "offset_m": 3.5,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "dark 3-4 rail horse fence left"
+  },
+  "frames": [
+   146
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 9855,
+  "s1": 9905,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "white 3-rail, shed behind"
+  },
+  "frames": [
+   147,
+   148
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 9905,
+  "s1": 9940,
+  "side": "left",
+  "offset_m": 3.5,
+  "height_m": 1.6,
+  "attrs": {
+   "note": "welded wire mesh in dark steel frame (not chain-link strictly), left, with cypress row"
+  },
+  "frames": [
+   148
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "cypress_row",
+  "s0": 9905,
+  "s1": 9945,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 12,
+  "attrs": {
+   "note": "tall columnar Italian cypress row, 6-8 trees, one pole inside"
+  },
+  "frames": [
+   148
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 9925,
+  "s1": 9990,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "dark 4-rail fence beside gravel drive"
+  },
+  "frames": [
+   149
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 9990,
+  "s1": 10115,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "white 4-rail painted fence with wire between, posts square 15 cm, ~2.5 m spacing; very visible"
+  },
+  "frames": [
+   150,
+   151
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 10115,
+  "s1": 10190,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "dark brown 3-rail, posts round, left, ivy beyond"
+  },
+  "frames": [
+   152
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "solid_wood_privacy_fence",
+  "s0": 10200,
+  "s1": 10240,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.8,
+  "attrs": {
+   "note": "vertical board, scalloped top, natural; behind mailbox/Intero sign; remove guardrail here"
+  },
+  "frames": [
+   153
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 10240,
+  "s1": 10290,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.5,
+  "attrs": {
+   "note": "wire mesh with posts near pole, left"
+  },
+  "frames": [
+   154
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "solid_wood_privacy_fence",
+  "s0": 10270,
+  "s1": 10300,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 1.8,
+  "attrs": {
+   "note": "dark board fence right, beyond aloe planting"
+  },
+  "frames": [
+   154
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 10340,
+  "s1": 10372,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "dark 3-rail wood, ivy ground"
+  },
+  "frames": [
+   156
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "solid_wood_privacy_fence",
+  "s0": 10440,
+  "s1": 10500,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.8,
+  "attrs": {
+   "note": "gray vertical board fence; remove guardrail candidate 10435-10460"
+  },
+  "frames": [
+   158
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 10500,
+  "s1": 10575,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "dark 3-4 rail, curves with road"
+  },
+  "frames": [
+   158,
+   159
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 10575,
+  "s1": 10680,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "leaning dark rail fence, ivy; staggered"
+  },
+  "frames": [
+   161,
+   162
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 10690,
+  "s1": 10790,
+  "side": "both",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "note": "timber 4-rail on bridge approaches/along cut, mossy; right side 10735-10790 has same rail"
+  },
+  "frames": [
+   163,
+   164
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 10880,
+  "s1": 10960,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "barbed wire on black steel posts at base of left bank"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 10950,
+  "s1": 11000,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "wire fence pasture right"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 10565,
+  "s1": 10620,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "fieldstone pillar/wall part of estate"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "retaining_wall_concrete",
+  "s0": 10575,
+  "s1": 10620,
+  "side": "right",
+  "offset_m": 4.5,
+  "height_m": 1.0,
+  "attrs": {
+   "note": "plastered curved wall behind apron"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "retaining_wall_timber",
+  "s0": 10655,
+  "s1": 10675,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "timber planter wall by lattice fence"
+  },
+  "frames": [
+   162
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "solid_wood_privacy_fence",
+  "s0": 10650,
+  "s1": 10690,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 1.8,
+  "attrs": {
+   "note": "board fence with lattice top, right, behind pole"
+  },
+  "frames": [
+   162
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "building",
+  "s0": 9745,
+  "s1": 9745,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "house behind fence"
+  },
+  "frames": [
+   145
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 9715,
+  "s1": 9715,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "white house with porch"
+  },
+  "frames": [
+   144
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 9860,
+  "s1": 9860,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "house/garage + shed"
+  },
+  "frames": [
+   147
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 9915,
+  "s1": 9915,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "blue-gray two-story house"
+  },
+  "frames": [
+   149
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10010,
+  "s1": 10010,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "shed + greenhouse"
+  },
+  "frames": [
+   150
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 8900,
+  "s1": 8900,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "gray concrete utility enclosure on slope"
+  },
+  "frames": [
+   135
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10205,
+  "s1": 10205,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "house behind privacy fence"
+  },
+  "frames": [
+   153
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10330,
+  "s1": 10330,
+  "side": "left",
+  "offset_m": 12,
+  "height_m": 6,
+  "attrs": {
+   "note": "white house behind chainlink"
+  },
+  "frames": [
+   154
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10600,
+  "s1": 10600,
+  "side": "right",
+  "offset_m": 15,
+  "height_m": 6,
+  "attrs": {
+   "note": "estate wall; house above"
+  },
+  "frames": [
+   160
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10770,
+  "s1": 10770,
+  "side": "right",
+  "offset_m": 15,
+  "height_m": 6,
+  "attrs": {
+   "note": "gray house/barn"
+  },
+  "frames": [
+   163
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 10880,
+  "s1": 10880,
+  "side": "right",
+  "offset_m": 15,
+  "height_m": 6,
+  "attrs": {
+   "note": "tan house right"
+  },
+  "frames": [
+   164
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 7085,
+  "s1": 7600,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "cracked_old",
+   "rpm_present": "unknown",
+   "note": "frames 111-125 not inspected; see evidence text"
+  },
+  "frames": [
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119,
+   120
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 8030,
+  "s1": 8280,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "cracked_old",
+   "rpm_present": "yes - sparse yellow RPM in double yellow",
+   "note": "crack sealed longitudinal; leaves"
+  },
+  "frames": [
+   126,
+   129
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 8430,
+  "s1": 8900,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes",
+   "note": "dark patches are wet; left edge shoulder strip crumbling (cracked)"
+  },
+  "frames": [
+   130,
+   131,
+   132,
+   133,
+   134,
+   135
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 9090,
+  "s1": 9170,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes",
+   "note": "rectangular dark patch on right lane ~9110; narrow bridge"
+  },
+  "frames": [
+   136,
+   137
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 9300,
+  "s1": 9390,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes"
+  },
+  "frames": [
+   138,
+   139
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 9550,
+  "s1": 9600,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "cracked_old",
+   "rpm_present": "yes",
+   "note": "gate apron heavily alligator cracked; mainline crack sealed"
+  },
+  "frames": [
+   141
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 9600,
+  "s1": 9700,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes"
+  },
+  "frames": [
+   142,
+   143,
+   144
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 9700,
+  "s1": 10400,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes",
+   "note": "transverse crack at ~10000, alligator cracking left shoulder 10250-10260, 10200; fairly uniform"
+  },
+  "frames": [
+   144,
+   145,
+   146,
+   147,
+   148,
+   149,
+   150,
+   151,
+   152,
+   153,
+   154,
+   155,
+   156
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 10400,
+  "s1": 10640,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "cracked_old",
+   "rpm_present": "yes"
+  },
+  "frames": [
+   157,
+   158,
+   159,
+   160,
+   161
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 10640,
+  "s1": 10760,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes"
+  },
+  "frames": [
+   162,
+   163
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 10790,
+  "s1": 10820,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "patched",
+   "rpm_present": "yes",
+   "note": "large black L-shaped asphalt patch covering part of both lanes 10805-10825, slightly raised"
+  },
+  "frames": [
+   164
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 10840,
+  "s1": 11000,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "state": "crack_sealed",
+   "rpm_present": "yes",
+   "note": "station evidence says fresh asphalt starts ~10880; photo shows gray older surface with cracks"
+  },
+  "frames": [
+   165
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 8629,
+  "s1": 8639,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "no left barrier seen (dirt/real-estate pullout right; left bush edge)",
+   "replace_with": "see nearby fence entries"
+  },
+  "frames": [
+   132
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 8809,
+  "s1": 8858,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is mossy stone wall/ditch, no guardrail",
+   "replace_with": "see nearby fence entries"
+  },
+  "frames": [
+   134
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 9770,
+  "s1": 9783,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is wood rail fence w/ mesh",
+   "replace_with": "wood_split_rail_fence"
+  },
+  "frames": [
+   145
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 10200,
+  "s1": 10211,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is board privacy fence",
+   "replace_with": "see nearby fence entries"
+  },
+  "frames": [
+   153
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 10435,
+  "s1": 10460,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is privacy fence then rail fence",
+   "replace_with": "see nearby fence entries"
+  },
+  "frames": [
+   158
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 10529,
+  "s1": 10542,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is wood rail fence",
+   "replace_with": "wood_split_rail_fence"
+  },
+  "frames": [
+   159,
+   160
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 10731,
+  "s1": 10742,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "timber rail fence on bridge, no steel rail (also the 10727 case)",
+   "replace_with": "wood_split_rail_fence"
+  },
+  "frames": [
+   163
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 10787,
+  "s1": 10799,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "timber rail fence",
+   "replace_with": "wood_split_rail_fence"
+  },
+  "frames": [
+   164
+  ],
+  "confidence": "high"
+ }
+]
