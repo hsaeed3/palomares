@@ -1,0 +1,23 @@
+{
+ "terrain_before": {
+  "pairs_near": 1641797,
+  "max_crease_deg": 152.75280049410497,
+  "p99_crease_deg": 26.52929140419538,
+  "n_crease_over": 19932,
+  "max_spike_m": 5.435368299249646,
+  "n_spike_over": 130408,
+  "max_slope_deg": 83.22926184299011
+ },
+ "terrain_after": {
+  "pairs_near": 1641797,
+  "max_crease_deg": 59.99707024501332,
+  "p99_crease_deg": 24.882611423355247,
+  "n_crease_over": 15471,
+  "max_spike_m": 0.15869535639296828,
+  "n_spike_over": 911,
+  "max_slope_deg": 76.38770918417326
+ },
+ "open_edges_near": 9,
+ "tree_colliders": 4213,
+ "walls_thickened": 66
+}

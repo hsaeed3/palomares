@@ -197,7 +197,7 @@ for c0, txt, bg in ((1, "START", (20, 120, 50)), (3, "FINISH", (15, 15, 15))):
     bb = tilebox(c0, 7, 2, 1); dr.rectangle(bb, fill=bg)
     if txt == "FINISH":
         for i in range(16):
-            for j in range(2): dr.rectangle((bb[0] + i * 32, bb[1] + j * 32 + (0 if j == 0 else 192), bb[0] + i * 32 + 31, bb[1] + j * 32 + 31 + (0 if j == 0 else 160)), fill=WHITE if (i + j) % 2 else (15, 15, 15))
+            for j, y_ in enumerate((0, 224)): dr.rectangle((bb[0] + i * 32, bb[1] + y_, bb[0] + i * 32 + 31, bb[1] + y_ + 31), fill=WHITE if (i + j) % 2 else (15, 15, 15))
     dr.text((bb[0] + 256, bb[1] + 128), txt, fill=WHITE, font=F(120), anchor="mm"); region(txt.lower(), *bb)
 A.transpose(Image.FLIP_TOP_BOTTOM).save(BUILD / "dressing_atlas.png")   # kn5 v runs bottom-up; UVT uses top-down
 

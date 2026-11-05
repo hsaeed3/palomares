@@ -88,7 +88,7 @@ z0 = z.copy()
 for _ in range(10):                         # Taubin lambda/mu: low-pass without shrinking cut banks / drops
     z = z + 0.5 * w * L(z)
     z = z - 0.53 * w * L(z)
-for it in range(40):                        # crease / spike clamp (local)
+for it in range(200):                        # crease / spike clamp (local)
     s, ang, a, b = stats(z)
     bad = np.zeros(nU, bool)
     hit = ang > CREASE_DEG
@@ -97,7 +97,7 @@ for it in range(40):                        # crease / spike clamp (local)
     bad &= (d_edge < QA_R + 5) & ~pinned
     if not bad.any():
         break
-    z[bad] += 0.6 * L(z)[bad]
+    z[bad] += 0.8 * L(z)[bad]
 after, *_ = stats(z)
 dz = z - z0
 print("terrain before", before); print("terrain after ", after)
