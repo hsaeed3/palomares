@@ -2,7 +2,6 @@
 """Phase 2 build runner: runs the numbered steps with a header, step lines, timings and a summary.
 
   python3 scripts/p2/build.py package          # quick installable zip (make package)
-  python3 scripts/p2/build.py package --gpu    # same, torch/CUDA for raster sampling if available (make package-gpu)
   python3 scripts/p2/build.py full             # full Phase 2 incl. QA + renders (run_phase2.sh)
 """
 import argparse, os, subprocess, sys, time, pathlib
@@ -43,26 +42,16 @@ def fmt(t):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target", nargs="?", default="package", choices=["package", "full"])
-    ap.add_argument("--gpu", action="store_true", help="use torch/CUDA where available (falls back to CPU)")
     a = ap.parse_args()
     steps = PACKAGE if a.target == "package" else FULL
     env = dict(os.environ, PYTHONUNBUFFERED="1")
-    if a.gpu:
-        env["PALOMARES_GPU"] = "1"
     if TTY:
         env.setdefault("PALOMARES_TTY", "1")  # child steps keep colours/progress bars when we pipe through
     ver = (ROOT / "VERSION").read_text().strip() if (ROOT / "VERSION").exists() else "?"
-    accel = "CPU"
-    if a.gpu:
-        try:
-            import torch
-            accel = f"GPU ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU (torch: no CUDA device)"
-        except ImportError:
-            accel = "CPU (torch not installed)"
     bar = "=" * 64
     print(c("1;36", bar))
     print(c("1;36", f"  Palomares Road -> Assetto Corsa   v{ver}   [{a.target}]"))
-    print(c("36", f"  {len(steps)} steps   acceleration: {accel}"))
+    print(c("36", f"  {len(steps)} steps   {os.cpu_count()} CPU cores"))
     print(c("1;36", bar), flush=True)
     times = []
     t_all = time.time()

@@ -9,3 +9,10 @@ phase2:
 # Quick installable zip (no QA / renders): uses committed data/derived + reports/visual previews
 package:
 	python3 scripts/p2/build.py package
+
+# Roadside assets (21c, after 21/21b) and the collision QA (needs the kn5s from 22)
+roadside:
+	python3 scripts/p2/21c_roadside_assets.py
+
+qa-collisions:
+	python3 scripts/p2/qa_collisions.py

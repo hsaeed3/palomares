@@ -316,7 +316,7 @@ for gi, (s0, s1, side) in enumerate(bars):
     add("barriers", f"guardrail_{gi:03d}", "guardrail", np.concatenate([P, P]), Tv, np.concatenate([UV, UV]))
     # physics: same strip but taller (0..1.0 m), invisible
     P = np.concatenate([np.c_[x, y, zb - 0.3], np.c_[x, y, zb + 1.0]])
-    add("barriers", f"1WALL_gr{gi:03d}", "invisible", P, T, UV, visible=False, renderable=False, cast_shadows=False)
+    add("barriers", f"1WALL_gr{gi:03d}", "invisible", P, T, UV, renderable=False, cast_shadows=False)
     # posts every ~1.9 m
     PP, PT = [], []
     for k in range(0, n, 2):
@@ -348,7 +348,7 @@ for side, env in (("left", road.env_l), ("right", road.env_r)):
         n = len(idx); a = np.arange(n - 1)
         T1 = np.c_[a, a + 1, a + n + 1]; T2 = np.c_[a, a + n + 1, a + n]
         T = np.concatenate([T1, T2, T1[:, [0, 2, 1]], T2[:, [0, 2, 1]]])
-        add("barriers", f"1WALL_cut{len(WALLS):03d}", "invisible", P, T, np.zeros((len(P), 2)), visible=False, renderable=False, cast_shadows=False)
+        add("barriers", f"1WALL_cut{len(WALLS):03d}", "invisible", P, T, np.zeros((len(P), 2)), renderable=False, cast_shadows=False)
         WALLS.append(dict(s0=float(road.s[idx[0]]), s1=float(road.s[idx[-1]]), side=side))
 
 # end walls at s=0 (behind the pit spot) and at the end of the built road
@@ -358,7 +358,7 @@ for nm, i in (("start", 1), ("end", N - 2)):
     P = np.concatenate([np.c_[x, y, np.full(8, zb - 2)], np.c_[x, y, np.full(8, zb + 4)]])
     a = np.arange(7); T1 = np.c_[a, a + 1, a + 9]; T2 = np.c_[a, a + 9, a + 8]
     T = np.concatenate([T1, T2, T1[:, [0, 2, 1]], T2[:, [0, 2, 1]]])
-    add("barriers", f"1WALL_{nm}", "invisible", P, T, np.zeros((16, 2)), visible=False, renderable=False, cast_shadows=False)
+    add("barriers", f"1WALL_{nm}", "invisible", P, T, np.zeros((16, 2)), renderable=False, cast_shadows=False)
 
 _tick("barriers + walls")
 # ------------------------------------------------------------------ road markings
@@ -424,6 +424,9 @@ for c in range(nchunks):
 _svs, _, _ = RS.survey_condition(ROOT, road.s[-1])
 _n_a = 110  # frames 1-110 = survey A, 111-219 = survey B
 RPM_S0 = float(_svs[min(_n_a, len(_svs) - 1)]) if len(_svs) > _n_a else 0.0
+_SSF = DER / "surface_spans.json"      # written by 21c_roadside_assets.py from the roadside survey (surface entries)
+SURF_SPANS = json.load(open(_SSF)) if _SSF.exists() else []
+RPM_SPANS = [(sp["s0"], sp["s1"]) for sp in SURF_SPANS if sp["kind"] == "rpm_present"]
 def rpm_box(sf, d):
     c = surf_pt(sf, d); i = int(round(min(sf, N - 1)))
     t = np.array([road.tx[i], road.ty[i], 0]); n = np.array([road.nx[i], road.ny[i], 0])
@@ -440,8 +443,10 @@ def rpm_box(sf, d):
     return P, T
 for c in range(nchunks):
     P, T = [], []
-    for s in np.arange(math.ceil(max(c * CHUNK, RPM_S0, 3) / RS.RPM_SPACING) * RS.RPM_SPACING, min((c + 1) * CHUNK, road.s[-1] - 3), RS.RPM_SPACING):
+    for s in np.arange(math.ceil(max(c * CHUNK, 3) / RS.RPM_SPACING) * RS.RPM_SPACING, min((c + 1) * CHUNK, road.s[-1] - 3), RS.RPM_SPACING):
         i = int(s)
+        if s < RPM_S0 and not any(a <= s <= b for a, b in RPM_SPANS):   # survey heuristic (north half) + observed rpm_present spans (21c)
+            continue
         if ctype[i] != "double_yellow":
             continue
         for d in (-(RS.DY_RIBBON / 2 + 0.07), RS.DY_RIBBON / 2 + 0.07):
@@ -461,6 +466,18 @@ for m in G["road"]:
         m["UV"] = np.stack([0.5 + D_ROAD[rows] / RS.ATLAS_M, np.repeat(road.s[rows, None] / RS.ATLAS_M, 13, 1)], -1).reshape(-1, 2)
 _ss, _scr, _spa = RS.survey_condition(ROOT, road.s[-1])
 _scr = gaussian_filter1d(_scr, 3); _spa = gaussian_filter1d(_spa, 3)
+if SURF_SPANS:   # observed condition spans override the evenly-spaced survey heuristic (densify to 5 m so short spans register)
+    _sd = np.arange(0, road.s[-1] + 5, 5.0); _scr = np.interp(_sd, _ss, _scr); _spa = np.interp(_sd, _ss, _spa); _ss = _sd
+    for _sp in SURF_SPANS:
+        _m = (_ss >= _sp["s0"] - 2.5) & (_ss <= _sp["s1"] + 2.5)
+        if _sp["kind"] == "cracked_old":
+            _scr[_m] = np.maximum(_scr[_m], 0.9)
+        elif _sp["kind"] == "crack_sealed":
+            _scr[_m] = np.clip(_scr[_m], 0.35, 0.55)
+        elif _sp["kind"] == "patched":
+            _spa[_m] = np.maximum(_spa[_m], 0.85)
+        elif _sp["kind"] == "fresh_overlay":
+            _scr[_m] = 0.0; _spa[_m] = 0.0
 drng = np.random.default_rng(1234)
 
 def decal(acc, s0, s1, d0, d1, cell, lift, rot=False):

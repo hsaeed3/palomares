@@ -16,8 +16,17 @@ The zip is not committed (`dist/*.zip` is gitignored), so build it once:
 
 ```bash
 pip install -r requirements.txt
-make package          # ~5 min, 16 GB RAM is enough; needs internet for the CC0 textures (ambientCG)
+make package          # ~10-15 min on 4 cores (21_build_geometry dominates); 16 GB RAM; needs internet for ambientCG CC0 textures
 ```
+
+`make package` runs `scripts/p2/build.py`: a header, `[k/6] step...` lines, per-section timings inside the geometry
+step, a counter per kn5 file written, and a summary table with the zip path and size. If a step fails, the runner names
+it and exits non-zero. Colours and progress bars appear only on a terminal (set `NO_COLOR=1` to turn them off).
+`pip install tqdm` gives nicer bars, but it is optional. `make phase2` (`scripts/p2/run_phase2.sh`) uses the same runner with QA and renders.
+
+GPU: there is no `make package-gpu`. The build time is in the constrained-Delaunay terrain triangulation
+(`triangle`, CPU-only, single-threaded) and in serial Python geometry code. Batched raster sampling on CUDA would save
+well under a second, so torch is not used.
 
 This writes `dist/palomares_road_v<VERSION>.zip`, with `palomares_road/` at the top level of the archive. Content Manager expects that layout.
 `make phase2` does the same plus QA (`reports/qa_phase2.md`) and the render/visual checks (needs Node + Playwright Chromium).
