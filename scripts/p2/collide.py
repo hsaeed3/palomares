@@ -120,3 +120,69 @@ def fix_wall_flags(groups):
                     m["P"] = P[T.ravel()]; m["T"] = np.arange(len(T) * 3).reshape(-1, 3)
                     m["N"] = np.repeat(fn / a[:, None], 3, axis=0); m["UV"] = np.zeros((len(m["P"]), 2))
     return n
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# v0.2.0-dev3 physics fixes (applied by scripts/p2/21d_physics.py as a post-process; see docs/AC_CONVENTIONS.md
+# "Physics meshes").  AC resolves a car-vs-mesh contact by pushing the body out along the normal of the nearest
+# face.  With a 0.14 m closed box, a car that penetrates more than ~7 cm in one physics step (head-on, > ~25 km/h
+# at 333 Hz with soft-body overlap) is nearer the BACK face and gets pushed out the far side: it drives through.
+# So the face away from the road is moved WALL_DEPTH away: the road-side face is always the nearest exit.
+WALL_DEPTH = 1.2
+
+
+def thicken_away(m, road_xy, depth=WALL_DEPTH, min_depth=0.3):
+    """m: 1WALL mesh dict of flat quads (own vertices per face).  Vertices of faces whose normal points away from
+    the road (dot > 0.6 with the horizontal away-from-road direction), and every vertex sharing their position (top
+    and cap faces), move `depth` along that direction.  Falls back to min_depth where the moved point would get
+    closer to the road (hairpins).  Returns number of moved vertices."""
+    from scipy.spatial import cKDTree
+    P, N, T = m["P"].astype(float), m["N"], m["T"].reshape(-1, 3)
+    kd = cKDTree(road_xy)
+    d0, j = kd.query(P[:, :2])
+    away = P[:, :2] - road_xy[j]; away /= np.linalg.norm(away, axis=1, keepdims=True) + 1e-9
+    fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]])
+    fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
+    dots = (fn[:, None, :2] * away[T][:, :, :]).sum(-1).mean(1)
+    back = np.unique(T[dots > 0.6].ravel())
+    if not len(back):
+        return 0
+    key = lambda Q: [tuple(r) for r in np.round(Q, 4)]
+    disp = {}
+    for kk, i in zip(key(P[back]), back):
+        disp.setdefault(kk, away[i])
+    moved = np.zeros(len(P), bool); Pn = P.copy()
+    for i, kk in enumerate(key(P)):
+        a = disp.get(kk)
+        if a is not None:
+            Pn[i, :2] = P[i, :2] + a * depth; moved[i] = True
+    dn, _ = kd.query(Pn[:, :2])
+    bad = moved & (dn < d0 + 0.5 * depth)
+    for i, kk in enumerate(key(P)):
+        if bad[i]:
+            Pn[i, :2] = P[i, :2] + disp[kk] * min_depth
+    m["P"] = Pn
+    fn = np.cross(Pn[T[:, 1]] - Pn[T[:, 0]], Pn[T[:, 2]] - Pn[T[:, 0]]); a = np.linalg.norm(fn, axis=1)
+    keep = a > 1e-9; T = T[keep]; fn = fn[keep] / a[keep, None]
+    # re-expand to own vertices per triangle so every normal is the flat face normal after the move
+    m["P"] = Pn[T.ravel()]; m["T"] = np.arange(len(T) * 3).reshape(-1, 3)
+    m["N"] = np.repeat(fn, 3, axis=0); m["UV"] = np.zeros((len(m["P"]), 2))
+    return int(moved.sum())
+
+
+def prism(cx, cy, r, z0, z1, sides=8):
+    """closed vertical n-sided prism (tree trunk collider), flat outward normals, own vertices per face"""
+    a = np.arange(sides) * 2 * np.pi / sides
+    ring = np.c_[cx + r * np.cos(a), cy + r * np.sin(a)]
+    P, T, N = [], [], []
+    def tri(p, q, s, nrm):
+        k = len(P); P.extend([p, q, s]); T.append([k, k + 1, k + 2]); N.extend([nrm] * 3)
+    for i in range(sides):
+        j = (i + 1) % sides
+        b0, b1 = (*ring[i], z0), (*ring[j], z0); t0, t1 = (*ring[i], z1), (*ring[j], z1)
+        nm = (a[i] + a[j]) / 2 if j else a[i] + np.pi / sides
+        nrm = (np.cos(nm), np.sin(nm), 0.0)
+        tri(b0, b1, t1, nrm); tri(b0, t1, t0, nrm)          # CCW seen from outside (ring is CCW from above)
+        tri((cx, cy, z1), t0, t1, (0, 0, 1.0))               # top
+        tri((cx, cy, z0), b1, b0, (0, 0, -1.0))              # bottom
+    return np.array(P, float), np.array(T, np.int64), np.array(N, float)

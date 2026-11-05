@@ -52,11 +52,11 @@ SHAPE_CUT = 0.2
 SHAPE_WIDTH = 1
 
 [RAIN_FX]
-PUDDLES_MATERIALS = road_asphalt, shoulder_dirt
-SOAKING_MATERIALS = road_asphalt, shoulder_dirt, litter, rock
+PUDDLES_MATERIALS = road_asphalt, road_decal, shoulder_dirt
+SOAKING_MATERIALS = road_asphalt, road_decal, shoulder_dirt, litter, rock
 ROUGH_MATERIALS = ground, bank, litter
 SMOOTH_MATERIALS = guardrail, dressing, rpm_yellow
-LINES_MATERIALS = paint_white, paint_yellow, paint_yellow_dbl, road_decal
+LINES_MATERIALS = paint_white, paint_yellow, paint_yellow_dbl
 """
     # sanity: every material named above must exist in the kn5s
     import re

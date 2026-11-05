@@ -34,3 +34,6 @@ fully transparent (we tune ksAlphaRef).
 
 Tune in game: albedo targets in config/materials.yaml (asphalt 0.13; raise if shade looks dead, lower if midday is
 blown out), ksAlphaRef (0.5; raise for more holes in the crowns), and the tree PROP_1 ksDiffuse in ext_config.
+
+### Night: road decals glowed under headlights (fixed in dev3)
+`road_decal` (crack-seal and patch overlays) was listed in RainFX `LINES_MATERIALS`, so CSP treated it as retroreflective road paint, and it had a higher specular than the asphalt. It now sits in `PUDDLES`/`SOAKING` with the asphalt, with specular 0.06 / exp 20. Only `paint_*` count as lines.
