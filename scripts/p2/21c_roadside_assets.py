@@ -168,8 +168,10 @@ class Line:
         zr = road.surface_z(idx, sgn * e, noise=False)
         sw = road.sh_w(idx, sgn)
         if ref != "road" and off <= CLAMP_MAX_OFF:   # per-sample clamp, smoothed so a fence line bends gently in toward the edge
-            offv = clamp_off(idx, sgn, e, off, zr)
-            offv = np.maximum(gaussian_filter1d(offv, max(1.0, 2.5 / step), mode="nearest"), sw)
+            raw = clamp_off(idx, sgn, e, off, zr)
+            from scipy.ndimage import minimum_filter1d
+            sm = gaussian_filter1d(minimum_filter1d(raw, max(3, int(6 / step)) | 1, mode="nearest"), max(1.0, 2.5 / step), mode="nearest")
+            offv = np.maximum(np.minimum(sm, raw), sw)                       # smooth, but never further out than the clamp
         else:
             offv = np.full(n, float(off))
         d = sgn * (e + offv)
