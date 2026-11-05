@@ -136,17 +136,30 @@ _gy, _gx = np.gradient(_a, dtm1.t.e, dtm1.t.a)
 _slope = Raster.__new__(Raster); _slope.__dict__.update(dtm1.__dict__); _slope.a = np.hypot(_gx, _gy)
 _sl = _slope.sample(cen[:, 0], cen[:, 1])
 nz = np.where(np.isfinite(_sl), 1 / np.sqrt(1 + np.nan_to_num(_sl) ** 2), 1.0)
-_, jc = bt.query(cen[:, :2])
+dcen, jc = bt.query(cen[:, :2])
 tch = np.minimum((road.s[jc] // CHUNK).astype(int), nchunks - 1)
+# surface classes, calibrated against the spring GoPro survey (data/derived/gopro_survey_*.json):
+#   r rock      > ~49 deg
+#   b cut bank  ~25-49 deg: mixed bare dirt / moss / new grass (most cut banks in the frames)
+#   l litter    gentle, within 6 m of the road edge or under tree crowns (CHM > 5 m): oak/bay leaf litter
+#   g grass     gentle and open: bright spring grass
+_chm_r = Raster(DER / "chm_r100_b150.tif")
+_chm = _chm_r.sample(cen[:, 0], cen[:, 1])
+_edge = dcen - np.maximum(road.el, road.er)[jc]
+_jit = np.sin(cen[:, 0] * 0.37) * np.cos(cen[:, 1] * 0.29) * 1.5  # break the straight 6 m contour
+kind_t = np.where(nz < 0.66, "r", np.where(nz < 0.9, "b",
+                  np.where((_edge < 6 + _jit) | (np.nan_to_num(_chm) > 5), "l", "g")))
+TMAT = {"g": "ground", "r": "rock", "b": "bank", "l": "litter"}
 for c in range(nchunks):
-    for kind, sel in (("g", (tch == c) & (nz >= 0.66)), ("r", (tch == c) & (nz < 0.66))):
-        T = TT[sel]
+    for kind in "grbl":
+        T = TT[(tch == c) & (kind_t == kind)]
         if not len(T):
             continue
         used, inv = np.unique(T, return_inverse=True)
         P = P3[used]
-        UV = np.c_[P[:, 0] / 6.0, P[:, 1] / 6.0] if kind == "g" else np.c_[(P[:, 0] + P[:, 1]) / 5.0, P[:, 2] / 5.0]
-        add("terrain", f"1GRASS_t{kind}{c:02d}", "ground" if kind == "g" else "rock", P, inv.reshape(-1, 3), UV)
+        UV = np.c_[P[:, 0] / 6.0, P[:, 1] / 6.0] if kind in "gl" else np.c_[(P[:, 0] + P[:, 1]) / 5.0, P[:, 2] / 5.0]
+        add("terrain", f"1GRASS_t{kind}{c:02d}", TMAT[kind], P, inv.reshape(-1, 3), UV)
+print("terrain classes", {k: int((kind_t == k).sum()) for k in "grbl"})
 print("terrain tris", len(TT))
 
 # ------------------------------------------------------------------ backdrop (non-physical)
@@ -202,6 +215,47 @@ for (c, sp), ks in sorted(tree_buckets.items()):
     # upward-biased normals give softer, more natural lighting on cards
     Nn = vertex_normals(P, T); Nn[:, 2] += 0.8; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
     add("trees", f"tree_{sp}_{c:02d}", f"tree_{sp}", P, T, np.array(UV), N_=Nn, cast_shadows=True, transparent=False, lod_out=900.0)
+
+# ------------------------------------------------------------------ understory shrubs (GoPro: dense green brush on every
+# bank and drop-off between the trunks; LiDAR trees >= 4 m miss it). Non-physical crossed cards, 1 mesh per chunk.
+srng = np.random.default_rng(11)
+SH_P, SH_T, SH_UV, SH_C = [], [], [], []
+for i in range(0, N, 2):
+    for side in (-1, 1):
+        for _ in range(2):
+            off = srng.uniform(2.2, 26.0) ** 1.0
+            hw_i = road.el[i] if side > 0 else road.er[i]
+            d = side * (hw_i + SHOULDER_W + off)
+            x, y = road.xy(np.array([i]), np.array([d]))
+            x, y = float(x[0]) + srng.normal(0, 0.6), float(y[0]) + srng.normal(0, 0.6)
+            sl = _slope.sample(np.array([x]), np.array([y]))[0]
+            if np.isfinite(sl) and sl > 1.15:  # bare rock faces: no brush
+                continue
+            ch = _chm_r.sample(np.array([x]), np.array([y]))[0]
+            if off > 8 and not (np.isfinite(ch) and ch > 3) and srng.uniform() < 0.6:  # thinner in the open
+                continue
+            z = dtm(np.array([x]), np.array([y]))[0]
+            if not np.isfinite(z):
+                continue
+            h = srng.uniform(0.9, 2.6) * (1.3 if off > 6 else 1.0); w = h * srng.uniform(1.2, 1.9)
+            a0 = srng.uniform(0, np.pi); u0 = 0.5 * srng.integers(0, 2)  # two shrub styles on one atlas
+            for a in (a0, a0 + np.pi / 2):
+                dx, dy = math.cos(a) * w / 2, math.sin(a) * w / 2
+                b = len(SH_P)
+                SH_P += [(x - dx, y - dy, z - 0.25), (x + dx, y + dy, z - 0.25), (x + dx, y + dy, z + h), (x - dx, y - dy, z + h)]
+                SH_UV += [(u0, 0), (u0 + 0.5, 0), (u0 + 0.5, 1), (u0, 1)]
+                SH_T += [(b, b + 1, b + 2), (b, b + 2, b + 3), (b, b + 2, b + 1), (b, b + 3, b + 2)]
+                SH_C += [chunk_of(i)] * 4
+SH_P = np.array(SH_P); SH_T = np.array(SH_T); SH_UV = np.array(SH_UV); SH_C = np.array(SH_C)
+for c in range(nchunks):
+    m = SH_C[SH_T[:, 0]] == c
+    if not m.any():
+        continue
+    used, inv = np.unique(SH_T[m], return_inverse=True)
+    P = SH_P[used]; T = inv.reshape(-1, 3)
+    Nn = np.tile([0, 0, 1.0], (len(P), 1))
+    add("trees", f"shrub_{c:02d}", "shrub", P, T, SH_UV[used], N_=Nn, cast_shadows=False, lod_out=250.0)
+print("shrub cards", len(SH_T) // 4)
 
 # ------------------------------------------------------------------ barriers
 feats = json.load(open(DER / "features.geojson"))["features"]

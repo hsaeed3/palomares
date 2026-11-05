@@ -31,37 +31,148 @@ def maps_from_rough(aid, spec=0.25):
     return Image.fromarray((a * 255).astype(np.uint8))
 
 
+GP = ROOT / "data/derived/gopro"
+PAL = json.load(open(GP / "palette.json"))  # scripts/p2/19_gopro_calibrate.py (dry-road only, wet mode excluded)
+
+
+def _lab(a):
+    c = a / 255.0
+    c = np.where(c > 0.04045, ((c + 0.055) / 1.055) ** 2.4, c / 12.92)
+    M = np.array([[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]])
+    xyz = c @ M.T / np.array([0.95047, 1.0, 1.08883])
+    f = np.where(xyz > 0.008856, np.cbrt(xyz), 7.787 * xyz + 16 / 116)
+    return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], -1)
+
+
+def _rgb(lab):
+    fy = (lab[..., 0] + 16) / 116; fx = fy + lab[..., 1] / 500; fz = fy - lab[..., 2] / 200
+    f = np.stack([fx, fy, fz], -1)
+    xyz = np.where(f ** 3 > 0.008856, f ** 3, (f - 16 / 116) / 7.787) * np.array([0.95047, 1.0, 1.08883])
+    M = np.linalg.inv(np.array([[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]]))
+    c = np.clip(xyz @ M.T, 0, 1)
+    c = np.where(c > 0.0031308, 1.055 * c ** (1 / 2.4) - 0.055, 12.92 * c)
+    return (c * 255).clip(0, 255).astype(np.uint8)
+
+
+def graded(aid, cls, size=1024, contrast=1.0, dL=0.0, chroma=1.0):
+    """CC0 texture structure, colour statistics of the GoPro class (Lab mean/std transfer).
+    dL/chroma: deliberate offsets (texture is lit by AC, photo is lit by an overcast sky)."""
+    a = np.asarray(jpg_tex(aid, "Color", size), float); lab = _lab(a)
+    mu, sd = lab.reshape(-1, 3).mean(0), lab.reshape(-1, 3).std(0) + 1e-6
+    tm, ts = np.array(PAL[cls]["lab_mean"]), np.array(PAL[cls]["lab_std"])
+    ts = np.minimum(ts, sd * 2.5) * contrast  # class std includes lighting variance across frames; keep texture detail plausible
+    out = (lab - mu) / sd * ts + tm
+    out[..., 0] += dL; out[..., 1:] *= chroma
+    return Image.fromarray(_rgb(out))
+
+
+def _load_fol():
+    """photo leaf crops, sky-contaminated ones dropped, each normalised to the common Lab mean so tiles don't show"""
+    out = []
+    for p in sorted(GP.glob("foliage_*.png")):
+        a = np.asarray(Image.open(p).convert("RGB"), float)
+        if ((a.min(-1) > 190)).mean() > 0.01:
+            continue
+        out.append(_lab(a))
+    mu = np.mean([l.reshape(-1, 3).mean(0) for l in out], 0)
+    res = []
+    for l in out:
+        m = l.reshape(-1, 3).mean(0); l = l - m + mu
+        res.append(_rgb(l))
+    return res
+
+
+FOL = _load_fol()
+
+
+def photo_fill(H, W, r, tint=None):
+    """tile real leaf texture (spring GoPro crops) over an H x W canvas"""
+    acc = np.zeros((H, W, 3)); wsum = np.full((H, W, 1), 1e-6)
+    win = np.outer(np.hanning(256), np.hanning(256))[..., None] + 1e-3  # feathered overlap, no seams
+    for y in range(-128, H, 128):
+        for x in range(-128, W, 128):
+            p = FOL[r.integers(len(FOL))].astype(float)
+            if r.uniform() < 0.5: p = p[:, ::-1]
+            y0, x0 = max(y, 0), max(x, 0); y1, x1 = min(y + 256, H), min(x + 256, W)
+            acc[y0:y1, x0:x1] += (p * win)[y0 - y:y1 - y, x0 - x:x1 - x]; wsum[y0:y1, x0:x1] += win[y0 - y:y1 - y, x0 - x:x1 - x]
+    out = (acc / wsum).clip(0, 255).astype(np.uint8)
+    if tint is not None:
+        out = (out.astype(float) * tint).clip(0, 255).astype(np.uint8)
+    return out
+
+
 def foliage(kind, seed):
-    """procedural tree card (RGBA 512x1024): trunk + clumped crown, alpha-tested"""
+    """tree card (RGBA 512x1024): photo-leaf crown (GoPro crops) in a clumped alpha envelope, dark oak-bark trunk.
+    Shapes follow the frames: broad low crowns (oak), denser rounder (bay), tall open (euc/sycamore-ish)."""
     r = np.random.default_rng(seed)
     W, H = 512, 1024
-    im = Image.new("RGBA", (W, H), (60, 70, 40, 0)); d = ImageDraw.Draw(im)
-    trunk_top = {"euc": 0.55, "oak": 0.35, "bay": 0.4}[kind]
-    tw = {"euc": 18, "oak": 34, "bay": 22}[kind]
-    bark = {"euc": (170, 160, 140), "oak": (70, 60, 50), "bay": (85, 75, 60)}[kind]
-    d.polygon([(W / 2 - tw, H), (W / 2 + tw, H), (W / 2 + tw * 0.4, H * (1 - trunk_top)), (W / 2 - tw * 0.4, H * (1 - trunk_top))], fill=bark + (255,))
-    base = {"euc": (95, 110, 75), "oak": (70, 85, 40), "bay": (50, 75, 40)}[kind]
-    # crown envelope
+    mask = Image.new("L", (W, H), 0); d = ImageDraw.Draw(mask)
+    trunk_top = {"euc": 0.30, "oak": 0.22, "bay": 0.25}[kind]
+    tw = {"euc": 14, "oak": 30, "bay": 20}[kind]
+    bark = {"euc": (122, 114, 100), "oak": (74, 64, 56), "bay": (88, 78, 66)}[kind]
     if kind == "euc":
-        cx, cy, rx, ry = W / 2, H * 0.32, W * 0.30, H * 0.30
+        cx, cy, rx, ry = W / 2, H * 0.40, W * 0.40, H * 0.38
     elif kind == "oak":
-        cx, cy, rx, ry = W / 2, H * 0.40, W * 0.47, H * 0.33
+        cx, cy, rx, ry = W / 2, H * 0.44, W * 0.49, H * 0.40
     else:
-        cx, cy, rx, ry = W / 2, H * 0.38, W * 0.40, H * 0.36
-    for _ in range(2600):
+        cx, cy, rx, ry = W / 2, H * 0.42, W * 0.45, H * 0.41
+    blobs = []
+    for _ in range(420):
         a = r.uniform(0, 2 * np.pi); q = math.sqrt(r.uniform(0, 1))
         x = cx + math.cos(a) * rx * q; y = cy + math.sin(a) * ry * q
-        s = r.uniform(6, 20)
-        shade = 0.55 + 0.45 * (1 - (y - (cy - ry)) / (2 * ry)) * r.uniform(0.7, 1.1)
-        col = tuple(int(np.clip(c * shade * r.uniform(0.85, 1.15), 0, 255)) for c in base)
-        d.ellipse([x - s, y - s * 0.8, x + s, y + s * 0.8], fill=col + (255,))
-    # branches visible through gaps
-    for _ in range(10):
-        y0 = H * (1 - trunk_top) * r.uniform(0.9, 1.0); x1 = cx + r.uniform(-rx, rx) * 0.8; y1 = cy + r.uniform(-ry, ry) * 0.5
-        d.line([(W / 2, y0), (x1, y1)], fill=bark + (255,), width=4)
-    a = np.asarray(im).copy()
-    a[..., 3] = np.where(a[..., 3] > 128, 255, 0)
-    return Image.fromarray(a)
+        s_ = r.uniform(14, 46) * (1.0 - 0.4 * q)
+        d.ellipse([x - s_, y - s_ * 0.85, x + s_, y + s_ * 0.85], fill=255); blobs.append((x, y, s_))
+    m = np.asarray(mask.filter(ImageFilter.GaussianBlur(3)), float) / 255
+    # ragged leafy edge: threshold against leaf-scale noise
+    noise = np.asarray(Image.fromarray((r.uniform(0, 255, (H // 4, W // 4))).astype(np.uint8)).resize((W, H), Image.BICUBIC), float) / 255
+    alpha = (m * (0.75 + 0.5 * noise)) > 0.62
+    leaves = photo_fill(H, W, r).astype(float)
+    # self-shadow: darker underneath and toward the trunk, lit crown top (overcast GoPro light)
+    yy = (np.arange(H)[:, None] - (cy - ry)) / (2 * ry)
+    shade = np.clip(1.15 - 0.55 * yy, 0.45, 1.2)
+    rgb = (leaves * shade[..., None]).clip(0, 255)
+    wood = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dt = ImageDraw.Draw(wood)
+    y_top = H * (1 - trunk_top)
+    dt.polygon([(W / 2 - tw, H), (W / 2 + tw, H), (W / 2 + tw * 0.5, y_top), (W / 2 - tw * 0.5, y_top)], fill=bark + (255,))
+    for _ in range(7):
+        x1 = cx + r.uniform(-rx, rx) * 0.75; y1 = cy + r.uniform(-0.2, 0.6) * ry
+        dt.line([(W / 2, y_top + r.uniform(0, 40)), (x1, y1)], fill=bark + (255,), width=int(r.uniform(5, 11)))
+    w_ = np.asarray(wood).astype(float); wd = w_[..., :3] * 0.8  # limbs sit in crown shadow
+    lower = np.arange(H)[:, None] > cy + ry * 0.55  # trunk itself in front below the crown
+    front = alpha & ~(lower & (w_[..., 3] > 0))
+    rgb = np.where(front[..., None], rgb, np.where(np.arange(H)[:, None, None] > y_top, w_[..., :3], wd))
+    im = Image.fromarray(np.dstack([rgb, (front | (w_[..., 3] > 0)) * 255]).astype(np.uint8), "RGBA")
+    a_ = np.asarray(im).copy(); a_[..., 3] = np.where(a_[..., 3] > 128, 255, 0)
+    return Image.fromarray(a_)
+
+
+def bank_tex():
+    """Ground068 structure: its mossy parts -> GoPro bank-grass colour, the rest -> GoPro bare-dirt colour"""
+    src = np.asarray(jpg_tex("Ground068", "Color"), float); lab0 = _lab(src)
+    green = np.clip((-lab0[..., 1] - 2) / 8, 0, 1)[..., None]
+    green = np.asarray(Image.fromarray((green[..., 0] * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(2)), float)[..., None] / 255
+    dirt = _lab(np.asarray(graded("Ground068", "dirt_cut", contrast=0.9), float))
+    gr = _lab(np.asarray(graded("Ground068", "grass", contrast=0.9, chroma=1.3), float))
+    return Image.fromarray(_rgb(dirt * (1 - green) + gr * green))
+
+
+def shrub_atlas():
+    """two understory shrub styles side by side (u 0-0.5, 0.5-1), photo leaves, alpha-tested"""
+    r = np.random.default_rng(21); W, H = 512, 256
+    mask = Image.new("L", (W, H), 0); d = ImageDraw.Draw(mask)
+    for half in (0, 1):
+        for _ in range(120):
+            x = half * 256 + 128 + r.normal(0, 55); y = H - abs(r.normal(0, 85)) - 10
+            s_ = r.uniform(10, 30); d.ellipse([x - s_, y - s_, x + s_, y + s_], fill=255)
+    m = np.asarray(mask.filter(ImageFilter.GaussianBlur(2)), float) / 255
+    noise = np.asarray(Image.fromarray(r.uniform(0, 255, (H // 3, W // 3)).astype(np.uint8)).resize((W, H), Image.BICUBIC), float) / 255
+    alpha = (m * (0.7 + 0.6 * noise)) > 0.6
+    alpha[:, 250:262] = False  # keep halves separate under mip filtering
+    lv = photo_fill(H, W, r).astype(float)
+    lv[:, 256:] *= np.array([1.08, 1.06, 0.9])  # second style: lighter, yellower (coyote brush / new growth)
+    yy = np.arange(H)[:, None] / H
+    lv *= np.clip(1.2 - 0.5 * yy, 0.6, 1.2)[..., None]
+    return Image.fromarray(np.dstack([lv.clip(0, 255), alpha * 255]).astype(np.uint8), "RGBA")
 
 
 def solid(rgb, size=16):
@@ -89,12 +200,16 @@ with rasterio.open(DER / "backdrop_dem_r10.tif") as r:
 backdrop_img = Image.fromarray(o).resize((4096, int(4096 * o.shape[0] / o.shape[1]))).filter(ImageFilter.GaussianBlur(0.6))
 
 T = {
-    "asphalt_d.png": png(jpg_tex("Asphalt026C", "Color")),
+    # dry-asphalt grade; AC lighting is brighter than the overcast photos, so pull L down a little
+    "asphalt_d.png": png(graded("Asphalt026C", "asphalt_dry", contrast=0.55, dL=-6)),
     "asphalt_n.png": png(jpg_tex("Asphalt026C", "NormalDX")),
     "asphalt_maps.png": png(maps_from_rough("Asphalt026C", 0.3).resize((1024, 1024))),
-    "ground_d.png": png(jpg_tex("Ground037", "Color")),
-    "rock_d.png": png(jpg_tex("Rock030", "Color")),
-    "dirt_d.png": png(jpg_tex("Ground054", "Color")),
+    "ground_d.png": png(graded("Grass004", "grass", contrast=0.8, dL=4, chroma=1.35)),  # vivid spring grass
+    "rock_d.png": png(graded("Rock030", "dirt_cut", contrast=0.9, dL=-4, chroma=0.6)),
+    "dirt_d.png": png(graded("Ground048", "litter", contrast=0.7)),          # road shoulder: oak leaf litter + gravel
+    "litter_d.png": png(graded("Ground048", "litter", contrast=0.8, dL=-3)),
+    "bank_d.png": png(bank_tex()),  # moss / new grass over bare dirt cut banks
+    "shrub.png": png(shrub_atlas()),
     "backdrop_d.png": png(backdrop_img),
     "tree_oak.png": png(foliage("oak", 1)), "tree_bay.png": png(foliage("bay", 2)), "tree_euc.png": png(foliage("euc", 3)),
     "paint_white.png": png(solid((230, 230, 225))), "paint_yellow.png": png(solid((225, 180, 40))),
@@ -109,6 +224,9 @@ MATS = {
     "shoulder_dirt": Material("shoulder_dirt", "ksPerPixel", dict(BASE), {"txDiffuse": "dirt_d.png"}),
     "ground": Material("ground", "ksPerPixel", dict(BASE), {"txDiffuse": "ground_d.png"}),
     "rock": Material("rock", "ksPerPixel", dict(BASE), {"txDiffuse": "rock_d.png"}),
+    "litter": Material("litter", "ksPerPixel", dict(BASE), {"txDiffuse": "litter_d.png"}),
+    "bank": Material("bank", "ksPerPixel", dict(BASE), {"txDiffuse": "bank_d.png"}),
+    "shrub": Material("shrub", "ksPerPixelAT", {**BASE, "ksAmbient": 0.55, "ksDiffuse": 0.35}, {"txDiffuse": "shrub.png"}, alpha_tested=True),
     "backdrop": Material("backdrop", "ksPerPixel", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.35}, {"txDiffuse": "backdrop_d.png"}),
     "paint_white": Material("paint_white", "ksPerPixel", dict(BASE), {"txDiffuse": "paint_white.png"}),
     "paint_yellow": Material("paint_yellow", "ksPerPixel", dict(BASE), {"txDiffuse": "paint_yellow.png"}),
