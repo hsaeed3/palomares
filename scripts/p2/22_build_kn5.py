@@ -479,9 +479,9 @@ def to_kn5_mesh(m):
 def locator(name, l):
     p = np.array(l["p"]); f = np.array(l["fwd"]); f /= np.linalg.norm(f)
     up = np.array([0, 0, 1.0])
-    # AC-space axes (AC-Tools convention: Y up, -Z front)
+    # AC-space axes: Y up, +Z = car forward (in-game test: -Z spawned the car backwards)
     F = ac_from_local(f); U = ac_from_local(up)
-    Z = -F; Y = U; X = np.cross(Y, Z); X /= np.linalg.norm(X)
+    Z = F; Y = U; X = np.cross(Y, Z); X /= np.linalg.norm(X)  # verified in game: AC spawns along +Z (user test, v0.2)
     t = ac_from_local(p)
     M = list(X) + [0] + list(Y) + [0] + list(Z) + [0] + list(t) + [1]
     return Dummy(name, [float(v) for v in M])
