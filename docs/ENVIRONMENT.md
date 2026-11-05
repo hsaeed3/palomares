@@ -14,3 +14,8 @@
 - EPT sets `CA_AlamedaCo_{1,2,3}_2021` = project CA_AlamedaCounty_2021_B21, **QL1**, Riegl VQ-1560ii. Work unit 1 was flown 2021-06-21 to 07-02, and unit 2 from 2019-07-02. NVA 4.04 cm and VVA 10.46 cm at 95% (USGS WP report).
 - EPT horizontal is EPSG:3857 and Z is **metres** NAVD88. The source delivery is EPSG:6420/6360 (ft), but the EPT Z values match USGS EPQS to within ±0.17 m.
 - Vegetation is **not** classified in this delivery (classes 1, 2, 7, 9, 17, 18 and 20 only).
+
+## Phase 2 additions
+- No Blender. All geometry is built in Python (`scripts/p2/`) and written with our own kn5 writer, which is reproducible and headless. Renders use three.js in headless Chromium (SwiftShader) from the **round-tripped** kn5 data.
+- Extra pip packages: `triangle` (Shewchuk constrained Delaunay), `pyyaml`.
+- Mapillary: the token is configured, but per the user Palomares Rd has no Mapillary coverage, so the visual check has no street-photo column. Drop-in slot: `reports/visual/reference/ref_s<station>.png`.

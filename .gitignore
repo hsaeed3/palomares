@@ -3,3 +3,4 @@ data/cache/
 __pycache__/
 *.pyc
 dist/*.zip
+build/

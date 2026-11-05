@@ -8,7 +8,7 @@ inside_exit_m: 14                  # inside kerb extends this far after the peak
 outside_exit_start_m: 4            # outside (exit) kerb starts this far after the peak
 outside_exit_length_m: 20          # ... and runs this long
 merge_gap_m: 6                     # merge kerbs on the same side closer than this
-width_m: 0.9
+width_m: 0.8                       # must equal the shoulder width (kerb sits on the shoulder)
 height_m: 0.04                     # standard low AC rumble-strip profile peak
 stripe_length_m: 1.0               # red/white block length (texture repeat)
 skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
