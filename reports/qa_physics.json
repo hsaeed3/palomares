@@ -1,15 +1,6 @@
 {
  "terrain_before": {
   "pairs_near": 1641797,
-  "max_crease_deg": 152.75280049410497,
-  "p99_crease_deg": 26.52929140419538,
-  "n_crease_over": 19932,
-  "max_spike_m": 5.435368299249646,
-  "n_spike_over": 130408,
-  "max_slope_deg": 83.22926184299011
- },
- "terrain_after": {
-  "pairs_near": 1641797,
   "max_crease_deg": 60.34409993782684,
   "p99_crease_deg": 24.78234174083241,
   "n_crease_over": 15017,
@@ -17,7 +8,16 @@
   "n_spike_over": 2,
   "max_slope_deg": 76.2068988772828
  },
+ "terrain_after": {
+  "pairs_near": 1641797,
+  "max_crease_deg": 60.23412413027281,
+  "p99_crease_deg": 24.983159287115143,
+  "n_crease_over": 16269,
+  "max_spike_m": 0.11999506844493624,
+  "n_spike_over": 0,
+  "max_slope_deg": 76.18744545474301
+ },
  "open_edges_near": 9,
  "tree_colliders": 4213,
- "walls_thickened": 66
+ "walls_thickened": 1
 }

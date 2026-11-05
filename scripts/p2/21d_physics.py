@@ -29,90 +29,92 @@ TREE_R = 25.0
 
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
 G = geo["groups"]
-if geo["meta"].get("physics_21d_done"):
-    print("21d: geometry.pkl already post-processed (rerun 21 to start fresh) - skipping"); raise SystemExit(0)
+TERRAIN_DONE = bool(geo["meta"].get("physics_21d_done"))  # terrain smoothing must run once per fresh 21 output
 road_ms = [m for m in G["road"] if m["name"].startswith(("1ROAD", "1GRASS"))]
 road_xy = np.concatenate([m["P"][:, :2] for m in G["road"] if m["name"].startswith("1ROAD")])
 road_kd = cKDTree(road_xy)
 edge_xy = np.concatenate([m["P"][:, :2] for m in road_ms])   # road + shoulders: distance to the drivable edge
 
 # ------------------------------------------------------------------ 1. terrain
-TM = [m for m in G["terrain"] if m["name"].startswith("1GRASS_t")]
-allP = np.concatenate([m["P"] for m in TM])
-keys = np.round(allP[:, :2], 3)
-uk, inv = np.unique(keys, axis=0, return_inverse=True); inv = inv.ravel()
-nU = len(uk)
-z = np.zeros(nU); z[inv] = allP[:, 2]
-off = np.cumsum([0] + [len(m["P"]) for m in TM])
-Tg = np.concatenate([inv[m["T"].reshape(-1, 3) + o] for m, o in zip(TM, off[:-1])])
-rk = {tuple(r) for r in np.round(np.concatenate([m["P"][:, :2] for m in road_ms]), 3)}
-pinned = np.array([tuple(r) in rk for r in uk])
-d_edge, _ = cKDTree(edge_xy).query(uk, workers=4)
-w = np.clip((FAR - d_edge) / (FAR - NEAR), 0, 1); w[pinned] = 0
-print(f"terrain: {nU} unique vertices, {len(Tg)} tris, {pinned.sum()} pinned (road stitch)")
+if TERRAIN_DONE:
+    print("21d: terrain already smoothed on this geometry.pkl (rerun 21 for a fresh one) - skipping terrain step")
+else:
+    TM = [m for m in G["terrain"] if m["name"].startswith("1GRASS_t")]
+    allP = np.concatenate([m["P"] for m in TM])
+    keys = np.round(allP[:, :2], 3)
+    uk, inv = np.unique(keys, axis=0, return_inverse=True); inv = inv.ravel()
+    nU = len(uk)
+    z = np.zeros(nU); z[inv] = allP[:, 2]
+    off = np.cumsum([0] + [len(m["P"]) for m in TM])
+    Tg = np.concatenate([inv[m["T"].reshape(-1, 3) + o] for m, o in zip(TM, off[:-1])])
+    rk = {tuple(r) for r in np.round(np.concatenate([m["P"][:, :2] for m in road_ms]), 3)}
+    pinned = np.array([tuple(r) in rk for r in uk])
+    d_edge, _ = cKDTree(edge_xy).query(uk, workers=4)
+    w = np.clip((FAR - d_edge) / (FAR - NEAR), 0, 1); w[pinned] = 0
+    print(f"terrain: {nU} unique vertices, {len(Tg)} tris, {pinned.sum()} pinned (road stitch)")
 
-e = np.r_[Tg[:, [0, 1]], Tg[:, [1, 2]], Tg[:, [2, 0]]]
-A = sp.coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(nU, nU)).tocsr()
-A = ((A + A.T) > 0).astype(float)
-deg = np.asarray(A.sum(1)).ravel(); deg[deg == 0] = 1
-Dinv = sp.diags(1 / deg)
-L = lambda zz: Dinv @ (A @ zz) - zz
-# boundary (holes) check: edges used once, not on the road stitch
-ee = np.sort(e, 1); u_e, cnt = np.unique(ee, axis=0, return_counts=True)
-open_e = u_e[(cnt == 1) & ~(pinned[u_e[:, 0]] & pinned[u_e[:, 1]])]
-open_near = int((d_edge[open_e].min(1) < QA_R).sum())
-
-
-def stats(zz):
-    P3 = np.c_[uk, zz]
-    fn = np.cross(P3[Tg[:, 1]] - P3[Tg[:, 0]], P3[Tg[:, 2]] - P3[Tg[:, 0]])
-    fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
-    near_t = d_edge[Tg].min(1) < QA_R
-    # adjacent triangle pairs via shared edges
-    te = np.r_[np.sort(Tg[:, [0, 1]], 1), np.sort(Tg[:, [1, 2]], 1), np.sort(Tg[:, [2, 0]], 1)]
-    tid = np.tile(np.arange(len(Tg)), 3)
-    o = np.lexsort((te[:, 1], te[:, 0])); te, tid = te[o], tid[o]
-    same = (te[1:] == te[:-1]).all(1)
-    a, b = tid[:-1][same], tid[1:][same]
-    ang = np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
-    nearp = near_t[a] | near_t[b]
-    spike = np.abs(L(zz))
-    near_v = d_edge < QA_R
-    return dict(pairs_near=int(nearp.sum()), max_crease_deg=float(ang[nearp].max()),
-                p99_crease_deg=float(np.percentile(ang[nearp], 99)),
-                n_crease_over=int((ang[nearp] > CREASE_DEG).sum()),
-                max_spike_m=float(spike[near_v & ~pinned].max()), n_spike_over=int((spike[near_v & ~pinned] > SPIKE).sum()),
-                max_slope_deg=float(np.degrees(np.arccos(np.abs(fn[near_t, 2]).min())))), ang, a, b
+    e = np.r_[Tg[:, [0, 1]], Tg[:, [1, 2]], Tg[:, [2, 0]]]
+    A = sp.coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(nU, nU)).tocsr()
+    A = ((A + A.T) > 0).astype(float)
+    deg = np.asarray(A.sum(1)).ravel(); deg[deg == 0] = 1
+    Dinv = sp.diags(1 / deg)
+    L = lambda zz: Dinv @ (A @ zz) - zz
+    # boundary (holes) check: edges used once, not on the road stitch
+    ee = np.sort(e, 1); u_e, cnt = np.unique(ee, axis=0, return_counts=True)
+    open_e = u_e[(cnt == 1) & ~(pinned[u_e[:, 0]] & pinned[u_e[:, 1]])]
+    open_near = int((d_edge[open_e].min(1) < QA_R).sum())
 
 
-before, *_ = stats(z)
-z0 = z.copy()
-for _ in range(10):                         # Taubin lambda/mu: low-pass without shrinking cut banks / drops
-    z = z + 0.5 * w * L(z)
-    z = z - 0.53 * w * L(z)
-for it in range(200):                        # crease / spike clamp (local)
-    s, ang, a, b = stats(z)
-    bad = np.zeros(nU, bool)
-    hit = ang > CREASE_DEG
-    bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True
-    bad |= np.abs(L(z)) > SPIKE
-    bad &= (d_edge < QA_R + 5) & ~pinned
-    if not bad.any():
-        break
-    z[bad] += 0.8 * L(z)[bad]
-after, *_ = stats(z)
-dz = z - z0
-print("terrain before", before); print("terrain after ", after)
-print(f"terrain height change: mean |dz| {np.abs(dz).mean():.3f} m, max {np.abs(dz).max():.2f} m; open edges near road {open_near}")
-for m, o in zip(TM, off[:-1]):
-    ii = inv[o:o + len(m["P"])]
-    m["P"] = m["P"].copy(); m["P"][:, 2] = z[ii]
-    P = m["P"]; T = m["T"].reshape(-1, 3)
-    fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]])
-    N = np.zeros_like(P)
-    for k in range(3):
-        np.add.at(N, T[:, k], fn)
-    m["N"] = N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12)
+    def stats(zz):
+        P3 = np.c_[uk, zz]
+        fn = np.cross(P3[Tg[:, 1]] - P3[Tg[:, 0]], P3[Tg[:, 2]] - P3[Tg[:, 0]])
+        fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
+        near_t = d_edge[Tg].min(1) < QA_R
+        # adjacent triangle pairs via shared edges
+        te = np.r_[np.sort(Tg[:, [0, 1]], 1), np.sort(Tg[:, [1, 2]], 1), np.sort(Tg[:, [2, 0]], 1)]
+        tid = np.tile(np.arange(len(Tg)), 3)
+        o = np.lexsort((te[:, 1], te[:, 0])); te, tid = te[o], tid[o]
+        same = (te[1:] == te[:-1]).all(1)
+        a, b = tid[:-1][same], tid[1:][same]
+        ang = np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
+        nearp = near_t[a] | near_t[b]
+        spike = np.abs(L(zz))
+        near_v = d_edge < QA_R
+        return dict(pairs_near=int(nearp.sum()), max_crease_deg=float(ang[nearp].max()),
+                    p99_crease_deg=float(np.percentile(ang[nearp], 99)),
+                    n_crease_over=int((ang[nearp] > CREASE_DEG).sum()),
+                    max_spike_m=float(spike[near_v & ~pinned].max()), n_spike_over=int((spike[near_v & ~pinned] > SPIKE).sum()),
+                    max_slope_deg=float(np.degrees(np.arccos(np.abs(fn[near_t, 2]).min())))), ang, a, b
+
+
+    before, *_ = stats(z)
+    z0 = z.copy()
+    for _ in range(10):                         # Taubin lambda/mu: low-pass without shrinking cut banks / drops
+        z = z + 0.5 * w * L(z)
+        z = z - 0.53 * w * L(z)
+    for it in range(200):                        # crease / spike clamp (local)
+        s, ang, a, b = stats(z)
+        bad = np.zeros(nU, bool)
+        hit = ang > CREASE_DEG
+        bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True
+        bad |= np.abs(L(z)) > SPIKE
+        bad &= (d_edge < QA_R + 5) & ~pinned
+        if not bad.any():
+            break
+        z[bad] += 0.8 * L(z)[bad]
+    after, *_ = stats(z)
+    dz = z - z0
+    print("terrain before", before); print("terrain after ", after)
+    print(f"terrain height change: mean |dz| {np.abs(dz).mean():.3f} m, max {np.abs(dz).max():.2f} m; open edges near road {open_near}")
+    for m, o in zip(TM, off[:-1]):
+        ii = inv[o:o + len(m["P"])]
+        m["P"] = m["P"].copy(); m["P"][:, 2] = z[ii]
+        P = m["P"]; T = m["T"].reshape(-1, 3)
+        fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]])
+        N = np.zeros_like(P)
+        for k in range(3):
+            np.add.at(N, T[:, k], fn)
+        m["N"] = N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12)
 
 # ------------------------------------------------------------------ 2. trees
 renamed = 0
@@ -143,6 +145,7 @@ for k in np.nonzero(d_tree < TREE_R)[0]:
     ch = min(int(j * nchunks // len(road_xy)), nchunks - 1)
     colls.setdefault(ch, CO.Collider(f"1WALL_tree_{ch:02d}")).add(*CO.prism(c[0], c[1], r, zb - 1.0, zb + 4.5))
     ntree += 1
+G["trees"] = [m for m in G["trees"] if not m["name"].startswith("1WALL_tree")]  # idempotent
 for ch, col in sorted(colls.items()):
     G["trees"] += col.meshes()
 print(f"trees: {ntree} trunk colliders within {TREE_R} m in {len(colls)} meshes; {renamed} physical-named tree meshes renamed")
