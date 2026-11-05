@@ -1,0 +1,9 @@
+# Phase 2 layouts. Distances are stations s (m) along data/derived/centerline.csv.
+build_end_m: 7642        # road built 250 m past the summit as run-off
+start_gate_m: 20         # AC_AB_START_L/R
+spawn_m: 12              # AC_START_0 / AC_HOTLAP_START_0 (before the gate, facing uphill)
+pit_m: 6                 # AC_PIT_0
+finish_gate_m: 7392      # summit (Phase 1)
+layouts:
+  road_summit: {center_line: true, edge_lines: true, kerbs: false}
+  track_summit: {center_line: false, edge_lines: true, kerbs: true}

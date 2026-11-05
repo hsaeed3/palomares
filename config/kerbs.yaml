@@ -1,0 +1,14 @@
+# Automatic kerb placement for the track_* layouts (scripts/p2/21_build_track.py).
+# Curvature is |1/R| of the refined centerline, smoothed with a Gaussian (sigma_m).
+sigma_m: 6.0
+curvature_threshold_1pm: 0.0167    # R < 60 m counts as a corner
+min_corner_length_m: 10            # ignore shorter curvature blips
+apex_entry_m: 6                    # inside kerb starts this far before the curvature peak
+inside_exit_m: 14                  # inside kerb extends this far after the peak
+outside_exit_start_m: 4            # outside (exit) kerb starts this far after the peak
+outside_exit_length_m: 20          # ... and runs this long
+merge_gap_m: 6                     # merge kerbs on the same side closer than this
+width_m: 0.9
+height_m: 0.04                     # standard low AC rumble-strip profile peak
+stripe_length_m: 1.0               # red/white block length (texture repeat)
+skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
