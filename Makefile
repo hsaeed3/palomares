@@ -16,3 +16,7 @@ roadside:
 
 qa-collisions:
 	python3 scripts/p2/qa_collisions.py
+
+# Download the prebuilt zip (Git LFS, with a direct-download fallback) into dist/
+download:
+	bash scripts/download_build.sh
