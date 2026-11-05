@@ -722,6 +722,11 @@ for lay, L_ in LAYOUTS.items():
               open(ui / "ui_track.json", "w"), indent=2, ensure_ascii=False)
     # outline.png: same line on transparent 1000 px
     ol = mp_l.copy(); ol.thumbnail((1000, 1000)); ol.save(ui / "outline.png")
+# AI / ideal line: <layout>/ai/fast_lane.ai from the racing line of the layout's run direction (ai_spline.py)
+import ai_spline
+from geom import Road as _Road
+AI = ai_spline.export_layouts(TRACK, {lay: dict(s_from=L_["s_from"], s_to=L_["s_to"]) for lay, L_ in LAYOUTS.items()}, _Road(meta["s_end"]))
+json.dump(AI, open(BUILD / "ai_lines.json", "w"), indent=1)
 _dc = {lay: sum(DRAWS.get(f, 0) for f in L_["files"]) for lay, L_ in LAYOUTS.items()}
 print("  draw calls (renderable meshes, per layout): max %d (%s), min %d; roadside kn5 = %d, budget 1500" % (
     max(_dc.values()), max(_dc, key=_dc.get), min(_dc.values()), DRAWS.get("palomares_roadside.kn5", 0)))
