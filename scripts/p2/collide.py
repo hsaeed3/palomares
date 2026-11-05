@@ -112,4 +112,11 @@ def fix_wall_flags(groups):
         for m in ms:
             if m["name"].startswith("1WALL"):
                 m.update(WALL_FLAGS); n += 1
+                ln = np.linalg.norm(m["N"], axis=1)
+                if (np.abs(ln - 1) > 0.05).any():       # e.g. 21b's double-sided strips: shared vertices, opposite windings => zero normals
+                    P = m["P"]; T = m["T"].reshape(-1, 3)
+                    fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]]); a = np.linalg.norm(fn, axis=1)
+                    keep = a > 1e-9; T, fn, a = T[keep], fn[keep], a[keep]
+                    m["P"] = P[T.ravel()]; m["T"] = np.arange(len(T) * 3).reshape(-1, 3)
+                    m["N"] = np.repeat(fn / a[:, None], 3, axis=0); m["UV"] = np.zeros((len(m["P"]), 2))
     return n

@@ -81,7 +81,7 @@ def make_proto(kind, seed, lod=0):
     maxd = S["depth"] - (1 if lod else 0)
 
     def grow(p, d, ln, rad, depth):
-        nsub = 3 if depth <= 1 else 2
+        nsub = (3, 2, 1, 1)[min(depth, 3)]
         pts, rr = [p.copy()], [rad]
         for i in range(nsub):
             d = _unit(d + r.normal(0, 0.13 if kind != "euc" else 0.05, 3))
@@ -92,8 +92,8 @@ def make_proto(kind, seed, lod=0):
                 d = _unit(d + _UP * 0.08)
             p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.35 * (i + 1) / nsub))
         sides = (6, 4, 3, 3)[min(depth, 3)]
-        if lod and depth >= 2: sides = 3
-        B.tube(np.array(pts), rr, sides, STRIP[kind])
+        if not (lod and depth >= 2):  # far LOD: small branches hidden in the clusters, no tubes
+            B.tube(np.array(pts), rr, sides, STRIP[kind])
         end_r = rr[-1]
         if depth >= maxd:
             tips.append((p, d)); return
@@ -132,7 +132,7 @@ def make_proto(kind, seed, lod=0):
     for (p, d) in tips:
         if r.uniform() > keep or r.uniform() < 0.18:
             continue
-        for _ in range(S["lpt"] if not lod else max(2, S["lpt"] - 1)):
+        for _ in range(S["lpt"] + 1):
             q = p + d * r.uniform(0, 0.6) + r.normal(0, 0.55, 3)
             B.leaf(q, r.uniform(*S["ls"]) * (1.6 if lod else 1.0), centre, row, int(r.integers(0, 4)), r)
     # normalise: crown radius R0 (90th pct of leaf distance), height H

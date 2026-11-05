@@ -546,7 +546,7 @@ def do_building(e, side):
         acc.tri(P3, wall, [(0, 0), (1, 0), (0.5, 0.4)])
     if off <= 15:
         acc.col.box(c[0], c[1], t, L, D, zlow, eave + 1.0)
-        need_col("building", [tuple(c + t * k) for k in np.linspace(-L / 2, L / 2, int(L) + 1)], [zf] * (int(L) + 1), False, p.s, p.s)
+        need_col("building", [tuple(c - n * D / 2 + t * k) for k in np.linspace(-L / 2, L / 2, int(L) + 1)], [zf] * (int(L) + 1), False, p.s, p.s)
 
 
 def do_cypress(e, side):
