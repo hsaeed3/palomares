@@ -17,6 +17,12 @@ from scipy.ndimage import gaussian_filter1d, label
 from matplotlib.path import Path as MPath
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, CFG, SHOULDER_W, Road, Raster, load_centerline, vertex_normals, grid_tris
+from progress import bar, Section
+import time as _time
+_T0 = _time.time()
+def _tick(name):
+    global _T0
+    print(f"  - {name:28s} {_time.time() - _T0:6.1f}s", flush=True); _T0 = _time.time()
 
 S_END = CFG["build_end_m"]
 CHUNK = 250.0
@@ -88,6 +94,7 @@ for c in range(nchunks):
         UV = np.stack([np.tile(np.arange(3) * 0.2, nr), np.repeat(road.s[rows], 3) / 2.0], -1)
         add("road", f"1GRASS_sh{side}{c:02d}", "shoulder_dirt", P, grid_tris(nr, 3), UV)
 
+_tick("road + shoulders")
 # ------------------------------------------------------------------ terrain (constrained Delaunay)
 bound = np.concatenate([np.c_[SRX[:, 2], SRY[:, 2]], np.c_[SLX[::-1, 2], SLY[::-1, 2]]])
 bound_z = np.concatenate([SRZ[:, 2], SLZ[::-1, 2]])
@@ -162,6 +169,7 @@ for c in range(nchunks):
 print("terrain classes", {k: int((kind_t == k).sum()) for k in "grbl"})
 print("terrain tris", len(TT))
 
+_tick("terrain")
 # ------------------------------------------------------------------ backdrop (non-physical)
 bd = Raster(DER / "backdrop_dem_r10.tif")
 H, W = bd.a.shape
@@ -186,6 +194,7 @@ for ty in range(4):
             used, inv = np.unique(T, return_inverse=True)
             add("backdrop", f"backdrop_{ty}{tx}", "backdrop", Pb[used], inv.reshape(-1, 3), UVb[used], cast_shadows=False)
 
+_tick("backdrop")
 # ------------------------------------------------------------------ trees
 tr = list(csv.DictReader(open(DER / "trees.csv")))
 tx_, ty_, tz_, th_, tcr_, ts_ = (np.array([float(t[k]) for t in tr]) for k in ("x_local", "y_local", "ground_z", "height_m", "crown_radius_m", "s_m"))
@@ -216,25 +225,29 @@ for (c, sp), ks in sorted(tree_buckets.items()):
     Nn = vertex_normals(P, T); Nn[:, 2] += 0.8; Nn /= np.linalg.norm(Nn, axis=1, keepdims=True)
     add("trees", f"tree_{sp}_{c:02d}", f"tree_{sp}", P, T, np.array(UV), N_=Nn, cast_shadows=True, transparent=False, lod_out=900.0)
 
+_tick("trees")
 # ------------------------------------------------------------------ understory shrubs (GoPro: dense green brush on every
 # bank and drop-off between the trunks; LiDAR trees >= 4 m miss it). Non-physical crossed cards, 1 mesh per chunk.
 srng = np.random.default_rng(11)
 SH_P, SH_T, SH_UV, SH_C = [], [], [], []
-for i in range(0, N, 2):
+_rx, _ry, _rnx, _rny = road.x.tolist(), road.y.tolist(), road.nx.tolist(), road.ny.tolist()  # scalar fast path
+for i in bar(range(0, N, 2), "shrubs"):
     for side in (-1, 1):
         for _ in range(2):
             off = srng.uniform(2.2, 26.0) ** 1.0
             hw_i = road.el[i] if side > 0 else road.er[i]
             d = side * (hw_i + SHOULDER_W + off)
-            x, y = road.xy(np.array([i]), np.array([d]))
-            x, y = float(x[0]) + srng.normal(0, 0.6), float(y[0]) + srng.normal(0, 0.6)
-            sl = _slope.sample(np.array([x]), np.array([y]))[0]
+            x, y = _rx[i] + _rnx[i] * d, _ry[i] + _rny[i] * d
+            x, y = x + srng.normal(0, 0.6), y + srng.normal(0, 0.6)
+            sl = _slope.sample1(x, y)
             if np.isfinite(sl) and sl > 1.15:  # bare rock faces: no brush
                 continue
-            ch = _chm_r.sample(np.array([x]), np.array([y]))[0]
+            ch = _chm_r.sample1(x, y)
             if off > 8 and not (np.isfinite(ch) and ch > 3) and srng.uniform() < 0.6:  # thinner in the open
                 continue
-            z = dtm(np.array([x]), np.array([y]))[0]
+            z = dtm05.sample1(x, y)
+            if not math.isfinite(z):
+                z = dtm1.sample1(x, y)
             if not np.isfinite(z):
                 continue
             h = srng.uniform(0.9, 2.6) * (1.3 if off > 6 else 1.0); w = h * srng.uniform(1.2, 1.9)
@@ -257,6 +270,7 @@ for c in range(nchunks):
     add("trees", f"shrub_{c:02d}", "shrub", P, T, SH_UV[used], N_=Nn, cast_shadows=False, lod_out=250.0)
 print("shrub cards", len(SH_T) // 4)
 
+_tick("shrubs")
 # ------------------------------------------------------------------ barriers
 feats = json.load(open(DER / "features.geojson"))["features"]
 bars = []  # (s0, s1, side)
@@ -328,6 +342,7 @@ for nm, i in (("start", 1), ("end", N - 2)):
     T = np.concatenate([T1, T2, T1[:, [0, 2, 1]], T2[:, [0, 2, 1]]])
     add("barriers", f"1WALL_{nm}", "invisible", P, T, np.zeros((16, 2)), visible=False, renderable=False, cast_shadows=False)
 
+_tick("barriers + walls")
 # ------------------------------------------------------------------ road markings
 # MUTCD dimensions, worn-paint textures and RPMs: see scripts/p2/road_surface.py. Non-physical (names don't start
 # with 1ROAD/1KERB...), lifted >= 2.3 cm, shared by road and track layouts (group lines_road).
@@ -503,6 +518,7 @@ for c in range(nchunks):
     if acc["P"]:
         add("lines_road", f"decal_{c:02d}", "road_decal", np.concatenate(acc["P"]), np.concatenate(acc["T"]), np.concatenate(acc["UV"]), cast_shadows=False)
 
+_tick("markings + decals")
 # ------------------------------------------------------------------ kerbs (track layouts)
 K = yaml.safe_load(open(ROOT / "config/kerbs.yaml"))
 ks = gaussian_filter1d(road.k, K["sigma_m"])
@@ -592,11 +608,13 @@ for seg, sd in CFG["segments"].items():
                        loc=layout_locators(CFG[sd["from"]], CFG[sd["to"]]))
 loc = LAYLOC["summit"]["loc"]  # legacy
 
+_tick("kerbs + locators")
 BUILD.mkdir(exist_ok=True)
 meta = dict(segments=LAYLOC, s_end=float(road.s[-1]), nchunks=nchunks, guardrails=GR, walls=WALLS, kerbs=KERBS, locators=loc,
             n_trees=int(sel.sum()))
 pickle.dump(dict(groups=G, meta=meta), open(BUILD / "geometry.pkl", "wb"))
 
+_tick("write geometry.pkl")
 # stations for visual checks (every 250 m)
 with open(ROOT / "reports/visual_check_stations.csv", "w") as f:
     w = csv.writer(f); w.writerow(["station_m", "lat", "lon", "heading_deg_true", "z_navd88"])

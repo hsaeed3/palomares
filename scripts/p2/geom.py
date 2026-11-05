@@ -1,5 +1,5 @@
 """Shared Phase 2 geometry: centerline loading, road cross-section surface, rasters."""
-import csv, json, pathlib
+import csv, json, math, pathlib
 import numpy as np, yaml, rasterio
 from scipy.ndimage import gaussian_filter1d
 
@@ -74,6 +74,16 @@ class Raster:
         a = self.a
         v = (a[r0, c0] * (1 - fc) * (1 - fr) + a[r0, c0 + 1] * fc * (1 - fr) + a[r0 + 1, c0] * (1 - fc) * fr + a[r0 + 1, c0 + 1] * fc * fr)
         return np.where(ok, v, np.nan)
+
+    def sample1(self, xl, yl):
+        """scalar bilinear sample (same arithmetic as sample(), no numpy overhead)"""
+        col = (xl + self.x0 - self.t.c) / self.t.a - 0.5; row = (yl + self.y0 - self.t.f) / self.t.e - 0.5
+        c0 = math.floor(col); r0 = math.floor(row); fc = col - c0; fr = row - r0
+        H, W = self.a.shape
+        if not (0 <= c0 < W - 1 and 0 <= r0 < H - 1):
+            return float("nan")
+        a = self.a
+        return float(a[r0, c0] * (1 - fc) * (1 - fr) + a[r0, c0 + 1] * fc * (1 - fr) + a[r0 + 1, c0] * (1 - fc) * fr + a[r0 + 1, c0 + 1] * fc * fr)
 
 
 def vertex_normals(P, T):

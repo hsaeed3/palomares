@@ -8,4 +8,4 @@ phase2:
 
 # Quick installable zip (no QA / renders): uses committed data/derived + reports/visual previews
 package:
-	cd scripts/p2 && python3 19_gopro_calibrate.py && python3 20_fetch_textures.py && python3 21_build_geometry.py && python3 21b_track_dressing.py && python3 22_build_kn5.py && python3 25_package.py
+	python3 scripts/p2/build.py package

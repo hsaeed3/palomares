@@ -306,7 +306,8 @@ def write(fname, groups, extra_nodes=(), merge=None):
     texn = sorted({t for u in used for t in MATS[u].textures.values()})
     nodes = [to_kn5_mesh(m) for m in ms] + list(extra_nodes)
     write_kn5(TRACK / fname, mats, {t: T[t] for t in texn}, nodes)
-    print(f"{fname:28s} {len(nodes):4d} nodes  {(TRACK / fname).stat().st_size / 1e6:6.1f} MB")
+    write.n = getattr(write, "n", 0) + 1
+    print(f"  [kn5 {write.n:2d}] {fname:28s} {len(nodes):4d} nodes  {(TRACK / fname).stat().st_size / 1e6:6.1f} MB")
 
 
 gr_key = lambda n: "guardrail_all" if n.startswith(("guardrail_", "grpost_")) else n
