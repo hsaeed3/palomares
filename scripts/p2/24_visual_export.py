@@ -20,7 +20,7 @@ for lay in (sys.argv[1:] or ["road_full", "track_full"]):
             tex = m["textures"].get("txDiffuse")
             if tex and not (out / tex).exists():
                 (out / tex).write_bytes(k["textures"][tex])
-            ent_m = dict(name=m["name"], tex=tex, alpha=bool(m["alpha_tested"]))
+            ent_m = dict(name=m["name"], tex=tex, alpha=bool(m["alpha_tested"]), blend=int(m.get("blend", 0)))
             det = m["textures"].get("txDetail")
             if det and m["shader"] == "ksPerPixelMultiMap" and m["props"].get("useDetail", [0])[0] > 0:
                 if not (out / det).exists():

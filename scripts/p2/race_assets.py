@@ -679,7 +679,7 @@ def build(ns):
         d, j = ctree.query(np.atleast_2d(pts))
         return d - np.maximum(road.outer(j, 1), road.outer(j, -1))
 
-    def spot(s0, s1, L, W, offs, sides=(1, -1), step=2.0, margin=1.5, maxrange=0.8, s_ref=None, wo=0.05, ws=0.01, clear=0.6, wz=0.0):
+    def spot(s0, s1, L, W, offs, sides=(1, -1), step=2.0, margin=1.5, maxrange=0.8, s_ref=None, wo=0.05, ws=0.01, clear=0.6, wz=0.0, maxrise=None):
         best = None; s_ref = (s0 + s1) / 2 if s_ref is None else s_ref
         R = 0.5 * math.hypot(L, W)
         for s in np.arange(max(s0, 1.0), min(s1, s_end - 1.0) + 0.01, step):
@@ -701,6 +701,8 @@ def build(ns):
                         continue
                     # wz: prefer ground near road level (a stand perched on a cut bank on tall legs looks wrong)
                     zr_ = road.surface_z(j, side * road.outer(j, side), noise=False)
+                    if maxrise is not None and abs(0.5 * (r[1] + r[2]) - zr_) > maxrise:
+                        continue                                    # hard cap: stands sit near road level
                     sc = r[0] + wo * off + ws * abs(s - s_ref) + wz * abs(0.5 * (r[1] + r[2]) - zr_)
                     if best is None or sc < best[0]:
                         best = (sc, x, y, j, side, s, off, r)
@@ -749,12 +751,19 @@ def build(ns):
 
     # ------------------------------------------------------------------ grandstands (start area + summit finish)
     def grandstand_site(name, s0, s1, s_ref, nrows, L):
-        W = nrows * 0.8 + 1.0
-        best = spot(s0, s1, L + 2.4, W, np.arange(4.5, 22.1, 1.0), maxrange=1.6, margin=3.5, s_ref=s_ref, wo=0.04, ws=0.004, wz=0.8)
+        # flat ground near road level only (a stand perched on a cut bank on tall scaffold legs is not what an
+        # organiser builds): widen the search, then shrink the stand; no perched fallback
+        best = None
+        for nr_, L_ in ((nrows, L), (5, 10.0), (4, 8.0)):
+            W = nr_ * 0.8 + 1.0
+            for pad_, mr_ in ((0, 1.6), (80, 1.6), (80, 2.2), (180, 2.2)):
+                best = spot(s0 - pad_, s1 + pad_, L_ + 2.4, W, np.arange(3.5, 22.1, 1.0), maxrange=mr_, margin=3.5, s_ref=s_ref,
+                            wo=0.04, ws=0.004, wz=0.8, maxrise=1.5)
+                if best: break
+            if best:
+                nrows, L = nr_, L_; break
         if not best:
-            best = spot(s0, s1, L + 2.4, W, np.arange(4.5, 22.1, 1.0), maxrange=2.2, margin=3.5, s_ref=s_ref, wo=0.04, ws=0.004, wz=0.8)
-        if not best:
-            RLOG.append(f"{name}: no spot for a grandstand"); return None
+            RLOG.append(f"{name}: no flat spot near road level for a grandstand - none placed"); return None
         x, y, j, side, s, off, r, xa, ya = site(best, 0.5 * math.hypot(L + 2.4, W) + 1.0, L + 2.4, W, f"grandstand_{name.split()[0].lower().replace('-', '')}")
         zref = r[2]; front = -W / 2 + 0.6                       # local y of the stand front (footprint centred)
         o = W2(x, y, xa, ya, -0.6, front)                         # stand origin: x centre of the seating, y front
@@ -769,7 +778,7 @@ def build(ns):
         if road_gap(P).min() < RA_COLL_DIST:
             coll.ribbon(P[:, 0], P[:, 1], Z - 0.5, Z + 3.5, half=0.06); ncoll[0] += 1
         RLOG.append(f"{name}: grandstand {nrows} rows x {L:.0f} m (~{int(L / 0.5) * nrows} seats) s={s:.0f} {side_txt(side)} "
-                    f"{off:.1f} m past shoulder, ground range {r[0]:.2f} m, + catch fence {L + 5.4:.0f} m")
+                    f"{off:.1f} m past shoulder, ground range {r[0]:.2f} m, {0.5 * (r[1] + r[2]) - road.surface_z(j, side * road.outer(j, side), noise=False):+.1f} m vs road edge, + catch fence {L + 5.4:.0f} m")
         return x, y, j, side, s, xa, ya
 
     if REPLACES_BLEACHER:

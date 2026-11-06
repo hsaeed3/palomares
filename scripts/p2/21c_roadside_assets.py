@@ -482,7 +482,11 @@ def do_wires(poles):
                     acc.quad2(P4, R["black"])
 
 
-def do_sign(e, side):
+SB_FACING = []     # stations of signs that already face southbound traffic (backs of NB signs, SB-specific signs)
+
+
+def do_sign(e, side, sb=False, cdir_force=None):
+    """sb=True: a synthetic SOUTHBOUND sign (do_southbound_signs); the survey describes northbound faces only"""
     a = e.get("attrs") or {}
     txt = " ".join(str(a.get(k, "")) for k in ("text", "type_detail", "shape")).lower().strip() or str(a.get("note", "")).lower()
     off = float(e.get("offset_m") or 1.5); s = 0.5 * (float(e["s0"]) + float(e["s1"]))
@@ -490,12 +494,16 @@ def do_sign(e, side):
     p = Pt(s, side, off)
     # Approach direction: every readable sign faces northbound traffic (the survey drove S->N and only describes what a
     # northbound driver reads); signs that are only seen from behind face southbound traffic.
-    nb = not key.startswith("back")
+    nb = not sb and not key.startswith("back")
+    if not nb:
+        SB_FACING.append(s)
     # Turn direction = how the ROAD turns ahead of an approaching driver (signed curvature road.k, + = left for s increasing;
     # southbound drivers see the opposite sign).  Overrides the survey wording when the curve is real (> ~5 deg in 45 m).
     i0 = min(max(int(round(s)), 0), N - 1)
     dh = float(road.k[i0:i0 + 45].sum()) if nb else -float(road.k[max(i0 - 45, 0):i0 + 1].sum())
     cdir = ("left" if dh > 0 else "right") if abs(dh) > 0.09 else None
+    if cdir_force:                                        # synthetic southbound curve / chevron signs: direction from the SB approach
+        cdir = cdir_force
     if cdir and key.startswith(("chev", "dia_", "arrow")):
         im, w, h, key = RX.sign_image(txt, None, dirn_override=cdir)
     if im is None:
@@ -762,6 +770,58 @@ for e in ASSETS:
     except Exception as ex:                       # one bad entry must not lose the rest
         print(f"  WARN {t} s={e.get('s0')}: {type(ex).__name__}: {ex}")
 do_wires(poles)
+
+
+# 3b. SOUTHBOUND signs.  The GoPro survey was northbound, so every readable sign above faces northbound traffic.  For southbound
+# drivers (the *_rev layouts) add curve warnings + chevrons from the curvature AHEAD of a southbound driver, speed limits at the
+# stations of northbound ones, and a STOP at the SR-84 end.  They stand on the SB driver's right (= the NB left side, +d), set back
+# 1.8 m beyond the outer edge of the shoulder (road.outer), face SB traffic (do_sign sb=True) and carry the SB turn direction,
+# which qa_collisions check 7 verifies.  No sign is placed within 40 m (chevrons 12 m) of one that already faces southbound.
+def do_southbound_signs():
+    from scipy.ndimage import gaussian_filter1d
+    ks = gaussian_filter1d(np.asarray(road.k, float), 4)
+    idx = np.flatnonzero(np.abs(ks) > 1 / 80)
+    groups = [g for g in np.split(idx, np.flatnonzero(np.diff(idx) > 25) + 1) if len(g) > 10]
+    placed = list(SB_FACING); chev = []; cnt = collections.Counter()
+
+    def put(s_, text, cdir=None, h=2.1):
+        i = int(np.clip(round(s_), 3, N - 4))
+        e = dict(type="road_sign", s0=s_, s1=s_, side="left", offset_m=float(road.outer(i, 1) - road.el[i]) + 1.8, height_m=h, attrs=dict(text=text))
+        k_ = do_sign(e, "left", sb=True, cdir_force=cdir)
+        cnt[k_] += 1; signs[k_] += 1
+        return k_
+
+    for g in groups:
+        tot = float(ks[g].sum()); deg = abs(math.degrees(tot)); rmin = 1.0 / float(np.abs(ks[g]).max())
+        if deg < 30:
+            continue
+        sb_dir = "right" if tot > 0 else "left"                                    # + = left for NB; SB sees the opposite turn
+        a, b = int(g[0]), int(g[-1])
+        for dd in (0, 15, -15, 30, -30):
+            s_ = float(b) + (60.0 if rmin < 60 else 80.0) + dd
+            if 5 < s_ < S_END - 8 and all(abs(s_ - q) > 40 for q in placed):
+                put(s_, f"yellow warning diamond curve {sb_dir}", cdir=sb_dir); placed.append(s_)
+                break
+        if sb_dir == "left" and (deg >= 55 or rmin <= 50):                         # outside of the bend = SB right side
+            n_ = 0
+            for s_ in np.arange(b - 6.0, a + 4.0, -24.0):
+                if n_ < 6 and all(abs(s_ - q) > 12 for q in placed + chev):
+                    put(float(s_), "chevron left", cdir="left", h=1.9); chev.append(float(s_)); n_ += 1
+    for e in ASSETS:                                                               # speed limits wherever a northbound one stands
+        if e["type"] != "road_sign":
+            continue
+        a_ = e.get("attrs") or {}
+        txt = " ".join(str(a_.get(k, "")) for k in ("text", "type_detail", "shape")).lower()
+        m_ = re.search(r"speed\s*limit\D{0,6}(\d{2})", txt)
+        s_ = 0.5 * (float(e["s0"]) + float(e["s1"]))
+        if m_ and "curve" not in txt and all(abs(s_ - q) > 10 for q in placed):
+            put(s_, f"SPEED LIMIT {m_.group(1)}", h=2.2); placed.append(s_)
+    if all(abs(14.0 - q) > 8 for q in placed):                                      # SB drivers meet SR-84 at the south end
+        put(14.0, "STOP", h=2.2); placed.append(14.0)
+    print("  southbound signs:", dict(cnt))
+
+
+do_southbound_signs()
 
 # 4. emit
 out = G.setdefault("roadside", [])

@@ -427,9 +427,9 @@ for p in drops:
 cand.sort()
 picked = []
 for sc, s0, s1, side, kmax in cand:
-    if len(picked) >= 18: break                     # dev4: every fast exposed drop (racing-line ranked), not just 8
+    if len(picked) >= 48: break                     # dev4: every fast exposed drop (racing-line ranked), not just 8
     if kmax < 0.015: continue
-    if all(abs(s0 - q[0]) > 150 for q in picked):
+    if all(side != q[2] or s0 > q[1] + 10 or s1 < q[0] - 10 for q in picked):   # no overlap on the same side (150 m spacing skipped real exposed drops)
         picked.append((s0, s1, side, kmax))
 picked.sort()
 KINDS = ("tyre_belt", "tecpro", "jersey")
@@ -580,18 +580,25 @@ zs = gaussian_filter1d(road.z, 8); vc = np.gradient(np.gradient(zs))         # v
 crest_lab, ncr = label(vc < -0.0025)
 crests = sorted(((float(-vc[ix].min()), ix[np.argmin(vc[ix])]) for ix in (np.nonzero(crest_lab == l)[0] for l in range(1, ncr + 1))), reverse=True)
 targets = []
+# dev4: every FAST blind crest first (same test as qa_drive: sight < 120 m at > 110 km/h on either direction's line),
+# ranked by line speed, >= 500 m apart; then the sharpest crests / hardest corners up to 12 posts
+_v_line = np.maximum(_RL["nb"]["v"], _RL["sb"]["v"]) * 3.6
+fast = sorted(((float(_v_line[ic]), v_, ic) for v_, ic in crests if np.sqrt(2 * 1.2 / max(v_, 1e-4)) * 2 < 120 and _v_line[ic] > 110), reverse=True)
+for vv_, v_, ic in fast:
+    s_c = float(road.s[ic])
+    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 500 for t_ in targets) and all(abs(s_c - g) > 300 for g in GATES) and len(targets) < 8:
+        targets.append(s_c); LOG.append(f"  blind crest s={s_c:.0f} (vert. curvature {v_:.4f} 1/m, line {vv_:.0f} km/h)")
 for v_, ic in crests:
     s_c = float(road.s[ic])
-    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1000 for t_ in targets) and all(abs(s_c - g) > 300 for g in GATES):
+    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1000 for t_ in targets) and all(abs(s_c - g) > 300 for g in GATES) and len(targets) < 9:
         targets.append(s_c); LOG.append(f"  blind crest s={s_c:.0f} (vert. curvature {v_:.4f} 1/m)")
-    if len(targets) >= 6: break
 hard = sorted(corners, reverse=True)
 for kpk, i0, i1, inner in hard:
     s_c = float(road.s[(i0 + i1) // 2])
-    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1200 for t_ in targets) and len(targets) < 10 and all(abs(s_c - g) > 300 for g in GATES):
+    if 300 < s_c < road.s[-1] - 300 and all(abs(s_c - t_) > 1200 for t_ in targets) and len(targets) < 12 and all(abs(s_c - g) > 300 for g in GATES):
         targets.append(s_c)
 targets.sort()
-for k, s_c in enumerate(targets[:10]):
+for k, s_c in enumerate(targets[:12]):
     best = flat_spot(s_c - 60, s_c + 60, 3, np.arange(2.0, 8.1, 1.0), 2.0, 2.0, maxrange=0.6, s_ref=s_c, avoid=USED)
     if not best:
         LOG.append(f"  marshal post near s={s_c:.0f}: no flat spot"); continue

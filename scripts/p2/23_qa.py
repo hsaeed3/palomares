@@ -233,7 +233,14 @@ d = np.abs(zo - P[bv, 2]); has = ~np.isnan(d)
 def station_of(xy):
     tr = cKDTree(np.stack([CX, CY], 1)); dd, ii = tr.query(xy); return S[ii], dd
 s_bv, dist_bv = station_of(P[bv, :2])
-big = has & (d > 0.02)
+# a boundary vertex BELOW a kerb at that point is hidden (the wheel rides the higher surface,
+# e.g. a shoulder material seam under a kerb); only boundaries that stick UP out of the surface beneath are steps
+# (the higher mesh's own boundary vertices cover the drop-off side of every overlap)
+# (restricted to kerbs, which are laid on top of the shoulder by design; any other overlap still counts both ways)
+_sgn = P[bv, 2] - zo
+_okerb = np.array([drv_items[drv.own[t_]][1].startswith("1KERB") if t_ >= 0 else False for t_ in to])
+hidden = has & (d > 0.02) & (_sgn < 0) & _okerb
+big = has & (d > 0.02) & ~hidden
 steps = []
 for j in np.argsort(-np.where(big, d, 0))[:int(big.sum())]:
     steps.append(dict(dz=round(float(d[j]), 3), signed_this_minus_other=round(float(P[bv[j],2]-zo[j]),3), s=float(s_bv[j]), off=round(float(dist_bv[j]), 1),
@@ -249,7 +256,7 @@ road_steps = [x for x in steps if x["a"].startswith("1ROAD") or x["b"].startswit
 chk("3a_vertical_steps", len(steps) == 0,
     n_boundary_vertices_checked=int(len(bv)), n_with_overlap_surface=int(has.sum()), n_steps_over_2cm=int(len(steps)),
     max_step=float(d[has].max()) if has.any() else 0, coincident_vertex_max_dz=float(cstep.max()),
-    n_coincident_over_2cm=int(np.sum(cstep > 0.02)),
+    n_coincident_over_2cm=int(np.sum(cstep > 0.02)), n_hidden_under_higher_surface=int(hidden.sum()),
     by_mesh_pair={k: dict(n=v[0], max_dz=round(v[1], 3)) for k, v in sorted(pair.items(), key=lambda kv: -kv[1][0])},
     road_or_kerb_steps_n=len(road_steps), worst=steps[:25], worst_road_or_kerb=road_steps[:25], road_vs_terrain=[x for x in steps if "1ROAD" in x["a"]+x["b"]][:30])
 
@@ -365,7 +372,12 @@ for lay, files in layouts.items():
             pk.append(f"{lay}: map.ini WIDTH/HEIGHT {wv.group(1)}x{hv.group(1)} != map.png {im.size}")
 # timing objects
 dm = {}
+# the legacy S->N summit timing check: only the kn5 files of road_summit (every layout has its own timing kn5;
+# a union over all files lets the last layout's gates overwrite the others)
+_tl = layouts.get("road_summit", list(kn5))
 for fn, k in kn5.items():
+    if fn not in _tl:
+        continue
     for nm, m in k["dummies"]:
         if nm.startswith("AC_"): dm[nm] = (fn, np.array(m).reshape(4, 4))
 need = ["AC_START_0", "AC_PIT_0", "AC_HOTLAP_START_0", "AC_AB_START_L", "AC_AB_START_R", "AC_AB_FINISH_L", "AC_AB_FINISH_R"]

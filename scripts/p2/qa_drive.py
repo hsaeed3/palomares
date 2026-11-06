@@ -200,19 +200,38 @@ for lay in ("road_full", "road_full_rev", "track_full", "track_full_rev"):
             find(lay, road.s[st_line[k]], wn, "HIGH" if step[k] > 0.04 else "MED", "step",
                  f"vertical step {step[k] * 100:.1f} cm on the line ({sk}->{sk2}) at {V[k] * 3.6:.0f} km/h")
         az, ld = quarter_car(zf, V)                # body accel + tyre load (quarter-car, tyre patch envelope)
+        az_c, ld_c = quarter_car(gaussian_filter1d(zf, 30), V)   # the same on the 3 m-smoothed profile = road crests/dips
         res[f"max_az_{wn}_g"] = float(np.abs(az).max()); res[f"p999_az_{wn}_g"] = float(np.percentile(np.abs(az), 99.9))
         res[f"min_load_{wn}"] = float(ld.min())
         bad = (np.abs(az) > AZ_LIM_G) | (ld < LOAD_LIM)
         for a, b in ranges(bad, s_ln):
-            k = a + int(np.argmin(ld[a:b + 1]))
-            find(lay, road.s[st_line[k]], wn, "HIGH" if ld[k] < 0.02 else "MED", "vertical_accel",
-                 f"body accel {az[k]:+.1f} g, tyre load {ld[k] * 100:.0f}% of static at {V[k] * 3.6:.0f} km/h on {kind_of[who[k]] if who[k] >= 0 else '?'}")
+            k = a + int(np.argmin(ld[a:b + 1])); w0, w1 = max(a - 30, 0), min(b + 30, len(ld) - 1)
+            zero_m = float(np.sum(ld[a:b + 1] < 0.02) * 0.1)
+            if ld_c[w0:w1 + 1].min() < 0.3 or az_c[w0:w1 + 1].min() < -0.7:   # the real road's crest at line speed (not a mesh bump)
+                find(lay, road.s[st_line[k]], wn, "MED", "crest_unload",
+                     f"crest at {V[k] * 3.6:.0f} km/h: smooth-profile body accel {az_c[w0:w1 + 1].min():+.2f} g, tyre load "
+                     f"{ld_c[w0:w1 + 1].min() * 100:.0f}% (with surface texture {ld[k] * 100:.0f}%)",
+                     "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)")
+            else:
+                find(lay, road.s[st_line[k]], wn, "HIGH" if zero_m > 0.3 else "MED", "vertical_accel",
+                     f"surface bump: body accel {az[k]:+.1f} g, tyre load {ld[k] * 100:.0f}% of static for {zero_m:.1f} m at "
+                     f"{V[k] * 3.6:.0f} km/h on {kind_of[who[k]] if who[k] >= 0 else '?'}")
     # ---- kerb ride (track layouts): push the car onto the kerbs where the line is near the edge
     if lay.startswith("track"):
         D = RL[dname]; j = st_line
         gl, gr_ = D["gap_l"][j], D["gap_r"][j]
         # station-left is the run-left for nb; shift in station terms
-        near_l = gl < KC["placement"]["touch_m"]; near_r = gr_ < KC["placement"]["touch_m"]
+        # only where this layout HAS a kerb on that side (the ride used to push the car onto bare verge / cut bank
+        # at kerb-less touches and kerb taper ends: 0.25 m rises on 1GRASS_tb that were reported as kerb launches)
+        _kv = [to_local(m["pos"]) for f in files if "kerbs" in f for m in kn(f)["meshes"] if m["name"].startswith("1KERB")]
+        kl = np.zeros(NS, bool); kr_ = np.zeros(NS, bool)
+        if _kv:
+            _kv = np.vstack(_kv); _jj, _dd = ckd.query(_kv[:, :2])
+            _sgn = np.sign((_kv[:, 0] - road.x[_jj]) * road.nx[_jj] + (_kv[:, 1] - road.y[_jj]) * road.ny[_jj])
+            kl[_jj[_sgn > 0]] = True; kr_[_jj[_sgn < 0]] = True
+            from scipy.ndimage import binary_erosion
+            kl = binary_erosion(kl, np.ones(7, bool)); kr_ = binary_erosion(kr_, np.ones(7, bool))   # skip the 3 m tapers
+        near_l = (gl < KC["placement"]["touch_m"]) & kl[j]; near_r = (gr_ < KC["placement"]["touch_m"]) & kr_[j]
         shift = np.where(near_l & (gl <= gr_), gl + 0.3, np.where(near_r, -(gr_ + 0.3), 0.0))
         shift = gaussian_filter1d(shift, 30)                       # 3 m blend in and out
         nrm = np.c_[road.nx[j], road.ny[j]]
@@ -235,7 +254,7 @@ for lay in ("road_full", "road_full_rev", "track_full", "track_full_rev"):
             res["kerb_ride_min_load"] = min(k[5] for k in kmax)
             for azk, stk, sk, wn, vk, lk in kmax:
                 if azk > AZ_LIM_G or stk > STEP_LIM or lk < LOAD_LIM:
-                    find(lay, sk, wn, "HIGH" if (lk < 0.02 or stk > 0.04) else "MED", "kerb_ride",
+                    find(lay, sk, wn, "HIGH" if (azk > AZ_LIM_G or stk > 0.04) else "MED", "kerb_ride",
                          f"riding the kerb at {vk:.0f} km/h: body accel {azk:.1f} g, min tyre load {lk * 100:.0f}%, step {stk * 100:.1f} cm")
         # static kerb cross-sections: height above the surface beneath, ramp angle, outer drop
         KI = phys_items([f for f in files if "kerbs" in f], ("KERB",))
@@ -393,6 +412,14 @@ FIXES = [
     "spectator areas skip run-wide zones of exit kerbs, ROAD CLOSED barricades skipped where a surveyed gate/chain-link closes the mouth.",
     "Road profile (geom.Road): local smoothing where grade changes > 0.6 %/m (23_qa 3d spike s=7866), <= 4 cm change.",
     "Draw calls (22): lines merged per 500 m, edge strips L+R per 500 m, kerbs per 1 km.",
+    "Ride model (qa_drive): vertical accel from a quarter-car (300/40 kg, 45 kN/m, 260 kN/m tyre, 0.15 m patch) instead of the raw "
+    "0.1 m contact-path 2nd derivative (30 g artefacts from mesh facets); bumps vs real crests separated on a 3 m-smoothed profile (crest_unload).",
+    "23_qa 3a: shoulder seams hidden under a kerb no longer count as steps (only boundaries sticking up out of the surface beneath); "
+    "nb / sb kerbs are checked separately (never loaded together). 4_package timing: only road_summit's kn5 (the union let the last layout's gates win).",
+    "Event barriers (21b): up to 36 exposed drops, 150 m spacing per side (was 18, any side). Marshal posts: every fast blind crest "
+    "(sight < 120 m at > 110 km/h) first, up to 12 posts.",
+    "Summit grandstand (race_assets): hard cap of 1.2 m between stand ground and road edge, search widened to +-150 m of the finish.",
+    "fill_holes (21d): sliver threshold 5e-3 (float32 in the kn5 flipped 5 near-zero-area triangles: 23_qa 3c).",
 ]
 sev_rank = {"HIGH": 0, "MED": 1, "LOW": 2, "INFO": 3}
 F.sort(key=lambda f: (sev_rank[f["severity"]], f["kind"], f["layout"], f["s"]))

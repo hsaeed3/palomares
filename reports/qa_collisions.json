@@ -1,8 +1,8 @@
 {
  "kn5_files": 17,
  "physics_meshes": 130,
- "collision_triangles": 213574,
- "solid_items": 469,
+ "collision_triangles": 214694,
+ "solid_items": 509,
  "uncovered_items": 1,
  "per_type": {
   "guardrail_candidate": {
@@ -16,7 +16,7 @@
    "uncovered_m": 0.0
   },
   "road_sign": {
-   "items": 67,
+   "items": 107,
    "uncovered": 0,
    "uncovered_m": 0.0
   },

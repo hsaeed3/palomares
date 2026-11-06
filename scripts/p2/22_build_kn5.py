@@ -458,7 +458,9 @@ MATS = {
     "paint_yellow": Material("paint_yellow", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow.png"}, alpha_tested=True),
     "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
     "rpm_yellow": Material("rpm_yellow", "ksPerPixel", {**BASE, "ksSpecular": 0.5, "ksSpecularEXP": 60.0}, {"txDiffuse": "rpm.png"}),
-    "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.06, "ksSpecularEXP": 20.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
+    # crack-seal / patches / crazing: alpha-BLENDED (blend=1, depth mode 1 = no depth write) so edges carry a soft texture-space alpha
+    # ramp; non-physical (not 1ROAD), low specular, and NOT in CSP LINES_MATERIALS
+    "road_decal": Material("road_decal", "ksPerPixelAlpha", {**BASE, "ksSpecular": 0.05, "ksSpecularEXP": 18.0}, {"txDiffuse": "road_decal.png"}, blend=1, alpha_tested=False, depth=1),
     "kerb": Material("kerb", "ksPerPixelNM", {**BASE, "ksSpecular": 0.18, "ksSpecularEXP": 24.0}, {"txDiffuse": "kerb_d.png", "txNormal": "kerb_n.png"}),
     "runoff": Material("runoff", "ksPerPixel", {**BASE, "ksSpecular": 0.08, "ksSpecularEXP": 15.0}, {"txDiffuse": "runoff_d.png"}),
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),

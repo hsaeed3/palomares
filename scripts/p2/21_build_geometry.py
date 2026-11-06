@@ -579,6 +579,7 @@ for c in range(nchunks):
 # (1ROAD_ / 1ROAD_F UVs are already set in this atlas mapping when the road meshes are built)
 _ss, _scr, _spa = RS.survey_condition(ROOT, road.s[-1])
 _scr = gaussian_filter1d(_scr, 3); _spa = gaussian_filter1d(_spa, 3)
+_SURV0 = (_ss, _scr, _spa)   # evenly-spaced GoPro frame heuristic (background density only)
 if SURF_SPANS:   # observed condition spans override the evenly-spaced survey heuristic (densify to 5 m so short spans register)
     _sd = np.arange(0, road.s[-1] + 5, 5.0); _scr = np.interp(_sd, _ss, _scr); _spa = np.interp(_sd, _ss, _spa); _ss = _sd
     for _sp in SURF_SPANS:
@@ -591,82 +592,16 @@ if SURF_SPANS:   # observed condition spans override the evenly-spaced survey he
             _spa[_m] = np.maximum(_spa[_m], 0.85)
         elif _sp["kind"] == "fresh_overlay":
             _scr[_m] = 0.0; _spa[_m] = 0.0
-drng = np.random.default_rng(1234)
-
-def decal(acc, s0, s1, d0, d1, cell, lift, rot=False):
-    """quad grid on the road surface between stations s0..s1 (m) and offsets d0..d1; rot: sprite v runs across"""
-    if road.fresh[int(np.clip(s0, 0, N - 1)):int(np.clip(s1, 0, N - 1)) + 1].any():
-        return                                   # freshly repaved: no crack-seal / patch / crack decals
-    nr = max(2, int(math.ceil((s1 - s0) / 1.0)) + 1)
-    dl = [d0, d1] if not (d0 < 0 < d1) else [d0, 0.0, d1]
-    dl = np.unique(np.concatenate([np.linspace(dl[k], dl[k + 1], max(2, int(math.ceil((dl[k + 1] - dl[k]) / 0.7)) + 1)) for k in range(len(dl) - 1)]))
-    S_ = np.linspace(s0, s1, nr); Dg, Sg = np.meshgrid(dl, S_)
-    p = surf_pt(Sg.ravel(), Dg.ravel()); p[:, 2] += lift
-    u0, v0, u1, v1 = cell
-    fu = ((Dg - d0) / (d1 - d0)).ravel(); fv = ((Sg - s0) / (s1 - s0)).ravel()
-    if rot:
-        fu, fv = fv, fu
-    uv = np.stack([u0 + (u1 - u0) * fu, v0 + (v1 - v0) * fv], -1)
-    k = acc["n"]; acc["P"].append(p); acc["UV"].append(uv); acc["T"].append(grid_tris(nr, len(dl), k)); acc["n"] = k + len(p)
-
-for c in range(nchunks):
-    acc = dict(P=[], UV=[], T=[], n=0)
-    sa, sb = c * CHUNK + 3, min((c + 1) * CHUNK, road.s[-1] - 3)
-    if sb - sa < 5:
-        continue
-    for side in (1, -1):
-        e_of = lambda i: road.el[i] if side > 0 else road.er[i]
-        # longitudinal crack seal: centre joint, wheel paths, near the edge; chained 6 m sprites with gaps
-        for dbase, rate in ((0.30, 1 / 22), (0.80, 1 / 40), (2.30, 1 / 45), (None, 1 / 35)):
-            s = sa + drng.uniform(0, 20)
-            while s < sb - 2:
-                i = int(s); crk = np.interp(s, _ss, _scr)
-                if drng.random() < min(0.9, rate * 25 * (0.5 + 1.5 * crk)):
-                    L = drng.uniform(4, 30); dd = (dbase if dbase is not None else e_of(i) - 0.55) + drng.normal(0, 0.08)
-                    t = s
-                    while t < min(s + L, sb - 1):
-                        ln = min(RS.SEAL_CELL_M[1], sb - t)
-                        if ln < 1.0:
-                            break
-                        di = side * dd
-                        decal(acc, t, t + ln, di - 0.3, di + 0.3, RS.CELLS["seal"][drng.integers(8)], RS.LIFT["seal"])
-                        t += ln; dd += drng.normal(0, 0.05)
-                    s += L + drng.uniform(3, 25)
-                else:
-                    s += drng.uniform(8, 30)
-        # patches
-        s = sa + drng.uniform(0, 30)
-        while s < sb - 3:
-            pat = np.interp(s, _ss, _spa); i = int(s)
-            if drng.random() < 0.25 + 0.6 * pat:
-                L = drng.uniform(1.5, 7.0); W = drng.uniform(0.9, min(2.8, e_of(i) - 0.4))
-                d_in = drng.uniform(0.25, max(0.3, e_of(i) - 0.35 - W))
-                cell = RS.CELLS["patch"][3 if drng.random() < 0.3 else drng.integers(3)]
-                a, b = sorted((side * d_in, side * (d_in + W)))
-                decal(acc, s, min(s + L, sb), a, b, cell, RS.LIFT["patch"])
-                s += L
-            s += drng.uniform(25, 90) / (1 + 1.5 * pat)
-        # alligator / block cracking in the wheel paths
-        s = sa + drng.uniform(0, 40)
-        while s < sb - 3:
-            crk = np.interp(s, _ss, _scr)
-            if drng.random() < 0.15 + 0.7 * crk:
-                L = drng.uniform(1.8, 4.0); dc = side * drng.choice([0.8, 1.6, 2.3])
-                decal(acc, s, min(s + L, sb), dc - L / 2, dc + L / 2, RS.CELLS["network"][drng.integers(4)], RS.LIFT["network"])
-            s += drng.uniform(15, 60) / (1 + 2 * crk)
-    # transverse crack seal (thermal cracks), lane or full width
-    s = sa + drng.uniform(0, 15)
-    while s < sb - 1:
-        crk = np.interp(s, _ss, _scr); i = int(s)
-        if drng.random() < 0.4 + 0.5 * crk:
-            fullw = drng.random() < 0.4; side = drng.choice([1, -1])
-            a, b = (-road.er[i] + 0.3, road.el[i] - 0.3) if fullw else ((0.1, road.el[i] - 0.3) if side > 0 else (-road.er[i] + 0.3, -0.1))
-            # sprite is 6 m long: map its length across the road, 0.6 m along
-            for k0 in np.arange(a, b - 0.5, RS.SEAL_CELL_M[1]):
-                decal(acc, s - 0.3, s + 0.3, k0, min(k0 + RS.SEAL_CELL_M[1], b), RS.CELLS["seal"][drng.integers(8)], RS.LIFT["seal"] + 0.001, rot=True)
-        s += drng.uniform(6, 30) / (1 + crk)
-    if acc["P"]:
-        add("lines_road", f"decal_{c:02d}", "road_decal", np.concatenate(acc["P"]), np.concatenate(acc["T"]), np.concatenate(acc["UV"]), cast_shadows=False)
+# survey-driven decals (scripts/p2/road_surface.py): meandering crack-seal ribbons (3-6 cm, soft edges), feathered rounded-rectangle
+# patches in 3 tones, alligator crazing only where the survey says severe; none on fresh pavement (road.fresh + fresh_overlay spans).
+# One alpha-blended mesh per chunk (road_decal), lifts 1.6-2.0 cm, no depth write.
+_NOTES = RS.load_surface_notes(ROOT)
+_DEC, _dst = RS.build_decals(road, surf_pt, grid_tris, CHUNK, nchunks, SURF_SPANS, _SURV0, _NOTES, seed=1234)
+for c in sorted(_DEC):
+    _P, _T, _UV = _DEC[c]
+    assert len(_P) < 65000, f"decal chunk {c}: {len(_P)} verts"
+    add("lines_road", f"decal_{c:02d}", "road_decal", _P, _T, _UV, cast_shadows=False, transparent=True)
+print("decals", _dst, "verts", sum(len(v[0]) for v in _DEC.values()))
 
 _tick("markings + decals")
 # ------------------------------------------------------------------ kerbs (track layouts)
