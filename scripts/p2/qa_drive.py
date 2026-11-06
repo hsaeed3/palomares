@@ -226,7 +226,7 @@ for lay in ("road_full", "road_full_rev", "track_full", "track_full_rev"):
         _kv = [to_local(m["pos"]) for f in files if "kerbs" in f for m in kn(f)["meshes"] if m["name"].startswith("1KERB")]
         kl = np.zeros(NS, bool); kr_ = np.zeros(NS, bool)
         if _kv:
-            _kv = np.vstack(_kv); _jj, _dd = ckd.query(_kv[:, :2])
+            _kv = np.vstack(_kv); _dd, _jj = ckd.query(_kv[:, :2])
             _sgn = np.sign((_kv[:, 0] - road.x[_jj]) * road.nx[_jj] + (_kv[:, 1] - road.y[_jj]) * road.ny[_jj])
             kl[_jj[_sgn > 0]] = True; kr_[_jj[_sgn < 0]] = True
             from scipy.ndimage import binary_erosion
