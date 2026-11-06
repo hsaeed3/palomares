@@ -22,7 +22,7 @@
 
 ## Dev5 step S: frame segmentation (analysis only, nothing ships)
 
-- Model: `facebook/mask2former-swin-large-mapillary-vistas-semantic` (Hugging Face). Licence: the model card lists **CC BY-NC 4.0** (non-commercial). That is acceptable here only because the masks are internal analysis data: no model output pixels and no weights go into the track.
+- Model: `facebook/mask2former-swin-large-mapillary-vistas-semantic` (Hugging Face). Licence: the HF card says `license: other`. Mask2Former code is MIT, but Mapillary Vistas training data is CC BY-NC-SA, so treat it as non-commercial. That is acceptable here only because the masks are internal analysis data: no model output pixels and no weights go into the track.
 - torch 2.15.0+cpu (download.pytorch.org CPU wheel), transformers 5.22.2, run on CPU with 3 threads under `nice -n 10`.
 - Inference runs at native half resolution (1021x743, padded to /32, `do_resize=False`). The processor default squashes to 384x384, which loses poles and markings. About 7 s/frame, ~27 min for 219 frames.
 - Weights live in `~/.cache/huggingface/` (outside the repo) and must never be committed. Raw model label maps live in `data/scene/seg_raw/` (gitignored, regenerable). The masks in `data/scene/seg/` are committed.

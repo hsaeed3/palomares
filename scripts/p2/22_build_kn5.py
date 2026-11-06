@@ -475,6 +475,9 @@ T["race_assets.png"] = (BUILD / "race_assets_atlas.png").read_bytes()
 # poles, so it is NOT run through albedo_calibrate (a single mean-luminance target would wash out one or the other); tiles are
 # authored at plausible albedo already.
 T["roadside.png"] = (BUILD / "roadside_atlas.png").read_bytes()
+# dev5 scene-ledger atlas (21e_ledger_assets.py / scripts/p5/assets.py): authored at plausible albedo, NOT calibrated
+if (BUILD / "ledger_atlas.png").exists():
+    T["ledger.png"] = (BUILD / "ledger_atlas.png").read_bytes()
 albedo_calibrate(T)
 # ragged asphalt-edge strip atlas (edge_tex.py), from the calibrated shoulder textures so strip and shoulder match
 import edge_tex as _ET
@@ -491,6 +494,8 @@ MATS["road_edge"] = Material("road_edge", "ksPerPixelAT", {**BASE, "ksAmbient": 
 # RGBA atlas: opaque tiles + alpha-tested catch-fence mesh / flag cut-outs, one material = one draw call per kn5
 MATS["dressing"] = Material("dressing", "ksPerPixelAT", {**BASE, "ksSpecular": 0.12, "ksSpecularEXP": 20.0}, {"txDiffuse": "dressing.png"}, alpha_tested=True)
 MATS["race_assets"] = Material("race_assets", "ksPerPixelAT", {**BASE, "ksSpecular": 0.1, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "race_assets.png"}, alpha_tested=True)
+if "ledger.png" in T:
+    MATS["ledger"] = Material("ledger", "ksPerPixelAT", {**BASE, "ksSpecular": 0.06, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "ledger.png"}, alpha_tested=True)
 MATS["roadside"] = Material("roadside", "ksPerPixelAT", {**BASE, "ksSpecular": 0.06, "ksSpecularEXP": 20.0, "ksAlphaRef": 0.5}, {"txDiffuse": "roadside.png"}, alpha_tested=True)
 for sp in ("oak", "bay", "euc", "syc"):
     MATS[f"tree_{sp}"] = Material(f"tree_{sp}", "ksPerPixelAT", {**BASE, "ksAmbient": 0.5, "ksDiffuse": 0.5, "ksAlphaRef": 0.5}, {"txDiffuse": f"tree_{sp}.png"}, alpha_tested=True)

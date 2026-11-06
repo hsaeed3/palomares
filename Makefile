@@ -14,6 +14,16 @@ package:
 roadside:
 	python3 scripts/p2/21c_roadside_assets.py
 
+# dev5 scene ledger: build hook (after 21c, before 21d), catalog yaml + contact sheet, seed from the survey files
+ledger-assets:
+	python3 scripts/p2/21e_ledger_assets.py
+
+catalog:
+	python3 scripts/p5/assets.py --yaml --sheet
+
+ledger-seed:
+	python3 scripts/p5/ledger_seed.py
+
 physics:
 	python3 scripts/p2/21d_physics.py
 

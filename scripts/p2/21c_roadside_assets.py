@@ -70,6 +70,42 @@ def load_assets():
 
 ASSETS, FILES = load_assets()
 print(f"21c: {len(ASSETS)} asset entries from {len(FILES)} files: {', '.join(FILES)}")
+
+
+# ================================================================== dev5 scene ledger switch
+# Step 21e places every status=placed row of data/scene/ledger.jsonl. A legacy entry is OWNED by the ledger (and skipped
+# here) when a placed ledger row of the same class (scripts/p5/ledger_seed.LEGACY_CLS) on the same side lies within
+# +-LEDGER_TOL m of its span.  Off with `--no-ledger` or PALOMARES_LEDGER=0 (then 21e should not run either).
+LEDGER_TOL = 15.0
+LEDGER_ON = "--no-ledger" not in sys.argv and __import__("os").environ.get("PALOMARES_LEDGER", "1") != "0"
+OWNED = set(); LEDGER_ROWS = []
+if LEDGER_ON and (ROOT / "data/scene/ledger.jsonl").exists():
+    sys.path.insert(0, str(ROOT / "scripts/p5"))
+    from ledger_seed import LEGACY_CLS
+    for _ln in (ROOT / "data/scene/ledger.jsonl").read_text().splitlines():
+        try:
+            _r = json.loads(_ln) if _ln.strip() else None
+        except json.JSONDecodeError:
+            _r = None
+        if _r and _r.get("status") == "placed":
+            LEDGER_ROWS.append(_r)
+    _by = collections.defaultdict(list)
+    for _r in LEDGER_ROWS:
+        _by[(_r.get("cls"), _r.get("side"))].append((float(_r["s"]), float(_r.get("s1") if _r.get("s1") is not None else _r["s"])))
+    for _e in ASSETS:
+        _c = LEGACY_CLS.get(_e["type"])
+        if not _c:
+            continue
+        _sides = ["L", "R"] if _e.get("side") in ("both", "center", None) else ["L" if _e.get("side") == "left" else "R"]
+        a0, a1 = float(_e["s0"]) - LEDGER_TOL, float(_e["s1"]) + LEDGER_TOL
+        if any(b0 <= a1 and b1 >= a0 for sd in _sides for b0, b1 in _by[(_c, sd)]):
+            OWNED.add(id(_e))
+    print(f"  ledger switch: {len(LEDGER_ROWS)} placed ledger rows own {len(OWNED)} of {len(ASSETS)} legacy entries "
+          f"(skipped here, placed by 21e): {dict(collections.Counter(e['type'] for e in ASSETS if id(e) in OWNED))}")
+
+
+def ledger_owned(e):
+    return id(e) in OWNED
 CNT = collections.Counter(e["type"] for e in ASSETS)
 
 
@@ -483,6 +519,7 @@ def do_wires(poles):
 
 
 SB_FACING = []     # stations of signs that already face southbound traffic (backs of NB signs, SB-specific signs)
+SB_FACING += [float(r["s"]) for r in LEDGER_ROWS if r.get("cls") == "sign" and (r.get("params") or {}).get("dir") == "sb"]
 
 
 def do_sign(e, side, sb=False, cdir_force=None):
@@ -691,6 +728,9 @@ for e in ASSETS:
     if e["type"] == "guardrail_wbeam":
         for sd in sides_of(e):
             real[sd].append((float(e["s0"]), float(e["s1"])))
+for _r in LEDGER_ROWS:                     # ledger guardrails (21e) also replace the candidates they overlap
+    if _r.get("cls") == "guardrail" and _r.get("s1") is not None:
+        real["left" if _r.get("side") == "L" else "right"].append((float(_r["s"]), float(_r["s1"])))
 
 
 def subtract(iv, cuts):
@@ -717,7 +757,7 @@ print(f"  guardrail candidates: {n_cand} runs / {len_cand:.0f} m -> {n_kept} pie
       f"({len_cand - len_kept:.0f} m suppressed by remove_guardrail or replaced by real W-beam)")
 n_real = 0; len_real = 0.0
 for e in ASSETS:
-    if e["type"] == "guardrail_wbeam":
+    if e["type"] == "guardrail_wbeam" and not ledger_owned(e):
         a = e.get("attrs") or {}
         for sd in sides_of(e):
             do_guardrail(float(e["s0"]), float(e["s1"]), sd, float(e.get("offset_m") or 0.8), min(max(float(e.get("height_m") or 0.75), 0.6), 0.85),
@@ -741,6 +781,13 @@ for nm, i in (("1WALL_start", 1), ("1WALL_end", N - 2)):
 poles = {"left": [], "right": []}; signs = collections.Counter()
 for e in ASSETS:
     t = e["type"]
+    if ledger_owned(e):
+        if t == "road_sign":               # keep the southbound-sign spacing rule aware of owned back-facing signs
+            _a = e.get("attrs") or {}
+            _txt = " ".join(str(_a.get(k, "")) for k in ("text", "type_detail", "shape")).lower().strip() or str(_a.get("note", "")).lower()
+            if RX.sign_image(_txt, None)[3].startswith("back"):
+                SB_FACING.append(0.5 * (float(e["s0"]) + float(e["s1"])))
+        continue
     try:
         for sd in sides_of(e):
             if t in FENCE:
