@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 dist/*.zip.tmp
 build/
+# HF model weights / cache (segmentation, analysis only - never commit)
+.cache/
+*.safetensors
+*.bin
+data/scene/seg_raw/

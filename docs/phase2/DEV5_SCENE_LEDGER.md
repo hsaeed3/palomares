@@ -66,3 +66,31 @@ python3 scripts/p5/ledger_lint.py                   # schema, catalog ids, overl
 ```
 
 Only `make package` (21 → 22 → QA → 25) consumes the ledger for the real track.
+
+## How agents use the scorer and poses (scripts/p5)
+
+| script | does | typical time |
+|---|---|---|
+| `scene.py` | shared: class ids, camera/lens model (same as `27_litmus_fit.py`), chunk cache, class-ID renderer (numpy projection + PIL painter's order, pinhole; photo/seg undistorted to it) | — |
+| `score.py` | render + compare one or more frames, write `scores/NNN.json`, `scores/summary.csv`, optional overlay | ~0.5–1 s / frame (512×372), `--all` ≈ 1.5 min on 3 workers |
+| `register.py` | pose per frame → `poses.json` | ~9 s / frame, all 219 ≈ 11 min on 3 workers |
+| `ledger_lint.py` | schema / catalog / overlap / clearance checks | < 1 s |
+
+- **Cache**: `data/scene/cache/chunk_KKK.npz` (triangles + class per 200 m of station) is rebuilt automatically from
+  `build/geometry.pkl` when that file changes (≈5 s); `--rebuild-cache` forces it. The ledger is *not* cached: it is
+  read fresh on every run, so editing `ledger.jsonl` and re-running `score.py --frames N --overlay` is the whole loop.
+- **Ledger proxies**: each object is a box (`proxy: [w, d, h]`, `z0`, `class` from `config/asset_catalog.yaml` if
+  present, else `scene.DEFAULT_PROXY`), at `s`, `side`, `off` beyond the pavement edge (`geom.Road.outer`); linear
+  objects get a box every 2 m from `s` to `s1`. Signs get a post. `mound/ditch/tree_density/marking/driveway` have no proxy.
+- **Reading a score**: open the overlay first (photo | seg | render, then photo with render edges in magenta and the
+  disagreement map: green agree, red disagree, yellow = road in photo only, magenta = road in render only). The
+  numbers are secondary. `groups` holds merged IoUs (`vegetation` = tree+shrub+trunk, `terrain` = grass+bare+rock);
+  per-class values are noisy. Per ledger instance: `px` = visible pixels, `match` = fraction of them the seg labels
+  with a compatible class, `found` = px ≥ 6 and match ≥ 0.4, `occluded` = fewer than 6 pixels visible.
+- **Seg**: `data/scene/seg/NNN.png` is used when it exists, else an HSV stand-in (`"seg": "hsv"` in the json); do not
+  judge content against the stand-in.
+- **Poses**: `score.py` uses `poses.json` and falls back to the old `gopro_stations_*.csv`. If a frame looks wrong in
+  the overlay, decide the station by eye (landmarks, bridges, junctions) and pin it:
+  `python3 scripts/p5/register.py --set 104=5560` (stored in `data/scene/pose_pins.json`; only the rest of the
+  pose is refit within ±15 m). Low `conf` (< 0.3) or `flag_moved_30m` frames are the ones to check by eye first.
+- CPU: everything runs at `nice 5` with at most 3 processes.
