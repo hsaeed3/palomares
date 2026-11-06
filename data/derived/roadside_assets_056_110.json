@@ -1,0 +1,2127 @@
+[
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 3540.0,
+  "s1": 3562.0,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "rails": 3,
+   "weathered": true,
+   "on_bank": true
+  },
+  "frames": [
+   56
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3545.0,
+  "s1": 3545.0,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "back of warning diamond (southbound hump sign) + plaque",
+   "shape": "diamond_back"
+  },
+  "frames": [
+   56
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3545.0,
+  "s1": 3568.0,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched"
+  },
+  "frames": [
+   56,
+   57
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3548.0,
+  "s1": 3652.9,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old"
+  },
+  "frames": [
+   57,
+   58,
+   59,
+   60
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3550,
+  "s1": 3600,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "rpm": false,
+   "note": "none seen"
+  },
+  "frames": [
+   56,
+   57,
+   58
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 3552.0,
+  "s1": 3558.0,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "HUMP",
+   "white": true
+  },
+  "frames": [
+   56
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3560.0,
+  "s1": 3560.0,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false,
+   "wires_parallel": true,
+   "note": "cross-arm-less wood pole w/ yellow-black band"
+  },
+  "frames": [
+   56
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "culvert_headwall",
+  "s0": 3563.0,
+  "s1": 3573.0,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 0.6,
+  "attrs": {
+   "note": "corrugated pipe outlet into creek bank, rocks"
+  },
+  "frames": [
+   57
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 3605.6,
+  "s1": 3645.6,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "redwood",
+   "wire": "woven/barbed",
+   "on_bank": true
+  },
+  "frames": [
+   58
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 3623.6,
+  "s1": 3675.3,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched"
+  },
+  "frames": [
+   59,
+   60,
+   61,
+   62
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3630.6,
+  "s1": 3630.6,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   58
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 3635.3,
+  "s1": 3655.3,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "note": "at top of bank, next to timber post fence"
+  },
+  "frames": [
+   62
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 3643.6,
+  "s1": 3643.6,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.2,
+  "attrs": {
+   "count": 1,
+   "color": "black w/ red flag",
+   "on_post": true
+  },
+  "frames": [
+   59
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3647.9,
+  "s1": 3647.9,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   60
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 3657,
+  "s1": 3690,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "rpm": true,
+   "note": "amber RPM near centre double yellow in 63"
+  },
+  "frames": [
+   63,
+   65
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 3664.1,
+  "s1": 3694.1,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "brown",
+   "rails": 3,
+   "note": "ranch-board fence on lawn bank; some posts leaning"
+  },
+  "frames": [
+   65
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3668.1,
+  "s1": 3681.1,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved",
+   "note": "paved drive opening next to redwoods"
+  },
+  "frames": [
+   64
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3668.1,
+  "s1": 3741.0,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "crack_sealed"
+  },
+  "frames": [
+   63,
+   64,
+   65,
+   66,
+   67,
+   68
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 3668.1,
+  "s1": 3685.1,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.3,
+  "attrs": {
+   "rails": 3,
+   "lawn_behind": true,
+   "note": "frame 63 shows it left with rails at top of lawn bank; also frame 62-63 junction of rail styles"
+  },
+  "frames": [
+   63,
+   64,
+   65
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3668.5,
+  "s1": 3688.5,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved asphalt patch"
+  },
+  "frames": [
+   66
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3685.3,
+  "s1": 3685.3,
+  "side": "right",
+  "offset_m": 8.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   62
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3687.3,
+  "s1": 3687.3,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   61
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3694.1,
+  "s1": 3694.1,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   65
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3696.1,
+  "s1": 3696.1,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   64
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3698.1,
+  "s1": 3698.1,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   63
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3714.0,
+  "s1": 3729.0,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "wide concrete apron with side-drive, gravel/asphalt further in"
+  },
+  "frames": [
+   69
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 3718.0,
+  "s1": 3718.0,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "count": 1,
+   "note": "black box on post + 2-3 trash/recycle bins at verge"
+  },
+  "frames": [
+   67
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 3722.0,
+  "s1": 3762.0,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 1.3,
+  "attrs": {
+   "rails": 4,
+   "note": "long white rail fence on right of curve, black wrought-iron gate in it at frame 70"
+  },
+  "frames": [
+   70,
+   71,
+   72
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "bridge_parapet_concrete",
+  "s0": 3723.0,
+  "s1": 3735.0,
+  "side": "right",
+  "offset_m": 0.5,
+  "height_m": 0.9,
+  "attrs": {
+   "note": "creek culvert/bridge 3723, low parapet appears dark timber/concrete; 3723-3729 class17"
+  },
+  "frames": [
+   69
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3724.0,
+  "s1": 3825.1,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay"
+  },
+  "frames": [
+   69,
+   70,
+   71,
+   72,
+   73
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 3726.0,
+  "s1": 3756.0,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 1.8,
+  "attrs": {
+   "screened": true,
+   "color": "dark green privacy slats"
+  },
+  "frames": [
+   68
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3736.0,
+  "s1": 3736.0,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "text": "small white rectangular speed/regulatory sign on fence",
+   "shape": "rectangle"
+  },
+  "frames": [
+   68
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 3739.0,
+  "s1": 3739.0,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "count": 1
+  },
+  "frames": [
+   69
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 3740,
+  "s1": 3755,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "white rail fence only, no steel guardrail"
+  },
+  "frames": [
+   70,
+   71
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 3744.0,
+  "s1": 3744.0,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 1.8,
+  "attrs": {
+   "material": "black wrought iron, gap in white fence"
+  },
+  "frames": [
+   70
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3748.0,
+  "s1": 3748.0,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white/yellow"
+  },
+  "frames": [
+   67
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 3782.5,
+  "s1": 3782.5,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "count": 1,
+   "color": "grey metal on post"
+  },
+  "frames": [
+   72
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 3795.5,
+  "s1": 3810.5,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "dark brown",
+   "note": "brown fence behind white fence"
+  },
+  "frames": [
+   72
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3820.1,
+  "s1": 3835.1,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved concrete/asphalt apron"
+  },
+  "frames": [
+   73
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3825.1,
+  "s1": 3825.1,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   73
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3840.1,
+  "s1": 3840.1,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   73
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3842.9,
+  "s1": 4142.2,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay"
+  },
+  "frames": [
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3857.9,
+  "s1": 3877.9,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "several white posts along right edge"
+  },
+  "frames": [
+   74
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3897.9,
+  "s1": 3897.9,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow warning diamond (curve/hump advisory)",
+   "shape": "diamond"
+  },
+  "frames": [
+   74
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3904.1,
+  "s1": 3904.1,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow diamond w/ plaque (hump ahead)",
+   "shape": "diamond"
+  },
+  "frames": [
+   75
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3904.1,
+  "s1": 3904.1,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   75
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 3909.1,
+  "s1": 3919.1,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "speed hump bars (white)"
+  },
+  "frames": [
+   75
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3911.9,
+  "s1": 3911.9,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "back of white diamond (southbound hump sign)",
+   "shape": "diamond_back"
+  },
+  "frames": [
+   76
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 3916.9,
+  "s1": 3928.9,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "speed hump w/ 3-4 white bars across both lanes; raised"
+  },
+  "frames": [
+   76
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 3934.9,
+  "s1": 3951.9,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.1,
+  "attrs": {
+   "rails": 2
+  },
+  "frames": [
+   76
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3936.9,
+  "s1": 3936.9,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow diamond w/ plaque (hump ahead / 15 MPH advisory)",
+   "shape": "diamond"
+  },
+  "frames": [
+   76
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 3939.9,
+  "s1": 3969.9,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.2,
+  "attrs": {
+   "material": "white stucco pillars/wall with terracotta tile caps, Spanish style",
+   "pillars": 2,
+   "wall_extends": true
+  },
+  "frames": [
+   77,
+   79
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3949.9,
+  "s1": 3949.9,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "pole with crossarm/transformer fitting, beside white stucco gate pillar"
+  },
+  "frames": [
+   77
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 4018,
+  "s1": 4080,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "rpm": true,
+   "note": "amber RPMs on yellow centre"
+  },
+  "frames": [
+   80,
+   81,
+   82
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4027.6,
+  "s1": 4027.6,
+  "side": "left",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   79
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4037.6,
+  "s1": 4037.6,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow diamond/chevron ahead past estate gate",
+   "shape": "diamond"
+  },
+  "frames": [
+   79
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 4041.7,
+  "s1": 4081.7,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "unclear",
+   "note": "dark weathered rail at right pavement edge; delineator white post at its start (frame 83)"
+  },
+  "frames": [
+   81,
+   82,
+   83
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 4043.7,
+  "s1": 4078.7,
+  "side": "right",
+  "offset_m": 1.3,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "galvanized": true,
+   "note": "outside of right bend with a parked/passing car beyond; tapered end ahead"
+  },
+  "frames": [
+   80,
+   81
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4114.5,
+  "s1": 4114.5,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   83
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 4119.1,
+  "s1": 4169.1,
+  "side": "right",
+  "offset_m": 1.2,
+  "height_m": 0.8,
+  "attrs": {
+   "posts": "wood",
+   "note": "timber-faced rail (brown wood rails + posts) like bridge/ranch rail; flows into wood fence at 85",
+   "timber": true
+  },
+  "frames": [
+   84,
+   85
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 4152.2,
+  "s1": 4172.2,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved wide pullout/driveway"
+  },
+  "frames": [
+   85
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 4163.5,
+  "s1": 4233.5,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.3,
+  "attrs": {
+   "rails": 3,
+   "color": "dark brown posts and rails",
+   "note": "around pasture"
+  },
+  "frames": [
+   86,
+   87,
+   88
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 4167.2,
+  "s1": 4222.2,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "color": "dark brown",
+   "note": "ranch fence continues past pullout, paved apron/pullout right at 85"
+  },
+  "frames": [
+   85,
+   86
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 4168.5,
+  "s1": 4215.0,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay"
+  },
+  "frames": [
+   86,
+   87,
+   88
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4169.1,
+  "s1": 4169.1,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow warning diamond",
+   "shape": "diamond"
+  },
+  "frames": [
+   84
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4195.0,
+  "s1": 4195.0,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   88
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4200.0,
+  "s1": 4200.0,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "multiple wires cross diagonally overhead in 88-89"
+  },
+  "frames": [
+   88
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 4202.4,
+  "s1": 4219.4,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "cobble/paver apron"
+  },
+  "frames": [
+   89
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4203.5,
+  "s1": 4203.5,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   86
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 4204.4,
+  "s1": 4229.4,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.9,
+  "attrs": {
+   "style": "mortared fieldstone with brick-like caps, curved driveway wing walls",
+   "note": "driveway entrance masonry, stone pillar with orange reflector"
+  },
+  "frames": [
+   89
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 4209.4,
+  "s1": 4374.3,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old"
+  },
+  "frames": [
+   89,
+   90,
+   91
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4216.5,
+  "s1": 4216.5,
+  "side": "right",
+  "offset_m": 7.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   87
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4218.5,
+  "s1": 4218.5,
+  "side": "right",
+  "offset_m": 7.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "pole with crossarms, wires parallel"
+  },
+  "frames": [
+   86
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 4249.4,
+  "s1": 4274.4,
+  "side": "right",
+  "offset_m": 1.2,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "galvanized": true,
+   "note": "leading to bridge 4258; yellow delineator at end"
+  },
+  "frames": [
+   89
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4342.4,
+  "s1": 4342.4,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   90
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4349.3,
+  "s1": 4349.3,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 2.1,
+  "attrs": {
+   "text": "STOP sign at side driveway/junction 4393 (red octagon)",
+   "shape": "octagon"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 4354.3,
+  "s1": 4369.3,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt/gravel"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 4354.3,
+  "s1": 4475.0,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "crack_sealed"
+  },
+  "frames": [
+   91,
+   92,
+   93
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "bridge_parapet_stone",
+  "s0": 4379.3,
+  "s1": 4394.3,
+  "side": "left",
+  "offset_m": 0.5,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "bridge 4387: stone masonry parapet with W-beam rail on top, left"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 4379.3,
+  "s1": 4404.3,
+  "side": "both",
+  "offset_m": 0.8,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "galvanized": true,
+   "note": "bridge 4387 rails both sides incl. left end terminal; right rail extends past bridge"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4387.3,
+  "s1": 4387.3,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.3,
+  "attrs": {
+   "text": "yellow diamond + plaque 15 MPH",
+   "shape": "diamond"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 4391.3,
+  "s1": 4399.3,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "HUMP"
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 4414.3,
+  "s1": 4444.3,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "note": "wire with steel posts beside gate"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 4414.3,
+  "s1": 4439.3,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "note": "ranch rails + wire gate, grass pullout left"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 4416,
+  "s1": 4427,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "right side shows sign/shrubs only after bridge"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4419.3,
+  "s1": 4419.3,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "back of diamond sign (southbound)",
+   "shape": "diamond_back"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4419.3,
+  "s1": 4419.3,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   91
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 4444.3,
+  "s1": 4469.3,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "speed hump with 4 white bars, repainted"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 4460.0,
+  "s1": 4470.0,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "HUMP"
+  },
+  "frames": [
+   93
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 4468,
+  "s1": 4480,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "right side shrubs/cut, no rail"
+  },
+  "frames": [
+   93
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 4469.3,
+  "s1": 4469.3,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow diamond",
+   "shape": "diamond"
+  },
+  "frames": [
+   92
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4510.0,
+  "s1": 4510.0,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   93
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4520.0,
+  "s1": 4520.0,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "wires clearly cross over road above in 93"
+  },
+  "frames": [
+   93
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 4610.3,
+  "s1": 4861.7,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay"
+  },
+  "frames": [
+   94,
+   95,
+   96,
+   97
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4610.3,
+  "s1": 4610.3,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 11,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "close left pole with transformer/can and ground wire conduit, yellow-black marker band"
+  },
+  "frames": [
+   94
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 4750.0,
+  "s1": 4840.0,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "thin steel/wood",
+   "wire": "barbed",
+   "note": "partly hidden by shrubs"
+  },
+  "frames": [
+   95,
+   96,
+   97,
+   98
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 4783,
+  "s1": 4793,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "wire fence only"
+  },
+  "frames": [
+   95,
+   96
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 4783.8,
+  "s1": 4818.8,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 1.0,
+  "attrs": {
+   "posts": "small steel T-posts w/ white tags",
+   "note": "lower, set back; gravel shoulder"
+  },
+  "frames": [
+   96
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4790.0,
+  "s1": 4790.0,
+  "side": "left",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   95
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4805.0,
+  "s1": 4805.0,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   95
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 4838.8,
+  "s1": 4838.8,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   96
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4863.8,
+  "s1": 4863.8,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   96
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 4875.2,
+  "s1": 4895.2,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.3,
+  "attrs": {
+   "color": "dark brown, dog-ear pickets",
+   "note": "left edge of frame"
+  },
+  "frames": [
+   98
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 4876,
+  "s1": 4888,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "wire fence only"
+  },
+  "frames": [
+   97,
+   98
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 4880.2,
+  "s1": 4900.2,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.5,
+  "attrs": {
+   "color": "dark green vinyl coated"
+  },
+  "frames": [
+   98
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4881.7,
+  "s1": 4881.7,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "leaning slightly, wires parallel"
+  },
+  "frames": [
+   97
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 4885.2,
+  "s1": 5997.0,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "crack_sealed"
+  },
+  "frames": [
+   98,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 4892.2,
+  "s1": 4892.2,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": false
+  },
+  "frames": [
+   98
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 4895.2,
+  "s1": 4895.2,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 1.0,
+  "attrs": {
+   "count": 2,
+   "note": "trash + recycle bins at verge"
+  },
+  "frames": [
+   98
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 4897,
+  "s1": 4908,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "wire fence only"
+  },
+  "frames": [
+   98
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 5305.3,
+  "s1": 5325.3,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel/dirt wide shoulder"
+  },
+  "frames": [
+   99
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 5305.3,
+  "s1": 5335.3,
+  "side": "left",
+  "offset_m": 3.0,
+  "height_m": 1.3,
+  "attrs": {
+   "color": "dark brown picket with dog-ear tops",
+   "on_grass_bank": true
+  },
+  "frames": [
+   99
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 5355.3,
+  "s1": 5355.3,
+  "side": "right",
+  "offset_m": 2.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   99
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 5412.9,
+  "s1": 5462.9,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "thin",
+   "note": "barbed wire in shrubs"
+  },
+  "frames": [
+   101
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5430.6,
+  "s1": 5430.6,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white w/ reflector"
+  },
+  "frames": [
+   102
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 5430.6,
+  "s1": 5445.6,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "cracked asphalt/gravel"
+  },
+  "frames": [
+   102
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 5450.6,
+  "s1": 5450.6,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "pole just past right edge, wires run over road"
+  },
+  "frames": [
+   102
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 5452.9,
+  "s1": 5452.9,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   101
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 5507,
+  "s1": 5565,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "rpm": true
+  },
+  "frames": [
+   103,
+   104
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5532.0,
+  "s1": 5532.0,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   103
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 5547.0,
+  "s1": 5547.0,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow diamond far",
+   "shape": "diamond"
+  },
+  "frames": [
+   103
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 5562.1,
+  "s1": 5569.1,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "legend": "HUMP + one white bar"
+  },
+  "frames": [
+   104
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5592.3,
+  "s1": 5592.3,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   105
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5597.1,
+  "s1": 5597.1,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   104
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 5607.3,
+  "s1": 5622.3,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "asphalt side lane/turnout ahead left"
+  },
+  "frames": [
+   105
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 5695,
+  "s1": 5708,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is lawn/asphalt berm, no rail; station of 107 uncertain"
+  },
+  "frames": [
+   107
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5730.7,
+  "s1": 5730.7,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   107
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 5740.7,
+  "s1": 5740.7,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   107
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 5809.5,
+  "s1": 5809.5,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 1.0,
+  "attrs": {
+   "note": "white post at asphalt berm/curb start"
+  },
+  "frames": [
+   108
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 5890,
+  "s1": 5990,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "rpm": true,
+   "note": "sparse"
+  },
+  "frames": [
+   108,
+   109,
+   110
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 5936.8,
+  "s1": 5936.8,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow warning chevron/diamond",
+   "shape": "diamond"
+  },
+  "frames": [
+   109
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 6007.0,
+  "s1": 6052.0,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 1.6,
+  "attrs": {
+   "color": "dark brown stained boards with posts",
+   "note": "near-solid in 110"
+  },
+  "frames": [
+   110
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 6027.0,
+  "s1": 6027.0,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "yellow warning ahead",
+   "shape": "diamond"
+  },
+  "frames": [
+   110
+  ],
+  "confidence": "low"
+ }
+]

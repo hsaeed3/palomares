@@ -1,0 +1,2538 @@
+[
+ {
+  "type": "surface",
+  "s0": 0,
+  "s1": 60,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "severe alligator cracking with patches, potholes at left edge"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 0,
+  "s1": 50,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 0,
+  "s1": 700,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": false,
+   "note": "no raised yellow markers seen"
+  },
+  "frames": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 10,
+  "s1": 10,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 2.4,
+  "attrs": {
+   "text": "PALOMARES RD street name blade, junction with Niles Canyon Rd"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 12,
+  "s1": 12,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "text": "uncertain legend (survey says XING; wide white letters across both lanes)",
+   "note": "white legend in the lane at bottom of frame 1"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 25,
+  "s1": 25,
+  "side": "right",
+  "offset_m": 4,
+  "height_m": 12,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "black pole with yellow bands, signs attached, wires run diagonally across road"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 28,
+  "s1": 28,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "round regulatory (no-turn/no-trucks style)",
+   "note": "circle with red slash"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 30,
+  "s1": 30,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 35,
+  "s1": 35,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "rectangular, back of sign on two posts"
+  },
+  "frames": [
+   1
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 55,
+  "s1": 100,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 2.5,
+  "attrs": {
+   "gate": false,
+   "note": "behind cut-bank top, silver galvanized"
+  },
+  "frames": [
+   2
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 60,
+  "s1": 60,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 2.0,
+  "attrs": {
+   "shape": "warning, left-turn arrow (curve)"
+  },
+  "frames": [
+   1,
+   2
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 60,
+  "s1": 115,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "manhole cover left of centre, patch outline"
+  },
+  "frames": [
+   2
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 80,
+  "s1": 125,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 2.5,
+  "attrs": {
+   "note": "fence close to edge at left of frame 3"
+  },
+  "frames": [
+   3
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 100,
+  "s1": 165,
+  "side": "right",
+  "offset_m": 5,
+  "height_m": 2.5,
+  "attrs": {
+   "gate": true,
+   "note": "industrial/quarry yard with large double gate and gravel/paved apron; silver"
+  },
+  "frames": [
+   2,
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 100,
+  "s1": 165,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel/paved",
+   "note": "yard entry with wide gravel apron"
+  },
+  "frames": [
+   2,
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 100,
+  "s1": 150,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "light cracking, patched edges"
+  },
+  "frames": [
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 110,
+  "s1": 110,
+  "side": "left",
+  "offset_m": 8,
+  "height_m": 11,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "behind chainlink at yard; wires cross road"
+  },
+  "frames": [
+   2,
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 120,
+  "s1": 120,
+  "side": "right",
+  "offset_m": 6,
+  "height_m": 2.5,
+  "attrs": {
+   "material": "galvanized chainlink double gate on steel posts",
+   "note": "industrial yard gate"
+  },
+  "frames": [
+   2,
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 123,
+  "s1": 133,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "chainlink yard fence, no rail"
+  },
+  "frames": [
+   2,
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 130,
+  "s1": 130,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 2.0,
+  "attrs": {
+   "shape": "warning curve/turn arrow yellow; white rectangular regulatory sign beside it"
+  },
+  "frames": [
+   3
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 190,
+  "s1": 235,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel/dirt",
+   "note": "wide gravel pullout ~4 m deep, patched asphalt edge"
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 190,
+  "s1": 214,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "vegetated cut bank at edge, no rail"
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 190,
+  "s1": 260,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "patched left edge at pullout"
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 195,
+  "s1": 245,
+  "side": "left",
+  "offset_m": 3.5,
+  "height_m": 2.0,
+  "attrs": {
+   "note": "silver, beyond gravel pullout"
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 230,
+  "s1": 230,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "text": "AHEAD",
+   "note": "white legend in northbound lane (part of ...AHEAD warning legend, e.g. SIGNAL/STOP AHEAD or similar), seen upside down near camera"
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 240,
+  "s1": 240,
+  "side": "left",
+  "offset_m": 6,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   4
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 249,
+  "s1": 271,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "side driveway / cut bank"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 262,
+  "s1": 262,
+  "side": "left",
+  "offset_m": 2,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "warning diamond (back/side visible)"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 265,
+  "s1": 265,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "yellow reflector bands; wires run along road"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 285,
+  "s1": 285,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 286,
+  "s1": 374,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank + wire fence, no rail"
+  },
+  "frames": [
+   5,
+   6,
+   7
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 290,
+  "s1": 315,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved asphalt side road/driveway",
+   "note": "with mailbox and white posts"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 292,
+  "s1": 292,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 10,
+  "attrs": {
+   "note": "yellow bands, right of side driveway"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 300,
+  "s1": 300,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 300,
+  "s1": 300,
+  "side": "right",
+  "offset_m": 6,
+  "height_m": 1.2,
+  "attrs": {},
+  "frames": [
+   5
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 300,
+  "s1": 345,
+  "side": "right",
+  "offset_m": 6,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "wood",
+   "note": "on grassy bank, pasture side"
+  },
+  "frames": [
+   6
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 310,
+  "s1": 310,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   5
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 315,
+  "s1": 315,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 2.0,
+  "attrs": {
+   "shape": "warning diamond, deer crossing"
+  },
+  "frames": [
+   6
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 330,
+  "s1": 640,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay",
+   "note": "light-grey smooth, crisp lines"
+  },
+  "frames": [
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 345,
+  "s1": 505,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.5,
+  "attrs": {
+   "screened": true,
+   "color": "dark green privacy-screen",
+   "note": "continuous, post tops visible; ends ~500"
+  },
+  "frames": [
+   7,
+   8
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 353,
+  "s1": 366,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "dark green chainlink fence only"
+  },
+  "frames": [
+   7
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "building",
+  "s0": 385,
+  "s1": 385,
+  "side": "left",
+  "offset_m": 30,
+  "height_m": 6,
+  "attrs": {
+   "kind": "ranch house + red-roof barn with white board fence",
+   "footprint_m": "12x8"
+  },
+  "frames": [
+   6
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 390,
+  "s1": 401,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   7
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 400,
+  "s1": 400,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   7
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 430,
+  "s1": 493,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank, no rail"
+  },
+  "frames": [
+   8,
+   9
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 498,
+  "s1": 511,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   9
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 527,
+  "s1": 551,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   9,
+   10
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 540,
+  "s1": 540,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   9
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 562,
+  "s1": 586,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   10
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 620,
+  "s1": 620,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 10,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "mostly hidden in foliage; wires from left"
+  },
+  "frames": [
+   11
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 690,
+  "s1": 700,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": true,
+   "note": "yellow raised chip at bottom of frame 12"
+  },
+  "frames": [
+   12
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 700,
+  "s1": 745,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "wood",
+   "finish": "weathered galvanized/brown",
+   "note": "on curve over drop-off; matches candidate 715-728 but extends further"
+  },
+  "frames": [
+   12
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 735,
+  "s1": 735,
+  "side": "right",
+  "offset_m": 4,
+  "height_m": 10,
+  "attrs": {
+   "note": "behind foliage"
+  },
+  "frames": [
+   12
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 755,
+  "s1": 790,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old"
+  },
+  "frames": [
+   14
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 758,
+  "s1": 778,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.0,
+  "attrs": {
+   "note": "low dry-laid stone wall at fence base, mossy"
+  },
+  "frames": [
+   13
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_board_fence",
+  "s0": 765,
+  "s1": 800,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 1.5,
+  "attrs": {
+   "finish": "natural weathered brown slats",
+   "note": "backed by ivy/privet hedge"
+  },
+  "frames": [
+   13
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 797,
+  "s1": 810,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   13,
+   14
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 800,
+  "s1": 860,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.4,
+  "attrs": {
+   "privacy_slats": true,
+   "color": "brown",
+   "note": "tall brown slatted/woven privacy screen on chainlink or posts; could be solid_wood_privacy_fence"
+  },
+  "frames": [
+   14
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 800,
+  "s1": 800,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   13
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 878,
+  "s1": 889,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank with speed sign"
+  },
+  "frames": [
+   15
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 900,
+  "s1": 900,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white with reflector"
+  },
+  "frames": [
+   15
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 905,
+  "s1": 905,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "speed limit",
+   "text": "SPEED LIMIT 25"
+  },
+  "frames": [
+   15
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 925,
+  "s1": 965,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "note": "black chainlink fence behind rail on concrete footing; candidate only 909-926"
+  },
+  "frames": [
+   16
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 960,
+  "s1": 960,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 10,
+  "attrs": {},
+  "frames": [
+   15
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 1000,
+  "s1": 1040,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "unknown",
+   "note": "seen far ahead on curve in frame 18"
+  },
+  "frames": [
+   18
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 1015,
+  "s1": 1045,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "transverse crack across lane"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 1015,
+  "s1": 1025,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": true
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1018,
+  "s1": 1018,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white with reflectors, two posts"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1030,
+  "s1": 1030,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 1060,
+  "s1": 1080,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "concrete ramp",
+   "note": "steep paved driveway ramp between timber wall and cut"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 1062,
+  "s1": 1062,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "two warning diamonds (curve/driveway)"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 1068,
+  "s1": 1090,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 2.5,
+  "attrs": {
+   "note": "on top of cut slope above timber wall at driveway"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_timber",
+  "s0": 1072,
+  "s1": 1088,
+  "side": "right",
+  "offset_m": 3,
+  "height_m": 2.0,
+  "attrs": {
+   "note": "brown timber planks beside driveway ramp, chainlink above"
+  },
+  "frames": [
+   17
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1139,
+  "s1": 1150,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "steep grassy cut"
+  },
+  "frames": [
+   19
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 1170,
+  "s1": 1245,
+  "side": "left",
+  "offset_m": 1.2,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "wood",
+   "finish": "galvanized",
+   "note": "long run on curve; build has only 1207-1217 (and 1134-1147)"
+  },
+  "frames": [
+   19,
+   20
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 1170,
+  "s1": 1230,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "longitudinal crack left of centre"
+  },
+  "frames": [
+   19
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 1215,
+  "s1": 1225,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": true,
+   "note": "sparse, ~every 10-15 m along the double yellow"
+  },
+  "frames": [
+   20
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1224,
+  "s1": 1234,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   20
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1325,
+  "s1": 1325,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   21
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1379,
+  "s1": 1396,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "rock cut"
+  },
+  "frames": [
+   22
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1415,
+  "s1": 1415,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   22
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1422,
+  "s1": 1422,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white on rock cut"
+  },
+  "frames": [
+   22
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "rockfall_mesh",
+  "s0": 1500,
+  "s1": 1735,
+  "side": "left",
+  "offset_m": 2,
+  "height_m": 10,
+  "attrs": {
+   "note": "draped steel cable mesh over steep slide-prone cut, small catch fence/posts at toe (frame 23 ~1520-1560); continuous to bridge"
+  },
+  "frames": [
+   23,
+   24
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1504,
+  "s1": 1514,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "slope has rockfall mesh not guardrail; drop is on right side"
+  },
+  "frames": [
+   23
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 1540,
+  "s1": 1745,
+  "side": "right",
+  "offset_m": 4,
+  "height_m": 2.0,
+  "attrs": {
+   "screened": true,
+   "color": "black",
+   "note": "black mesh on steel posts above drop-off, up to bridge at 1738"
+  },
+  "frames": [
+   23,
+   24
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "culvert_headwall",
+  "s0": 1568,
+  "s1": 1568,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0.5,
+  "attrs": {
+   "note": "stream crossing in features at 1568; not visible in photos"
+  },
+  "frames": [
+   23
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1592,
+  "s1": 1603,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "black chainlink on posts only"
+  },
+  "frames": [
+   23,
+   24
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 1700,
+  "s1": 1745,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "lighter repaired/replaced section at bridge approach with visible seam"
+  },
+  "frames": [
+   24
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "bridge_parapet_concrete",
+  "s0": 1735,
+  "s1": 1748,
+  "side": "left",
+  "offset_m": 0.3,
+  "height_m": 0.8,
+  "attrs": {
+   "note": "concrete barrier/k-rail style at small bridge over Stonybrook Creek (stream crossing 1738); right side is chainlink instead"
+  },
+  "frames": [
+   24
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 1760,
+  "s1": 1790,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "end_terminal": "flared bolt-down end near bridge; concrete curb/gutter beneath",
+   "note": "MISSING in build (no candidate)"
+  },
+  "frames": [
+   25
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 1780,
+  "s1": 1800,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "two-tone seam band"
+  },
+  "frames": [
+   25
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 1830,
+  "s1": 1870,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "dark wet streaks and mud tracks"
+  },
+  "frames": [
+   26
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 1925,
+  "s1": 1950,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt",
+   "note": "wide dirt pullout"
+  },
+  "frames": [
+   28
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1938,
+  "s1": 2051,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank/bare dirt, no rail"
+  },
+  "frames": [
+   28,
+   29,
+   30
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 1945,
+  "s1": 1945,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 2.5,
+  "attrs": {
+   "shape": "white rectangle",
+   "text": "NO DUMPING",
+   "note": "pipe post with black box on top, next to wide dirt pullout"
+  },
+  "frames": [
+   28
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 1965,
+  "s1": 1965,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   28
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 1986,
+  "s1": 2000,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "open edge, no rail"
+  },
+  "frames": [
+   29
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 2000,
+  "s1": 2030,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "damp, edge broken"
+  },
+  "frames": [
+   29
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 2045,
+  "s1": 2045,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 2.0,
+  "attrs": {
+   "shape": "warning diamond (faded white/yellow), curve ahead"
+  },
+  "frames": [
+   29
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 2052,
+  "s1": 2075,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "dirt berm, no rail"
+  },
+  "frames": [
+   30
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 2071,
+  "s1": 2083,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank"
+  },
+  "frames": [
+   30,
+   31
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 2080,
+  "s1": 2100,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "right edge cracked, seam bump"
+  },
+  "frames": [
+   30
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 2114,
+  "s1": 2126,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank, gate/driveway"
+  },
+  "frames": [
+   31,
+   32
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 2115,
+  "s1": 2115,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "warning diamond with yellow plaque below"
+  },
+  "frames": [
+   31
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2185,
+  "s1": 2185,
+  "side": "left",
+  "offset_m": 1,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   32
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 2195,
+  "s1": 2235,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "gravel/dirt",
+   "note": "farm gate entry"
+  },
+  "frames": [
+   32
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2215,
+  "s1": 2215,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   32
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 2215,
+  "s1": 2215,
+  "side": "right",
+  "offset_m": 8,
+  "height_m": 1.6,
+  "attrs": {
+   "material": "wood/steel pipe farm gate",
+   "note": "with white sign; not estate pillars"
+  },
+  "frames": [
+   32
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2297,
+  "s1": 2297,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   34
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 2305,
+  "s1": 2330,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "fresh black patch at left edge"
+  },
+  "frames": [
+   35
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 2320,
+  "s1": 2341,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "cut bank, no rail"
+  },
+  "frames": [
+   34,
+   35
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "building",
+  "s0": 2345,
+  "s1": 2345,
+  "side": "right",
+  "offset_m": 20,
+  "height_m": 6,
+  "attrs": {
+   "kind": "white house/vehicles on hill, far"
+  },
+  "frames": [
+   34
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 2350,
+  "s1": 2350,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 10,
+  "attrs": {
+   "note": "on bank behind left edge"
+  },
+  "frames": [
+   35
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 2365,
+  "s1": 2395,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "crack_sealed",
+   "note": "dark transverse seal line"
+  },
+  "frames": [
+   36
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2380,
+  "s1": 2380,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   36
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 2590,
+  "s1": 2615,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "finish": "galvanized",
+   "note": "above creek; matches candidate right 2602-2614"
+  },
+  "frames": [
+   37
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "remove_guardrail",
+  "s0": 2604,
+  "s1": 2624,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "reason": "left is vegetated bank/pole, no rail"
+  },
+  "frames": [
+   39,
+   40
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 2620,
+  "s1": 2660,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "black patch centre-left near 2625 and right edge 2650"
+  },
+  "frames": [
+   38
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 2640,
+  "s1": 3335,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay",
+   "note": "uniform dark-grey, crisp edge lines (not seen in cracked frames 46,50)"
+  },
+  "frames": [
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   47,
+   48,
+   51,
+   52,
+   53
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 2650,
+  "s1": 2650,
+  "side": "left",
+  "offset_m": 8,
+  "height_m": 10,
+  "attrs": {
+   "note": "on high bank"
+  },
+  "frames": [
+   37,
+   38
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2655,
+  "s1": 2655,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   38
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2700,
+  "s1": 2700,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   39
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 2712,
+  "s1": 2712,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 11,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "tan wood pole very close to edge"
+  },
+  "frames": [
+   40
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2760,
+  "s1": 2760,
+  "side": "right",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   40
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 2770,
+  "s1": 2800,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt/gravel",
+   "note": "wide graded pullout"
+  },
+  "frames": [
+   41
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 2800,
+  "s1": 2800,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "speed limit",
+   "text": "SPEED LIMIT 25"
+  },
+  "frames": [
+   41
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "road_sign",
+  "s0": 2800,
+  "s1": 2800,
+  "side": "left",
+  "offset_m": 3,
+  "height_m": 1.8,
+  "attrs": {
+   "shape": "small square sign on post"
+  },
+  "frames": [
+   41
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 2815,
+  "s1": 2885,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "wood",
+   "finish": "rusty/brown weathered",
+   "note": "long curved run over creek; build has only 2836-2847"
+  },
+  "frames": [
+   41,
+   42,
+   43
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 2830,
+  "s1": 2870,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": true
+  },
+  "frames": [
+   42,
+   43
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 2835,
+  "s1": 2835,
+  "side": "left",
+  "offset_m": 6,
+  "height_m": 11,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "behind guardrail, crossarm"
+  },
+  "frames": [
+   41,
+   42
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 2915,
+  "s1": 2915,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white/yellow"
+  },
+  "frames": [
+   44
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 2950,
+  "s1": 2950,
+  "side": "right",
+  "offset_m": 6,
+  "height_m": 10,
+  "attrs": {
+   "note": "on cut bank"
+  },
+  "frames": [
+   44
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 2998,
+  "s1": 3015,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "crack_sealed",
+   "note": "dark irregular longitudinal crack through lane"
+  },
+  "frames": [
+   46
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3000,
+  "s1": 3025,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt bench",
+   "note": "wide dirt shoulder"
+  },
+  "frames": [
+   45
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3030,
+  "s1": 3030,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "yellow/orange stake plus white post beyond"
+  },
+  "frames": [
+   45,
+   46
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3050,
+  "s1": 3050,
+  "side": "right",
+  "offset_m": 8,
+  "height_m": 10,
+  "attrs": {
+   "note": "on bank top, crossarm"
+  },
+  "frames": [
+   46
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "retaining_wall_stone",
+  "s0": 3095,
+  "s1": 3118,
+  "side": "left",
+  "offset_m": 0.5,
+  "height_m": 0.6,
+  "attrs": {
+   "note": "stacked flat slate/rip-rap protecting road edge"
+  },
+  "frames": [
+   47
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3150,
+  "s1": 3150,
+  "side": "left",
+  "offset_m": 2,
+  "height_m": 10,
+  "attrs": {},
+  "frames": [
+   47
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3185,
+  "s1": 3185,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 11,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "black with yellow bands, crossarm; second pole thin far"
+  },
+  "frames": [
+   48
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "surface",
+  "s0": 3190,
+  "s1": 3205,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "cracked_old",
+   "note": "edge breaks"
+  },
+  "frames": [
+   49,
+   50
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3190,
+  "s1": 3200,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "rpm_present",
+   "present": true
+  },
+  "frames": [
+   49,
+   50
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 3225,
+  "s1": 3225,
+  "side": "left",
+  "offset_m": 1.5,
+  "height_m": 1.1,
+  "attrs": {
+   "color": "white"
+  },
+  "frames": [
+   49,
+   50
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 3228,
+  "s1": 3275,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "wood",
+   "finish": "dark/rusty",
+   "note": "curve over creek"
+  },
+  "frames": [
+   51,
+   52
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3230,
+  "s1": 3230,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 1.5,
+  "attrs": {
+   "shape": "small orange/yellow curve sign far ahead"
+  },
+  "frames": [
+   49,
+   50
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3235,
+  "s1": 3235,
+  "side": "left",
+  "offset_m": 2,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "warning diamond on post, at start of guardrail"
+  },
+  "frames": [
+   51
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3240,
+  "s1": 3240,
+  "side": "right",
+  "offset_m": 4,
+  "height_m": 10,
+  "attrs": {},
+  "frames": [
+   49,
+   50
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3265,
+  "s1": 3265,
+  "side": "left",
+  "offset_m": 6,
+  "height_m": 10,
+  "attrs": {},
+  "frames": [
+   51
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3280,
+  "s1": 3330,
+  "side": "left",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "dirt/gravel",
+   "note": "wide graded dirt apron"
+  },
+  "frames": [
+   53
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 3370,
+  "s1": 3370,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 10,
+  "attrs": {},
+  "frames": [
+   53
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 3460,
+  "s1": 3480,
+  "side": "left",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "finish": "galvanized",
+   "note": "approach to small bridge/culvert at 3507"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3470,
+  "s1": 3470,
+  "side": "left",
+  "offset_m": 5,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "round convex traffic mirror on tree/pole"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3480,
+  "s1": 3520,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "patched",
+   "note": "dark patches at bridge approach/driveway, tar band"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 3485,
+  "s1": 3515,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "material": "paved asphalt",
+   "note": "patched asphalt drive beside bridge approach"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 3490,
+  "s1": 3510,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "finish": "galvanized",
+   "note": "MISSING in build; right side of bridge approach next to paved driveway"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "chainlink_fence",
+  "s0": 3500,
+  "s1": 3690,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 2.0,
+  "attrs": {
+   "screened": true,
+   "color": "black",
+   "note": "black windscreen/silt-fence style on posts; continues beyond s=3690"
+  },
+  "frames": [
+   54,
+   55
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 3515,
+  "s1": 3515,
+  "side": "right",
+  "offset_m": 6,
+  "height_m": 1.3,
+  "attrs": {
+   "note": "wood posts with green street-name blade"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3560,
+  "s1": 3560,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 2.0,
+  "attrs": {
+   "shape": "yellow diamond far ahead (hump/advisory)"
+  },
+  "frames": [
+   54
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 3590,
+  "s1": 3660,
+  "side": "center",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "condition": "fresh_overlay",
+   "note": "smooth, HUMP legend"
+  },
+  "frames": [
+   55
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 3630,
+  "s1": 3630,
+  "side": "right",
+  "offset_m": 2,
+  "height_m": 2.2,
+  "attrs": {
+   "shape": "warning diamond HUMP with 15 mph plaque",
+   "text": "HUMP / 15",
+   "note": "sits on fence line; stationing from frame 55 sign ~25 m ahead"
+  },
+  "frames": [
+   55
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "hump_marking",
+  "s0": 3640,
+  "s1": 3640,
+  "side": "right",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "text": "HUMP",
+   "note": "white legend in northbound lane ~20 m ahead of frame 55 camera"
+  },
+  "frames": [
+   55
+  ],
+  "confidence": "med"
+ }
+]

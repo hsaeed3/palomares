@@ -1,0 +1,3353 @@
+{
+ "summary": {
+  "road_full": {
+   "points": 154949,
+   "length_m": 15494.800000000001,
+   "max_step_L_m": 0.002829404914166389,
+   "n_step_over_L": 0,
+   "max_az_L_g": 1.5809139319481582,
+   "p999_az_L_g": 1.2823642196786105,
+   "min_load_L": 0.0,
+   "max_step_R_m": 0.0025358828297044056,
+   "n_step_over_R": 0,
+   "max_az_R_g": 1.4799028393969977,
+   "p999_az_R_g": 1.123907691160354,
+   "min_load_R": 0.0,
+   "end_walls_touch_line": false,
+   "walls_in_envelope": 0
+  },
+  "road_full_rev": {
+   "points": 154984,
+   "length_m": 15498.300000000001,
+   "max_step_L_m": 0.0028710342916724585,
+   "n_step_over_L": 0,
+   "max_az_L_g": 1.5452741032961508,
+   "p999_az_L_g": 1.1951618648468303,
+   "min_load_L": 0.0,
+   "max_step_R_m": 0.002425998112897787,
+   "n_step_over_R": 0,
+   "max_az_R_g": 1.524679669314989,
+   "p999_az_R_g": 1.2677767968885136,
+   "min_load_R": 0.0,
+   "end_walls_touch_line": false,
+   "walls_in_envelope": 0
+  },
+  "track_full": {
+   "points": 154949,
+   "length_m": 15494.800000000001,
+   "max_step_L_m": 0.002829404914166389,
+   "n_step_over_L": 0,
+   "max_az_L_g": 1.5809139319481582,
+   "p999_az_L_g": 1.2823642196786105,
+   "min_load_L": 0.0,
+   "max_step_R_m": 0.0025358828297044056,
+   "n_step_over_R": 0,
+   "max_az_R_g": 1.4799028393969977,
+   "p999_az_R_g": 1.123907691160354,
+   "min_load_R": 0.0,
+   "kerb_rides": 73,
+   "kerb_ride_max_az_g": 5.565543943305753,
+   "kerb_ride_max_step_m": 0.01660341924542763,
+   "kerb_ride_min_load": 0.0,
+   "kerb_profile": {
+    "n": 751,
+    "max_height_above_base_m": 0.05264208077416299,
+    "p95_height_m": 0.04650925030254882,
+    "max_ramp_deg": 67.23155607019102,
+    "p95_ramp_deg": 55.19907255714952,
+    "max_outer_drop_m": 0.2949686335371666
+   },
+   "end_walls_touch_line": false,
+   "walls_in_envelope": 0
+  },
+  "track_full_rev": {
+   "points": 154984,
+   "length_m": 15498.300000000001,
+   "max_step_L_m": 0.0028710342916724585,
+   "n_step_over_L": 0,
+   "max_az_L_g": 1.5452741032961508,
+   "p999_az_L_g": 1.1951618648468303,
+   "min_load_L": 0.0,
+   "max_step_R_m": 0.002425998112897787,
+   "n_step_over_R": 0,
+   "max_az_R_g": 1.524679669314989,
+   "p999_az_R_g": 1.2677767968885136,
+   "min_load_R": 0.0,
+   "kerb_rides": 77,
+   "kerb_ride_max_az_g": 4.363319028502116,
+   "kerb_ride_max_step_m": 0.013704429371301785,
+   "kerb_ride_min_load": 0.0,
+   "kerb_profile": {
+    "n": 789,
+    "max_height_above_base_m": 0.05122015379303946,
+    "p95_height_m": 0.043952570648860954,
+    "max_ramp_deg": 71.95402959004448,
+    "p95_ramp_deg": 53.802435008306404,
+    "max_outer_drop_m": 0.28717103656366305
+   },
+   "end_walls_touch_line": false,
+   "walls_in_envelope": 0
+  }
+ },
+ "findings": [
+  {
+   "layout": "track_full",
+   "s": 704.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 152 km/h: body accel 3.0 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2187.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 95 km/h: body accel 2.1 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2628.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 148 km/h: body accel 2.6 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3061.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 140 km/h: body accel 3.3 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3408.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 133 km/h: body accel 2.9 g, min tyre load 97%, step 0.9 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 4418.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 161 km/h: body accel 2.3 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 4699.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 160 km/h: body accel 4.9 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 4991.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 93 km/h: body accel 2.6 g, min tyre load 15%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5109.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 140 km/h: body accel 5.4 g, min tyre load 0%, step 1.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5257.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 126 km/h: body accel 2.1 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 6207.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 174 km/h: body accel 2.5 g, min tyre load 68%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11082.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 154 km/h: body accel 2.8 g, min tyre load 88%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11134.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 137 km/h: body accel 2.0 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12604.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 93 km/h: body accel 3.1 g, min tyre load 7%, step 1.0 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13272.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 147 km/h: body accel 5.6 g, min tyre load 10%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13853.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 110 km/h: body accel 2.1 g, min tyre load 37%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14283.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 186 km/h: body accel 2.1 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14584.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 86 km/h: body accel 3.0 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 15206.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 176 km/h: body accel 3.5 g, min tyre load 67%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 705.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 149 km/h: body accel 2.2 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1231.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 123 km/h: body accel 2.4 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1956.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 84 km/h: body accel 2.7 g, min tyre load 56%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2918.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 130 km/h: body accel 4.4 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3053.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 129 km/h: body accel 2.6 g, min tyre load 42%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3345.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 103 km/h: body accel 2.1 g, min tyre load 52%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3425.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 145 km/h: body accel 2.2 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 4158.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 141 km/h: body accel 2.8 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 4783.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 151 km/h: body accel 2.2 g, min tyre load 38%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 5264.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 132 km/h: body accel 2.6 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 5311.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 100 km/h: body accel 2.0 g, min tyre load 63%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 5398.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 106 km/h: body accel 2.6 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7731.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 152 km/h: body accel 3.4 g, min tyre load 46%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 11844.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 158 km/h: body accel 2.4 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12420.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 144 km/h: body accel 3.8 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13648.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 175 km/h: body accel 3.6 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 14369.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 168 km/h: body accel 2.4 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 15199.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 177 km/h: body accel 2.9 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_* nb",
+   "s": 6708.0,
+   "side": "right",
+   "severity": "HIGH",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 151 km/h, line gap 0.40 m \u2014 no guardrail / event barrier",
+   "fix": ""
+  },
+  {
+   "layout": "track_* nb",
+   "s": 12000.0,
+   "side": "right",
+   "severity": "HIGH",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 141 km/h, line gap 1.44 m \u2014 no guardrail / event barrier",
+   "fix": ""
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2849.0,
+   "side": "left",
+   "severity": "HIGH",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 138 km/h, line gap 0.49 m \u2014 no guardrail / event barrier",
+   "fix": ""
+  },
+  {
+   "layout": "track_* sb",
+   "s": 6708.0,
+   "side": "right",
+   "severity": "HIGH",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 142 km/h, line gap 0.40 m \u2014 no guardrail / event barrier",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 12858.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 0% of static for 0.7 m at 148 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 14297.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 0% of static for 1.1 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8453.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 0% of static for 0.4 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8963.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 0% of static for 0.6 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 13665.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 2% of static for 0.3 m at 170 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12858.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 0% of static for 0.7 m at 148 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14297.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 0% of static for 1.1 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8453.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 0% of static for 0.4 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8963.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 0% of static for 0.6 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13665.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 2% of static for 0.3 m at 170 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 441.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.88 g, tyre load 4% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 1640.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 148 km/h: smooth-profile body accel -0.44 g, tyre load 25% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 1641.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 147 km/h: smooth-profile body accel -0.50 g, tyre load 20% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 3775.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 150 km/h: smooth-profile body accel -0.68 g, tyre load 27% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 4472.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 169 km/h: smooth-profile body accel -0.49 g, tyre load 29% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 4675.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 173 km/h: smooth-profile body accel -0.75 g, tyre load 26% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 4677.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 172 km/h: smooth-profile body accel -0.75 g, tyre load 26% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 5666.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.77 g, tyre load 19% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 5667.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.69 g, tyre load 25% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 5668.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.77 g, tyre load 19% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 7876.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 157 km/h: smooth-profile body accel -0.82 g, tyre load 51% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 7877.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 157 km/h: smooth-profile body accel -0.81 g, tyre load 52% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 8327.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.71 g, tyre load 60% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 10980.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 199 km/h: smooth-profile body accel -0.80 g, tyre load 30% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 10982.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 198 km/h: smooth-profile body accel -0.72 g, tyre load 40% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 12787.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 168 km/h: smooth-profile body accel -0.72 g, tyre load 14% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 12788.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 168 km/h: smooth-profile body accel -0.78 g, tyre load 4% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 12790.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 167 km/h: smooth-profile body accel -0.79 g, tyre load 3% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 12795.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 165 km/h: smooth-profile body accel -0.79 g, tyre load 3% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 13479.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.77 g, tyre load 35% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 13480.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.77 g, tyre load 35% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 13480.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.71 g, tyre load 41% (with surface texture 4%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 13671.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 189 km/h: smooth-profile body accel -0.80 g, tyre load 36% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full",
+   "s": 13672.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 189 km/h: smooth-profile body accel -0.80 g, tyre load 36% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 436.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 182 km/h: smooth-profile body accel -0.84 g, tyre load 36% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 3728.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 170 km/h: smooth-profile body accel -0.71 g, tyre load 45% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7578.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 174 km/h: smooth-profile body accel -0.39 g, tyre load 28% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7579.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 175 km/h: smooth-profile body accel -0.45 g, tyre load 22% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7584.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 178 km/h: smooth-profile body accel -0.40 g, tyre load 27% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7585.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 179 km/h: smooth-profile body accel -0.46 g, tyre load 22% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7586.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 180 km/h: smooth-profile body accel -0.40 g, tyre load 27% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7644.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 178 km/h: smooth-profile body accel -0.44 g, tyre load 24% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7647.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 177 km/h: smooth-profile body accel -0.44 g, tyre load 24% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7783.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 139 km/h: smooth-profile body accel -0.42 g, tyre load 27% (with surface texture 2%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7852.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.88 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7852.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.80 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7872.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 176 km/h: smooth-profile body accel -0.56 g, tyre load 22% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7872.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 176 km/h: smooth-profile body accel -0.57 g, tyre load 20% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7936.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.60 g, tyre load 14% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7937.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 7937.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.60 g, tyre load 14% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8029.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.43 g, tyre load 30% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8052.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.46 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8054.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.49 g, tyre load 21% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8060.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.46 g, tyre load 23% (with surface texture 4%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8096.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8100.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.77 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8101.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8321.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.55 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8518.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8521.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.50 g, tyre load 26% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8521.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8524.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.58 g, tyre load 19% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8593.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.80 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8601.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.82 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8602.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.69 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9563.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 203 km/h: smooth-profile body accel -0.82 g, tyre load 5% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9567.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 204 km/h: smooth-profile body accel -0.82 g, tyre load 3% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9572.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 206 km/h: smooth-profile body accel -0.86 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9573.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 206 km/h: smooth-profile body accel -0.82 g, tyre load 3% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 12678.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 148 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 12684.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 152 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 12686.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 153 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 12687.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 154 km/h: smooth-profile body accel -0.57 g, tyre load 20% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 12687.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 154 km/h: smooth-profile body accel -0.58 g, tyre load 20% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 15177.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 173 km/h: smooth-profile body accel -0.56 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 441.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.88 g, tyre load 4% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 1640.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 148 km/h: smooth-profile body accel -0.44 g, tyre load 25% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 1641.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 147 km/h: smooth-profile body accel -0.50 g, tyre load 20% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 3775.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 150 km/h: smooth-profile body accel -0.68 g, tyre load 27% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 4472.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 169 km/h: smooth-profile body accel -0.49 g, tyre load 29% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 4675.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 173 km/h: smooth-profile body accel -0.75 g, tyre load 26% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 4677.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 172 km/h: smooth-profile body accel -0.75 g, tyre load 26% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 5666.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.77 g, tyre load 19% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 5667.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.69 g, tyre load 25% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 5668.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 200 km/h: smooth-profile body accel -0.77 g, tyre load 19% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 7876.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 157 km/h: smooth-profile body accel -0.82 g, tyre load 51% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 7877.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 157 km/h: smooth-profile body accel -0.81 g, tyre load 52% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 8327.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.71 g, tyre load 60% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 10980.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 199 km/h: smooth-profile body accel -0.80 g, tyre load 30% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 10982.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 198 km/h: smooth-profile body accel -0.72 g, tyre load 40% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 12787.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 168 km/h: smooth-profile body accel -0.72 g, tyre load 14% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 12788.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 168 km/h: smooth-profile body accel -0.78 g, tyre load 4% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 12790.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 167 km/h: smooth-profile body accel -0.79 g, tyre load 3% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 12795.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 165 km/h: smooth-profile body accel -0.79 g, tyre load 3% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 13479.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.77 g, tyre load 35% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 13480.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.77 g, tyre load 35% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 13480.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.71 g, tyre load 41% (with surface texture 4%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 13671.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 189 km/h: smooth-profile body accel -0.80 g, tyre load 36% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 13672.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 189 km/h: smooth-profile body accel -0.80 g, tyre load 36% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 436.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 182 km/h: smooth-profile body accel -0.84 g, tyre load 36% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3728.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 170 km/h: smooth-profile body accel -0.71 g, tyre load 45% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7578.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 174 km/h: smooth-profile body accel -0.39 g, tyre load 28% (with surface texture 9%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7579.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 175 km/h: smooth-profile body accel -0.45 g, tyre load 22% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7584.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 178 km/h: smooth-profile body accel -0.40 g, tyre load 27% (with surface texture 7%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7585.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 179 km/h: smooth-profile body accel -0.46 g, tyre load 22% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7586.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 180 km/h: smooth-profile body accel -0.40 g, tyre load 27% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7644.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 178 km/h: smooth-profile body accel -0.44 g, tyre load 24% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7647.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 177 km/h: smooth-profile body accel -0.44 g, tyre load 24% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7783.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 139 km/h: smooth-profile body accel -0.42 g, tyre load 27% (with surface texture 2%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7852.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.88 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7852.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 155 km/h: smooth-profile body accel -0.80 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7872.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 176 km/h: smooth-profile body accel -0.56 g, tyre load 22% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7872.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 176 km/h: smooth-profile body accel -0.57 g, tyre load 20% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7936.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.60 g, tyre load 14% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7937.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7937.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.60 g, tyre load 14% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8029.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.43 g, tyre load 30% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8052.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.46 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8054.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.49 g, tyre load 21% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8060.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.46 g, tyre load 23% (with surface texture 4%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8096.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8100.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.77 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8101.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.63 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8321.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.55 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8518.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8521.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.50 g, tyre load 26% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8521.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8524.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.58 g, tyre load 19% (with surface texture 8%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8593.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.80 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8601.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.82 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8602.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 209 km/h: smooth-profile body accel -0.69 g, tyre load 10% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9563.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 203 km/h: smooth-profile body accel -0.82 g, tyre load 5% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9567.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 204 km/h: smooth-profile body accel -0.82 g, tyre load 3% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9572.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 206 km/h: smooth-profile body accel -0.86 g, tyre load 0% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9573.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 206 km/h: smooth-profile body accel -0.82 g, tyre load 3% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12678.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 148 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12684.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 152 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12686.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 153 km/h: smooth-profile body accel -0.59 g, tyre load 19% (with surface texture 3%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12687.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 154 km/h: smooth-profile body accel -0.57 g, tyre load 20% (with surface texture 6%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12687.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 154 km/h: smooth-profile body accel -0.58 g, tyre load 20% (with surface texture 10%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 15177.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "crest_unload",
+   "msg": "crest at 173 km/h: smooth-profile body accel -0.56 g, tyre load 24% (with surface texture 0%)",
+   "fix": "real crest: AI spline speed is a grip limit only; marshal post / driver lifts (see blind_crest)"
+  },
+  {
+   "layout": "track_full",
+   "s": 6863.0,
+   "side": "left",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 52 mm above the surface below it (ramp 44 deg, outer drop 145 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12817.0,
+   "side": "right",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 52 mm above the surface below it (ramp 28 deg, outer drop 179 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13852.0,
+   "side": "right",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 53 mm above the surface below it (ramp 30 deg, outer drop 192 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 4282.0,
+   "side": "left",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 51 mm above the surface below it (ramp 24 deg, outer drop 154 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13641.0,
+   "side": "right",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 51 mm above the surface below it (ramp 51 deg, outer drop 95 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13834.0,
+   "side": "right",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 51 mm above the surface below it (ramp 27 deg, outer drop 195 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 82.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 63 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 710.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 147 km/h: body accel 1.1 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1228.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 128 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1318.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 142 km/h: body accel 1.2 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1455.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 100 km/h: body accel 1.8 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1664.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 148 km/h: body accel 1.0 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1768.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 94 km/h: body accel 1.2 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1826.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 87 km/h: body accel 1.3 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1908.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 73 km/h: body accel 1.8 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1962.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 77 km/h: body accel 1.2 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2000.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 100 km/h: body accel 0.9 g, min tyre load 5%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2537.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 117 km/h: body accel 1.9 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3347.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 92 km/h: body accel 1.4 g, min tyre load 0%, step 1.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3415.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 137 km/h: body accel 1.1 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3852.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 121 km/h: body accel 0.9 g, min tyre load 9%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5269.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 120 km/h: body accel 1.1 g, min tyre load 0%, step 0.9 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5373.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 98 km/h: body accel 1.0 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5404.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 89 km/h: body accel 1.8 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 6806.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 118 km/h: body accel 1.6 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 6839.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 123 km/h: body accel 1.5 g, min tyre load 1%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 6903.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 7240.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 140 km/h: body accel 1.6 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 7874.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 155 km/h: body accel 1.0 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11087.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11257.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 132 km/h: body accel 1.2 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11681.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 158 km/h: body accel 1.0 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12600.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 90 km/h: body accel 1.0 g, min tyre load 0%, step 0.9 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12859.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 147 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13646.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 186 km/h: body accel 1.4 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13916.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 151 km/h: body accel 1.8 g, min tyre load 2%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14182.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 161 km/h: body accel 1.1 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 79.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 64 km/h: body accel 1.1 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1089.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 159 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1125.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 139 km/h: body accel 1.0 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1313.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 150 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1821.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 89 km/h: body accel 1.0 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2137.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 131 km/h: body accel 1.5 g, min tyre load 0%, step 1.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2182.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 98 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2334.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 128 km/h: body accel 1.0 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2481.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 127 km/h: body accel 1.1 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2667.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 153 km/h: body accel 1.4 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3524.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 140 km/h: body accel 1.4 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 4777.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 154 km/h: body accel 1.1 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 6055.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 171 km/h: body accel 1.0 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7035.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 110 km/h: body accel 1.1 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7727.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 154 km/h: body accel 1.2 g, min tyre load 0%, step 0.1 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7787.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 137 km/h: body accel 1.7 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9413.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 137 km/h: body accel 1.1 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 11129.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 146 km/h: body accel 1.6 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 11142.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 140 km/h: body accel 1.1 g, min tyre load 0%, step 1.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12025.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 122 km/h: body accel 1.3 g, min tyre load 7%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12416.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 146 km/h: body accel 1.2 g, min tyre load 0%, step 0.6 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12458.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 121 km/h: body accel 1.4 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12859.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 148 km/h: body accel 2.0 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12938.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 133 km/h: body accel 1.7 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12989.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 116 km/h: body accel 1.4 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13839.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 110 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13921.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 149 km/h: body accel 1.3 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 14122.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 15145.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 150 km/h: body accel 1.0 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2827.0,
+   "side": "left",
+   "severity": "MED",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 119 km/h, line gap 0.81 m \u2014 no guardrail / event barrier",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 872.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 9% of static for 0.0 m at 179 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 1039.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 5% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 1306.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 6% of static for 0.0 m at 152 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 1982.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.5 g, tyre load 5% of static for 0.0 m at 86 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 1983.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 86 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 2017.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 9% of static for 0.0 m at 100 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 2302.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 8% of static for 0.0 m at 135 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 3157.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 8% of static for 0.0 m at 168 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 5604.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 5% of static for 0.0 m at 185 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 12858.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 9% of static for 0.0 m at 148 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 12860.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 3% of static for 0.0 m at 147 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 14297.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 5% of static for 0.0 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full",
+   "s": 14299.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 6% of static for 0.0 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8027.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 8263.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9789.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 4% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9811.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 4% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 9854.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 6% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 10533.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 10% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 10534.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 10% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 10579.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 7% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 13667.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 3% of static for 0.0 m at 170 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 14418.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 6% of static for 0.0 m at 149 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 15168.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 2% of static for 0.0 m at 167 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "road_full_rev",
+   "s": 15295.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 10% of static for 0.0 m at 196 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 872.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 9% of static for 0.0 m at 179 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1039.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 5% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1306.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 6% of static for 0.0 m at 152 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1982.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.5 g, tyre load 5% of static for 0.0 m at 86 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1983.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 86 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2017.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 9% of static for 0.0 m at 100 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2302.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 8% of static for 0.0 m at 135 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3157.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 8% of static for 0.0 m at 168 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5604.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 5% of static for 0.0 m at 185 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12858.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 9% of static for 0.0 m at 148 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 12860.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -1.0 g, tyre load 3% of static for 0.0 m at 147 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14297.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 5% of static for 0.0 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 14299.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.9 g, tyre load 6% of static for 0.0 m at 190 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8027.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 8263.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.6 g, tyre load 9% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9789.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 4% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9811.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 4% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 9854.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 6% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 10533.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 10% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 10534.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 10% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 10579.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 7% of static for 0.0 m at 209 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13667.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 3% of static for 0.0 m at 170 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 14418.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.8 g, tyre load 6% of static for 0.0 m at 149 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 15168.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 2% of static for 0.0 m at 167 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 15295.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "vertical_accel",
+   "msg": "surface bump: body accel -0.7 g, tyre load 10% of static for 0.0 m at 196 km/h on ROAD",
+   "fix": ""
+  },
+  {
+   "layout": "track_* nb",
+   "s": 685.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (30 m) on the outside at 165 km/h, line gap 1.77 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 852.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 175 km/h, line gap 0.85 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 1188.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (27 m) on the outside at 106 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 1291.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 155 km/h, line gap 3.38 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 1317.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (72 m) on the outside at 143 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 1717.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 110 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 1858.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (16 m) on the outside at 103 km/h, line gap 1.82 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2211.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (21 m) on the outside at 107 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2441.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 145 km/h, line gap 0.41 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2453.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 134 km/h, line gap 1.21 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2648.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 156 km/h, line gap 3.27 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2763.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 103 km/h, line gap 2.66 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2827.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 119 km/h, line gap 3.17 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 2868.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (26 m) on the outside at 143 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3014.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 111 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3384.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 116 km/h, line gap 1.06 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3562.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 138 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3669.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (17 m) on the outside at 141 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3670.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (15 m) on the outside at 140 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3962.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (8 m) on the outside at 132 km/h, line gap 1.47 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 3985.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 145 km/h, line gap 0.43 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 4315.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 126 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 4336.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (15 m) on the outside at 126 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 4592.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (36 m) on the outside at 155 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 5061.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (13 m) on the outside at 113 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 5190.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 153 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 5479.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 140 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 9316.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 180 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 9319.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 180 km/h, line gap 4.21 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 11367.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 169 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 12645.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 113 km/h, line gap 1.36 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 12762.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 161 km/h, line gap 0.45 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 12825.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 158 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* nb",
+   "s": 14621.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (13 m) on the outside at 118 km/h, line gap 2.19 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 693.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (30 m) on the outside at 152 km/h, line gap 2.01 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 1177.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (27 m) on the outside at 101 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 1286.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 155 km/h, line gap 3.19 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 1372.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (72 m) on the outside at 111 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 1717.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 120 km/h, line gap 1.18 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2254.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (21 m) on the outside at 126 km/h, line gap 1.59 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2460.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 141 km/h, line gap 3.52 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2460.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (12 m) on the outside at 141 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2737.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 108 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2740.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 107 km/h, line gap 3.39 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2827.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 117 km/h, line gap 1.71 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2858.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (26 m) on the outside at 141 km/h, line gap 0.41 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 2983.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 110 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 3396.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 120 km/h, line gap 0.50 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 3597.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (20 m) on the outside at 133 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 3701.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (17 m) on the outside at 147 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 3718.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (15 m) on the outside at 165 km/h, line gap 0.46 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 3963.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (8 m) on the outside at 117 km/h, line gap 0.58 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 4328.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 128 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 4331.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (15 m) on the outside at 130 km/h, line gap 0.44 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 4556.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (36 m) on the outside at 157 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 5183.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 163 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 5470.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 134 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 9293.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (11 m) on the outside at 171 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 11359.0,
+   "side": "right",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 201 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 12646.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 123 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 12746.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (9 m) on the outside at 169 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  },
+  {
+   "layout": "track_* sb",
+   "s": 12826.0,
+   "side": "left",
+   "severity": "INFO",
+   "kind": "unprotected_drop",
+   "msg": "steep drop (10 m) on the outside at 154 km/h, line gap 0.40 m \u2014 event barrier present",
+   "fix": "covered by 21b event barrier"
+  }
+ ],
+ "runtime_s": 315.0973844528198
+}

@@ -1,0 +1,58 @@
+frame,s_m,confidence,lateral_m,height_m,yaw_rel_deg,pitch_deg,roll_deg,fov_v_deg,iou,evidence
+54,3485.9,high,-0.8,1.69,-0.5,4.44,3.02,64.0,0.867,bridge 3507 guardrails both sides
+55,3512.2,low,-0.8,1.7,-3.76,3.16,-1.09,64.0,0.823,interpolated between landmark anchors; local IoU refine only
+56,3550.0,low,-0.8,1.68,2.96,5.73,4.01,64.0,0.817,interpolated between landmark anchors; local IoU refine only
+57,3553.0,low,-0.8,1.7,-4.34,3.61,-0.2,64.0,0.815,interpolated between landmark anchors; local IoU refine only
+58,3625.6,med,-0.16,1.7,-2.67,3.28,-4.01,64.0,0.817,pasture left matches CHM open-left 3600
+59,3628.6,low,-0.21,1.67,-2.32,1.77,-2.73,64.0,0.846,interpolated between landmark anchors; local IoU refine only
+60,3637.9,low,-0.01,1.7,4.93,-0.45,-4.01,64.0,0.841,interpolated between landmark anchors; local IoU refine only
+61,3657.3,low,-0.8,1.69,3.59,5.52,-2.7,64.0,0.762,interpolated between landmark anchors; local IoU refine only
+62,3660.3,low,-0.8,1.64,5.85,5.73,-4.01,64.0,0.815,interpolated between landmark anchors; local IoU refine only
+63,3673.1,med,-0.8,1.69,2.99,2.77,0.71,64.0,0.792,white rail fence + lawn left matches CHM open-left 3650
+64,3676.1,low,-0.4,1.7,-1.83,1.85,-4.01,64.0,0.875,interpolated between landmark anchors; local IoU refine only
+65,3679.1,low,-0.8,1.7,8.36,5.73,-1.79,64.0,0.738,interpolated between landmark anchors; local IoU refine only
+66,3688.5,low,-0.8,1.62,1.2,4.25,4.01,64.0,0.813,interpolated between landmark anchors; local IoU refine only
+67,3723.0,low,0.54,1.33,1.71,0.56,1.06,64.0,0.858,interpolated between landmark anchors; local IoU refine only
+68,3726.0,low,-0.8,1.36,-8.56,2.77,-4.01,64.0,0.806,interpolated between landmark anchors; local IoU refine only
+69,3729.0,high,-0.8,1.7,1.63,3.05,2.3,64.0,0.764,"junction 3729 + culvert/bridge 3723 right, concrete driveway left"
+70,3732.0,low,-0.8,1.35,5.44,4.77,-4.01,64.0,0.799,interpolated between landmark anchors; local IoU refine only
+71,3772.4,low,-0.8,1.7,1.05,5.73,-4.01,64.0,0.692,interpolated between landmark anchors; local IoU refine only
+72,3790.5,low,-0.8,1.7,1.65,5.65,-3.06,64.0,0.793,interpolated between landmark anchors; local IoU refine only
+73,3810.1,low,-0.8,1.7,2.5,5.69,-4.01,64.0,0.733,interpolated between landmark anchors; local IoU refine only
+74,3847.9,low,-0.8,1.7,4.44,3.2,1.78,64.0,0.838,interpolated between landmark anchors; local IoU refine only
+75,3869.1,low,-0.8,1.7,7.59,5.67,-1.49,64.0,0.761,interpolated between landmark anchors; local IoU refine only
+76,3916.9,low,-0.8,1.7,16.68,5.73,-2.54,64.0,0.74,interpolated between landmark anchors; local IoU refine only
+77,3919.9,low,-0.8,1.7,14.14,3.32,-4.01,64.0,0.84,interpolated between landmark anchors; local IoU refine only
+78,3968.4,low,-0.8,1.7,6.45,2.43,-0.14,64.0,0.849,interpolated between landmark anchors; local IoU refine only
+79,3977.6,low,-0.8,1.44,0.2,3.79,-4.01,64.0,0.73,interpolated between landmark anchors; local IoU refine only
+80,4018.7,low,-0.8,1.35,3.49,4.73,-4.01,64.0,0.723,interpolated between landmark anchors; local IoU refine only
+81,4021.7,low,-0.8,1.7,14.32,5.73,4.01,64.0,0.43,interpolated between landmark anchors; local IoU refine only
+82,4053.3,low,-0.8,1.68,11.42,5.73,-4.01,64.0,0.782,interpolated between landmark anchors; local IoU refine only
+83,4074.5,low,-0.8,1.63,-2.09,2.35,-4.01,64.0,0.867,interpolated between landmark anchors; local IoU refine only
+84,4124.1,low,-0.8,1.7,0.11,3.1,-2.02,64.0,0.795,interpolated between landmark anchors; local IoU refine only
+85,4127.2,low,-0.8,1.23,-1.56,3.85,-3.89,64.0,0.796,interpolated between landmark anchors; local IoU refine only
+86,4173.5,med,-0.8,1.59,3.19,2.33,2.94,64.0,0.847,pasture/flat grass left matches CHM open-left 4150-4200
+87,4176.5,med,-0.8,1.34,-8.7,5.73,-4.01,64.0,0.771,flat grass left
+88,4200.0,med,-0.8,1.09,-2.36,5.73,-4.01,64.0,0.795,flat grass left
+89,4214.4,med,-0.8,1.7,-1.69,5.73,-4.01,64.0,0.786,"stone wall driveway left, guardrail right near bridge 4258 / driveway 4171"
+90,4302.4,low,-0.8,1.68,-1.84,2.29,-4.01,64.0,0.831,interpolated between landmark anchors; local IoU refine only
+91,4359.3,high,-0.8,1.4,-0.08,5.73,2.63,64.0,0.79,bridge 4387 + driveway left + HUMP/speed hump 15 sign
+92,4429.3,med,-0.8,1.56,3.12,5.45,1.17,64.0,0.85,speed-hump markings right after bridge 4388/junction 4393
+93,4460.0,med,-0.8,1.53,0.54,5.73,-4.01,64.0,0.86,HUMP legend after bridge
+94,4615.3,low,-0.8,1.64,8.65,4.04,4.01,64.0,0.826,interpolated between landmark anchors; local IoU refine only
+95,4760.0,med,-0.8,1.63,-0.59,3.76,4.01,64.0,0.882,wood fence right matches CHM open-right 4750-4900
+96,4803.8,med,-0.31,1.3,1.29,3.07,4.01,64.0,0.831,"wood fence right, open-right 4750-4900"
+97,4846.7,med,-0.8,1.48,0.01,5.73,-4.01,64.0,0.777,wood fence right
+98,4890.2,med,-0.8,1.7,1.82,5.73,-4.01,64.0,0.797,"fence right, open-right 4750-4900"
+99,5320.3,med,-0.8,1.69,-1.22,0.14,-0.35,64.0,0.874,flat grass left matches CHM open-left 5300
+100,5334.0,low,-0.8,1.7,-1.38,3.5,-4.01,64.0,0.807,interpolated between landmark anchors; local IoU refine only
+101,5402.9,low,-0.8,1.69,9.46,2.97,-4.01,64.0,0.825,interpolated between landmark anchors; local IoU refine only
+102,5440.6,low,0.07,1.35,12.68,4.35,-4.01,64.0,0.824,interpolated between landmark anchors; local IoU refine only
+103,5507.0,low,-0.8,1.7,5.37,5.73,-4.01,64.0,0.834,interpolated between landmark anchors; local IoU refine only
+104,5557.1,low,-0.8,1.38,7.27,5.72,-4.01,64.0,0.798,"HUMP legend, near Stonybrook Creek crossing 5652?"
+105,5587.3,low,-0.8,1.7,4.77,3.76,-3.44,64.0,0.83,interpolated between landmark anchors; local IoU refine only
+106,5657.0,med,-0.8,1.7,11.83,5.73,-3.51,64.0,0.798,lawn/flat grass left matches CHM open-left 5650-5700
+107,5705.7,low,-0.8,1.41,-5.85,3.61,-0.36,64.0,0.802,interpolated between landmark anchors; local IoU refine only
+108,5814.5,low,-0.8,1.65,8.79,0.76,-3.96,64.0,0.735,interpolated between landmark anchors; local IoU refine only
+109,5891.8,low,-0.8,1.36,6.63,1.94,0.53,64.0,0.772,interpolated between landmark anchors; local IoU refine only
+110,5982.0,low,-0.77,1.7,6.33,3.36,-1.8,64.0,0.799,interpolated between landmark anchors; local IoU refine only

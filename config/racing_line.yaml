@@ -1,0 +1,32 @@
+# Racing line + speed profile (scripts/p2/racing_line.py). One line per run direction (nb = s increasing,
+# sb = s decreasing) over the whole built road; layouts clip it to their start/finish gates.
+# The line is the CAR CENTRE. It stays on the asphalt (road.el / road.er), never on the shoulder.
+car_half_width_m: 0.90          # centre -> outer tyre wall
+edge_margin_m: 0.40             # tyre never closer than this to the asphalt edge  => centre >= 1.30 m from the edge
+min_centre_room_m: 0.30         # on very narrow bits the centre keeps at least this much lateral freedom
+step_m: 2.0                     # optimisation grid (resampled back to the 1 m stations)
+
+# minimum-curvature QP (bounded least squares): sum w_i * |p_{i-1} - 2 p_i + p_{i+1}|^2 + smooth * |a_{i+1} - a_i|^2
+smooth_weight: 0.00002         # first-difference regulariser on the lateral offset (tiny: only stops jitter on dead straights)
+exit_weight: 2.5                # extra curvature weight where the speed profile is traction/power limited (corner exits)
+                                # -> direction-dependent, later apexes / straighter exits ("minimum-time-ish")
+iterations: 3                   # line -> speed profile -> weights -> line
+
+# GG / point-mass speed model
+g: 9.81
+lat_g: 1.20                     # lateral limit (g)
+brake_g: 1.00                   # braking limit (g), friction-ellipse with lateral
+accel_g: 0.85                   # traction limit for acceleration (g)
+power_to_mass_w_per_kg: 260     # power-limited acceleration a = P/m / v (grade added separately: - g*sin(grade))
+drag_coeff_per_m: 0.00040       # aero drag decel = k * v^2  (m/s^2)
+vmax_ms: 58.0                   # ~209 km/h cap
+use_camber: true                # banking toward the inside of the turn adds g*bank to the lateral limit
+use_vertical_curvature: true    # crests unload the car: lateral/brake limit scaled by (1 + v^2 * kz / g)
+start_speed_ms: 0.0             # standing start at each layout's start gate
+
+# braking zones (brake boards in 21b_track_dressing.py)
+brake_min_drop_kmh: 15          # ignore zones that scrub less than this
+turn_in_frac: 0.35              # turn-in = first station after brake onset where |k_line| > frac * k_apex
+boards_per_direction: 8
+board_distances_m: [150, 100, 50]
+board_min_spacing_m: 300        # between boarded turn-ins

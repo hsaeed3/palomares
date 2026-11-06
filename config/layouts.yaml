@@ -1,0 +1,25 @@
+# Phase 2 layouts. Distances are stations s (m) along data/derived/centerline.csv (S->N, 0 = SR-84 / Niles Canyon Rd).
+# The whole road is built once (shared kn5 chunks); each layout only differs in timing gates, spawn, lines and kerbs.
+build_end_m: 15583       # northern terminus (Palo Verde Rd, Castro Valley); road built over the full length
+start_gate_m: 20         # southern gate (SR-84 end), kept off the junction
+north_gate_m: 15563      # northern gate, 20 m before the terminus junction
+summit_m: 7392           # highest point on the centerline (Phase 1)
+spawn_back_m: 8          # AC_START_0 / AC_HOTLAP_START_0: this far before the start gate, facing the run direction
+pit_back_m: 14           # AC_PIT_0
+# legacy keys (QA / reports): the S->N summit run
+finish_gate_m: 7392
+spawn_m: 12
+pit_m: 6
+
+# segment -> (from, to) in run direction; dir nb = northbound (s increasing), sb = southbound
+segments:
+  summit:      {from: start_gate_m, to: summit_m,     name: "Niles Canyon → Summit"}
+  summit_rev:  {from: summit_m,     to: start_gate_m, name: "Summit → Niles Canyon"}
+  north:       {from: summit_m,     to: north_gate_m, name: "Summit → Castro Valley"}
+  north_rev:   {from: north_gate_m, to: summit_m,     name: "Castro Valley → Summit"}
+  full:        {from: start_gate_m, to: north_gate_m, name: "Niles Canyon → Castro Valley (full)"}
+  full_rev:    {from: north_gate_m, to: start_gate_m, name: "Castro Valley → Niles Canyon (full)"}
+styles:
+  road:  {center_line: true,  edge_lines: true, kerbs: false}
+  track: {center_line: false, edge_lines: true, kerbs: true}
+# layout folder = <style>_<segment>, e.g. road_summit, track_full_rev  (12 layouts)

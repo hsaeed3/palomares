@@ -1,0 +1,119 @@
+{
+ "kn5_files": 17,
+ "physics_meshes": 130,
+ "collision_triangles": 215402,
+ "solid_items": 509,
+ "uncovered_items": 1,
+ "per_type": {
+  "guardrail_candidate": {
+   "items": 12,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "guardrail_wbeam": {
+   "items": 50,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "road_sign": {
+   "items": 107,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "utility_pole": {
+   "items": 89,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "chainlink_fence": {
+   "items": 27,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate_estate": {
+   "items": 12,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "mailbox_cluster": {
+   "items": 24,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "ranch_wire_fence": {
+   "items": 34,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "retaining_wall_stone": {
+   "items": 6,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wood_board_fence": {
+   "items": 15,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "retaining_wall_timber": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "rockfall_mesh": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "culvert_headwall": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "bridge_parapet_concrete": {
+   "items": 4,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wood_split_rail_fence": {
+   "items": 21,
+   "uncovered": 1,
+   "uncovered_m": 0.5
+  },
+  "white_rail_fence": {
+   "items": 18,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "bridge_parapet_stone": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "cypress_row": {
+   "items": 57,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "solid_wood_privacy_fence": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "retaining_wall_concrete": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building": {
+   "items": 14,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  }
+ },
+ "failures": [
+  "1 solid items lack collision within 0.3 m / 1.25 m height"
+ ],
+ "tolerance_m": 0.3,
+ "min_height_m": 1.25
+}

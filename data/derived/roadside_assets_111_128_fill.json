@@ -1,0 +1,950 @@
+[
+ {
+  "type": "guardrail_wbeam",
+  "s0": 7109,
+  "s1": 7124,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "steel",
+   "terminal": "flared end at start, hazard-marker (black/yellow) on end",
+   "note": "matches build candidate 7109-7122"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "guardrail_wbeam",
+  "s0": 7330,
+  "s1": 7440,
+  "side": "right",
+  "offset_m": 1.0,
+  "height_m": 0.75,
+  "attrs": {
+   "posts": "wood/steel (weathered), W-beam rusty-galv",
+   "sections": "one run through the left bend, pole behind it near 7395; ends ~7435 before green wire fence",
+   "build_lacks": true,
+   "note": "station uncertain: frame 115 (low-conf s) sees run start ahead; 116/117 see it continuing"
+  },
+  "frames": [
+   115,
+   116,
+   117
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 7095,
+  "s1": 7130,
+  "side": "left",
+  "offset_m": 5.0,
+  "height_m": 1.1,
+  "attrs": {
+   "posts": "wood and T-post, sparse",
+   "note": "behind dirt pullout, boulders at 7090"
+  },
+  "frames": [
+   111
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 7150,
+  "s1": 7200,
+  "side": "left",
+  "offset_m": 12.0,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "steel T-post + wood",
+   "note": "pasture fence behind junction apron, wood rail gate ~7165"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 7290,
+  "s1": 7345,
+  "side": "right",
+  "offset_m": 7.0,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "black steel T-posts",
+   "note": "above valley slope behind guardrail"
+  },
+  "frames": [
+   115
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 7438,
+  "s1": 7460,
+  "side": "right",
+  "offset_m": 5.0,
+  "height_m": 1.5,
+  "attrs": {
+   "material": "green-coated welded wire/chainlink style",
+   "note": "green fence beyond guardrail end"
+  },
+  "frames": [
+   117
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "ranch_wire_fence",
+  "s0": 7930,
+  "s1": 7995,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 1.2,
+  "attrs": {
+   "posts": "wood posts, wire; trees pollarded along it"
+  },
+  "frames": [
+   125
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 7725,
+  "s1": 7790,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "color": "natural brown, ranch/horse style",
+   "posts": "square wood"
+  },
+  "frames": [
+   122
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "wood_split_rail_fence",
+  "s0": 7850,
+  "s1": 7935,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "color": "natural weathered, horse-fence style, pole 7845 stands in front"
+  },
+  "frames": [
+   123,
+   124
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 7668,
+  "s1": 7705,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.15,
+  "attrs": {
+   "rails": 3,
+   "material": "painted wood",
+   "note": "could be creek-crossing rail; check for culvert/bridge near 7680"
+  },
+  "frames": [
+   121,
+   120
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "white_rail_fence",
+  "s0": 8108,
+  "s1": 8190,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.2,
+  "attrs": {
+   "rails": 3,
+   "material": "white vinyl/painted, square posts",
+   "note": "continues on hillside driveway behind"
+  },
+  "frames": [
+   127
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 7210,
+  "s1": 7210,
+  "side": "right",
+  "offset_m": 6.0,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "thin pole behind oak, wires along road"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 7395,
+  "s1": 7395,
+  "side": "right",
+  "offset_m": 4.0,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": false,
+   "note": "behind guardrail"
+  },
+  "frames": [
+   116
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 7845,
+  "s1": 7845,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": true,
+   "reflector_bands": "yellow"
+  },
+  "frames": [
+   123,
+   124
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 8110,
+  "s1": 8110,
+  "side": "right",
+  "offset_m": 3.5,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": true
+  },
+  "frames": [
+   127,
+   128
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 8225,
+  "s1": 8225,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "wires seen overhead running diagonal across lane"
+  },
+  "frames": [
+   128
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "utility_pole",
+  "s0": 7920,
+  "s1": 7920,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 10.0,
+  "attrs": {
+   "wires_cross_road": true,
+   "note": "overhead wires cross road diagonally"
+  },
+  "frames": [
+   125
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7100,
+  "s1": 7100,
+  "side": "left",
+  "offset_m": 4.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "large black arrow right on yellow rectangle + yellow diamond (T/side-road warning)"
+  },
+  "frames": [
+   111
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7122,
+  "s1": 7122,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron right (yellow/black)"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7125,
+  "s1": 7125,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron right (yellow/black)"
+  },
+  "frames": [
+   112
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7160,
+  "s1": 7160,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron right (yellow/black)"
+  },
+  "frames": [
+   112,
+   114
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7185,
+  "s1": 7185,
+  "side": "left",
+  "offset_m": 2.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron right (yellow/black) on bank"
+  },
+  "frames": [
+   114
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7280,
+  "s1": 7280,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left (yellow/black), left-bend outer"
+  },
+  "frames": [
+   115
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7340,
+  "s1": 7340,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left, small distant"
+  },
+  "frames": [
+   115,
+   116
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7405,
+  "s1": 7405,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left (yellow/black)"
+  },
+  "frames": [
+   116,
+   117
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7432,
+  "s1": 7432,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left (yellow/black)"
+  },
+  "frames": [
+   116,
+   117
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7458,
+  "s1": 7458,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left (yellow/black)"
+  },
+  "frames": [
+   118
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7600,
+  "s1": 7600,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "chevron left (yellow/black)"
+  },
+  "frames": [
+   120
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7665,
+  "s1": 7665,
+  "side": "right",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "warning diamond with right-turn bent arrow"
+  },
+  "frames": [
+   121
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "road_sign",
+  "s0": 7742,
+  "s1": 7742,
+  "side": "left",
+  "offset_m": 2.5,
+  "height_m": 2.0,
+  "attrs": {
+   "text": "back of sign (grey metal), unreadable"
+  },
+  "frames": [
+   122
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7120,
+  "s1": 7160,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7135,
+  "s1": 7165,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7180,
+  "s1": 7205,
+  "side": "right",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   114
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7240,
+  "s1": 7262,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   115
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7370,
+  "s1": 7385,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   116
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7395,
+  "s1": 7420,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   117
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7452,
+  "s1": 7480,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   118
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7505,
+  "s1": 7535,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   119
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7575,
+  "s1": 7610,
+  "side": "left",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   120
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 7655,
+  "s1": 7665,
+  "side": "right",
+  "offset_m": 0.7,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   121
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "delineator_post",
+  "s0": 8195,
+  "s1": 8215,
+  "side": "left",
+  "offset_m": 0.8,
+  "height_m": 1.2,
+  "attrs": {
+   "color": "white flexible posts, ~10-25 m spacing; some square steel post with reflector"
+  },
+  "frames": [
+   128
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 7085,
+  "s1": 7115,
+  "side": "left",
+  "offset_m": 0.0,
+  "height_m": 0.0,
+  "attrs": {
+   "surface": "dirt/gravel, wide pullout ~12 m wide, no paving",
+   "note": "extends from edge line to fence"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "driveway_apron",
+  "s0": 7138,
+  "s1": 7160,
+  "side": "left",
+  "offset_m": 0.0,
+  "height_m": 0.0,
+  "attrs": {
+   "surface": "dirt/gravel plus paved concrete ramp leading to ranch gate; roadside junction, left side open",
+   "note": "junction at 7147"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "high"
+ },
+ {
+  "type": "gate_estate",
+  "s0": 7160,
+  "s1": 7160,
+  "side": "left",
+  "offset_m": 14.0,
+  "height_m": 1.5,
+  "attrs": {
+   "material": "wood ranch gate with fence panels; info signboard at left",
+   "note": "also pickup truck parked beyond"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 7170,
+  "s1": 7190,
+  "side": "left",
+  "offset_m": 30.0,
+  "height_m": 3.0,
+  "attrs": {
+   "note": "tan cabin/shed barely visible in pasture beyond gate; low confidence"
+  },
+  "frames": [
+   113
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "building",
+  "s0": 8140,
+  "s1": 8160,
+  "side": "right",
+  "offset_m": 12.0,
+  "height_m": 4.0,
+  "attrs": {
+   "note": "grey roof of house above white fence, footprint ~10x8 m"
+  },
+  "frames": [
+   127
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "mailbox_cluster",
+  "s0": 8120,
+  "s1": 8120,
+  "side": "right",
+  "offset_m": 3.0,
+  "height_m": 1.0,
+  "attrs": {
+   "note": "blue/grey wheelie bin(s) at fence gap; mailboxes not confirmed"
+  },
+  "frames": [
+   127
+  ],
+  "confidence": "low"
+ },
+ {
+  "type": "surface",
+  "s0": 7085,
+  "s1": 7140,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "side_note": "left edge broken and patched; right half smooth"
+  },
+  "frames": [
+   111,
+   112
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7140,
+  "s1": 7185,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "crack": "longitudinal cracks right lane at 7150, crack-sealed seams",
+   "sealing": true
+  },
+  "frames": [
+   113,
+   114
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7110,
+  "s1": 7125,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "rpm_present",
+   "rpm": true
+  },
+  "frames": [
+   112
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7230,
+  "s1": 7260,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "rpm_present",
+   "rpm": true
+  },
+  "frames": [
+   115
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7380,
+  "s1": 7400,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "rpm_present",
+   "rpm": true
+  },
+  "frames": [
+   117
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7380,
+  "s1": 7392,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "alligator": "left lane and edge alligator cracking"
+  },
+  "frames": [
+   116,
+   117
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7440,
+  "s1": 7600,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "left_edge": "strip of broken asphalt along left edge (patched), right lane smooth",
+   "rpm": true
+  },
+  "frames": [
+   118,
+   119,
+   120
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7640,
+  "s1": 7790,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "rpm": false,
+   "note": "worn grey, minor longitudinal cracks"
+  },
+  "frames": [
+   121,
+   122
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7820,
+  "s1": 7870,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "patched",
+   "puddle": true,
+   "note": "water pooling in left lane; rpm=False"
+  },
+  "frames": [
+   123
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 7880,
+  "s1": 7960,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "rpm": true,
+   "crack": "transverse and longitudinal cracks, one pothole-like dark patch at 7920"
+  },
+  "frames": [
+   124,
+   125
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 8090,
+  "s1": 8130,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "cracked_old",
+   "rpm": true
+  },
+  "frames": [
+   127
+  ],
+  "confidence": "med"
+ },
+ {
+  "type": "surface",
+  "s0": 8190,
+  "s1": 8230,
+  "side": "both",
+  "offset_m": 0,
+  "height_m": 0,
+  "attrs": {
+   "kind": "patched",
+   "rpm": false,
+   "note": "dark filled patches and edge crumbling; rpm few"
+  },
+  "frames": [
+   128
+  ],
+  "confidence": "med"
+ }
+]
