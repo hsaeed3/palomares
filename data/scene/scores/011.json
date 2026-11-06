@@ -61,24 +61,24 @@
    "px_seg": 52301
   },
   "vegetation_tree": {
-   "iou": 0.5615,
-   "precision": 0.7516,
+   "iou": 0.5612,
+   "precision": 0.751,
    "recall": 0.6895,
-   "px_render": 45443,
+   "px_render": 45483,
    "px_seg": 49541
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12957,
+   "px_render": 12967,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0084,
    "precision": 0.0097,
    "recall": 0.0621,
-   "px_render": 1033,
+   "px_render": 1035,
    "px_seg": 161
   },
   "sign_face": {
@@ -99,15 +99,8 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 73,
+   "px_render": 119,
    "px_seg": 243
-  },
-  "other_prop": {
-   "iou": 0.0,
-   "precision": 0.0,
-   "recall": null,
-   "px_render": 98,
-   "px_seg": 0
   }
  },
  "groups": {
@@ -154,31 +147,31 @@
    "px_seg": 74733
   },
   "tree": {
-   "iou": 0.5615,
-   "precision": 0.7516,
+   "iou": 0.5612,
+   "precision": 0.751,
    "recall": 0.6895,
-   "px_render": 45443,
+   "px_render": 45483,
    "px_seg": 49541
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12957,
+   "px_render": 12967,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0084,
    "precision": 0.0097,
    "recall": 0.0621,
-   "px_render": 1033,
+   "px_render": 1035,
    "px_seg": 161
   },
   "vegetation": {
-   "iou": 0.5196,
-   "precision": 0.6279,
+   "iou": 0.5193,
+   "precision": 0.6274,
    "recall": 0.7509,
-   "px_render": 59433,
+   "px_render": 59485,
    "px_seg": 49702
   },
   "sign": {
@@ -199,28 +192,21 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 73,
+   "px_render": 119,
    "px_seg": 243
-  },
-  "prop": {
-   "iou": 0.0,
-   "precision": 0.0,
-   "recall": null,
-   "px_render": 98,
-   "px_seg": 0
   }
  },
  "instances": [
   {
    "id": "guardrail_s0001",
    "cls": "guardrail",
-   "px": 73,
+   "px": 119,
    "match": 0.0,
    "found": false,
    "occluded": false
   }
  ],
- "score": 0.5873,
- "t_render_s": 0.477,
- "t_total_s": 0.538
+ "score": 0.5872,
+ "t_render_s": 0.412,
+ "t_total_s": 0.445
 }

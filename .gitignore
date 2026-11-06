@@ -9,3 +9,4 @@ build/
 *.safetensors
 *.bin
 data/scene/seg_raw/
+data/scene/cache/
