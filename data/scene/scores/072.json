@@ -1,0 +1,236 @@
+{
+ "frame": 72,
+ "s": 3760.4,
+ "pose_src": "poses.json",
+ "seg": "hsv",
+ "classes": {
+  "sky": {
+   "iou": 0.1069,
+   "precision": 0.1122,
+   "recall": 0.6917,
+   "px_render": 21400,
+   "px_seg": 3471
+  },
+  "road": {
+   "iou": 0.7312,
+   "precision": 0.7959,
+   "recall": 0.8999,
+   "px_render": 38822,
+   "px_seg": 34339
+  },
+  "marking_yellow": {
+   "iou": 0.0298,
+   "precision": 0.03,
+   "recall": 0.8487,
+   "px_render": 3370,
+   "px_seg": 119
+  },
+  "marking_white": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 919,
+   "px_seg": 115
+  },
+  "shoulder_dirt": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 8024,
+   "px_seg": 0
+  },
+  "terrain_grass": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 36848
+  },
+  "terrain_bare": {
+   "iou": 0.3083,
+   "precision": 0.5847,
+   "recall": 0.3947,
+   "px_render": 27409,
+   "px_seg": 40608
+  },
+  "vegetation_tree": {
+   "iou": 0.4026,
+   "precision": 0.6029,
+   "recall": 0.5479,
+   "px_render": 65341,
+   "px_seg": 71902
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20914,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 795,
+   "px_seg": 0
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1,
+   "px_seg": 0
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 104,
+   "px_seg": 0
+  },
+  "mailbox_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 6,
+   "px_seg": 0
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 297,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.1069,
+   "precision": 0.1122,
+   "recall": 0.6917,
+   "px_render": 21400,
+   "px_seg": 3471
+  },
+  "road": {
+   "iou": 0.7312,
+   "precision": 0.7959,
+   "recall": 0.8999,
+   "px_render": 38822,
+   "px_seg": 34339
+  },
+  "marking_yellow": {
+   "iou": 0.0298,
+   "precision": 0.03,
+   "recall": 0.8487,
+   "px_render": 3370,
+   "px_seg": 119
+  },
+  "marking_white": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 919,
+   "px_seg": 115
+  },
+  "shoulder": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 8024,
+   "px_seg": 0
+  },
+  "terrain": {
+   "iou": 0.2237,
+   "precision": 0.6993,
+   "recall": 0.2475,
+   "px_render": 27409,
+   "px_seg": 77456
+  },
+  "tree": {
+   "iou": 0.4026,
+   "precision": 0.6029,
+   "recall": 0.5479,
+   "px_render": 65341,
+   "px_seg": 71902
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20914,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 795,
+   "px_seg": 0
+  },
+  "vegetation": {
+   "iou": 0.5181,
+   "precision": 0.6232,
+   "recall": 0.7544,
+   "px_render": 87050,
+   "px_seg": 71902
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1,
+   "px_seg": 0
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 104,
+   "px_seg": 0
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 303,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "mailbox_s0006",
+   "cls": "mailbox",
+   "px": 6,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "fence_s0019",
+   "cls": "fence",
+   "px": 104,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "driveway_s0014",
+   "cls": "driveway",
+   "px": 27,
+   "match": 0.481,
+   "found": true,
+   "occluded": false
+  },
+  {
+   "id": "post_s0028",
+   "cls": "post",
+   "px": 1,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  }
+ ],
+ "score": 0.395,
+ "t_render_s": 0.897,
+ "t_total_s": 1.481
+}

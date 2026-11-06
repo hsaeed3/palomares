@@ -1,0 +1,236 @@
+{
+ "frame": 74,
+ "s": 3764.3,
+ "pose_src": "poses.json",
+ "seg": "hsv",
+ "classes": {
+  "sky": {
+   "iou": 0.5409,
+   "precision": 0.6052,
+   "recall": 0.8358,
+   "px_render": 23241,
+   "px_seg": 16829
+  },
+  "road": {
+   "iou": 0.745,
+   "precision": 0.844,
+   "recall": 0.864,
+   "px_render": 47743,
+   "px_seg": 46637
+  },
+  "marking_yellow": {
+   "iou": 0.001,
+   "precision": 0.001,
+   "recall": 1.0,
+   "px_render": 3972,
+   "px_seg": 4
+  },
+  "marking_white": {
+   "iou": 0.0164,
+   "precision": 0.0222,
+   "recall": 0.0583,
+   "px_render": 899,
+   "px_seg": 343
+  },
+  "shoulder_dirt": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 5243,
+   "px_seg": 0
+  },
+  "terrain_grass": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 41714
+  },
+  "terrain_bare": {
+   "iou": 0.2264,
+   "precision": 0.362,
+   "recall": 0.3767,
+   "px_render": 25537,
+   "px_seg": 24541
+  },
+  "vegetation_tree": {
+   "iou": 0.3802,
+   "precision": 0.5439,
+   "recall": 0.5581,
+   "px_render": 58832,
+   "px_seg": 57334
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20847,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 533,
+   "px_seg": 0
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1,
+   "px_seg": 0
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 137,
+   "px_seg": 0
+  },
+  "mailbox_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 10,
+   "px_seg": 0
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 407,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.5409,
+   "precision": 0.6052,
+   "recall": 0.8358,
+   "px_render": 23241,
+   "px_seg": 16829
+  },
+  "road": {
+   "iou": 0.745,
+   "precision": 0.844,
+   "recall": 0.864,
+   "px_render": 47743,
+   "px_seg": 46637
+  },
+  "marking_yellow": {
+   "iou": 0.001,
+   "precision": 0.001,
+   "recall": 1.0,
+   "px_render": 3972,
+   "px_seg": 4
+  },
+  "marking_white": {
+   "iou": 0.0164,
+   "precision": 0.0222,
+   "recall": 0.0583,
+   "px_render": 899,
+   "px_seg": 343
+  },
+  "shoulder": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 5243,
+   "px_seg": 0
+  },
+  "terrain": {
+   "iou": 0.1553,
+   "precision": 0.4833,
+   "recall": 0.1863,
+   "px_render": 25537,
+   "px_seg": 66255
+  },
+  "tree": {
+   "iou": 0.3802,
+   "precision": 0.5439,
+   "recall": 0.5581,
+   "px_render": 58832,
+   "px_seg": 57334
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20847,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 533,
+   "px_seg": 0
+  },
+  "vegetation": {
+   "iou": 0.4716,
+   "precision": 0.5495,
+   "recall": 0.7688,
+   "px_render": 80212,
+   "px_seg": 57334
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1,
+   "px_seg": 0
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 137,
+   "px_seg": 0
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 417,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "mailbox_s0006",
+   "cls": "mailbox",
+   "px": 10,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "fence_s0019",
+   "cls": "fence",
+   "px": 137,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "driveway_s0014",
+   "cls": "driveway",
+   "px": 20,
+   "match": 0.35,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "post_s0028",
+   "cls": "post",
+   "px": 1,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  }
+ ],
+ "score": 0.4782,
+ "t_render_s": 0.67,
+ "t_total_s": 1.25
+}

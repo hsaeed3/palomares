@@ -237,8 +237,20 @@ def ledger_tris(ledger, catalog, s_lo, s_hi):
         cat = catalog.get(o.get("asset"), {})
         w, dp, h, z0, cl = DEFAULT_PROXY.get(o.get("cls"), (1, 1, 1, 0, "other_prop"))
         sz = cat.get("proxy") or cat.get("size")
-        if isinstance(sz, dict): sz = [sz.get("w", w), sz.get("d", dp), sz.get("h", h)]
-        if sz: w, dp, h = list(sz)[:3]
+        if isinstance(sz, dict):            # assets.py catalog: x fwd (along road), y out, z up
+            shp = sz.get("shape", "box")
+            if shp == "none":
+                continue
+            if shp == "plane" and o.get("s1") is not None:   # linear sheet (fence panel) runs along the road
+                w, dp, h = sz.get("w", w), sz.get("d", 0.1), sz.get("h", h)
+            elif shp == "plane":              # vertical sheet facing the road traffic (spans across, thin along)
+                w, dp, h = sz.get("d", 0.1), sz.get("w", w), sz.get("h", h)
+            elif shp == "plane_h":          # flat on the ground
+                w, dp, h = sz.get("w", w), sz.get("h", sz.get("d", dp)), 0.03
+            else:
+                w, dp, h = sz.get("w", sz.get("l", w)), sz.get("d", dp), sz.get("h", h)
+        elif sz: w, dp, h = list(sz)[:3]
+        if o.get("cls") == "marking" and (o.get("params") or {}).get("width"): dp = float(o["params"]["width"])
         z0 = cat.get("z0", z0); cl = cat.get("class", cat.get("seg_class", cl))
         if cl is None or cl not in CID: continue
         sc = float(o.get("scale", 1) or 1); w, dp, h = w * sc, dp * sc, h * sc

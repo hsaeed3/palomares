@@ -1,0 +1,233 @@
+{
+ "frame": 1,
+ "s": 32.1,
+ "pose_src": "poses.json",
+ "seg": "seg",
+ "classes": {
+  "sky": {
+   "iou": 0.064,
+   "precision": 0.065,
+   "recall": 0.8042,
+   "px_render": 21423,
+   "px_seg": 1731
+  },
+  "road": {
+   "iou": 0.5615,
+   "precision": 0.7634,
+   "recall": 0.6798,
+   "px_render": 40210,
+   "px_seg": 45155
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 4808,
+   "px_seg": 1154
+  },
+  "marking_white": {
+   "iou": 0.0082,
+   "precision": 0.0113,
+   "recall": 0.0287,
+   "px_render": 14014,
+   "px_seg": 5548
+  },
+  "shoulder_dirt": {
+   "iou": 0.2339,
+   "precision": 0.734,
+   "recall": 0.2556,
+   "px_render": 6906,
+   "px_seg": 19831
+  },
+  "terrain_grass": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 950,
+   "px_seg": 10721
+  },
+  "terrain_bare": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 40222,
+   "px_seg": 0
+  },
+  "rock_cut": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 105
+  },
+  "vegetation_tree": {
+   "iou": 0.3708,
+   "precision": 0.9687,
+   "recall": 0.3753,
+   "px_render": 34362,
+   "px_seg": 88689
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 19874,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0027,
+   "precision": 0.0081,
+   "recall": 0.0041,
+   "px_render": 3702,
+   "px_seg": 7238
+  },
+  "sign_face": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 11,
+   "px_seg": 849
+  },
+  "sign_back": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 679
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 5,
+   "px_seg": 4371
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 505
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 89,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.064,
+   "precision": 0.065,
+   "recall": 0.8042,
+   "px_render": 21423,
+   "px_seg": 1731
+  },
+  "road": {
+   "iou": 0.5615,
+   "precision": 0.7634,
+   "recall": 0.6798,
+   "px_render": 40210,
+   "px_seg": 45155
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 4808,
+   "px_seg": 1154
+  },
+  "marking_white": {
+   "iou": 0.0082,
+   "precision": 0.0113,
+   "recall": 0.0287,
+   "px_render": 14014,
+   "px_seg": 5548
+  },
+  "shoulder": {
+   "iou": 0.2339,
+   "precision": 0.734,
+   "recall": 0.2556,
+   "px_render": 6906,
+   "px_seg": 19831
+  },
+  "terrain": {
+   "iou": 0.212,
+   "precision": 0.221,
+   "recall": 0.8403,
+   "px_render": 41172,
+   "px_seg": 10826
+  },
+  "tree": {
+   "iou": 0.3708,
+   "precision": 0.9687,
+   "recall": 0.3753,
+   "px_render": 34362,
+   "px_seg": 88689
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 19874,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0027,
+   "precision": 0.0081,
+   "recall": 0.0041,
+   "px_render": 3702,
+   "px_seg": 7238
+  },
+  "vegetation": {
+   "iou": 0.5451,
+   "precision": 0.9369,
+   "recall": 0.5659,
+   "px_render": 57938,
+   "px_seg": 95927
+  },
+  "sign": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 11,
+   "px_seg": 1528
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 5,
+   "px_seg": 4371
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 505
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 89,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "sign_s0004",
+   "cls": "sign",
+   "px": 16,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  }
+ ],
+ "score": 0.3456,
+ "t_render_s": 0.33,
+ "t_total_s": 0.409
+}

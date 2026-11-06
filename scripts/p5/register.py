@@ -2,6 +2,7 @@
 
   python3 scripts/p5/register.py                 # all frames (3 workers), then monotone pass
   python3 scripts/p5/register.py --frames 99-110 # refit some frames, merged into poses.json
+  python3 scripts/p5/register.py --frames none   # only re-run the monotone pass
   python3 scripts/p5/register.py --set 104=5560  # manual station pin (by eye) for a frame; refits only pose around it
 
 Method (kept simple on purpose):
@@ -11,7 +12,7 @@ Method (kept simple on purpose):
     the csv pose; each refined by 27's Nelder-Mead on (s, lateral, height, yaw, pitch, roll) within +-12 m.
  3. each candidate judged by the full class-ID render (scene.render, 256x186) vs seg on stable classes
     (sky/horizon silhouette from DTM + backdrop, road, vegetation, terrain) + the road/yellow fit term
-    - prior penalty; the best wins.  This is what breaks the "every straight looks alike" aliasing.
+    - prior penalty (0.002 per m beyond 10 m from the csv guess: a 50 m move needs +0.08 score); the best wins.  This is what breaks the "every straight looks alike" aliasing.
  4. monotone pass: weighted isotonic regression of s over frame number; frames > 20 m off it are refit inside
     [prev, next].  Manual pins (data/scene/pose_pins.json) override everything.
  conf = 0..1 from road IoU, full-render score and the margin to the runner-up candidate.
@@ -83,7 +84,7 @@ def register_frame(f, prior, win, pin=None, lo=None, hi=None):
         q = np.array(r["p"])
         q[0] = np.clip(q[0], a, b)
         fs = full_score(q, seg_u, valid)
-        tot = fs + 0.5 * r["iou"] - 0.25 * min(r["yellow_res_px"] / 480, 1) - 0.1e-3 * abs(q[0] - s0)
+        tot = fs + 0.5 * r["iou"] - 0.25 * min(r["yellow_res_px"] / 480, 1) - 2e-3 * max(abs(q[0] - s0) - 10, 0)
         cands.append(dict(p=q, iou=r["iou"], yres=r["yellow_res_px"], full=fs, tot=tot))
     cands.sort(key=lambda c: -c["tot"]); c = cands[0]
     alt = next((d for d in cands[1:] if abs(d["p"][0] - c["p"][0]) > 15), None)
@@ -136,12 +137,13 @@ def main():
     for f, s in ANCHOR_FRAMES.items():
         if f in old: old[f]["conf"] = "high"
     prev = {r["frame"]: r for r in json.load(open(OUTP))["poses"]} if OUTP.exists() else {}
-    frames = SCR.parse_frames(a.frames) if a.frames else sorted(old)
+    frames = [] if a.frames == "none" else SCR.parse_frames(a.frames) if a.frames else sorted(old)
     frames = sorted(set(frames) | {int(k) for k in a.set and [kv.split("=")[0] for kv in a.set]})
     W = dict(high=40, med=100, low=150)
     t0 = time.time()
     jobs = [(f, old[f], W.get(old[f]["conf"], 150), pins.get(str(f))) for f in frames if f in old]
     import multiprocessing as mp
+    if a.frames == "none": jobs = []
     with mp.Pool(min(a.workers, 3)) as pool:
         res = pool.map(_job, jobs, chunksize=1)
     for r in res: prev[r["frame"]] = r
@@ -160,6 +162,13 @@ def main():
         with mp.Pool(min(a.workers, 3)) as pool:
             for r in pool.map(_job, jobs, chunksize=1):
                 r["monotone_refit"] = True; r["conf"] = round(r["conf"] * 0.7, 3); prev[r["frame"]] = r
+    # last resort: frames still out of order are clamped onto the isotonic fit (pose otherwise kept, conf capped)
+    fr = sorted(prev); s = np.array([prev[f]["s"] for f in fr])
+    w = np.array([0.05 + prev[f]["conf"] + (5 if prev[f].get("pinned") else 0) for f in fr]); iso = isotonic(s, w)
+    for i, f in enumerate(fr):
+        if abs(s[i] - iso[i]) > 1 and not prev[f].get("pinned"):
+            prev[f].update(s_fit=prev[f].get("s_fit", prev[f]["s"]), s=round(float(iso[i]), 1), forced_monotone=True,
+                           conf=round(min(prev[f]["conf"], 0.15), 3))
     for f, r in prev.items():
         r["flag_moved_30m"] = abs(r["s"] - r["s_old"]) > 30
     out = [prev[f] for f in sorted(prev)]

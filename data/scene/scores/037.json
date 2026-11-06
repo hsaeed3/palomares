@@ -1,0 +1,234 @@
+{
+ "frame": 37,
+ "s": 2525.1,
+ "pose_src": "poses.json",
+ "seg": "seg",
+ "classes": {
+  "sky": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 7596,
+   "px_seg": 0
+  },
+  "road": {
+   "iou": 0.337,
+   "precision": 0.5997,
+   "recall": 0.4348,
+   "px_render": 32857,
+   "px_seg": 45321
+  },
+  "marking_yellow": {
+   "iou": 0.0013,
+   "precision": 0.0019,
+   "recall": 0.0045,
+   "px_render": 3205,
+   "px_seg": 1329
+  },
+  "marking_white": {
+   "iou": 0.0011,
+   "precision": 0.0023,
+   "recall": 0.0022,
+   "px_render": 2153,
+   "px_seg": 2293
+  },
+  "shoulder_dirt": {
+   "iou": 0.0028,
+   "precision": 0.0091,
+   "recall": 0.004,
+   "px_render": 4198,
+   "px_seg": 9470
+  },
+  "terrain_grass": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 469,
+   "px_seg": 34271
+  },
+  "terrain_bare": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 34939,
+   "px_seg": 0
+  },
+  "rock_cut": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1416,
+   "px_seg": 0
+  },
+  "vegetation_tree": {
+   "iou": 0.6865,
+   "precision": 0.9461,
+   "recall": 0.7144,
+   "px_render": 64864,
+   "px_seg": 85893
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 31227,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.036,
+   "precision": 0.0824,
+   "recall": 0.0601,
+   "px_render": 3665,
+   "px_seg": 5029
+  },
+  "sign_face": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 159
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 1,
+   "px_seg": 307
+  },
+  "guardrail": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 67,
+   "px_seg": 2599
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 14,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 7596,
+   "px_seg": 0
+  },
+  "road": {
+   "iou": 0.337,
+   "precision": 0.5997,
+   "recall": 0.4348,
+   "px_render": 32857,
+   "px_seg": 45321
+  },
+  "marking_yellow": {
+   "iou": 0.0013,
+   "precision": 0.0019,
+   "recall": 0.0045,
+   "px_render": 3205,
+   "px_seg": 1329
+  },
+  "marking_white": {
+   "iou": 0.0011,
+   "precision": 0.0023,
+   "recall": 0.0022,
+   "px_render": 2153,
+   "px_seg": 2293
+  },
+  "shoulder": {
+   "iou": 0.0028,
+   "precision": 0.0091,
+   "recall": 0.004,
+   "px_render": 4198,
+   "px_seg": 9470
+  },
+  "terrain": {
+   "iou": 0.2935,
+   "precision": 0.438,
+   "recall": 0.4707,
+   "px_render": 36824,
+   "px_seg": 34271
+  },
+  "tree": {
+   "iou": 0.6865,
+   "precision": 0.9461,
+   "recall": 0.7144,
+   "px_render": 64864,
+   "px_seg": 85893
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 31227,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.036,
+   "precision": 0.0824,
+   "recall": 0.0601,
+   "px_render": 3665,
+   "px_seg": 5029
+  },
+  "vegetation": {
+   "iou": 0.6355,
+   "precision": 0.7427,
+   "recall": 0.8149,
+   "px_render": 99756,
+   "px_seg": 90922
+  },
+  "sign": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 159
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 1,
+   "px_seg": 307
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 67,
+   "px_seg": 2599
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 14,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "guardrail_s0006",
+   "cls": "guardrail",
+   "px": 67,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "post_s0019",
+   "cls": "post",
+   "px": 1,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  }
+ ],
+ "score": 0.3165,
+ "t_render_s": 0.61,
+ "t_total_s": 0.672
+}

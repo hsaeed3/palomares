@@ -1,0 +1,244 @@
+{
+ "frame": 213,
+ "s": 15076.6,
+ "pose_src": "poses.json",
+ "seg": "hsv",
+ "classes": {
+  "sky": {
+   "iou": 0.7363,
+   "precision": 0.8904,
+   "recall": 0.8097,
+   "px_render": 56696,
+   "px_seg": 62346
+  },
+  "road": {
+   "iou": 0.7568,
+   "precision": 0.8232,
+   "recall": 0.9036,
+   "px_render": 62694,
+   "px_seg": 57114
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 5053,
+   "px_seg": 0
+  },
+  "marking_white": {
+   "iou": 0.0014,
+   "precision": 0.0029,
+   "recall": 0.0029,
+   "px_render": 687,
+   "px_seg": 701
+  },
+  "shoulder_dirt": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 4784,
+   "px_seg": 0
+  },
+  "terrain_grass": {
+   "iou": 0.0151,
+   "precision": 0.5835,
+   "recall": 0.0153,
+   "px_render": 593,
+   "px_seg": 22678
+  },
+  "terrain_bare": {
+   "iou": 0.0134,
+   "precision": 0.0706,
+   "recall": 0.0163,
+   "px_render": 4464,
+   "px_seg": 19302
+  },
+  "vegetation_tree": {
+   "iou": 0.2141,
+   "precision": 0.3007,
+   "recall": 0.4262,
+   "px_render": 35799,
+   "px_seg": 25261
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 15559,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 169,
+   "px_seg": 0
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 118,
+   "px_seg": 0
+  },
+  "guardrail": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 1,
+   "px_seg": 0
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 204,
+   "px_seg": 0
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 581,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.7363,
+   "precision": 0.8904,
+   "recall": 0.8097,
+   "px_render": 56696,
+   "px_seg": 62346
+  },
+  "road": {
+   "iou": 0.7568,
+   "precision": 0.8232,
+   "recall": 0.9036,
+   "px_render": 62694,
+   "px_seg": 57114
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 5053,
+   "px_seg": 0
+  },
+  "marking_white": {
+   "iou": 0.0014,
+   "precision": 0.0029,
+   "recall": 0.0029,
+   "px_render": 687,
+   "px_seg": 701
+  },
+  "shoulder": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 4784,
+   "px_seg": 0
+  },
+  "terrain": {
+   "iou": 0.0703,
+   "precision": 0.6112,
+   "recall": 0.0736,
+   "px_render": 5057,
+   "px_seg": 41980
+  },
+  "tree": {
+   "iou": 0.2141,
+   "precision": 0.3007,
+   "recall": 0.4262,
+   "px_render": 35799,
+   "px_seg": 25261
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 15559,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 169,
+   "px_seg": 0
+  },
+  "vegetation": {
+   "iou": 0.2819,
+   "precision": 0.3278,
+   "recall": 0.6685,
+   "px_render": 51527,
+   "px_seg": 25261
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 118,
+   "px_seg": 0
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 205,
+   "px_seg": 0
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 581,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "fence_s0095",
+   "cls": "fence",
+   "px": 14,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "pole_s0082",
+   "cls": "pole",
+   "px": 118,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "gate_s0014",
+   "cls": "gate",
+   "px": 190,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "driveway_s0040",
+   "cls": "driveway",
+   "px": 272,
+   "match": 0.055,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "guardrail_s0038",
+   "cls": "guardrail",
+   "px": 1,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  }
+ ],
+ "score": 0.4613,
+ "t_render_s": 0.452,
+ "t_total_s": 1.06
+}

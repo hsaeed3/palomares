@@ -1,0 +1,233 @@
+{
+ "frame": 41,
+ "s": 2696.7,
+ "pose_src": "poses.json",
+ "seg": "seg",
+ "classes": {
+  "sky": {
+   "iou": 0.4251,
+   "precision": 0.4358,
+   "recall": 0.9455,
+   "px_render": 12266,
+   "px_seg": 5653
+  },
+  "road": {
+   "iou": 0.8027,
+   "precision": 0.9,
+   "recall": 0.8813,
+   "px_render": 47161,
+   "px_seg": 48158
+  },
+  "marking_yellow": {
+   "iou": 0.2695,
+   "precision": 0.288,
+   "recall": 0.8072,
+   "px_render": 3677,
+   "px_seg": 1312
+  },
+  "marking_white": {
+   "iou": 0.0114,
+   "precision": 0.0235,
+   "recall": 0.0215,
+   "px_render": 2554,
+   "px_seg": 2790
+  },
+  "shoulder_dirt": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 4724,
+   "px_seg": 200
+  },
+  "terrain_grass": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 6,
+   "px_seg": 334
+  },
+  "terrain_bare": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 27051,
+   "px_seg": 0
+  },
+  "rock_cut": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 1209,
+   "px_seg": 16911
+  },
+  "vegetation_tree": {
+   "iou": 0.6132,
+   "precision": 0.9726,
+   "recall": 0.6239,
+   "px_render": 68706,
+   "px_seg": 107094
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 16979,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0025,
+   "precision": 0.007,
+   "recall": 0.0039,
+   "px_render": 1148,
+   "px_seg": 2057
+  },
+  "sign_face": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 628
+  },
+  "sign_back": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 77
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 931,
+   "px_seg": 966
+  },
+  "guardrail": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 288
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 56,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.4251,
+   "precision": 0.4358,
+   "recall": 0.9455,
+   "px_render": 12266,
+   "px_seg": 5653
+  },
+  "road": {
+   "iou": 0.8027,
+   "precision": 0.9,
+   "recall": 0.8813,
+   "px_render": 47161,
+   "px_seg": 48158
+  },
+  "marking_yellow": {
+   "iou": 0.2695,
+   "precision": 0.288,
+   "recall": 0.8072,
+   "px_render": 3677,
+   "px_seg": 1312
+  },
+  "marking_white": {
+   "iou": 0.0114,
+   "precision": 0.0235,
+   "recall": 0.0215,
+   "px_render": 2554,
+   "px_seg": 2790
+  },
+  "shoulder": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 4724,
+   "px_seg": 200
+  },
+  "terrain": {
+   "iou": 0.1727,
+   "precision": 0.2371,
+   "recall": 0.3886,
+   "px_render": 28266,
+   "px_seg": 17245
+  },
+  "tree": {
+   "iou": 0.6132,
+   "precision": 0.9726,
+   "recall": 0.6239,
+   "px_render": 68706,
+   "px_seg": 107094
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 16979,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0025,
+   "precision": 0.007,
+   "recall": 0.0039,
+   "px_render": 1148,
+   "px_seg": 2057
+  },
+  "vegetation": {
+   "iou": 0.6988,
+   "precision": 0.9284,
+   "recall": 0.7386,
+   "px_render": 86833,
+   "px_seg": 109151
+  },
+  "sign": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 705
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 931,
+   "px_seg": 966
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": null,
+   "recall": 0.0,
+   "px_render": 0,
+   "px_seg": 288
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 56,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "pole_s0011",
+   "cls": "pole",
+   "px": 931,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  }
+ ],
+ "score": 0.5248,
+ "t_render_s": 0.488,
+ "t_total_s": 0.549
+}

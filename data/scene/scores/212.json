@@ -1,0 +1,221 @@
+{
+ "frame": 212,
+ "s": 15016.5,
+ "pose_src": "poses.json",
+ "seg": "hsv",
+ "classes": {
+  "sky": {
+   "iou": 0.8512,
+   "precision": 0.9342,
+   "recall": 0.9055,
+   "px_render": 60340,
+   "px_seg": 62255
+  },
+  "road": {
+   "iou": 0.7575,
+   "precision": 0.8374,
+   "recall": 0.8881,
+   "px_render": 49154,
+   "px_seg": 46347
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 4145,
+   "px_seg": 0
+  },
+  "marking_white": {
+   "iou": 0.0151,
+   "precision": 0.0169,
+   "recall": 0.1225,
+   "px_render": 4369,
+   "px_seg": 604
+  },
+  "shoulder_dirt": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 8224,
+   "px_seg": 0
+  },
+  "terrain_grass": {
+   "iou": 0.0143,
+   "precision": 0.314,
+   "recall": 0.0147,
+   "px_render": 1519,
+   "px_seg": 32424
+  },
+  "terrain_bare": {
+   "iou": 0.0826,
+   "precision": 0.1663,
+   "recall": 0.1411,
+   "px_render": 15217,
+   "px_seg": 17935
+  },
+  "vegetation_tree": {
+   "iou": 0.3202,
+   "precision": 0.4829,
+   "recall": 0.4872,
+   "px_render": 28080,
+   "px_seg": 27837
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 15615,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 150,
+   "px_seg": 0
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20,
+   "px_seg": 0
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 16,
+   "px_seg": 0
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 553,
+   "px_seg": 0
+  }
+ },
+ "groups": {
+  "sky": {
+   "iou": 0.8512,
+   "precision": 0.9342,
+   "recall": 0.9055,
+   "px_render": 60340,
+   "px_seg": 62255
+  },
+  "road": {
+   "iou": 0.7575,
+   "precision": 0.8374,
+   "recall": 0.8881,
+   "px_render": 49154,
+   "px_seg": 46347
+  },
+  "marking_yellow": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 4145,
+   "px_seg": 0
+  },
+  "marking_white": {
+   "iou": 0.0151,
+   "precision": 0.0169,
+   "recall": 0.1225,
+   "px_render": 4369,
+   "px_seg": 604
+  },
+  "shoulder": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 8224,
+   "px_seg": 0
+  },
+  "terrain": {
+   "iou": 0.2286,
+   "precision": 0.7458,
+   "recall": 0.2479,
+   "px_render": 16736,
+   "px_seg": 50359
+  },
+  "tree": {
+   "iou": 0.3202,
+   "precision": 0.4829,
+   "recall": 0.4872,
+   "px_render": 28080,
+   "px_seg": 27837
+  },
+  "shrub": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 15615,
+   "px_seg": 0
+  },
+  "trunk": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 150,
+   "px_seg": 0
+  },
+  "vegetation": {
+   "iou": 0.3994,
+   "precision": 0.4666,
+   "recall": 0.7349,
+   "px_render": 43845,
+   "px_seg": 27837
+  },
+  "pole": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 20,
+   "px_seg": 0
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 16,
+   "px_seg": 0
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 553,
+   "px_seg": 0
+  }
+ },
+ "instances": [
+  {
+   "id": "pole_s0082",
+   "cls": "pole",
+   "px": 20,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "gate_s0014",
+   "cls": "gate",
+   "px": 16,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "driveway_s0040",
+   "cls": "driveway",
+   "px": 9,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  }
+ ],
+ "score": 0.5592,
+ "t_render_s": 0.575,
+ "t_total_s": 1.094
+}
