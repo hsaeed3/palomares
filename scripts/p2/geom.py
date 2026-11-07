@@ -12,10 +12,18 @@ CFG = yaml.safe_load(open(ROOT / "config/layouts.yaml"))
 SHOULDER_W = 0.8          # nominal default only; per-station widths: Road.sh_w_l / sh_w_r (edge_profile.py)
 
 
-def load_centerline(s_end=None):
-    rows = list(csv.DictReader(open(DER / "centerline.csv")))
-    num = {k: np.array([float(r[k]) for r in rows]) for k in rows[0] if k not in ("env_left", "env_right")}
-    num["env_left"] = np.array([r["env_left"] for r in rows]); num["env_right"] = np.array([r["env_right"] for r in rows])
+DEV7 = DER / "dev7"
+_TEXT_COLS = ("env_left", "env_right", "struct")
+
+
+def load_centerline(s_end=None, path=None):
+    """Palomares refined centerline (default) or any centerline CSV with the same core columns, e.g. a dev7 road
+    (data/derived/dev7/centerline_<road>.csv); text columns (env_*, struct) stay strings, empty numbers -> nan."""
+    rows = list(csv.DictReader(open(path or (DER / "centerline.csv"))))
+    num = {k: np.array([float(r[k]) if r[k] != "" else np.nan for r in rows]) for k in rows[0] if k not in _TEXT_COLS}
+    for k in _TEXT_COLS:
+        if k in rows[0]:
+            num[k] = np.array([r[k] for r in rows])
     if s_end is not None:
         m = num["s_m"] <= s_end + 1e-6
         num = {k: v[m] for k, v in num.items()}
@@ -23,9 +31,20 @@ def load_centerline(s_end=None):
 
 
 class Road:
-    """Road surface as a function of station s and lateral offset d (d>0 = left looking uphill)."""
-    def __init__(self, s_end):
-        c = load_centerline(s_end)
+    """Road surface as a function of station s and lateral offset d (d>0 = left looking uphill).
+
+    Road(s_end)            : Palomares (data/derived/centerline.csv), as in every Phase 2 step.
+    Road(None, name="x")   : a dev7 network road (data/derived/dev7/centerline_x.csv). Same smoothing / surface
+                             model; half-widths clipped to edge_clip (default 2.0-12 m: Mission Blvd is up to 19 m
+                             wide) and a uniform default edge profile instead of the Palomares GoPro-based one
+                             (edge_profile.py reads Palomares-only survey data). See scripts/p7/network.py."""
+    def __init__(self, s_end=None, name=None, path=None, edge_clip=None, z_override=None):
+        self.name = name or "palomares"
+        if name is not None and path is None:
+            path = DEV7 / f"centerline_{name}.csv"
+        c = load_centerline(s_end, path)
+        if z_override is not None:          # network.py: profile fixes (bridge decks, grade limits) before smoothing
+            c["z_navd88"] = np.asarray(z_override, float)
         self.raw = c
         self.s = c["s_m"]
         self.x = gaussian_filter1d(c["x_local"], 1.5, mode="nearest")
@@ -43,8 +62,9 @@ class Road:
                 _m[np.clip(_bad + _o, 1, len(self.z) - 2)] = True
             _zs = self.z.copy(); _zs[1:-1] = 0.25 * self.z[:-2] + 0.5 * self.z[1:-1] + 0.25 * self.z[2:]
             self.z = np.where(_m, _zs, self.z)
-        self.el = gaussian_filter1d(np.clip(c["edge_left_m"], 2.4, 6.0), 6, mode="nearest")
-        self.er = gaussian_filter1d(np.clip(c["edge_right_m"], 2.4, 6.0), 6, mode="nearest")
+        lo, hi = edge_clip or ((2.4, 6.0) if path is None else (2.0, 12.0))
+        self.el = gaussian_filter1d(np.clip(c["edge_left_m"], lo, hi), 6, mode="nearest")
+        self.er = gaussian_filter1d(np.clip(c["edge_right_m"], lo, hi), 6, mode="nearest")
         self.cl = gaussian_filter1d(np.clip(c["crossfall_left"], -0.10, 0.10), 5, mode="nearest")
         self.cr = gaussian_filter1d(np.clip(c["crossfall_right"], -0.10, 0.10), 5, mode="nearest")
         tx, ty = np.gradient(self.x), np.gradient(self.y)
@@ -53,9 +73,18 @@ class Road:
         h = np.unwrap(np.arctan2(self.ty, self.tx))
         self.k = gaussian_filter1d(np.gradient(h), 2, mode="nearest")   # signed curvature, + = left turn
         self.env_l, self.env_r = c["env_left"], c["env_right"]
-        import edge_profile   # per-station shoulder width / material / ditch / edge-line inset (scripts/p2/edge_profile.py)
-        for k_, v_ in edge_profile.compute(self).items():
-            setattr(self, k_, v_)
+        if path is None:
+            import edge_profile   # per-station shoulder width / material / ditch / edge-line inset (scripts/p2/edge_profile.py)
+            for k_, v_ in edge_profile.compute(self).items():
+                setattr(self, k_, v_)
+        else:                    # network roads: uniform defaults (network.py sets town curbs / canyon shoulders)
+            n_ = len(self.s); z0 = np.zeros(n_)
+            self.sh_w_l = np.full(n_, 0.6); self.sh_w_r = np.full(n_, 0.6)
+            self.sh_mat_l = np.full(n_, "dirt", dtype=object); self.sh_mat_r = self.sh_mat_l.copy()
+            self.ditch_l, self.ditch_r = z0.copy(), z0.copy()
+            self.line_in_l = np.full(n_, 0.3); self.line_in_r = np.full(n_, 0.3)
+            self.fresh = np.zeros(n_, bool)
+            self.strip_in_l = np.full(n_, 0.12); self.strip_in_r = np.full(n_, 0.12)
 
     def sh_w(self, i, side):
         """shoulder width at station index i (array ok); side: +1/'left'/'L' or -1/'right'/'R'"""
