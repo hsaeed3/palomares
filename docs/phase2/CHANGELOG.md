@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.2.0-dev6 (palomares_road_dev6)
+
+**Test build.** It was shipped early at the user's request. The new FFB-safety gate (qa_ffb_safety) still reports 215 findings in this build; they are listed below and the fix is in progress for dev6.1.
+
+- **Collision:** follows AC conventions now. Barriers, fences and the forest line each get one continuous, invisible, closed slab at least 1 m deep, with flared ends. Trees, shrubs and small props have no collision, so there are no trunk-hit FFB spikes. Buildings always collide.
+- **Shader cache (NVIDIA DXCache popup):** every texture is now DDS with mipmaps and power-of-two sizes. Terrain materials are merged into atlases, about 191 down to about 13. Tangents are fixed. Clear `%LOCALAPPDATA%\NVIDIA\DXCache` once before testing.
+- **Light through hills:** backdrop hills now cast shadows.
+- **Trees:** cards made from photographic CC0 leaf cut-outs, with more and smaller clusters. Conifers and bare winter sycamores are added. A far-zone scatter (60-150 m) is driven by LiDAR canopy height and NAIP.
+- **Grass:** spring-green terrain base. GrassFX tall grass plus wildflowers.
+- **Road:** crack seal is baked into the asphalt, and the random decals in mid-road are removed. Edge lines are solid. Near-road terrain follows the LiDAR.
+- **Racing line:** resampled at 1 m, so it is a continuous AC line instead of sparse arrows.
+- **Measured placement:** LiDAR buildings, NAIP-derived understorey, and new litmus camera calibration.
+
+**Known issues (FFB gate findings, distance from SR-84):**
+- **Building colliders:** zero-thickness boxes at s 14,300-15,700 (Castro Valley end).
+- **Kerbs:** about 27 crease warnings over 25 deg, in both directions.
+- **Road aprons:** creases of 9-10 deg against the 8 deg limit, at 4 spots.
+- **Barrier walls:** 8 road-face creases of 31-37 deg.
+- If you feel a sharp FFB hit anywhere, note the distance marker. Keep FFB gain moderate on this build.
+
 ## 0.2.0-dev5
 
 **SAFETY WARNING: do not drive this build with strong force feedback or a direct-drive wheel.** Collisions with

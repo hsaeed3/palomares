@@ -33,6 +33,25 @@ TREE_R = 25.0
 
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
 G = geo["groups"]
+# dev6: 21d is re-runnable.  The first run on a fresh 21/21b/21c/21e output snapshots everything 21d modifies
+# (road shoulders/aprons, terrain, kerbs, every 1WALL source mesh) into geo["_pre21d"]; later runs restore that
+# snapshot first, so iterating 21d -> 22 -> qa never compounds edits and never needs 21 again.
+import copy
+_SNAP_GROUPS = ("road", "terrain", "kerbs_nb", "kerbs_sb")
+if "_pre21d" in geo:
+    snap = geo["_pre21d"]
+    for g in _SNAP_GROUPS:
+        if g in snap:
+            G[g] = copy.deepcopy(snap[g])
+    for g, ms in snap["walls"].items():
+        G[g] = [m for m in G.get(g, []) if not m["name"].startswith("1WALL")] + copy.deepcopy(ms)
+    geo["meta"]["physics_21d_done"] = False
+    print("21d: restored the pre-21d snapshot (road, terrain, kerbs, 1WALL sources)")
+elif geo["meta"].get("physics_21d_done"):
+    sys.exit("21d: geometry.pkl was already processed by an older 21d without a snapshot - rerun 21 -> 21e first")
+else:
+    geo["_pre21d"] = dict({g: copy.deepcopy(G[g]) for g in _SNAP_GROUPS if g in G},
+                          walls={g: copy.deepcopy([m for m in ms if m["name"].startswith("1WALL")]) for g, ms in G.items()})
 TERRAIN_DONE = bool(geo["meta"].get("physics_21d_done"))  # terrain smoothing must run once per fresh 21 output
 road_ms = [m for m in G["road"] if m["name"].startswith(("1ROAD", "1GRASS"))]
 road_xy = np.concatenate([m["P"][:, :2] for m in G["road"] if m["name"].startswith("1ROAD")])
@@ -207,7 +226,7 @@ print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill}
 # position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
 # 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
 # surface and every vertex within KERB_KEEP m of a 1KERB (kerbs are draped there) are pinned, i.e. vertices within KERB_KEEP m of a kerb.  Heights only.
-RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP, MAX_DZ = 25.0, 6.0, 4.5, 0.0, 0.40
+RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP, MAX_DZ = 25.0, 6.0, 4.5, 0.9, 0.40
 
 
 def runoff_clamp():
@@ -250,7 +269,7 @@ def runoff_clamp():
         return np.where(flatish | (an > 100), an, 0.0)
     z0 = z.copy(); ang = ang_(z); before = float(ang.max()) if len(ang) else 0.0; nb = int((ang > lim).sum())
     it = 0
-    for it in range(1200):
+    for it in range(600):
         hit = ang > lim
         if not hit.any():
             break
@@ -286,22 +305,10 @@ def runoff_clamp():
                     P3 = np.c_[xy[Tg[t_]], z[Tg[t_]]]; e_ = np.linalg.norm(np.roll(P3, 1, 0) - P3, axis=1)
                     print("   ", round(ang[q]), "tri", t_, "apron" if apron[t_] else "", "edges", e_.round(3), "dz", np.ptp(P3[:, 2]).round(3), "pins", pin[Tg[t_]].astype(int), "dr", dr[Tg[t_]].round(2), "xy", P3[0].round(1))
         r["left_by_dist"] = np.histogram(dd, [0, 0.9, 1.5, 2.5, 3.5, 4.5, 99])[0].tolist(); r["left_pins"] = np.bincount(pp, minlength=7).tolist()
-    # kerbs are draped over the shoulder: where the clamp raised the shoulder, lift the kerb vertices above it
-    from scipy.interpolate import LinearNDInterpolator
+    # kerbs: the shoulder under and within KERB_KEEP m of a kerb is pinned, so kerbs are left exactly as 21 draped
+    # them (dev6 build 2 shifted kerb vertices by an interpolated dz field and cut 3-4 cm folds into them)
     nk = 0
-    for g in ("kerbs_nb", "kerbs_sb"):
-        for m in G.get(g, []):
-            if not len(m["P"]):
-                continue
-            idx_ = np.nonzero(cKDTree(m["P"][:, :2]).query(ky, distance_upper_bound=1.5, workers=4)[0] < 1.5)[0]
-            if len(idx_) < 3:
-                continue
-            f_ = LinearNDInterpolator(ky[idx_], z[idx_])
-            zs = f_(m["P"][:, :2]); up = np.isfinite(zs) & (m["P"][:, 2] < zs + 0.002) & (m["P"][:, 2] > zs - 0.06)   # only small lifts; deeper = kerb end buried in a ditch
-            if up.any():
-                mx_lift = max(globals().get("_mxl", 0.0), float((zs[up] + 0.002 - m["P"][up, 2]).max())); globals()["_mxl"] = mx_lift
-                m["P"] = m["P"].copy(); m["P"][up, 2] = zs[up] + 0.002; nk += int(up.sum())
-    r["kerb_vertices_lifted"] = nk; r["kerb_max_lift_m"] = round(globals().get("_mxl", 0.0), 3)
+    r["kerb_vertices_lifted"] = nk
     print(f"run-off crease clamp: {r}")
     return r
 

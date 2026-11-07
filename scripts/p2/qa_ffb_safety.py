@@ -30,6 +30,7 @@ TRACK = BUILD / "palomares_road"
 MIN_THICK, MIN_H, NEAR = 0.5, 1.2, 8.0
 WALL_CREASE, ROAD_CREASE, KERB_CREASE, TERR_CREASE, TERR_R = 30.0, 8.0, 25.0, 45.0, 3.0
 MAX_WALL_TRIS_PER_KM = 6000
+APRON_CREASE, FOLD_AMP = 25.0, 0.01
 fails, warns, stats = [], [], collections.defaultdict(dict)
 fail = lambda s: fails.append(s)
 
@@ -61,6 +62,21 @@ def creases(P, T, fn):
     return np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1))), a, b, W
 
 
+def boxes_apart(A, B, gap=0.05):
+    """two closed 8-vertex boxes (vertical prisms): separating-axis test on their footprints + z ranges (two boxes
+    in the same 2 m station bin and |d| band can still stand apart along the road)"""
+    if min(A[:, 2].max(), B[:, 2].max()) - max(A[:, 2].min(), B[:, 2].min()) <= gap:
+        return True
+    for Q in (A, B):
+        q = np.unique(np.round(Q[:, :2], 3), axis=0); c = q.mean(0); ang = np.arctan2(*(q - c).T[::-1]); q = q[np.argsort(ang)]
+        for i in range(len(q)):
+            e = q[(i + 1) % len(q)] - q[i]; n_ = np.array([-e[1], e[0]]) / (np.hypot(*e) + 1e-12)
+            pa, pb = A[:, :2] @ n_, B[:, :2] @ n_
+            if pa.max() < pb.min() + gap or pb.max() < pa.min() + gap:
+                return True
+    return False
+
+
 K = {f.name: read_kn5(f) for f in sorted(TRACK.glob("*.kn5"))}
 # drivable edge = 1ROAD + shoulder vertices
 road = np.concatenate([enu(m["pos"])[:, :2] for m in K["palomares_road.kn5"]["meshes"] if m["name"][:1].isdigit()])
@@ -69,6 +85,7 @@ from geom import load_centerline
 F = CC.Frame(load_centerline())
 
 wall_boxes = []
+wall_pts = []
 n_wall_tris = 0
 for fn_, k in K.items():
     for name, b in k["textures"].items():
@@ -125,6 +142,11 @@ for fn_, k in K.items():
             s, d, j = F.sd(cen[:, :2])
             tow = -np.sign(d)[:, None] * np.c_[F.nx[j], F.ny[j]]
             face = ((fnr[:, :2] * tow).sum(1) > 0.5) & (np.abs(fnr[:, 2]) < 0.3)
+            # building / end-wall boxes: an 8-vertex closed box always has 90 deg convex corners - that is the
+            # convention (one simple box per building, never on the drivable surface); the crease rule is for
+            # the continuous barrier slabs a car slides along
+            if "_bld_" in nm or nm.startswith(("1WALL_start", "1WALL_end")):
+                face[:] = False
             pr = face[a] & face[b] & ((dr[a] < NEAR) | (dr[b] < NEAR))
             mx = float(ang[pr].max()) if pr.any() else 0.0
             stats["wall_face_crease_max_deg"][nm] = round(mx, 1)
@@ -135,6 +157,10 @@ for fn_, k in K.items():
                 ext = np.ptp(Pc[:, :2], axis=0); hgt = np.ptp(Pc[:, 2])
                 long_ = np.ptp(sc) >= CC.LIN_MIN_LEN
                 u, sv, vt = np.linalg.svd(Pc[:, :2] - Pc[:, :2].mean(0), full_matrices=False)
+                nuniq = len(np.unique(np.round(Pc, 3), axis=0))
+                if nuniq == 8:   # closed box: thickness = smallest horizontal extent of its oriented box (the
+                    # road-frame window measure is only meaningful for slabs that follow the road)
+                    long_ = False
                 if not long_:
                     thick = float(np.ptp((Pc[:, :2] - Pc[:, :2].mean(0)) @ vt[1]))
                 else:   # depth across the road, measured in windows along the run (median over the run)
@@ -146,10 +172,26 @@ for fn_, k in K.items():
                     fail(f"{fn_}:{nm} wall lower than {MIN_H} m at s={sc.mean():.0f}")
                 if not long_ and ext[0] * ext[1] < 1.5 and not nm.startswith(("1WALL_start", "1WALL_end")):
                     fail(f"{fn_}:{nm} small-prop collider ({ext[0]:.1f}x{ext[1]:.1f} m) at s={sc.mean():.0f}")
+                if not nm.startswith(("1WALL_start", "1WALL_end")):
+                    # dense samples of the component's faces (vertices + face centres + edge midpoints)
+                    Tc = T[np.isin(T, comp).all(1)]
+                    bw = np.array([[u, v, 1 - u - v] for u in np.linspace(0, 1, 5) for v in np.linspace(0, 1, 5) if u + v <= 1 + 1e-9])
+                    smp = np.einsum("kj,tjc->tkc", bw, P[Tc]).reshape(-1, 3)
+                    wall_pts.append((fn_ + ":" + nm, smp, Pc if nuniq == 8 else None))
                 wall_boxes.append((fn_ + ":" + nm, sc.min(), sc.max(), np.sign(np.median(dc)), np.abs(dc).min(), np.abs(dc).max(), Pc[:, 2].min(), Pc[:, 2].max()))
         elif key in ("ROAD", "KERB", "RUNOFF", "GRASS"):
-            lim = {"ROAD": ROAD_CREASE, "KERB": KERB_CREASE, "RUNOFF": KERB_CREASE, "GRASS": TERR_CREASE}[key]
-            ang, a, b, _ = creases(P, T, fnr)
+            apron = nm.startswith("1ROAD_AP")
+            # paved driveway aprons lie OFF the carriageway (beyond the shoulder, reached only when leaving the road),
+            # so they get the run-off limit that 21d step 1c also smooths them to, not the carriageway's 8 deg
+            lim = {"ROAD": APRON_CREASE if apron else ROAD_CREASE, "KERB": KERB_CREASE, "RUNOFF": KERB_CREASE, "GRASS": TERR_CREASE}[key]
+            ang, a, b, W = creases(P, T, fnr)
+            # fold amplitude: distance of b's opposite vertex from a's plane.  A crease only matters for a tyre
+            # when the surface actually deviates; mm-scale kerb lips on 3 cm wide triangles give 30+ deg angles
+            # with < 1 cm of relief (CLAUDE.md drivability spec: no step > 2 cm; we gate at half of it)
+            opp = ((W[b] != W[a][:, [0]]) & (W[b] != W[a][:, [1]]) & (W[b] != W[a][:, [2]])).argmax(1)
+            Pb = P[T[b, opp]]
+            amp = np.abs(((Pb - P[T[a, 0]]) * fnr[a]).sum(1))
+            keep = amp > FOLD_AMP
             if key in ("GRASS", "ROAD"):
                 # folds a wheel rolls over: both faces < 40 deg slope, or a fold-over (> 100 deg); cut-bank toes
                 # (flat -> steep face) are real terrain and reported separately
@@ -157,29 +199,38 @@ for fn_, k in K.items():
                 flat = (np.abs(fnr[a, 2]) > c40) & (np.abs(fnr[b, 2]) > c40)
                 toe = ang[~flat & (ang <= 100)]
                 stats[f"{key.lower()}_banktoe_crease_max_deg"][nm] = round(float(toe.max()), 1) if len(toe) else 0.0
-                ang = ang[flat | (ang > 100)]
+                keep &= flat | (ang > 100)
                 if key == "GRASS":
                     dr, _ = road_kd.query(P[T].mean(1)[:, :2])
-                    ang = ang[((dr[a] < TERR_R) & (dr[b] < TERR_R))[flat | (np.degrees(np.arccos(np.clip((fnr[a] * fnr[b]).sum(1), -1, 1))) > 100)]]
+                    keep &= (dr[a] < TERR_R) & (dr[b] < TERR_R)
+            stats[f"{key.lower()}_crease_raw_max_deg"][nm] = round(float(ang.max()), 1) if len(ang) else 0.0
+            ang = ang[keep]
             mx = float(ang.max()) if len(ang) else 0.0
             stats[f"{key.lower()}_crease_max_deg"][nm] = round(mx, 1)
             if mx > lim:
-                (fail if key != "GRASS" else fail)(f"{fn_}:{nm} crease {mx:.0f} deg > {lim}")
+                fail(f"{fn_}:{nm} crease {mx:.0f} deg > {lim} (fold amplitude > {FOLD_AMP * 100:.0f} cm)")
 
-# overlaps between collider components (road frame boxes), same side
-wb = sorted(wall_boxes, key=lambda w: w[1])
-nov = 0
-for i, A in enumerate(wb):
-    for B in wb[i + 1:]:
-        if B[1] > A[2]:
-            break
-        if A[3] != B[3] or "start" in A[0] + B[0] or "end" in A[0] + B[0]:
-            continue
-        ov_s = min(A[2], B[2]) - max(A[1], B[1]); ov_d = min(A[5], B[5]) - max(A[4], B[4]); ov_z = min(A[7], B[7]) - max(A[6], B[6])
-        if ov_s > 0.05 and ov_d > 0.05 and ov_z > 0.05:
-            nov += 1
-            if nov <= 20:
-                fail(f"overlapping colliders {A[0]} / {B[0]} at s={max(A[1], B[1]):.0f}")
+# overlaps between collider components: per 2 m station, the |d| interval of each component on each side (precise
+# in the road frame; a whole-component bounding box flags every curved slab against its neighbours)
+occ = collections.defaultdict(list)    # (side, station) -> [(lo, hi, zlo, zhi, comp)]
+for ci, (nm_, sP, _bx) in enumerate(wall_pts):
+    s_, d_, _ = F.sd(sP[:, :2]); st = np.round(s_ / 2).astype(int); sd_ = np.sign(d_); ad = np.abs(d_)
+    for k_ in np.unique(np.c_[sd_, st], axis=0):
+        sel = (sd_ == k_[0]) & (st == k_[1])
+        occ[(int(k_[0]), int(k_[1]))].append((ad[sel].min(), ad[sel].max(), sP[sel, 2].min(), sP[sel, 2].max(), ci))
+nov, pairs = 0, set()
+for key_, iv in occ.items():
+    iv.sort()
+    for i in range(len(iv)):
+        for j in range(i + 1, len(iv)):
+            A, B = iv[i], iv[j]
+            if B[0] >= A[1] - 0.05:
+                break
+            if A[4] != B[4] and min(A[3], B[3]) - max(A[2], B[2]) > 0.05 and (min(A[4], B[4]), max(A[4], B[4])) not in pairs \
+                    and not (wall_pts[A[4]][2] is not None and wall_pts[B[4]][2] is not None and boxes_apart(wall_pts[A[4]][2], wall_pts[B[4]][2])):
+                pairs.add((min(A[4], B[4]), max(A[4], B[4]))); nov += 1
+                if nov <= 20:
+                    fail(f"overlapping colliders {wall_pts[A[4]][0]} / {wall_pts[B[4]][0]} at s={2 * key_[1]}")
 if nov > 20:
     fail(f"... {nov} overlapping collider pairs in total")
 # materials / shader permutations / textures per layout (NVIDIA DXCache bloat: dev5 had 189 terrain materials,

@@ -94,6 +94,14 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
             e_all = road.el if side == "left" else road.er
             # outward slope of the road plane at the edge (surface_z: z = z0 + cl*d (d>0), cr*d (d<0))
             slope_all = road.cl if side == "left" else -road.cr
+            # dev6 FFB safety: no kerb where the shoulder itself is not a near-plane continuation of the road (rising
+            # cut-bank toe, falling verge, ditch): a kerb draped there folds by 2-6 cm.  Kink = mid column vs the
+            # edge-outer chord; grade = shoulder cross-slope minus the road plane's.
+            _swa = shoulder_w[side] if isinstance(shoulder_w, dict) else np.full(N, float(shoulder_w))
+            _kink = np.abs(SZ[:, 1] - (SZ[:, 0] + SZ[:, 2]) / 2)                    # ditch / hump inside the shoulder
+            _grade = np.abs((SZ[:, 2] - SZ[:, 0]) / np.maximum(_swa, 0.1) - slope_all)  # shoulder cross-slope vs road plane
+            _bad = (_kink > K.get("max_shoulder_kink_m", 0.02)) | (_grade > K.get("max_shoulder_grade", 0.15))
+            rl[_bad] = 0
             for v, typ in ((1, "apex"), (2, "exit")):
                 P_ = T[typ]
                 for i in runs(rl == v):
@@ -116,11 +124,24 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     u = np.clip((dd - e[:, None]) / (sw_[:, None] / 2), 0, 2)
                     z0, z1, z2 = SZ[rr, 0], SZ[rr, 1], SZ[rr, 2]
                     zsh = np.where(u <= 1, z0 + (z1 - z0) * u, z1 + (z2 - z1) * (u - 1))
+                    # dev6: never drape a kerb INTO a shoulder ditch / dip (3-6 cm folds in build 2): the kerb rides the
+                    # chord from the road edge to its outer edge wherever the shoulder sags below it
+                    _ch = zsh[:, :1] + (zsh[:, -1:] - zsh[:, :1]) * ((dd - dd[:, :1]) / np.maximum(dd[:, -1:] - dd[:, :1], 1e-6))
+                    zsh = np.maximum(zsh, _ch)
                     zpl = RZ[i, col][:, None] + slope_all[i][:, None] * (dd - e[:, None])
                     fade = 1 - smoothstep((t - 0.75) / 0.25)[None, :]
                     base = zsh + np.clip(zpl - zsh, 0, K["max_above_shoulder_m"]) * fade
                     lift = np.where(t > 0, K["lift_m"], 0.0)[None, :] * np.ones((n, 1))
-                    z = base + lift + P_["height_m"] * hp[None, :] * tap[:, None]
+                    # dev6 FFB safety: where the shoulder forces a narrow kerb, scale its height with the width so the
+                    # steepest lip (about 3 x height / width with these profiles) stays under ~14 deg; dev5 squeezed
+                    # the full 2.5 cm into 10 cm => 40-50 deg micro-ramps with 2-5 cm of relief
+                    hmax = np.minimum(P_["height_m"], K.get("max_lip_slope", 0.08) * w)
+                    # ... and where the shoulder falls away from the road plane (steep verge), the raised profile on top
+                    # of the falling shoulder made 3-6 cm folds (dev6 gate): fade the profile out there (flat paint)
+                    from scipy.ndimage import gaussian_filter1d as _g1
+                    drop = (zpl - zsh).max(1)
+                    hk = np.clip(_g1(1 - smoothstep((drop - K.get("max_shoulder_drop_m", 0.025)) / 0.02), 2.0, mode="nearest"), 0, 1)
+                    z = base + lift + (hmax * hk)[:, None] * hp[None, :] * tap[:, None]
                     z[:, -1] = zsh[:, -1] - 0.002                             # outer edge sinks into the shoulder
                     x[:, 0], y[:, 0], z[:, 0] = RX[i, col], RY[i, col], RZ[i, col]   # == road-edge vertex
                     uu = P_["u0"] + (P_["u1"] - P_["u0"]) * t
