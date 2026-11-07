@@ -263,6 +263,16 @@ if KEPT is not None:
         znew[mo] = road.surface_z(jn[mo], np.clip(offn[mo], -road.er[jn[mo]], road.el[jn[mo]]))
     w_ = np.clip((np.abs(offn) - hwn - SH) / CUT, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
     P3[on, 2] = (1 - w_) * znew + w_ * zS[on]
+    # light relaxation of the blended asphalt vertices (the CDT does not follow the shipped mesh's crown/edge lines,
+    # which left 8-9 deg creases at the kept cut edge; qa_ffb_safety ROAD limit 8 deg)
+    if ROADALL is not None:
+        rel = np.flatnonzero(on)[mo]
+        nb2 = np.r_[TT[:, [0, 1]], TT[:, [1, 2]], TT[:, [2, 0]]]
+        for _it in range(20):
+            sm = np.zeros(len(P3)); ct = np.zeros(len(P3))
+            np.add.at(sm, nb2[:, 0], P3[nb2[:, 1], 2]); np.add.at(ct, nb2[:, 0], 1)
+            np.add.at(sm, nb2[:, 1], P3[nb2[:, 0], 2]); np.add.at(ct, nb2[:, 1], 1)
+            P3[rel, 2] = 0.5 * P3[rel, 2] + 0.5 * sm[rel] / np.maximum(ct[rel], 1)
     FIXED[on] = True
     LOG["stitch"]["blended_vertices"] = int(on.sum())
     mv &= ~FIXED

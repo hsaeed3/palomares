@@ -208,7 +208,7 @@ def _core(G, F, groups, trees, prefix, block):
     PB, TB, NB, k = [], [], [], 0
     # parts of one building (house + garage + porch boxes) overlap: merge overlapping footprints into ONE box so
     # colliders never nest or intersect
-    for _pass in range(6):
+    for _pass in range(60):          # merge until stable (6 passes left 2 overlapping clusters in dev7)
       if blds:
           bb = np.array([[q[:, 0].min(), q[:, 1].min(), q[:, 0].max(), q[:, 1].max()] for q in blds])
           par = list(range(len(blds)))
