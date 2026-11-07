@@ -20,6 +20,43 @@
  "open_edges_near": 8,
  "open_edges_near_filled": 8,
  "holes_filled": 2,
- "tree_colliders": 4203,
- "walls_thickened": 132
+ "tree_colliders": 0,
+ "collision": {
+  "shared": {
+   "linear": 380,
+   "building": 80,
+   "prop": 335,
+   "across": 2,
+   "old_meshes": 132,
+   "old_tris": 78576,
+   "slab_meshes": 121,
+   "runs": 456,
+   "forest_stations": 670,
+   "new_tris": 58680,
+   "new_meshes": 124
+  },
+  "dressing": {
+   "linear": 61,
+   "building": 10,
+   "prop": 19,
+   "across": 0,
+   "old_meshes": 2,
+   "old_tris": 3104,
+   "slab_meshes": 36,
+   "runs": 56,
+   "forest_stations": 0,
+   "new_tris": 4952,
+   "new_meshes": 37
+  },
+  "new_meshes": 161
+ },
+ "runoff_clamp": {
+  "max_crease_before": 176.8,
+  "n_over_before": 68217,
+  "max_crease_after_unpinned": 79.5,
+  "n_over_after": 23978,
+  "iters": 399,
+  "max_dz": 2.431,
+  "mean_dz_moved": 0.145
+ }
 }

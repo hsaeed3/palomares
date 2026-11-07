@@ -111,6 +111,7 @@ def main():
     meas_s = {"L": [], "R": []}
     for k, u in enumerate(U):
         p = u["properties"]
+        if not all(np.isfinite(float(p.get(k_, 0) or 0)) for k_ in ("off", "density", "s", "s1")): continue
         if p["cls"] == "hedge":
             new.append(row(f"p6_us_{k:05d}", "hedge", p["asset"], p["s"], p["side"], p["off"], s1=p["s1"], conf="med", src="lidar",
                            params=dict(density=p["density"], seed=k), note=f"LiDAR 0.3-3 m return share {p['frac']}, h90 {p['h90']} m, NAIP NDVI {p['ndvi']}; species NOT measured"))

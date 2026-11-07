@@ -1,0 +1,363 @@
+{
+ "niles_canyon_road": {
+  "west_mission_blvd": {
+   "osm_node": 53068020,
+   "lonlat": [
+    -121.9715553,
+    37.5766015
+   ],
+   "desc": "SR-84 Niles Canyon Rd / Mission Blvd (SR-238) signalised junction; Niles Blvd continues W"
+  },
+  "east_sunol": {
+   "osm_node": 734818893,
+   "lonlat": [
+    -121.8822367,
+    37.5928917
+   ],
+   "desc": "Sunol: SR-84 Niles Canyon Rd / Main St / Pleasanton-Sunol Rd all-way STOP (SR-84 continues E as Paloma Rd to I-680)"
+  },
+  "length_osm_m": 10720.6
+ },
+ "niles_blvd_start": {
+  "osm_node": 2500322399,
+  "lonlat": [
+   -121.9823224,
+   37.5776911
+  ],
+  "cross_streets": [
+   "Sullivan Underpass"
+  ],
+  "desc": "start of the block before the Devout Coffee block (block W of ['G Street']), 150 m W of Devout Coffee along Niles Blvd",
+  "devout_coffee": {
+   "osm_node": 3424127445,
+   "lonlat": [
+    -121.9807257,
+    37.5772056
+   ],
+   "s_along_niles_blvd_m": 150.1
+  },
+  "niles_blvd_end": {
+   "osm_node": 846477842,
+   "desc": "Niles Blvd / Mission Blvd / SR-84"
+  }
+ },
+ "palomares_south_end": {
+  "lonlat": [
+   -121.94686976656513,
+   37.597834919164015
+  ],
+  "dist_to_nearest_ncr_m": 0.0,
+  "ncr_station_m": 3538.9,
+  "note": "Phase-1 refined centerline s=0"
+ },
+ "roads": {
+  "niles_canyon_road": {
+   "name": "Niles Canyon Road",
+   "ref": "CA 84",
+   "from": "Mission Blvd",
+   "to": "Sunol stop (Main St)",
+   "length_osm_m": 10720.6,
+   "n_nodes": 263,
+   "start_node": 53068020,
+   "end_node": 734818893
+  },
+  "niles_blvd": {
+   "name": "Niles Boulevard",
+   "from": "start block (W of Devout Coffee)",
+   "to": "Mission Blvd / SR-84",
+   "length_osm_m": 1086.0,
+   "n_nodes": 46,
+   "start_node": 2500322399,
+   "end_node": 846477842
+  },
+  "2nd_street": {
+   "name": "2nd Street",
+   "role": "town",
+   "length_osm_m": 951.1,
+   "n_nodes": 26,
+   "start_node": 53091201,
+   "end_node": 53112113
+  },
+  "3rd_street": {
+   "name": "3rd Street",
+   "role": "town",
+   "length_osm_m": 964.1,
+   "n_nodes": 23,
+   "start_node": 53069908,
+   "end_node": 53048849
+  },
+  "chase_court": {
+   "name": "Chase Court",
+   "role": "town",
+   "length_osm_m": 88.8,
+   "n_nodes": 4,
+   "start_node": 53048850,
+   "end_node": 13141891104
+  },
+  "cinematic_common": {
+   "name": "Cinematic Common",
+   "role": "town",
+   "length_osm_m": 174.3,
+   "n_nodes": 9,
+   "start_node": 53068012,
+   "end_node": 53068010
+  },
+  "dollar_common": {
+   "name": "Dollar Common",
+   "role": "town",
+   "length_osm_m": 149.2,
+   "n_nodes": 8,
+   "start_node": 12924633144,
+   "end_node": 13082609705
+  },
+  "e_street": {
+   "name": "E Street",
+   "role": "town",
+   "length_osm_m": 118.7,
+   "n_nodes": 7,
+   "start_node": 53112108,
+   "end_node": 53068002
+  },
+  "essanay_avenue": {
+   "name": "Essanay Avenue",
+   "role": "town",
+   "length_osm_m": 102.0,
+   "n_nodes": 3,
+   "start_node": 53098760,
+   "end_node": 53111610
+  },
+  "essanay_place": {
+   "name": "Essanay Place",
+   "role": "town",
+   "length_osm_m": 204.8,
+   "n_nodes": 10,
+   "start_node": 53098757,
+   "end_node": 327133663
+  },
+  "f_street": {
+   "name": "F Street",
+   "role": "town",
+   "length_osm_m": 237.3,
+   "n_nodes": 11,
+   "start_node": 53069908,
+   "end_node": 53068003
+  },
+  "g_street": {
+   "name": "G Street",
+   "role": "town",
+   "length_osm_m": 239.3,
+   "n_nodes": 9,
+   "start_node": 53017515,
+   "end_node": 53017511
+  },
+  "h_street": {
+   "name": "H Street",
+   "role": "town",
+   "length_osm_m": 243.4,
+   "n_nodes": 9,
+   "start_node": 53028927,
+   "end_node": 53028920
+  },
+  "i_street": {
+   "name": "I Street",
+   "role": "town",
+   "length_osm_m": 253.8,
+   "n_nodes": 9,
+   "start_node": 3163620369,
+   "end_node": 1687470620
+  },
+  "j_street": {
+   "name": "J Street",
+   "role": "town",
+   "length_osm_m": 252.7,
+   "n_nodes": 8,
+   "start_node": 2500316003,
+   "end_node": 53066584
+  },
+  "l_street": {
+   "name": "L Street",
+   "role": "town",
+   "length_osm_m": 69.5,
+   "n_nodes": 2,
+   "start_node": 8897207530,
+   "end_node": 53069911
+  },
+  "limelight_terrace": {
+   "name": "Limelight Terrace",
+   "role": "town",
+   "length_osm_m": 100.6,
+   "n_nodes": 7,
+   "start_node": 12924633133,
+   "end_node": 12924633134
+  },
+  "locomotive_common": {
+   "name": "Locomotive Common",
+   "role": "town",
+   "length_osm_m": 255.0,
+   "n_nodes": 13,
+   "start_node": 12924633132,
+   "end_node": 12924633142
+  },
+  "main_street": {
+   "name": "Main Street",
+   "role": "canyon_side",
+   "length_osm_m": 678.5,
+   "n_nodes": 41,
+   "start_node": 9746941746,
+   "end_node": 53043052
+  },
+  "mayhews_road": {
+   "name": "Mayhews Road",
+   "role": "town",
+   "length_osm_m": 35.6,
+   "n_nodes": 4,
+   "start_node": 2262573825,
+   "end_node": 53104707
+  },
+  "mission_boulevard": {
+   "name": "Mission Boulevard",
+   "role": "town",
+   "length_osm_m": 721.2,
+   "n_nodes": 24,
+   "start_node": 846477833,
+   "end_node": 954152600
+  },
+  "mission_boulevard_2": {
+   "name": "Mission Boulevard",
+   "role": "town",
+   "length_osm_m": 667.4,
+   "n_nodes": 23,
+   "start_node": 718399457,
+   "end_node": 53104721
+  },
+  "mission_boulevard_3": {
+   "name": "Mission Boulevard",
+   "role": "town",
+   "length_osm_m": 673.1,
+   "n_nodes": 15,
+   "start_node": 4954431942,
+   "end_node": 4177204353
+  },
+  "mission_boulevard_4": {
+   "name": "Mission Boulevard",
+   "role": "town",
+   "length_osm_m": 736.3,
+   "n_nodes": 12,
+   "start_node": 718397844,
+   "end_node": 53104707
+  },
+  "nichols_avenue": {
+   "name": "Nichols Avenue",
+   "role": "town",
+   "length_osm_m": 181.2,
+   "n_nodes": 9,
+   "start_node": 53017022,
+   "end_node": 53089818
+  },
+  "nichols_court": {
+   "name": "Nichols Court",
+   "role": "town",
+   "length_osm_m": 42.8,
+   "n_nodes": 5,
+   "start_node": 53055322,
+   "end_node": 53055318
+  },
+  "old_canyon_road": {
+   "name": "Old Canyon Road",
+   "role": "town",
+   "length_osm_m": 58.1,
+   "n_nodes": 5,
+   "start_node": 325920547,
+   "end_node": 325920532
+  },
+  "paloma_road": {
+   "name": "Paloma Road",
+   "role": "sunol_stub",
+   "length_osm_m": 344.9,
+   "n_nodes": 4,
+   "start_node": 734818893,
+   "end_node": 1301337649
+  },
+  "palomares_road": {
+   "name": "Palomares Road",
+   "role": "palomares_connector",
+   "length_osm_m": 244.9,
+   "n_nodes": 14,
+   "start_node": 53067971,
+   "end_node": 927305286
+  },
+  "pleasanton_sunol_road": {
+   "name": "Pleasanton Sunol Road",
+   "role": "sunol_stub",
+   "length_osm_m": 165.3,
+   "n_nodes": 7,
+   "start_node": 734818893,
+   "end_node": 53095945
+  },
+  "quincy_terrace": {
+   "name": "Quincy Terrace",
+   "role": "town",
+   "length_osm_m": 59.6,
+   "n_nodes": 5,
+   "start_node": 12924633136,
+   "end_node": 12924633137
+  },
+  "sennett_terrace": {
+   "name": "Sennett Terrace",
+   "role": "town",
+   "length_osm_m": 94.1,
+   "n_nodes": 5,
+   "start_node": 12924633132,
+   "end_node": 12924633135
+  },
+  "sierra_terrace": {
+   "name": "Sierra Terrace",
+   "role": "town",
+   "length_osm_m": 48.1,
+   "n_nodes": 5,
+   "start_node": 12924633139,
+   "end_node": 12924633138
+  },
+  "sullivan_underpass": {
+   "name": "Sullivan Underpass",
+   "role": "town",
+   "length_osm_m": 183.6,
+   "n_nodes": 16,
+   "start_node": 2500322399,
+   "end_node": 53089818
+  },
+  "sycamore_street": {
+   "name": "Sycamore Street",
+   "role": "town",
+   "length_osm_m": 272.7,
+   "n_nodes": 5,
+   "start_node": 325920584,
+   "end_node": 325920558
+  },
+  "vallejo_street": {
+   "name": "Vallejo Street",
+   "role": "town",
+   "length_osm_m": 286.5,
+   "n_nodes": 7,
+   "start_node": 53111608,
+   "end_node": 53111613
+  },
+  "vallejo_way": {
+   "name": "Vallejo Way",
+   "role": "town",
+   "length_osm_m": 631.2,
+   "n_nodes": 12,
+   "start_node": 1687474895,
+   "end_node": 846478252
+  },
+  "palomares_link_1": {
+   "name": "SR-84 / Palomares Rd link",
+   "role": "palomares_connector",
+   "way": 825001492,
+   "length_osm_m": 34.2,
+   "n_nodes": 3,
+   "start_node": 927296897,
+   "end_node": 734824060
+  }
+ }
+}

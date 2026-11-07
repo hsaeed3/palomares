@@ -138,6 +138,8 @@ def main():
     ap.add_argument("--out"); ap.add_argument("--workers", type=int, default=3); a = ap.parse_args()
     os.nice(5)
     import multiprocessing as mp
+    if a.mode == "commit":
+        return commit(a.out)
     P = load_poses()
     frames = a.frames or sorted(P)
     K = tuple(a.K) if a.K else tuple(json.load(open(CAMF))["K"]) if CAMF.exists() else (1021 / np.tan(np.radians(40.65)), 0, 0, 0)
@@ -155,6 +157,44 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def commit(src):
+    """write the edge-registered poses (json from `calib.py register --out`) into data/scene/poses.json (backup kept)"""
+    import shutil
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import register as REG
+    d = json.load(open(src)); cam = json.load(open(CAMF)); pj = SC.SCENE / "poses.json"
+    bak = SC.SCENE / "poses_pre_camera.json"
+    if not bak.exists(): shutil.copy(pj, bak)
+    old = {r["frame"]: r for r in json.load(open(bak))["poses"]}
+    pins = json.load(open(SC.SCENE / "pose_pins.json"))
+    out = {}
+    for f, r in old.items():
+        n = dict(r)
+        if str(f) in d["frames"]:
+            v = d["frames"][str(f)]; q = v["p"]; res = v["res"]
+            fw = [res[k][0] for k in res]; n.update(
+                s=round(q[0], 1), lateral=round(q[1], 2), height=round(q[2], 2), yaw=round(float(np.degrees(q[3])), 2),
+                pitch=round(float(np.degrees(q[4])), 2), roll=round(float(np.degrees(q[5])), 2), edge_cost=round(v["cost"], 2),
+                edge_res_px={k: [round(x, 1) for x in res[k]] for k in res}, reg="calib_edge")
+        n.update(fov_v=cam["render_vfov_deg"], lens=dict(model=cam["model"], f_px=cam["f_px"], dcx=cam["dcx"], dcy=cam["dcy"], k1=cam["k1"]),
+                 pinned=str(f) in pins)
+        out[f] = n
+    fr = sorted(out); sv = np.array([out[f]["s"] for f in fr])
+    w = np.array([0.05 + out[f]["conf"] + (5 if out[f]["pinned"] else 0) for f in fr]); iso = REG.isotonic(sv, w)
+    forced = []
+    for i, f in enumerate(fr):
+        if abs(sv[i] - iso[i]) > 1 and not out[f]["pinned"]:
+            out[f].update(s_fit=out[f]["s"], s=round(float(iso[i]), 1), forced_monotone=True); forced.append(f)
+        else:
+            out[f].pop("forced_monotone", None); out[f].pop("s_fit", None)
+    L = [out[f] for f in fr]
+    viol = [L[i]["frame"] for i in range(1, len(L)) if L[i]["s"] < L[i - 1]["s"] - 1]
+    json.dump(dict(note="local coords; pose relative to centerline tangent at s (lateral>0 = right, as scene.cam_basis); yaw/pitch/"
+                        "roll deg; intrinsics config/camera.json (docs/phase2/CAMERA.md); reg=calib_edge: 6-DoF by edge chamfer "
+                        "(scripts/p5/calib.py); edge_res_px = [model->photo, photo->model] mean px per feature.",
+                   lens=L[0]["lens"], fov_v=cam["render_vfov_deg"], monotone_violations=viol, poses=L), open(pj, "w"), indent=1)
+    print("wrote", pj, "forced monotone:", forced, "violations:", viol)
 
 
 def overlay(f, p, K, path, extra=None):

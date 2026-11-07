@@ -206,7 +206,7 @@ print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill}
 # Shoulder strips (1GRASS_sh*), paved aprons (1ROAD_AP*) and the near-road terrain are smoothed JOINTLY (welded by
 # position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
 # 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
-# surface and every vertex within KERB_KEEP m of it (kerbs are draped there) are pinned.  Heights only.
+# surface and every vertex within KERB_KEEP m of a 1KERB (kerbs are draped there) are pinned, i.e. vertices within KERB_KEEP m of a kerb.  Heights only.
 RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 25.0, 6.0, 4.5, 0.9
 
 
@@ -224,7 +224,9 @@ def runoff_clamp():
     apron = np.concatenate([np.full(len(m["T"].reshape(-1, 3)), m["name"].startswith("1ROAD_AP")) for m in sel])
     dr, _ = rkd.query(ky, workers=4)
     rk = {tuple(r) for r in np.round(rxy, 3)}
-    pin = np.array([tuple(r) in rk for r in ky]) | (dr < KERB_KEEP) | (dr > RUNOFF_R)
+    kerb_xy = [m["P"][:, :2] for g in ("kerbs_nb", "kerbs_sb") for m in G.get(g, []) if m["name"].startswith("1KERB")]
+    dk = cKDTree(np.concatenate(kerb_xy)).query(ky, workers=4)[0] if kerb_xy else np.full(nU, np.inf)
+    pin = np.array([tuple(r) in rk for r in ky]) | (dk < KERB_KEEP) | (dr > RUNOFF_R)
     e = np.r_[Tg[:, [0, 1]], Tg[:, [1, 2]], Tg[:, [2, 0]]]
     A = sp.coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(nU, nU)).tocsr(); A = ((A + A.T) > 0).astype(float)
     deg = np.asarray(A.sum(1)).ravel(); deg[deg == 0] = 1; Dinv = sp.diags(1 / deg)
@@ -243,9 +245,12 @@ def runoff_clamp():
         flatish = (np.abs(fn[a, 2]) > np.cos(np.radians(40))) & (np.abs(fn[b, 2]) > np.cos(np.radians(40)))
         return np.where(flatish | (an > 100), an, 0.0)
     z0 = z.copy(); ang = ang_(z); before = float(ang.max()); nb = int((ang > lim).sum())
-    for it in range(400):
+    for it in range(1200):
         hit = ang > lim
-        bad = np.zeros(nU, bool); bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True; bad &= ~pin
+        bad = np.zeros(nU, bool); bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True
+        if it > 150:                                       # stubborn folds: widen to the 1-ring
+            bad |= (A @ bad.astype(float)) > 0
+        bad &= ~pin
         if not bad.any():
             break
         L = Dinv @ (A @ z) - z
@@ -265,6 +270,10 @@ def runoff_clamp():
     r = dict(max_crease_before=round(before, 1), n_over_before=nb, max_crease_after_unpinned=round(after, 1),
              n_over_after=int(((ang > lim) & act).sum()), iters=it, max_dz=round(float(np.abs(z - z0).max()), 3),
              mean_dz_moved=round(float(np.abs(z - z0)[np.abs(z - z0) > 1e-6].mean()) if (np.abs(z - z0) > 1e-6).any() else 0.0, 3))
+    bad_ = (ang > lim) & act
+    if bad_.any():
+        dd = dr[Tg[a[bad_]]].min(1); pp = pin[Tg[a[bad_]]].sum(1) + pin[Tg[b[bad_]]].sum(1)
+        r["left_by_dist"] = np.histogram(dd, [0, 0.9, 1.5, 2.5, 3.5, 4.5, 99])[0].tolist(); r["left_pins"] = np.bincount(pp, minlength=7).tolist()
     print(f"run-off crease clamp: {r}")
     return r
 
