@@ -5,7 +5,9 @@ from scipy.ndimage import gaussian_filter1d
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DER = ROOT / "data/derived"
-BUILD = ROOT / "build"
+import os as _os
+# PALOMARES_BUILD_DIR: run steps against a copy (e.g. build_quick/, docs/PIPELINE.md) without touching build/
+BUILD = pathlib.Path(_os.environ.get("PALOMARES_BUILD_DIR", ROOT / "build"))
 CFG = yaml.safe_load(open(ROOT / "config/layouts.yaml"))
 SHOULDER_W = 0.8          # nominal default only; per-station widths: Road.sh_w_l / sh_w_r (edge_profile.py)
 

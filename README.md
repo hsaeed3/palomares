@@ -1,44 +1,74 @@
-# Palomares Road → Assetto Corsa hill climb
+# Palomares Road for Assetto Corsa
 
-Status: **Phase 2 in progress** (drivable SR-84 → summit, layouts `road_summit` / `track_summit`). Textures and terrain are calibrated against the spring GoPro frames in `assets/gopro/`. See `CLAUDE.md` for the plan.
+A free mod track of **Palomares Road**, a narrow, tree-covered canyon road in the hills between Fremont and Castro Valley, California. It runs 15.6 km from Niles Canyon Road (SR-84) over a 372 m summit and down into Castro Valley.
 
-- Report: [`reports/phase1_report.md`](reports/phase1_report.md)
-- 3D viewer: `reports/viewer.html` (single file. Open it in a desktop browser; it loads three.js from jsDelivr.)
-- Corner screenshots: [`assets/`](assets/README.md)
-- Data package: [`data/README.md`](data/README.md)
-- Rebuild: `make all` (network required)
+The road shape, hills, banking and width come from real aerial laser scans (USGS LiDAR), so it drives like the real road.
 
-Attribution: road geometry seed © OpenStreetMap contributors (ODbL). LiDAR, DEM and imagery: USGS 3DEP / The National Map (public domain). Textures: ambientCG (CC0).
+> **Status: early development builds.** Expect rough visuals in places. Feedback is very welcome (see the end of this page).
 
-## Build the installable track (zip for Content Manager)
+![In-game view](docs/readme/shot_1.jpg)
+![In-game view](docs/readme/shot_2.jpg)
 
-**Prebuilt:** `dist/palomares_road_v<VERSION>.zip` is committed via Git LFS. Download it from the GitHub file page ("Download raw file"), or run `make download` (it uses `git lfs pull` and falls back to a direct download). Without LFS, a plain clone only contains a small pointer file.
+## Maps
 
-To build it yourself:
+| Hill climb: Niles Canyon → Summit | Full road: Niles Canyon → Castro Valley |
+|---|---|
+| ![Summit map](docs/readme/map_summit.png) | ![Full map](docs/readme/map_full.png) |
 
-```bash
-pip install -r requirements.txt
-make package          # ~10-15 min on 4 cores (21_build_geometry dominates); 16 GB RAM; needs internet for ambientCG CC0 textures
-```
+![Elevation profile](docs/readme/profile.png)
 
-`make package` runs `scripts/p2/build.py`: a header, `[k/6] step...` lines, per-section timings inside the geometry
-step, a counter per kn5 file written, and a summary table with the zip path and size. If a step fails, the runner names
-it and exits non-zero. Colours and progress bars appear only on a terminal (set `NO_COLOR=1` to turn them off).
-`pip install tqdm` gives nicer bars, but it is optional. `make phase2` (`scripts/p2/run_phase2.sh`) uses the same runner with QA and renders.
+## Layouts
 
-GPU: there is no `make package-gpu`. The build time is in the constrained-Delaunay terrain triangulation
-(`triangle`, CPU-only, single-threaded) and in serial Python geometry code. Batched raster sampling on CUDA would save
-well under a second, so torch is not used.
+Each route comes in two styles:
+- **Road:** the real road, with real lane markings and no kerbs.
+- **Track:** the same road with race kerbs on the corners and no centre line.
 
-This writes `dist/palomares_road_v<VERSION>.zip`, with `palomares_road/` at the top level of the archive. Content Manager expects that layout.
-`make phase2` does the same plus QA (`reports/qa_phase2.md`) and the render/visual checks (needs Node + Playwright Chromium).
+| Route | Road style | Track style |
+|---|---|---|
+| Niles Canyon → Summit (the main hill climb, 7.4 km) | `road_summit` | `track_summit` |
+| Summit → Niles Canyon (downhill) | `road_summit_rev` | `track_summit_rev` |
+| Summit → Castro Valley | `road_north` | `track_north` |
+| Castro Valley → Summit | `road_north_rev` | `track_north_rev` |
+| Full road, Niles Canyon → Castro Valley (15.6 km) | `road_full` | `track_full` |
+| Full road, reverse | `road_full_rev` | `track_full_rev` |
 
-The build needs Linux or WSL with Python 3.11+. The Phase 1 data it uses (`data/derived/`) is in the repo, so no LiDAR download is needed.
+Every layout is point-to-point: you start at the bottom, and the timer stops at the finish gate. Use **Practice** or **Hotlap** mode.
 
-### Install
+**Coming next:** a free-roam map that adds the Niles town area and all of Niles Canyon Road. It will have its own Niles Canyon hill-climb layouts.
 
-- **Content Manager:** drag the zip onto the CM window (or *Content → Install*, or `Ctrl+V` the path), then confirm **Install**. CM reads `palomares_road/` from the archive.
-- **Manual:** unzip and copy `palomares_road/` into `<Steam>/steamapps/common/assettocorsa/content/tracks/`.
-- **RAR:** not needed, because CM installs `.zip`, `.rar` and `.7z` alike. If you want one anyway, re-pack the folder: `rar a palomares_road.rar palomares_road/` (keep the folder at the top level).
+## Download
 
-Then pick **Palomares Road** → layout `road_summit` (real road) or `track_summit` (kerbs, no centre line). Use Practice or Hotlap. More details are in [`docs/phase2/INSTALL.md`](docs/phase2/INSTALL.md).
+Get the newest zip from the [`dist/`](dist/) folder. Click the file, then **Download raw file**. The highest `devN` number is the latest build.
+
+## Install
+
+**With Content Manager (easiest):**
+1. Drag the downloaded zip onto the Content Manager window.
+2. Click **Install**.
+
+**Without Content Manager:**
+1. Unzip the file.
+2. Copy the `palomares_road_devN` folder into `steamapps/common/assettocorsa/content/tracks/`.
+
+Then pick **Palomares Road** in the track list and choose a layout.
+
+**Recommended:** Custom Shaders Patch (CSP) and Pure, for better trees, grass and lighting. The track also works without them.
+
+## Feedback
+
+Driving it and something feels off? Open an issue, or send a note with:
+- **Where:** distance from the start, or a landmark
+- **Layout:** which one you drove
+- **What's wrong:** for example a bump, grip, the road width, a missing or misplaced wall, or something that looks wrong
+- **A screenshot,** if you can
+
+## Credits
+
+- Road data © OpenStreetMap contributors (ODbL)
+- LiDAR elevation and aerial imagery: USGS / The National Map (public domain)
+- Textures: ambientCG and Poly Haven (CC0)
+- Street-level reference: Mapillary contributors (CC-BY-SA)
+
+---
+
+**Developers:** to rebuild the track yourself, start with [`docs/phase2/INSTALL.md`](docs/phase2/INSTALL.md). Build notes, reports and pipeline details are in [`docs/`](docs/), [`reports/`](reports/) and [`CLAUDE.md`](CLAUDE.md). The build command is `make package`.
