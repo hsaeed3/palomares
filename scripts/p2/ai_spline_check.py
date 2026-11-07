@@ -14,11 +14,11 @@ OUT = ROOT / "reports/racing_line/ai_check"; OUT.mkdir(parents=True, exist_ok=Tr
 road = Road(CFG["build_end_m"]); I = np.arange(len(road.s))
 xl, yl = road.xy(I, road.el); xr, yr = road.xy(I, -road.er)
 inv = np.linalg.inv(ac_from_local(np.eye(3)))           # AC -> local (linear axis swap)
-lays = sys.argv[1:] or sorted(p.parent.name for p in (BUILD / "palomares_road").glob("*/ai/fast_lane.ai"))
+lays = sys.argv[1:] or sorted(p.parent.parent.name for p in (BUILD / "palomares_road").glob("*/ai/fast_lane.ai"))
 summ = {}
 for lay in lays:
     r = A.read(BUILD / "palomares_road" / lay / "ai" / "fast_lane.ai")
-    P = r["P"].astype(float) @ inv.T; e = r["extra"]
+    P = r["P"].astype(float) @ inv; e = r["extra"]
     d = np.linalg.norm(np.diff(r["P"].astype(float), axis=0), axis=1)
     # height above the noiseless asphalt at the nearest station / offset
     from scipy.spatial import cKDTree

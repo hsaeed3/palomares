@@ -202,6 +202,71 @@ def fill_holes():
 n_open, n_fill = fill_holes()
 print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill} holes filled (1GRASS_hole_fill)")
 
+# ------------------------------------------------------------------ 1c. run-off crease clamp (dev6 FFB safety)
+# Shoulder strips (1GRASS_sh*), paved aprons (1ROAD_AP*) and the near-road terrain are smoothed JOINTLY (welded by
+# position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
+# 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
+# surface and every vertex within KERB_KEEP m of it (kerbs are draped there) are pinned.  Heights only.
+RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 22.0, 6.0, 10.0, 0.9
+
+
+def runoff_clamp():
+    main_road = [m for m in G["road"] if m["name"].startswith("1ROAD") and not m["name"].startswith("1ROAD_AP")]
+    rxy = np.concatenate([m["P"][:, :2] for m in main_road]); rkd = cKDTree(rxy)
+    sel = [m for m in G["road"] if m["name"].startswith(("1GRASS_sh", "1ROAD_AP"))] + \
+          [m for m in G["terrain"] if m["name"].startswith("1GRASS_t") or m["name"] == "1GRASS_hole_fill"]
+    # restrict terrain meshes to the ones that come near the road
+    sel = [m for m in sel if rkd.query(m["P"][:, :2], distance_upper_bound=RUNOFF_R)[0].min() < RUNOFF_R]
+    aP = np.concatenate([m["P"] for m in sel]); off = np.cumsum([0] + [len(m["P"]) for m in sel])
+    ky, inv = np.unique(np.round(aP[:, :2], 3), axis=0, return_inverse=True); inv = inv.ravel()
+    nU = len(ky); z = np.zeros(nU); z[inv] = aP[:, 2]
+    Tg = np.concatenate([inv[m["T"].reshape(-1, 3) + o] for m, o in zip(sel, off[:-1])])
+    apron = np.concatenate([np.full(len(m["T"].reshape(-1, 3)), m["name"].startswith("1ROAD_AP")) for m in sel])
+    dr, _ = rkd.query(ky, workers=4)
+    rk = {tuple(r) for r in np.round(rxy, 3)}
+    pin = np.array([tuple(r) in rk for r in ky]) | (dr < KERB_KEEP) | (dr > RUNOFF_R)
+    e = np.r_[Tg[:, [0, 1]], Tg[:, [1, 2]], Tg[:, [2, 0]]]
+    A = sp.coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(nU, nU)).tocsr(); A = ((A + A.T) > 0).astype(float)
+    deg = np.asarray(A.sum(1)).ravel(); deg[deg == 0] = 1; Dinv = sp.diags(1 / deg)
+    te = np.r_[np.sort(Tg[:, [0, 1]], 1), np.sort(Tg[:, [1, 2]], 1), np.sort(Tg[:, [2, 0]], 1)]
+    tid = np.tile(np.arange(len(Tg)), 3); o = np.lexsort((te[:, 1], te[:, 0])); te, tid = te[o], tid[o]
+    same = (te[1:] == te[:-1]).all(1); a, b = tid[:-1][same], tid[1:][same]
+    lim = np.where(apron[a] | apron[b], APRON_CREASE, RUNOFF_CREASE)
+    xy = ky
+
+    def ang_(zz):
+        P3 = np.c_[xy, zz]; fn = np.cross(P3[Tg[:, 1]] - P3[Tg[:, 0]], P3[Tg[:, 2]] - P3[Tg[:, 0]])
+        fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
+        return np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
+    z0 = z.copy(); ang = ang_(z); before = float(ang.max()); nb = int((ang > lim).sum())
+    for it in range(400):
+        hit = ang > lim
+        bad = np.zeros(nU, bool); bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True; bad &= ~pin
+        if not bad.any():
+            break
+        L = Dinv @ (A @ z) - z
+        z[bad] += 0.6 * L[bad]
+        ang = ang_(z)
+    act = ~(pin[Tg[a]].all(1) & pin[Tg[b]].all(1))
+    after = float(ang[act].max()) if act.any() else 0.0
+    for m, o_ in zip(sel, off[:-1]):
+        ii = inv[o_:o_ + len(m["P"])]
+        if np.abs(z[ii] - m["P"][:, 2]).max() > 1e-6:
+            m["P"] = m["P"].copy(); m["P"][:, 2] = z[ii]
+            P = m["P"]; T = m["T"].reshape(-1, 3)
+            fn = np.cross(P[T[:, 1]] - P[T[:, 0]], P[T[:, 2]] - P[T[:, 0]]); N = np.zeros_like(P)
+            for k in range(3):
+                np.add.at(N, T[:, k], fn)
+            m["N"] = N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12)
+    r = dict(max_crease_before=round(before, 1), n_over_before=nb, max_crease_after_unpinned=round(after, 1),
+             n_over_after=int(((ang > lim) & act).sum()), iters=it, max_dz=round(float(np.abs(z - z0).max()), 3),
+             mean_dz_moved=round(float(np.abs(z - z0)[np.abs(z - z0) > 1e-6].mean()) if (np.abs(z - z0) > 1e-6).any() else 0.0, 3))
+    print(f"run-off crease clamp: {r}")
+    return r
+
+
+runoff_stats = runoff_clamp()
+
 # ------------------------------------------------------------------ 2+3. collision rebuild (dev6, collision_conv.py)
 # The per-object boxes of 21b/21c/21e/race_assets and dev4's 4,213 trunk prisms are replaced by continuous welded
 # slabs per side (barrier + forest line), simple closed boxes for buildings and nothing for props/trees.
@@ -223,7 +288,7 @@ geo["meta"]["physics"] = dict(terrain_before=_prev.get("terrain_before") if TERR
                               terrain_after=_prev.get("terrain_after") if TERRAIN_DONE else after,
                               open_edges_near=_prev.get("open_edges_near") if TERRAIN_DONE else open_near,
                               open_edges_near_filled=n_open, holes_filled=n_fill,
-                              tree_colliders=0, collision=cstats)
+                              tree_colliders=0, collision=cstats, runoff_clamp=runoff_stats)
 geo["meta"]["physics_21d_done"] = True
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 (ROOT / "reports").mkdir(exist_ok=True)

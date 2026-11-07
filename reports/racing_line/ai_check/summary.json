@@ -1,0 +1,458 @@
+{
+ "road_full": {
+  "points": 15515,
+  "length_m": 15513.9384765625,
+  "spacing_min": 0.9994420815891174,
+  "spacing_max": 1.00051021950403,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00036534851460601203,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.022467673837477945,
+   0.060338422866209385,
+   0.09996084090332602
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 54.08040010391361,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.177906036376953
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.059171676635742
+  ],
+  "normal_y_min": 0.9835441708564758,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "road_full_rev": {
+  "points": 15519,
+  "length_m": 15517.939453125,
+  "spacing_min": 0.9994736546868674,
+  "spacing_max": 1.0005643977621053,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.0005788758280687034,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.016964575538182203,
+   0.06021117574573509,
+   0.10140429827895502
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 51.10214551328887,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.152362823486328
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.352380752563477
+  ],
+  "normal_y_min": 0.9828066229820251,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "road_north": {
+  "points": 8194,
+  "length_m": 8192.984375,
+  "spacing_min": 0.9994121552240968,
+  "spacing_max": 1.0006040876815396,
+  "length_monotone": true,
+  "length_vs_chords_m": 1.5292498574126512e-05,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.018334431876526766,
+   0.05987767503384589,
+   0.10520584511990615
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 82.63167229584762,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.176565170288086
+  ],
+  "side_r": [
+   1.2999999523162842,
+   7.223828315734863
+  ],
+  "normal_y_min": 0.9872016906738281,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "road_north_rev": {
+  "points": 8195,
+  "length_m": 8193.984375,
+  "spacing_min": 0.9994890540525193,
+  "spacing_max": 1.0005643977621053,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00019242293092247564,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.01614555487660141,
+   0.060270003641605285,
+   0.10349403468852755
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 74.93302060391102,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.152362823486328
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.352380752563477
+  ],
+  "normal_y_min": 0.988486647605896,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "road_summit": {
+  "points": 7382,
+  "length_m": 7380.95361328125,
+  "spacing_min": 0.999554417475701,
+  "spacing_max": 1.00046494903209,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00012241143576829927,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.02234047453556201,
+   0.06018368736670254,
+   0.09801575327563081
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 19.10322261696447,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   7.498964786529541
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.059171676635742
+  ],
+  "normal_y_min": 0.9835441708564758,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "road_summit_rev": {
+  "points": 7384,
+  "length_m": 7382.95556640625,
+  "spacing_min": 0.999522544082885,
+  "spacing_max": 1.0004558745321204,
+  "length_monotone": true,
+  "length_vs_chords_m": 3.875416678056354e-05,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.02216554517235238,
+   0.05902132467767274,
+   0.09456990241794799
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 23.974138596388308,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   7.343262672424316
+  ],
+  "side_r": [
+   1.2999999523162842,
+   7.489617824554443
+  ],
+  "normal_y_min": 0.9828014969825745,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_full": {
+  "points": 15515,
+  "length_m": 15513.9384765625,
+  "spacing_min": 0.9994420815891174,
+  "spacing_max": 1.00051021950403,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00036534851460601203,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.022467673837477945,
+   0.060338422866209385,
+   0.09996084090332602
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 54.08040010391361,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.177906036376953
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.059171676635742
+  ],
+  "normal_y_min": 0.9835441708564758,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_full_rev": {
+  "points": 15519,
+  "length_m": 15517.939453125,
+  "spacing_min": 0.9994736546868674,
+  "spacing_max": 1.0005643977621053,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.0005788758280687034,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.016964575538182203,
+   0.06021117574573509,
+   0.10140429827895502
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 51.10214551328887,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.152362823486328
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.352380752563477
+  ],
+  "normal_y_min": 0.9828066229820251,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_north": {
+  "points": 8194,
+  "length_m": 8192.984375,
+  "spacing_min": 0.9994121552240968,
+  "spacing_max": 1.0006040876815396,
+  "length_monotone": true,
+  "length_vs_chords_m": 1.5292498574126512e-05,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.018334431876526766,
+   0.05987767503384589,
+   0.10520584511990615
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 82.63167229584762,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.176565170288086
+  ],
+  "side_r": [
+   1.2999999523162842,
+   7.223828315734863
+  ],
+  "normal_y_min": 0.9872016906738281,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_north_rev": {
+  "points": 8195,
+  "length_m": 8193.984375,
+  "spacing_min": 0.9994890540525193,
+  "spacing_max": 1.0005643977621053,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00019242293092247564,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.01614555487660141,
+   0.060270003641605285,
+   0.10349403468852755
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 74.93302060391102,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   8.152362823486328
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.352380752563477
+  ],
+  "normal_y_min": 0.988486647605896,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_summit": {
+  "points": 7382,
+  "length_m": 7380.95361328125,
+  "spacing_min": 0.999554417475701,
+  "spacing_max": 1.00046494903209,
+  "length_monotone": true,
+  "length_vs_chords_m": 0.00012241143576829927,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.02234047453556201,
+   0.06018368736670254,
+   0.09801575327563081
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 19.10322261696447,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   7.498964786529541
+  ],
+  "side_r": [
+   1.2999999523162842,
+   8.059171676635742
+  ],
+  "normal_y_min": 0.9835441708564758,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ },
+ "track_summit_rev": {
+  "points": 7384,
+  "length_m": 7382.95556640625,
+  "spacing_min": 0.999522544082885,
+  "spacing_max": 1.0004558745321204,
+  "length_monotone": true,
+  "length_vs_chords_m": 3.875416678056354e-05,
+  "ids_ok": true,
+  "extra_count_ok": true,
+  "height_above_asphalt_m": [
+   0.02216554517235238,
+   0.05902132467767274,
+   0.09456990241794799
+  ],
+  "inside_edges": true,
+  "curvature_sign_flips_per_km": 23.974138596388308,
+  "direction_values": [
+   -1.0,
+   1.0
+  ],
+  "speed_kmh": [
+   0.0,
+   208.79998779296875
+  ],
+  "side_l": [
+   1.2999999523162842,
+   7.343262672424316
+  ],
+  "side_r": [
+   1.2999999523162842,
+   7.489617824554443
+  ],
+  "normal_y_min": 0.9828014969825745,
+  "extra_length": [
+   7.699999809265137,
+   7.699999809265137
+  ]
+ }
+}

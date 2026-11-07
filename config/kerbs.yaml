@@ -25,7 +25,7 @@ outside_exit_length_m: 20          # ... and runs this long
 merge_gap_m: 6                     # merge kerbs of the same type on the same side closer than this
 min_kerb_length_m: 6               # drop shorter pieces
 taper_m: 3.0                       # smoothstep taper of height AND width at both ends
-taper_min_width_frac: 0.25         # width at the very ends (fraction of full width)
+taper_min_width_frac: 0.5          # width at the very ends (fraction of full width)
 lift_m: 0.004                      # base lift above the road-plane/shoulder (no z-fighting); inner edge stays at 0
 max_above_shoulder_m: 0.012        # base continues the road plane, but at most this far above a falling shoulder
 skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
@@ -38,16 +38,17 @@ types:
     width_m: 0.60
     height_m: 0.025
     stripe_length_m: 1.2           # red / white block length
-    profile_t: [0.0, 0.06, 0.18, 0.35, 0.5, 0.65, 0.82, 0.94, 1.0]
-    profile_h: [0.0, 0.30, 0.75, 0.97, 1.0, 0.97, 0.75, 0.30, 0.0]
+    # dev6 FFB safety: wider, gentler lips (dev5's 0.06 lip became a 40-60 deg micro-step at the tapers)
+    profile_t: [0.0, 0.15, 0.30, 0.42, 0.5, 0.58, 0.70, 0.85, 1.0]
+    profile_h: [0.0, 0.25, 0.70, 0.95, 1.0, 0.95, 0.70, 0.25, 0.0]
     u0: 0.01
     u1: 0.49
   exit:                            # wide, flat-topped, low exit kerb
     width_m: 0.80
     height_m: 0.015
     stripe_length_m: 1.5
-    profile_t: [0.0, 0.08, 0.2, 0.5, 0.8, 0.92, 1.0]
-    profile_h: [0.0, 0.55, 0.95, 1.0, 0.95, 0.55, 0.0]
+    profile_t: [0.0, 0.15, 0.30, 0.5, 0.70, 0.85, 1.0]
+    profile_h: [0.0, 0.45, 0.92, 1.0, 0.92, 0.45, 0.0]
     u0: 0.51
     u1: 0.99
 

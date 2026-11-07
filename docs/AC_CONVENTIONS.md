@@ -69,6 +69,29 @@ Status: scripts/p2/kn5.py writes the 16 floats in this order, and `locator()` in
   past the finish gate; speeds are a standing-start GG profile. lapTime/sampleCount 0 (not a recording); AC builds
   its own lookup grid (hasGrid 0). **Not verified in game**: whether AC recomputes the speed/brake payload;
   if the ideal line colours look wrong, re-record in game (AI app) and keep ours as a fallback.
+- **Ideal-line fix (user report: "choppy, spaced-out single arrows, not a proper AC racing line").** Format was
+  already right; the content was not. Compared field by field against a real Kunos file (Sepang `fast_lane.ai`
+  from github.com/619motorsports/newksEditor, LFS; 3536 pts, closed loop, hasGrid 1) and against
+  compujuckel/AssettoServer `FastLaneParser.cs`, leBluem/io_import_accsv `export_ai.py`, CSP `AISplineEditor.lua`:
+
+  | Field | Kunos Sepang | ours before | ours now |
+  |---|---|---|---|
+  | point y | on the driven surface | exactly on the *noiseless* asphalt: under the +-4 mm surface noise, the +12 mm paint and +10 mm patch decals -> line z-fought / hidden, only scattered arrows showed (**main cause**) | +0.06 m above the asphalt (median 0.060, p1 0.02, p99 0.10 measured) |
+  | spacing | 1.1-4.5 m, mean 1.55 | 0.84-1.04 m (station-indexed, uneven) | uniform 1.000 m (+-0.001) |
+  | plan smoothness | smooth | 1-2 cm station jitter from road.xy(): curvature sign flipped ~575x/km | sigma-1 m plan smoothing (<3 cm in hairpins): ~20-80 flips/km, all on straights |
+  | extra[8] direction | **+-1** (turn side; AssettoServer: signed camber = camber * direction) | heading in radians (-pi..pi) - wrong | +-1, same sign convention as Kunos (-sign of d/ds atan2(z,x)); corr -1.0 |
+  | extra[12] length | ~7.2-8.0 everywhere (meaning unknown, NOT cumulative) | cumulative length up to 15.5 km | 7.7 constant |
+  | forward xyz, tag, lat-g | 0 | unit forward, 0, 0 | unchanged (CSP editor uses forwardVector) |
+  | lapTime / sampleCount / hasGrid | 0 / 0 / 1 | 0 / 0 / 0 | unchanged (AC builds the grid; community writers ship 0) |
+  | ids / point length | 0..n-1, cumulative from 0 | same | same |
+  | speed | m/s (8-40) | m/s | m/s |
+- Open vs closed: Kunos circuits are closed (last->first ~1 m). For point-to-point we keep an open spline
+  (start 30 m before the gate, end 30 m past the finish). No source states a minimum or maximum point count;
+  Kunos files use thousands (Nordschleife-class ~15-20k), so 15.5k for road_full is in range. **Still not verified
+  in game**: whether the ideal-line renderer reads extra[12]; if arrows still look wrong, record a line in game
+  (CSP AI app) and compare.
+- Check: `scripts/p2/ai_spline_check.py` -> reports/racing_line/ai_check/ (summary.json, 4 tightest corners per
+  direction with the parsed points over the asphalt edges).
 - No `pit_lane.ai` (one pit box, p2p: AC runs without one on many community p2p tracks) and no `ai_hints.ini`
   (CSP-only, optional). Not verified in game.
 - Kerbs and brake boards of the `track_*` layouts are derived from the same line (config/kerbs.yaml `placement`,
