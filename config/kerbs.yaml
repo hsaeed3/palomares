@@ -25,13 +25,14 @@ outside_exit_length_m: 20          # ... and runs this long
 merge_gap_m: 6                     # merge kerbs of the same type on the same side closer than this
 min_kerb_length_m: 6               # drop shorter pieces
 taper_m: 3.0                       # smoothstep taper of height AND width at both ends
-max_shoulder_kink_m: 0.02         # no kerb over a shoulder ditch/hump deeper than this (mid vs chord)
-max_shoulder_grade: 0.15          # no kerb where the shoulder cross-slope differs from the road plane by more than this
+max_shoulder_kink_m: 0.04         # no kerb over a shoulder ditch/hump deeper than this (mid vs chord)
+max_shoulder_grade: 0.25          # no kerb where the shoulder cross-slope differs from the road plane by more than this
 max_shoulder_drop_m: 0.025         # raised profile fades out where the shoulder falls > this below the road plane
 max_lip_slope: 0.08                # kerb height <= this x local kerb width (narrow shoulders => lower kerb)
 taper_min_width_frac: 0.5          # width at the very ends (fraction of full width)
 lift_m: 0.004                      # base lift above the road-plane/shoulder (no z-fighting); inner edge stays at 0
 max_above_shoulder_m: 0.012        # base continues the road plane, but at most this far above a falling shoulder
+bad_run_m: 5                       # reject a stretch only when the shoulder is bad for this long
 skip_s_ranges: [[0, 30]]           # start area (SR-84 junction)
 
 # Profiles: profile_t = fraction of the width from the road edge (0) outward (1); profile_h = fraction of height_m.

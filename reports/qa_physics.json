@@ -24,17 +24,17 @@
  "collision": {
   "shared": {
    "linear": 403,
-   "building": 857,
-   "prop": 395,
+   "building": 866,
+   "prop": 386,
    "across": 2,
    "old_meshes": 135,
    "old_tris": 86144,
-   "building_clusters": 260,
-   "stations_cut": 24,
+   "building_clusters": 1,
+   "stations_cut": 0,
    "slab_meshes": 122,
-   "runs": 601,
+   "runs": 603,
    "forest_stations": 670,
-   "new_tris": 59976,
+   "new_tris": 57336,
    "new_meshes": 125
   },
   "dressing": {
@@ -45,14 +45,14 @@
    "old_meshes": 2,
    "old_tris": 3104,
    "building_clusters": 3,
-   "stations_cut": 161,
-   "slab_meshes": 36,
-   "runs": 80,
+   "stations_cut": 158,
+   "slab_meshes": 38,
+   "runs": 76,
    "forest_stations": 0,
-   "new_tris": 4308,
-   "new_meshes": 37
+   "new_tris": 4404,
+   "new_meshes": 39
   },
-  "new_meshes": 162
+  "new_meshes": 164
  },
  "runoff_clamp": {
   "max_crease_before": 72.2,

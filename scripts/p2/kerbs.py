@@ -101,6 +101,11 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
             _kink = np.abs(SZ[:, 1] - (SZ[:, 0] + SZ[:, 2]) / 2)                    # ditch / hump inside the shoulder
             _grade = np.abs((SZ[:, 2] - SZ[:, 0]) / np.maximum(_swa, 0.1) - slope_all)  # shoulder cross-slope vs road plane
             _bad = (_kink > K.get("max_shoulder_kink_m", 0.02)) | (_grade > K.get("max_shoulder_grade", 0.15))
+            # dev7: reject only sustained bad shoulder (>= bad_run_m); isolated rows used to cut every kerb into
+            # pieces shorter than min_kerb_length_m (dev6 rebuild: 2 kerbs left on 15.6 km). The kerb profile is
+            # smoothed over these rows instead; qa_ffb_safety still fails any kerb crease > 25 deg.
+            from scipy.ndimage import binary_opening as _bo
+            _bad = _bo(_bad, structure=np.ones(int(K.get("bad_run_m", 5)), bool))
             rl[_bad] = 0
             for v, typ in ((1, "apex"), (2, "exit")):
                 P_ = T[typ]

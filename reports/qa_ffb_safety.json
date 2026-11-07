@@ -1,9 +1,6 @@
 {
- "ok": false,
- "fails": [
-  "overlapping colliders palomares_roadside.kn5:1WALL_bld_00 / palomares_roadside.kn5:1WALL_bld_00 at s=13356",
-  "overlapping colliders palomares_roadside.kn5:1WALL_bld_00 / palomares_roadside.kn5:1WALL_bld_00 at s=10560"
- ],
+ "ok": true,
+ "fails": [],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -251,8 +248,8 @@
     "csp_shader_replacements": 1
    }
   },
-  "wall_tris_total": 64284,
-  "wall_tris_per_km": 4125,
-  "wall_components": 937
+  "wall_tris_total": 61740,
+  "wall_tris_per_km": 3962,
+  "wall_components": 685
  }
 }
