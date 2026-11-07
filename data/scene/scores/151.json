@@ -50,21 +50,21 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8876,
+   "px_render": 8875,
    "px_seg": 0
   },
   "vegetation_tree": {
    "iou": 0.6636,
    "precision": 0.8514,
    "recall": 0.7505,
-   "px_render": 69718,
+   "px_render": 69716,
    "px_seg": 79095
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8029,
+   "px_render": 8028,
    "px_seg": 0
   },
   "trunk": {
@@ -78,14 +78,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2,
+   "px_render": 4,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 624,
+   "px_render": 626,
    "px_seg": 141
   },
   "fence": {
@@ -157,21 +157,21 @@
    "iou": 0.0161,
    "precision": 0.0232,
    "recall": 0.0503,
-   "px_render": 10600,
+   "px_render": 10599,
    "px_seg": 4893
   },
   "tree": {
    "iou": 0.6636,
    "precision": 0.8514,
    "recall": 0.7505,
-   "px_render": 69718,
+   "px_render": 69716,
    "px_seg": 79095
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8029,
+   "px_render": 8028,
    "px_seg": 0
   },
   "trunk": {
@@ -182,24 +182,24 @@
    "px_seg": 148
   },
   "vegetation": {
-   "iou": 0.6686,
+   "iou": 0.6687,
    "precision": 0.7966,
    "recall": 0.8064,
-   "px_render": 80218,
+   "px_render": 80215,
    "px_seg": 79243
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2,
+   "px_render": 4,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 624,
+   "px_render": 626,
    "px_seg": 141
   },
   "barrier": {
@@ -322,9 +322,25 @@
    "occluded": true
   },
   {
+   "id": "sign_f155a",
+   "cls": "sign",
+   "px": 2,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  },
+  {
    "id": "mailbox_s0013",
    "cls": "mailbox",
    "px": 4,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  },
+  {
+   "id": "post_f154a",
+   "cls": "post",
+   "px": 2,
    "match": 0.0,
    "found": false,
    "occluded": true
@@ -347,6 +363,6 @@
   }
  ],
  "score": 0.4814,
- "t_render_s": 0.682,
- "t_total_s": 0.798
+ "t_render_s": 0.476,
+ "t_total_s": 0.556
 }

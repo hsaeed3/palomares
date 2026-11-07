@@ -1,0 +1,10 @@
+# Road markings, checked by eye against GoPro frames 1-219 (every 3rd frame, dev5 sweep 2026-11-07).
+# Read by scripts/p2/21_build_geometry.py on top of data/derived/markings.csv (LiDAR intensity detection, which
+# misses worn/shaded edge lines under canopy: ~40 % of 50 m bins were "not_detected" although the photos show paint).
+# Every checked frame shows a double yellow centre line and solid white edge lines on both sides, the whole length.
+# Shared by road_* and track_* layouts (group lines_road), so both keep the same yellow lines.
+center_type: double_yellow        # applied to every station unless a span below says otherwise
+edge_left: solid                  # solid | csv (use markings.csv detection)
+edge_right: solid
+# spans: [{s0, s1, center: double_yellow|broken_yellow|none, edge_left: solid|none, edge_right: solid|none, note}]
+spans: []

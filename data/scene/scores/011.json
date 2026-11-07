@@ -50,35 +50,35 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 27864,
+   "px_render": 27340,
    "px_seg": 0
   },
   "rock_cut": {
-   "iou": 0.1934,
-   "precision": 0.5658,
-   "recall": 0.227,
-   "px_render": 20868,
+   "iou": 0.2032,
+   "precision": 0.5469,
+   "recall": 0.2443,
+   "px_render": 23237,
    "px_seg": 52010
   },
   "vegetation_tree": {
-   "iou": 0.5019,
-   "precision": 0.6644,
+   "iou": 0.5026,
+   "precision": 0.6656,
    "recall": 0.6725,
-   "px_render": 50319,
+   "px_render": 50227,
    "px_seg": 49712
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 6237,
+   "px_render": 4619,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2791,
+   "px_render": 2656,
    "px_seg": 0
   },
   "sign_face": {
@@ -140,38 +140,38 @@
    "px_seg": 6964
   },
   "terrain": {
-   "iou": 0.5778,
-   "precision": 0.8972,
-   "recall": 0.6188,
-   "px_render": 51237,
+   "iou": 0.601,
+   "precision": 0.9007,
+   "recall": 0.6436,
+   "px_render": 53082,
    "px_seg": 74287
   },
   "tree": {
-   "iou": 0.5019,
-   "precision": 0.6644,
+   "iou": 0.5026,
+   "precision": 0.6656,
    "recall": 0.6725,
-   "px_render": 50319,
+   "px_render": 50227,
    "px_seg": 49712
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 6237,
+   "px_render": 4619,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2791,
+   "px_render": 2656,
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.5071,
-   "precision": 0.6183,
+   "iou": 0.5204,
+   "precision": 0.6382,
    "recall": 0.7382,
-   "px_render": 59347,
+   "px_render": 57502,
    "px_seg": 49712
   },
   "sign": {
@@ -198,6 +198,22 @@
  },
  "instances": [
   {
+   "id": "rock_a2m006",
+   "cls": "rock",
+   "px": 2283,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  },
+  {
+   "id": "rock_a2m007",
+   "cls": "rock",
+   "px": 395,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  },
+  {
    "id": "guardrail_s0001",
    "cls": "guardrail",
    "px": 151,
@@ -206,7 +222,7 @@
    "occluded": false
   }
  ],
- "score": 0.5812,
- "t_render_s": 0.884,
- "t_total_s": 0.969
+ "score": 0.5903,
+ "t_render_s": 2.035,
+ "t_total_s": 2.235
 }

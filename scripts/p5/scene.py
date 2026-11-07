@@ -202,7 +202,23 @@ def ledger_place(o):
     d = side * (half + float(o.get("off", 0) or 0))
     x = np.interp(ss, S, X); y = np.interp(ss, S, Y); z = np.interp(ss, S, Z)
     i = np.clip(np.round(ss).astype(int), 0, len(S) - 1)
-    return x - TY[i] * d, y + TX[i] * d, z + float(o.get("dz", 0) or 0), np.arctan2(TY[i], TX[i])
+    px, py = x - TY[i] * d, y + TX[i] * d
+    # same rule as 21e: blend from road-edge height to the DTM ground over the first 1.2 m beyond the edge
+    offv = float(o.get("off", 0) or 0)
+    if o.get("cls") not in ("building", "bridge", "marking", "driveway") and offv > 0:
+        zg = _ground(px, py); w = min(max(offv / 1.2, 0), 1)
+        z = np.where(np.isfinite(zg), z * (1 - w) + zg * w, z)
+    return px, py, z + float(o.get("dz", 0) or 0), np.arctan2(TY[i], TX[i])
+
+
+_DTM = None
+def _ground(x, y):
+    global _DTM
+    if _DTM is None:
+        import sys; sys.path.insert(0, str(ROOT / "scripts/p2")); import geom
+        D = ROOT / "data/derived"; _DTM = (geom.Raster(D / "dtm_r050_b40.tif"), geom.Raster(D / "dtm_r100_b150.tif"))
+    z = _DTM[0].sample(np.atleast_1d(x), np.atleast_1d(y)); z2 = _DTM[1].sample(np.atleast_1d(x), np.atleast_1d(y))
+    return np.where(np.isfinite(z), z, z2)
 
 
 def _box(cx, cy, z0, hd, w, dp, h):

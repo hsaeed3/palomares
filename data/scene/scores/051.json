@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 31301,
+   "px_render": 31196,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,7 +71,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 19710,
+   "px_render": 19703,
    "px_seg": 0
   },
   "trunk": {
@@ -108,6 +108,13 @@
    "recall": 0.1436,
    "px_render": 336,
    "px_seg": 571
+  },
+  "other_prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 112,
+   "px_seg": 0
   }
  },
  "groups": {
@@ -147,10 +154,10 @@
    "px_seg": 22028
   },
   "terrain": {
-   "iou": 0.3501,
-   "precision": 0.4019,
+   "iou": 0.3512,
+   "precision": 0.4032,
    "recall": 0.7312,
-   "px_render": 31556,
+   "px_render": 31451,
    "px_seg": 17342
   },
   "tree": {
@@ -164,7 +171,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 19710,
+   "px_render": 19703,
    "px_seg": 0
   },
   "trunk": {
@@ -175,10 +182,10 @@
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.7658,
+   "iou": 0.7657,
    "precision": 0.907,
-   "recall": 0.831,
-   "px_render": 87163,
+   "recall": 0.8309,
+   "px_render": 87156,
    "px_seg": 95141
   },
   "sign": {
@@ -201,9 +208,24 @@
    "recall": 0.1436,
    "px_render": 336,
    "px_seg": 571
+  },
+  "prop": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 112,
+   "px_seg": 0
   }
  },
  "instances": [
+  {
+   "id": "debris_a2m012",
+   "cls": "debris",
+   "px": 112,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
   {
    "id": "post_s0024",
    "cls": "post",
@@ -261,7 +283,7 @@
    "occluded": true
   }
  ],
- "score": 0.5937,
- "t_render_s": 0.93,
- "t_total_s": 0.991
+ "score": 0.594,
+ "t_render_s": 2.078,
+ "t_total_s": 2.277
 }

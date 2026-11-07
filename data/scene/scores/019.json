@@ -50,14 +50,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 30698,
+   "px_render": 29798,
    "px_seg": 0
   },
   "rock_cut": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 26937,
+   "px_render": 25860,
    "px_seg": 24215
   },
   "vegetation_tree": {
@@ -71,7 +71,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2847,
+   "px_render": 4824,
    "px_seg": 0
   },
   "trunk": {
@@ -140,10 +140,10 @@
    "px_seg": 9279
   },
   "terrain": {
-   "iou": 0.4782,
-   "precision": 0.6704,
-   "recall": 0.6251,
-   "px_render": 62943,
+   "iou": 0.4673,
+   "precision": 0.6711,
+   "recall": 0.6061,
+   "px_render": 60966,
    "px_seg": 67508
   },
   "tree": {
@@ -157,7 +157,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2847,
+   "px_render": 4824,
    "px_seg": 0
   },
   "trunk": {
@@ -168,10 +168,10 @@
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.4482,
-   "precision": 0.778,
-   "recall": 0.5139,
-   "px_render": 35877,
+   "iou": 0.4496,
+   "precision": 0.7552,
+   "recall": 0.5263,
+   "px_render": 37854,
    "px_seg": 54315
   },
   "pole": {
@@ -204,9 +204,25 @@
    "match": 0.31,
    "found": false,
    "occluded": false
+  },
+  {
+   "id": "shrub_a2m009",
+   "cls": "shrub",
+   "px": 1031,
+   "match": 0.655,
+   "found": true,
+   "occluded": false
+  },
+  {
+   "id": "shrub_a2m010",
+   "cls": "shrub",
+   "px": 963,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
   }
  ],
- "score": 0.4506,
- "t_render_s": 0.966,
- "t_total_s": 1.056
+ "score": 0.4482,
+ "t_render_s": 2.059,
+ "t_total_s": 2.232
 }

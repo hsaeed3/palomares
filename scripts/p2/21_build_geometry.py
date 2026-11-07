@@ -517,6 +517,19 @@ idx_all = np.arange(2, N - 2)
 ctype = np.array([mk_at(s)["assumed_center_type"] for s in road.s])
 ledge = np.array([mk_at(s)["left_edge_line"] in ("likely", "possible") for s in road.s])
 redge = np.array([mk_at(s)["right_edge_line"] in ("likely", "possible") for s in road.s])
+# config/markings.yaml: photo-checked overrides (intensity detection misses most edge paint under canopy)
+_MKC = yaml.safe_load(open(ROOT / "config/markings.yaml")) if (ROOT / "config/markings.yaml").exists() else {}
+if _MKC.get("center_type"):
+    ctype[:] = _MKC["center_type"]
+if _MKC.get("edge_left", "csv") == "solid":
+    ledge[:] = True
+if _MKC.get("edge_right", "csv") == "solid":
+    redge[:] = True
+for _sp in _MKC.get("spans") or []:
+    _m = (road.s >= _sp["s0"]) & (road.s < _sp["s1"])
+    if "center" in _sp: ctype[_m] = _sp["center"]
+    if "edge_left" in _sp: ledge[_m] = _sp["edge_left"] == "solid"
+    if "edge_right" in _sp: redge[_m] = _sp["edge_right"] == "solid"
 EW = RS.EDGE_RIBBON
 for c in range(nchunks):
     ic = idx_all[(idx_all >= c * CHUNK) & (idx_all <= (c + 1) * CHUNK)]

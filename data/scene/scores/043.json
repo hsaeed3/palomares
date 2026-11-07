@@ -33,10 +33,10 @@
    "px_seg": 4247
   },
   "shoulder_dirt": {
-   "iou": 0.064,
-   "precision": 0.1984,
-   "recall": 0.0864,
-   "px_render": 3816,
+   "iou": 0.0652,
+   "precision": 0.198,
+   "recall": 0.0885,
+   "px_render": 3919,
    "px_seg": 8764
   },
   "terrain_grass": {
@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 29040,
+   "px_render": 29020,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,7 +71,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 21445,
+   "px_render": 21364,
    "px_seg": 0
   },
   "trunk": {
@@ -89,10 +89,10 @@
    "px_seg": 16
   },
   "guardrail": {
-   "iou": 0.2904,
-   "precision": 0.4207,
+   "iou": 0.2905,
+   "precision": 0.4208,
    "recall": 0.4839,
-   "px_render": 5187,
+   "px_render": 5185,
    "px_seg": 4509
   },
   "wall": {
@@ -133,17 +133,17 @@
    "px_seg": 4247
   },
   "shoulder": {
-   "iou": 0.064,
-   "precision": 0.1984,
-   "recall": 0.0864,
-   "px_render": 3816,
+   "iou": 0.0652,
+   "precision": 0.198,
+   "recall": 0.0885,
+   "px_render": 3919,
    "px_seg": 8764
   },
   "terrain": {
-   "iou": 0.4052,
-   "precision": 0.5258,
+   "iou": 0.4054,
+   "precision": 0.5261,
    "recall": 0.6385,
-   "px_render": 38053,
+   "px_render": 38033,
    "px_seg": 31334
   },
   "tree": {
@@ -157,7 +157,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 21445,
+   "px_render": 21364,
    "px_seg": 0
   },
   "trunk": {
@@ -168,10 +168,10 @@
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.7213,
-   "precision": 0.8574,
+   "iou": 0.7219,
+   "precision": 0.8583,
    "recall": 0.8196,
-   "px_render": 76926,
+   "px_render": 76845,
    "px_seg": 80470
   },
   "pole": {
@@ -182,10 +182,10 @@
    "px_seg": 16
   },
   "barrier": {
-   "iou": 0.2845,
-   "precision": 0.4207,
+   "iou": 0.2846,
+   "precision": 0.4208,
    "recall": 0.4677,
-   "px_render": 5187,
+   "px_render": 5185,
    "px_seg": 4665
   }
  },
@@ -193,9 +193,17 @@
   {
    "id": "guardrail_s0007",
    "cls": "guardrail",
-   "px": 5187,
+   "px": 5185,
    "match": 0.421,
    "found": true,
+   "occluded": false
+  },
+  {
+   "id": "driveway_a2m002",
+   "cls": "driveway",
+   "px": 169,
+   "match": 0.343,
+   "found": false,
    "occluded": false
   },
   {
@@ -223,7 +231,7 @@
    "occluded": false
   }
  ],
- "score": 0.4572,
- "t_render_s": 0.784,
- "t_total_s": 0.875
+ "score": 0.4574,
+ "t_render_s": 1.709,
+ "t_total_s": 1.909
 }

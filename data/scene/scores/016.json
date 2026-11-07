@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 28177,
+   "px_render": 28174,
    "px_seg": 0
   },
   "rock_cut": {
@@ -63,22 +63,22 @@
   "vegetation_tree": {
    "iou": 0.4467,
    "precision": 0.9292,
-   "recall": 0.4625,
-   "px_render": 52361,
+   "recall": 0.4624,
+   "px_render": 52359,
    "px_seg": 105212
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 14295,
+   "px_render": 14301,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 1500,
+   "px_render": 1499,
    "px_seg": 13
   },
   "pole": {
@@ -147,38 +147,38 @@
    "px_seg": 15298
   },
   "terrain": {
-   "iou": 0.1847,
+   "iou": 0.1848,
    "precision": 0.196,
    "recall": 0.7632,
-   "px_render": 33508,
+   "px_render": 33505,
    "px_seg": 8605
   },
   "tree": {
    "iou": 0.4467,
    "precision": 0.9292,
-   "recall": 0.4625,
-   "px_render": 52361,
+   "recall": 0.4624,
+   "px_render": 52359,
    "px_seg": 105212
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 14295,
+   "px_render": 14301,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 1500,
+   "px_render": 1499,
    "px_seg": 13
   },
   "vegetation": {
    "iou": 0.5836,
    "precision": 0.9375,
-   "recall": 0.6072,
-   "px_render": 68156,
+   "recall": 0.6073,
+   "px_render": 68159,
    "px_seg": 105225
   },
   "pole": {
@@ -237,6 +237,14 @@
    "occluded": true
   },
   {
+   "id": "shrub_a2m008",
+   "cls": "shrub",
+   "px": 9,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  },
+  {
    "id": "driveway_s0004",
    "cls": "driveway",
    "px": 1,
@@ -254,6 +262,6 @@
   }
  ],
  "score": 0.3917,
- "t_render_s": 0.711,
- "t_total_s": 0.802
+ "t_render_s": 1.653,
+ "t_total_s": 1.853
 }

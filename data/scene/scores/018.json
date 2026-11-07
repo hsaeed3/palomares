@@ -50,28 +50,28 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 19915,
+   "px_render": 18848,
    "px_seg": 0
   },
   "rock_cut": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 119,
+   "px_render": 110,
    "px_seg": 15288
   },
   "vegetation_tree": {
-   "iou": 0.6912,
+   "iou": 0.6914,
    "precision": 0.9777,
-   "recall": 0.7023,
-   "px_render": 89351,
+   "recall": 0.7024,
+   "px_render": 89373,
    "px_seg": 124389
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 9188,
+   "px_render": 10260,
    "px_seg": 0
   },
   "trunk": {
@@ -85,14 +85,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 40,
+   "px_render": 27,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 824,
+   "px_render": 819,
    "px_seg": 284
   },
   "guardrail": {
@@ -161,24 +161,24 @@
    "px_seg": 5247
   },
   "terrain": {
-   "iou": 0.2612,
-   "precision": 0.362,
+   "iou": 0.2715,
+   "precision": 0.3822,
    "recall": 0.484,
-   "px_render": 20440,
+   "px_render": 19364,
    "px_seg": 15288
   },
   "tree": {
-   "iou": 0.6912,
+   "iou": 0.6914,
    "precision": 0.9777,
-   "recall": 0.7023,
-   "px_render": 89351,
+   "recall": 0.7024,
+   "px_render": 89373,
    "px_seg": 124389
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 9188,
+   "px_render": 10260,
    "px_seg": 0
   },
   "trunk": {
@@ -189,24 +189,24 @@
    "px_seg": 120
   },
   "vegetation": {
-   "iou": 0.7801,
-   "precision": 0.9762,
-   "recall": 0.7952,
-   "px_render": 101426,
+   "iou": 0.7885,
+   "precision": 0.9763,
+   "recall": 0.8039,
+   "px_render": 102520,
    "px_seg": 124509
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 40,
+   "px_render": 27,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 824,
+   "px_render": 819,
    "px_seg": 284
   },
   "barrier": {
@@ -234,9 +234,17 @@
    "occluded": false
   },
   {
+   "id": "shrub_a2m008",
+   "cls": "shrub",
+   "px": 1461,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  },
+  {
    "id": "sign_s0009",
    "cls": "sign",
-   "px": 46,
+   "px": 28,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -256,9 +264,25 @@
    "match": 0.0,
    "found": false,
    "occluded": false
+  },
+  {
+   "id": "shrub_a2m009",
+   "cls": "shrub",
+   "px": 12,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "shrub_a2m010",
+   "cls": "shrub",
+   "px": 1,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
   }
  ],
- "score": 0.4797,
- "t_render_s": 0.885,
- "t_total_s": 0.978
+ "score": 0.4844,
+ "t_render_s": 1.956,
+ "t_total_s": 2.169
 }

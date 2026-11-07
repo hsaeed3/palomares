@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 22302,
+   "px_render": 20264,
    "px_seg": 0
   },
   "rock_cut": {
@@ -61,17 +61,17 @@
    "px_seg": 1324
   },
   "vegetation_tree": {
-   "iou": 0.4817,
-   "precision": 0.9338,
-   "recall": 0.4987,
-   "px_render": 54666,
+   "iou": 0.4506,
+   "precision": 0.9296,
+   "recall": 0.4666,
+   "px_render": 51375,
    "px_seg": 102354
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 24378,
+   "px_render": 23245,
    "px_seg": 0
   },
   "trunk": {
@@ -85,7 +85,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 388,
+   "px_render": 6850,
    "px_seg": 8563
   },
   "guardrail": {
@@ -140,24 +140,24 @@
    "px_seg": 20693
   },
   "terrain": {
-   "iou": 0.039,
-   "precision": 0.0416,
+   "iou": 0.0426,
+   "precision": 0.0458,
    "recall": 0.3762,
-   "px_render": 22425,
+   "px_render": 20387,
    "px_seg": 2483
   },
   "tree": {
-   "iou": 0.4817,
-   "precision": 0.9338,
-   "recall": 0.4987,
-   "px_render": 54666,
+   "iou": 0.4506,
+   "precision": 0.9296,
+   "recall": 0.4666,
+   "px_render": 51375,
    "px_seg": 102354
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 24378,
+   "px_render": 23245,
    "px_seg": 0
   },
   "trunk": {
@@ -168,17 +168,17 @@
    "px_seg": 39
   },
   "vegetation": {
-   "iou": 0.6487,
-   "precision": 0.8996,
-   "recall": 0.6994,
-   "px_render": 79597,
+   "iou": 0.6087,
+   "precision": 0.8937,
+   "recall": 0.6561,
+   "px_render": 75173,
    "px_seg": 102393
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 388,
+   "px_render": 6850,
    "px_seg": 8563
   },
   "barrier": {
@@ -200,13 +200,13 @@
   {
    "id": "pole_s0037",
    "cls": "pole",
-   "px": 388,
+   "px": 6850,
    "match": 0.0,
    "found": false,
    "occluded": false
   }
  ],
- "score": 0.4264,
- "t_render_s": 1.111,
- "t_total_s": 1.207
+ "score": 0.4173,
+ "t_render_s": 1.748,
+ "t_total_s": 1.964
 }

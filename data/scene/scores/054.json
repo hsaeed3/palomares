@@ -12,10 +12,10 @@
    "px_seg": 8355
   },
   "road": {
-   "iou": 0.6157,
+   "iou": 0.6158,
    "precision": 0.6662,
-   "recall": 0.8904,
-   "px_render": 39857,
+   "recall": 0.8905,
+   "px_render": 39860,
    "px_seg": 29821
   },
   "marking_yellow": {
@@ -26,10 +26,10 @@
    "px_seg": 898
   },
   "marking_white": {
-   "iou": 0.0509,
-   "precision": 0.1152,
+   "iou": 0.051,
+   "precision": 0.1154,
    "recall": 0.0837,
-   "px_render": 1658,
+   "px_render": 1655,
    "px_seg": 2283
   },
   "shoulder_dirt": {
@@ -126,10 +126,10 @@
    "px_seg": 8355
   },
   "road": {
-   "iou": 0.6157,
+   "iou": 0.6158,
    "precision": 0.6662,
-   "recall": 0.8904,
-   "px_render": 39857,
+   "recall": 0.8905,
+   "px_render": 39860,
    "px_seg": 29821
   },
   "marking_yellow": {
@@ -140,10 +140,10 @@
    "px_seg": 898
   },
   "marking_white": {
-   "iou": 0.0509,
-   "precision": 0.1152,
+   "iou": 0.051,
+   "precision": 0.1154,
    "recall": 0.0837,
-   "px_render": 1658,
+   "px_render": 1655,
    "px_seg": 2283
   },
   "shoulder": {
@@ -261,7 +261,7 @@
   {
    "id": "marking_s0004",
    "cls": "marking",
-   "px": 10,
+   "px": 6,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -292,6 +292,6 @@
   }
  ],
  "score": 0.4443,
- "t_render_s": 0.788,
- "t_total_s": 0.894
+ "t_render_s": 1.396,
+ "t_total_s": 1.559
 }

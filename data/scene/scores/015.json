@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 33800,
+   "px_render": 33728,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,21 +71,21 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 14300,
+   "px_render": 14286,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2745,
+   "px_render": 2650,
    "px_seg": 0
   },
   "sign_face": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 135,
+   "px_render": 234,
    "px_seg": 217
   },
   "sign_back": {
@@ -99,7 +99,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 146,
+   "px_render": 228,
    "px_seg": 610
   },
   "guardrail": {
@@ -161,10 +161,10 @@
    "px_seg": 1947
   },
   "terrain": {
-   "iou": 0.4104,
-   "precision": 0.6841,
-   "recall": 0.5064,
-   "px_render": 34937,
+   "iou": 0.4086,
+   "precision": 0.6829,
+   "recall": 0.5044,
+   "px_render": 34865,
    "px_seg": 47204
   },
   "tree": {
@@ -178,35 +178,35 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 14300,
+   "px_render": 14286,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 2745,
+   "px_render": 2650,
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.6835,
-   "precision": 0.8763,
+   "iou": 0.6843,
+   "precision": 0.8776,
    "recall": 0.7565,
-   "px_render": 75725,
+   "px_render": 75616,
    "px_seg": 87719
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 135,
+   "px_render": 234,
    "px_seg": 358
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 146,
+   "px_render": 228,
    "px_seg": 610
   },
   "barrier": {
@@ -236,7 +236,7 @@
   {
    "id": "sign_s0008",
    "cls": "sign",
-   "px": 135,
+   "px": 316,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -282,7 +282,7 @@
    "occluded": false
   }
  ],
- "score": 0.4882,
- "t_render_s": 0.841,
- "t_total_s": 0.939
+ "score": 0.488,
+ "t_render_s": 1.83,
+ "t_total_s": 2.036
 }

@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 32286,
+   "px_render": 32284,
    "px_seg": 0
   },
   "rock_cut": {
@@ -85,7 +85,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 14,
+   "px_render": 16,
    "px_seg": 327
   },
   "guardrail": {
@@ -143,7 +143,7 @@
    "iou": 0.0032,
    "precision": 0.0037,
    "recall": 0.0207,
-   "px_render": 33839,
+   "px_render": 33837,
    "px_seg": 6089
   },
   "tree": {
@@ -178,7 +178,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 14,
+   "px_render": 16,
    "px_seg": 327
   },
   "barrier": {
@@ -208,7 +208,7 @@
   {
    "id": "post_s0019",
    "cls": "post",
-   "px": 2,
+   "px": 4,
    "match": 0.0,
    "found": false,
    "occluded": true
@@ -223,6 +223,6 @@
   }
  ],
  "score": 0.4253,
- "t_render_s": 0.772,
- "t_total_s": 0.858
+ "t_render_s": 1.658,
+ "t_total_s": 1.855
 }

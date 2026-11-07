@@ -92,7 +92,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 5152,
+   "px_render": 5153,
    "px_seg": 848
   },
   "building": {
@@ -101,13 +101,6 @@
    "recall": 0.0,
    "px_render": 0,
    "px_seg": 25
-  },
-  "mailbox_prop": {
-   "iou": 0.0,
-   "precision": 0.0,
-   "recall": null,
-   "px_render": 1,
-   "px_seg": 0
   }
  },
  "groups": {
@@ -192,7 +185,7 @@
    "iou": 0.2099,
    "precision": 0.2546,
    "recall": 0.5446,
-   "px_render": 12791,
+   "px_render": 12792,
    "px_seg": 5981
   },
   "building": {
@@ -201,13 +194,6 @@
    "recall": 0.0,
    "px_render": 0,
    "px_seg": 25
-  },
-  "prop": {
-   "iou": 0.0,
-   "precision": 0.0,
-   "recall": null,
-   "px_render": 1,
-   "px_seg": 0
   }
  },
  "instances": [
@@ -238,15 +224,7 @@
   {
    "id": "fence_s0039",
    "cls": "fence",
-   "px": 1,
-   "match": 0.0,
-   "found": false,
-   "occluded": true
-  },
-  {
-   "id": "mailbox_s0009",
-   "cls": "mailbox",
-   "px": 1,
+   "px": 2,
    "match": 0.0,
    "found": false,
    "occluded": true
@@ -261,6 +239,6 @@
   }
  ],
  "score": 0.4834,
- "t_render_s": 1.03,
- "t_total_s": 1.123
+ "t_render_s": 0.751,
+ "t_total_s": 0.821
 }

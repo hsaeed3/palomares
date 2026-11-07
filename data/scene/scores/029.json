@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 24756,
+   "px_render": 24738,
    "px_seg": 0
   },
   "rock_cut": {
@@ -64,28 +64,28 @@
    "iou": 0.6868,
    "precision": 0.8827,
    "recall": 0.7558,
-   "px_render": 87743,
+   "px_render": 87748,
    "px_seg": 102475
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12334,
+   "px_render": 12309,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 1832,
+   "px_render": 1858,
    "px_seg": 0
   },
   "sign_face": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 78,
+   "px_render": 87,
    "px_seg": 0
   },
   "sign_back": {
@@ -99,7 +99,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 36,
+   "px_render": 39,
    "px_seg": 57
   }
  },
@@ -140,52 +140,52 @@
    "px_seg": 3918
   },
   "terrain": {
-   "iou": 0.4037,
-   "precision": 0.8731,
-   "recall": 0.4289,
-   "px_render": 25041,
+   "iou": 0.4034,
+   "precision": 0.873,
+   "recall": 0.4285,
+   "px_render": 25023,
    "px_seg": 50980
   },
   "tree": {
    "iou": 0.6868,
    "precision": 0.8827,
    "recall": 0.7558,
-   "px_render": 87743,
+   "px_render": 87748,
    "px_seg": 102475
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12334,
+   "px_render": 12309,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 1832,
+   "px_render": 1858,
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.7423,
-   "precision": 0.8544,
-   "recall": 0.8497,
-   "px_render": 101909,
+   "iou": 0.7424,
+   "precision": 0.8545,
+   "recall": 0.8498,
+   "px_render": 101915,
    "px_seg": 102475
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 78,
+   "px_render": 87,
    "px_seg": 54
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 36,
+   "px_render": 39,
    "px_seg": 57
   }
  },
@@ -193,7 +193,7 @@
   {
    "id": "sign_s0012",
    "cls": "sign",
-   "px": 110,
+   "px": 122,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -215,7 +215,7 @@
    "occluded": true
   }
  ],
- "score": 0.4211,
- "t_render_s": 0.844,
- "t_total_s": 0.937
+ "score": 0.421,
+ "t_render_s": 1.859,
+ "t_total_s": 2.055
 }

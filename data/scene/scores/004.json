@@ -15,7 +15,7 @@
    "iou": 0.6813,
    "precision": 0.7727,
    "recall": 0.8521,
-   "px_render": 38809,
+   "px_render": 38807,
    "px_seg": 35190
   },
   "marking_yellow": {
@@ -61,24 +61,24 @@
    "px_seg": 9754
   },
   "vegetation_tree": {
-   "iou": 0.6359,
-   "precision": 0.8586,
+   "iou": 0.6358,
+   "precision": 0.8584,
    "recall": 0.7103,
-   "px_render": 70914,
+   "px_render": 70929,
    "px_seg": 85719
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 13720,
+   "px_render": 13719,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 5935,
+   "px_render": 5923,
    "px_seg": 0
   },
   "sign_face": {
@@ -122,7 +122,7 @@
    "iou": 0.6813,
    "precision": 0.7727,
    "recall": 0.8521,
-   "px_render": 38809,
+   "px_render": 38807,
    "px_seg": 35190
   },
   "marking_yellow": {
@@ -154,31 +154,31 @@
    "px_seg": 16976
   },
   "tree": {
-   "iou": 0.6359,
-   "precision": 0.8586,
+   "iou": 0.6358,
+   "precision": 0.8584,
    "recall": 0.7103,
-   "px_render": 70914,
+   "px_render": 70929,
    "px_seg": 85719
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 13720,
+   "px_render": 13719,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 5935,
+   "px_render": 5923,
    "px_seg": 0
   },
   "vegetation": {
    "iou": 0.7381,
-   "precision": 0.8266,
+   "precision": 0.8265,
    "recall": 0.8733,
-   "px_render": 90569,
+   "px_render": 90571,
    "px_seg": 85719
   },
   "sign": {
@@ -253,6 +253,14 @@
    "occluded": false
   },
   {
+   "id": "tree_add_a2m005",
+   "cls": "tree_add",
+   "px": 219,
+   "match": 0.219,
+   "found": false,
+   "occluded": false
+  },
+  {
    "id": "fence_s0006",
    "cls": "fence",
    "px": 14,
@@ -270,6 +278,6 @@
   }
  ],
  "score": 0.5132,
- "t_render_s": 1.058,
- "t_total_s": 1.153
+ "t_render_s": 2.204,
+ "t_total_s": 2.397
 }
