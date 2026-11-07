@@ -7,14 +7,14 @@
   "wall_face_crease_max_deg": {
    "1WALL_R_17": 19.6,
    "1WALL_R_26": 17.4,
-   "1WALL_L_40": 16.4,
    "1WALL_R_33": 15.4,
    "1WALL_R_28": 15.0,
    "1WALL_R_03": 14.1,
    "1WALL_R_02": 14.0,
    "1WALL_R_13": 13.9,
    "1WALL_R_21": 13.2,
-   "1WALL_L_08": 13.1
+   "1WALL_L_08": 13.1,
+   "1WALL_R_04": 12.9
   },
   "kerb_crease_raw_max_deg": {
    "1KERB_NCNB_SAU_026": 17.4,
@@ -71,7 +71,7 @@
    "1GRASS_tr12": 174.8,
    "1GRASS_tr27": 168.4,
    "1GRASS_tr53": 165.3,
-   "1GRASS_ncr_rock_03": 159.7,
+   "1GRASS_ncr_rock_03": 161.0,
    "1GRASS_tr28": 157.5,
    "1GRASS_tr31": 157.0,
    "1GRASS_town_rock_05": 152.8,
@@ -79,16 +79,16 @@
    "1GRASS_tr32": 151.9
   },
   "grass_crease_max_deg": {
+   "1GRASS_ncr_ground_03": 41.1,
    "1GRASS_ncr_ground_06": 39.9,
-   "1GRASS_ncr_bank_02": 37.9,
-   "1GRASS_ncr_ground_03": 37.9,
-   "1GRASS_ncr_ground_10": 37.5,
-   "1GRASS_ncr_ground_09": 37.2,
-   "1GRASS_ncr_ground_01": 36.5,
-   "1GRASS_ncr_bank_03": 36.3,
+   "1GRASS_ncr_ground_05": 39.8,
+   "1GRASS_ncr_ground_08": 39.0,
+   "1GRASS_ncr_bank_03": 38.4,
+   "1GRASS_ncr_bank_02": 38.3,
    "1GRASS_ncr_bank_01": 35.9,
-   "1GRASS_ncr_ground_02": 35.8,
-   "1GRASS_ncr_ground_05": 35.2
+   "1GRASS_ncr_ground_02": 34.9,
+   "1GRASS_ncr_ground_00": 33.5,
+   "1GRASS_ncr_bank_07": 33.4
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_APR01": 35.5,
@@ -96,11 +96,11 @@
    "1ROAD_APR13": 11.1,
    "1ROAD_ncr_road_asphalt_00": 0.0,
    "1ROAD_ncr_road_asphalt_01": 0.0,
-   "1ROAD_ncr_road_asphalt_10": 0.0,
    "1ROAD_ncr_road_asphalt_02": 0.0,
    "1ROAD_ncr_road_asphalt_03": 0.0,
    "1ROAD_ncr_road_asphalt_04": 0.0,
-   "1ROAD_ncr_road_asphalt_05": 0.0
+   "1ROAD_ncr_road_asphalt_05": 0.0,
+   "1ROAD_ncr_road_asphalt_06": 0.0
   },
   "road_crease_raw_max_deg": {
    "1ROAD_APR01": 35.5,
@@ -110,8 +110,8 @@
    "1ROAD_APR13": 11.1,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_AP_town_road_asphalt_09": 7.5,
-   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_09": 6.0
   },
   "road_crease_max_deg": {
@@ -119,8 +119,8 @@
    "1ROAD_APR14": 11.7,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_APR13": 7.5,
-   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_AP_town_road_asphalt_09": 7.3,
    "1ROAD_09": 6.0,
    "1ROAD_APR43": 6.0,
@@ -129,7 +129,7 @@
   "layouts": {
    "canyon_rev_road": {
     "materials": 36,
-    "shader_texture_combos": 37,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -141,7 +141,7 @@
    },
    "canyon_rev_track": {
     "materials": 39,
-    "shader_texture_combos": 40,
+    "shader_texture_combos": 39,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -154,7 +154,7 @@
    },
    "canyon_road": {
     "materials": 36,
-    "shader_texture_combos": 37,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -166,7 +166,7 @@
    },
    "canyon_track": {
     "materials": 39,
-    "shader_texture_combos": 40,
+    "shader_texture_combos": 39,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -178,8 +178,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 25092,
-  "wall_tris_per_km": 2339,
-  "wall_components": 81
+  "wall_tris_total": 24268,
+  "wall_tris_per_km": 2262,
+  "wall_components": 79
  }
 }

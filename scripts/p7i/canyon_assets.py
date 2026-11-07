@@ -119,11 +119,12 @@ def acc(mat, s):
 
 
 def wbox(X, Y, fw, L, Wd, z0, z1):
+    z1 = max(z1, z0 + 2.0)              # qa_ffb_safety MIN_H: a low solid (platform edge) still gets a >= 1.2 m collider
     fw = np.asarray(fw, float); fw = fw / (np.linalg.norm(fw) + 1e-12); fl = np.array([-fw[1], fw[0]]); c = np.array([X, Y])
     co = [c - fw * L / 2 - fl * Wd / 2, c + fw * L / 2 - fl * Wd / 2, c + fw * L / 2 + fl * Wd / 2, c - fw * L / 2 + fl * Wd / 2]
     P = np.array([[*q, z0] for q in co] + [[*q, z1] for q in co])
     T = np.array([[0, 2, 1], [0, 3, 2], [4, 5, 6], [4, 6, 7], [0, 1, 5], [0, 5, 4], [1, 2, 6], [1, 6, 5], [2, 3, 7], [2, 7, 6], [3, 0, 4], [3, 4, 7]])
-    WALLS.append((P, T, "__bld__" if CUR["cls"] == "building" else road.name))
+    WALLS.append((P, T, "__bld__" if CUR["cls"] in ("building", "prop") else road.name))   # boxes: one shared pass
 
 
 def wribbon(Q, half, z0, z1):
