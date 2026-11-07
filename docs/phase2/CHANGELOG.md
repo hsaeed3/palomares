@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.0-dev7 (palomares_road_dev7)
+
+One track folder with 18 layouts: the 12 Palomares Road layouts (from the dev6.1 release build, unchanged) plus the
+Niles / Niles Canyon extension.
+
+**New layouts**
+- `canyon_road`, `canyon_track`: Niles Canyon Rd (SR-84), Mission Blvd (s 70) -> just before the Sunol all-way stop (s 10,694), point to point.
+- `canyon_rev_road`, `canyon_rev_track`: the same in reverse.
+- `freeroam`: the whole map (Niles town, Mission Blvd, Niles Canyon Rd, the Sunol Main St loop, full Palomares Road), no timing. Spawn on Niles Blvd one block before Devout Coffee, eastbound (4 pit / start spots).
+- `freeroam_track`: freeroam plus every race kerb (Palomares from the Niles Canyon start, NCR from the Mission Blvd start) and the Palomares GP dressing.
+
+**Changed since dev6**
+- Road network: Niles town streets, Mission Blvd, Niles Canyon Rd, Sunol Main St loop and stubs, built from LiDAR, joined to Palomares through junction-cut copies of its road / terrain / lines (no double surfaces). New physics keys SIDEWALK and RAIL.
+- Road markings on NCR, Niles Blvd, Old Canyon Rd, Sullivan Underpass, Paloma Rd, Pleasanton-Sunol Rd, Mission Blvd and Main St.
+- Roadside assets from the Mapillary survey (about 1,440 rows): flashing warning masts (amber beacons blink with CSP), Niles Canyon Railway truss and plate-girder bridges and the UP concrete underpass (yawed to the rail bearing), Niles Blvd storefronts with plain-text names (e.g. DEVOUT), the firehouse, depots, a generic green coach, platforms, crossing signals, signs, street furniture. Sources: ambientCG and Poly Haven (CC0), public-domain MUTCD sign layouts.
+- Track kerbs: Palomares kerbs repainted in red / yellow / green blocks (Spa style) with "Palomares GP" boards; Niles Canyon gets red / white kerbs, green-painted run-off and low yellow sausage kerbs outside the run-off (kerb counts nb 13 apex / 8 exit / 4 run-off / 4 sausage, sb 12 / 5 / 1 / 1). Nothing is on the asphalt (lint + qa_on_road).
+- Gates on the packaged folder: qa_on_road 0 hits and qa_ffb_safety 0 fails for every layout group.
+
+**Known issues (station = metres along Niles Canyon Rd from Mission Blvd unless noted)**
+- AI line: NCR only (s 40-10,729). Freeroam has no AI line on the town streets or on Palomares; AI cars in freeroam are not supported.
+- Outer streets beyond the Niles and Sunol clusters are not modelled; the network ends at the cluster edges.
+- Not tested in AC: the CSP blink of the flasher masts (s 1,850, 2,318, 3,410, 3,738) and crossing lights, the freeroam spawn on Niles Blvd (s 68-92), the AB gate dummies of the canyon layouts. Please report what you see.
+- Truss at s 2,061: placed on the OSM rail bearing and centred on the road; the real span is offset toward the creek pier, so it may look slightly off.
+- Kerbs on NCR are sparse (it is a fast road); tune `config/kerbs.yaml: niles_canyon`.
+- Town buildings without a surveyed facade use generic CC0 walls at LiDAR height; 38 OSM boxes under surveyed storefronts were removed.
+
 ## 0.2.0-dev6 (palomares_road_dev6)
 
 **Test build.** It was shipped early at the user's request. The new FFB-safety gate (qa_ffb_safety) still reports 215 findings in this build; they are listed below and the fix is in progress for dev6.1.

@@ -59,10 +59,10 @@
    "1GRASS_ncr_rock_04": 92.1,
    "1GRASS_town_rock_05": 88.8,
    "1GRASS_town_bank_04": 88.6,
+   "1GRASS_sunolmain_bank_03": 88.1,
    "1GRASS_ncr_rock_05": 87.6,
    "1GRASS_town_bank_11": 87.6,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_bank_03": 85.6
+   "1GRASS_ncr_rock_02": 86.4
   },
   "grass_crease_raw_max_deg": {
    "1GRASS_ncr_rock_03": 161.0,
@@ -73,8 +73,8 @@
    "1GRASS_town_rock_08": 110.3,
    "1GRASS_ncr_rock_04": 103.4,
    "1GRASS_town_bank_04": 88.6,
-   "1GRASS_ncr_rock_05": 87.6,
-   "1GRASS_town_bank_11": 87.6
+   "1GRASS_sunolmain_bank_03": 88.1,
+   "1GRASS_ncr_rock_05": 87.6
   },
   "grass_crease_max_deg": {
    "1GRASS_ncr_ground_03": 41.1,
@@ -103,26 +103,26 @@
   "road_crease_raw_max_deg": {
    "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_AP_town_road_asphalt_09": 7.5,
+   "1ROAD_sunolmain_road_asphalt_03": 6.8,
+   "1ROAD_AP_sunolmain_road_asphalt_04": 6.8,
    "1ROAD_AP_town_road_asphalt_01": 5.3,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_town_road_asphalt_12": 3.8,
    "1ROAD_AP_town_road_asphalt_13": 3.8,
    "1ROAD_AP_sunol_road_asphalt_01": 3.7,
-   "1ROAD_town_road_asphalt_00": 3.7,
-   "1ROAD_sunol_road_asphalt_00": 3.4,
-   "1ROAD_ncr_road_asphalt_05": 3.2
+   "1ROAD_town_road_asphalt_00": 3.7
   },
   "road_crease_max_deg": {
    "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_AP_town_road_asphalt_09": 7.3,
+   "1ROAD_sunolmain_road_asphalt_03": 6.8,
+   "1ROAD_AP_sunolmain_road_asphalt_04": 6.8,
    "1ROAD_AP_town_road_asphalt_01": 5.3,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_town_road_asphalt_12": 3.8,
    "1ROAD_AP_town_road_asphalt_13": 3.8,
    "1ROAD_AP_sunol_road_asphalt_01": 3.7,
-   "1ROAD_town_road_asphalt_00": 3.7,
-   "1ROAD_sunol_road_asphalt_00": 3.4,
-   "1ROAD_ncr_road_asphalt_05": 3.2
+   "1ROAD_town_road_asphalt_00": 3.7
   },
   "layouts": {
    "freeroam": {
@@ -151,8 +151,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 26488,
-  "wall_tris_per_km": 2469,
-  "wall_components": 92
+  "wall_tris_total": 27312,
+  "wall_tris_per_km": 2546,
+  "wall_components": 94
  }
 }

@@ -44,7 +44,7 @@
   },
   "ffb_canyon": {
    "rc": 0,
-   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 24268 (2262/km), 79 wall components -> reports/dev7/qa_ffb_package_canyon.json"
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 25092 (2339/km), 81 wall components -> reports/dev7/qa_ffb_package_canyon.json"
   },
   "on_road_freeroam_palomares": {
    "rc": 0,
@@ -72,10 +72,10 @@
   },
   "ffb_freeroam_niles": {
    "rc": 0,
-   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 26488 (2469/km), 92 wall components -> reports/dev7/qa_ffb_package_freeroam_niles.json"
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 27312 (2546/km), 94 wall components -> reports/dev7/qa_ffb_package_freeroam_niles.json"
   }
  },
  "zip": "dist/palomares_road_dev7_v0.3.0-dev7.zip",
- "zip_mb": 636.4,
- "secs": 120.4
+ "zip_mb": 653.6,
+ "secs": 120.1
 }

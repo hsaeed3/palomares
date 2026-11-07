@@ -112,7 +112,7 @@
    "1ROAD_APR16": 9.2,
    "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_AP_town_road_asphalt_09": 7.5,
-   "1ROAD_09": 6.0
+   "1ROAD_sunolmain_road_asphalt_03": 6.8
   },
   "road_crease_max_deg": {
    "1ROAD_APR15": 20.7,
@@ -122,9 +122,9 @@
    "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_APR13": 7.5,
    "1ROAD_AP_town_road_asphalt_09": 7.3,
-   "1ROAD_09": 6.0,
-   "1ROAD_APR43": 6.0,
-   "1ROAD_12": 5.7
+   "1ROAD_sunolmain_road_asphalt_03": 6.8,
+   "1ROAD_AP_sunolmain_road_asphalt_04": 6.8,
+   "1ROAD_09": 6.0
   },
   "layouts": {
    "canyon_rev_road": {
@@ -178,8 +178,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 24268,
-  "wall_tris_per_km": 2262,
-  "wall_components": 79
+  "wall_tris_total": 25092,
+  "wall_tris_per_km": 2339,
+  "wall_components": 81
  }
 }

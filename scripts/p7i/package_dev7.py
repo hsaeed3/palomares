@@ -169,7 +169,7 @@ def main():
     (OUT / "INSTALL.md").write_text(f"# {NAME} v{VERSION}\n\nCopy the folder `{NAME}` into `assettocorsa/content/tracks/`. Layouts: {len(allm)} "
                                    f"(12 Palomares Road, plus {', '.join(sorted(d7))}). Content Manager and CSP recommended (blinking flashers, GrassFX); "
                                    "the track works without CSP.\n")
-    ch = ROOT / "CHANGELOG.md"
+    ch = ROOT / "docs/phase2/CHANGELOG.md"
     if ch.exists():
         (OUT / "CHANGELOG.md").unlink(missing_ok=True); shutil.copy2(ch, OUT / "CHANGELOG.md")
     att = ROOT / "reports/dev7/mapillary_attribution.csv"
