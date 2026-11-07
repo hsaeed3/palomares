@@ -26,11 +26,11 @@ SRC = {"oak": ("searsia_lucida", "Diffuse", "Alpha"), "bay": ("island_tree_02", 
 # per species: leaves per card, leaf length px (of a 512 cell ~ 1.4 m card), width squash, colour multiplier
 # (sRGB gain to the GoPro spring crowns: live oak dark glossy olive, bay darker yellow-green, euc grey-blue-green,
 # sycamore fresh lime, cypress dark blue-green)
-LEAF = {"oak": dict(n=520, L=(22, 34), sq=1.0, tint=(0.95, 1.05, 0.78)),
-        "bay": dict(n=300, L=(40, 60), sq=0.85, tint=(0.86, 0.98, 0.80)),
-        "euc": dict(n=220, L=(55, 85), sq=0.40, tint=(0.92, 0.98, 0.98)),
-        "syc": dict(n=200, L=(44, 64), sq=1.5, tint=(1.06, 1.18, 0.80)),
-        "con": dict(n=1100, L=(12, 20), sq=0.35, tint=(0.70, 0.86, 0.80))}
+LEAF = {"oak": dict(n=900, L=(22, 34), sq=1.0, tint=(0.95, 1.05, 0.78)),
+        "bay": dict(n=520, L=(40, 60), sq=0.85, tint=(0.86, 0.98, 0.80)),
+        "euc": dict(n=380, L=(55, 85), sq=0.40, tint=(0.92, 0.98, 0.98)),
+        "syc": dict(n=360, L=(44, 64), sq=1.5, tint=(1.06, 1.18, 0.80)),
+        "con": dict(n=1800, L=(12, 20), sq=0.35, tint=(0.70, 0.86, 0.80))}
 COL_TINT = (np.array([0.70, 0.76, 0.72]), np.array([0.86, 0.92, 0.88]), np.array([1.0, 1.03, 0.96]), np.array([1.10, 1.18, 0.86]))
 BARK = {"oak": (66, 60, 53), "bay": (104, 100, 92), "euc": (150, 138, 118), "syc": (170, 164, 150), "con": (80, 66, 54)}
 _CACHE = {}
@@ -92,9 +92,9 @@ def cell(kind, seed, col, S=512, bare=False):
     nmain = 2 if kind in ("oak", "syc") else 1
     for m in range(nmain if not bare else 3):
         _twig(d, r, S / 2 + r.normal(0, 25), S * 0.97, r.normal(0, 0.3), S * r.uniform(0.55, 0.7), 7 if bare else 5, bark, 7, pts)
-    for _ in range(r.integers(5, 8) if not bare else 9):
+    for _ in range(r.integers(9, 13) if not bare else 9):
         x, y, a = pts[r.integers(len(pts))]
-        _twig(d, r, x, y, a + r.choice([-1, 1]) * r.uniform(0.5, 1.1), S * r.uniform(0.15, 0.3), 3 if not bare else 2.5, bark, 4, pts)
+        _twig(d, r, x, y, a + r.choice([-1, 1]) * r.uniform(0.5, 1.1), S * r.uniform(0.2, 0.36), 3 if not bare else 2.5, bark, 4, pts)
     if bare:  # winter sycamore: fine twigs and a few pale buds only
         for _ in range(40):
             x, y, a = pts[r.integers(len(pts))]

@@ -76,3 +76,25 @@ Source: https://github.com/ac-custom-shaders-patch/acc-extension-config/wiki/Tra
 ## 3. Without CSP
 Vanilla AC: same trees with `ksPerPixelAT` (alpha test 0.5), photographic clusters and bent normals; no wind, no
 GrassFX (terrain texture alone carries the green spring colour).
+
+## 4. Implementation (files)
+- `scripts/p2/20_fetch_textures.py`: Poly Haven leaf sheets -> `data/raw/textures/polyhaven/<asset>/` (2K PNG, CC0).
+- `scripts/p2/foliage_photo.py`: composes `tree_leaves.png` (2048^2, 4 cols x 5 rows; DDS + mips via kn5.py).
+- `scripts/p2/trees3d.py`: species oak / bay / euc / syc / con / bare; ~2.5x more, ~half-size clusters; cone crowns.
+- `scripts/p2/21_build_geometry.py`: species rules (conifers: tall narrow crowns ~1/3, all non-oaks at
+  s 14700-15000 = cypress row of frames 210-211; bare sycamores: non-oaks at s 14380-14700, frames 206-208).
+  Procedural understorey clumps are **off** when the ledger carries measured `shrub.` rows (one shrub source:
+  21e / scripts/p5 generators, material `ledger`).
+- `scripts/p2/terrain_macro.py`: spring bias (grass weight +0.23, litter target 40 % toward grass, damping toward
+  spring green).
+- `scripts/p2/ext_config.py`: single foliage ksTree replacement, GrassFX highlands.dds + grass / wildflower groups.
+- Collision: none on trees (docs/AC_CONVENTIONS.md "Collision convention (dev6)", 21d: "nothing for props/trees").
+- Materials: `tree_leaves`, `tree_trunk` only (one each, all species/chunks/LODs). No new shaders.
+
+## 5. Open points
+- Ledger shrubs/hedges (scripts/p5 generators, `ledger` atlas shared with buildings) render as dark solid card
+  boxes and do not get ksTree (the material is shared with buildings). They would need their own foliage material
+  (e.g. reuse `tree_leaves` row 1/4 cells) in scripts/p5 -- owned by the data-placement agent.
+- Terrain still has one material per class per 250 m chunk (`ter_<class>_<chunk>`, unique macro maps): many
+  materials, same shader. Consolidation (e.g. one atlas'd macro) belongs to the material-consolidation work.
+- CSP `[TREES]` route (needs CM tree converter on Windows) left as an option.
