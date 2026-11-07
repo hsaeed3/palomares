@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12451,
+   "px_render": 12450,
    "px_seg": 0
   },
   "rock_cut": {
@@ -61,17 +61,17 @@
    "px_seg": 74
   },
   "vegetation_tree": {
-   "iou": 0.3458,
+   "iou": 0.3454,
    "precision": 0.9137,
-   "recall": 0.3575,
-   "px_render": 32180,
+   "recall": 0.3571,
+   "px_render": 32141,
    "px_seg": 82241
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8390,
+   "px_render": 8426,
    "px_seg": 0
   },
   "trunk": {
@@ -97,9 +97,9 @@
   },
   "fence": {
    "iou": 0.1435,
-   "precision": 0.1531,
+   "precision": 0.153,
    "recall": 0.6967,
-   "px_render": 15862,
+   "px_render": 15866,
    "px_seg": 3485
   },
   "mailbox_prop": {
@@ -150,21 +150,21 @@
    "iou": 0.0087,
    "precision": 0.0088,
    "recall": 0.5365,
-   "px_render": 14250,
+   "px_render": 14249,
    "px_seg": 233
   },
   "tree": {
-   "iou": 0.3458,
+   "iou": 0.3454,
    "precision": 0.9137,
-   "recall": 0.3575,
-   "px_render": 32180,
+   "recall": 0.3571,
+   "px_render": 32141,
    "px_seg": 82241
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8390,
+   "px_render": 8426,
    "px_seg": 0
   },
   "trunk": {
@@ -178,7 +178,7 @@
    "iou": 0.4204,
    "precision": 0.8837,
    "recall": 0.4451,
-   "px_render": 41488,
+   "px_render": 41485,
    "px_seg": 82375
   },
   "pole": {
@@ -190,9 +190,9 @@
   },
   "barrier": {
    "iou": 0.1433,
-   "precision": 0.1531,
+   "precision": 0.153,
    "recall": 0.6925,
-   "px_render": 15862,
+   "px_render": 15866,
    "px_seg": 3506
   },
   "prop": {
@@ -215,7 +215,7 @@
   {
    "id": "fence_s0090",
    "cls": "fence",
-   "px": 96,
+   "px": 90,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -245,6 +245,14 @@
    "occluded": false
   },
   {
+   "id": "shrub_m205b",
+   "cls": "shrub",
+   "px": 17,
+   "match": 1.0,
+   "found": true,
+   "occluded": false
+  },
+  {
    "id": "post_s0092",
    "cls": "post",
    "px": 10,
@@ -253,9 +261,17 @@
    "occluded": false
   },
   {
+   "id": "shrub_m205a",
+   "cls": "shrub",
+   "px": 31,
+   "match": 0.935,
+   "found": true,
+   "occluded": false
+  },
+  {
    "id": "fence_s0091",
    "cls": "fence",
-   "px": 45,
+   "px": 55,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -286,6 +302,6 @@
   }
  ],
  "score": 0.4327,
- "t_render_s": 0.162,
- "t_total_s": 0.195
+ "t_render_s": 0.179,
+ "t_total_s": 0.211
 }

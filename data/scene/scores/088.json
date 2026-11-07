@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 19463,
+   "px_render": 19281,
    "px_seg": 0
   },
   "rock_cut": {
@@ -90,9 +90,9 @@
   },
   "pole": {
    "iou": 0.0,
-   "precision": null,
+   "precision": 0.0,
    "recall": 0.0,
-   "px_render": 0,
+   "px_render": 182,
    "px_seg": 296
   },
   "guardrail": {
@@ -161,10 +161,10 @@
    "px_seg": 15570
   },
   "terrain": {
-   "iou": 0.2356,
-   "precision": 0.2639,
-   "recall": 0.6877,
-   "px_render": 20999,
+   "iou": 0.2357,
+   "precision": 0.2645,
+   "recall": 0.6835,
+   "px_render": 20817,
    "px_seg": 8057
   },
   "tree": {
@@ -204,9 +204,9 @@
   },
   "pole": {
    "iou": 0.0,
-   "precision": null,
+   "precision": 0.0,
    "recall": 0.0,
-   "px_render": 0,
+   "px_render": 182,
    "px_seg": 296
   },
   "barrier": {
@@ -226,6 +226,14 @@
  },
  "instances": [
   {
+   "id": "post_s0032",
+   "cls": "post",
+   "px": 182,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
    "id": "guardrail_s0014",
    "cls": "guardrail",
    "px": 1830,
@@ -243,6 +251,6 @@
   }
  ],
  "score": 0.5297,
- "t_render_s": 0.298,
- "t_total_s": 0.328
+ "t_render_s": 0.267,
+ "t_total_s": 0.298
 }

@@ -1,0 +1,9 @@
+# Near-road terrain overrides applied to the DTM before meshing (scripts/p2/terrain_edits.py, used by
+# 21_build_geometry.py terrain + shoulders and by edge_profile.py's shoulder-toe clamp).
+# Use for places where the ground changed after the 2019-21 LiDAR flight, as seen in the GoPro frames.
+# Small mounds / ditches go in the scene ledger instead (cls mound / ditch, applied by 21e_ledger_assets.py).
+#   s0, s1  stations (m, 0 at SR-84);  side L|R (northbound);  off0/off1 metres beyond the asphalt edge
+#   taper   fade length (m) inside off1 and outside s0/s1;  dz height relative to the asphalt edge (m)
+flatten:
+  - {s0: 114, s1: 168, side: R, off0: 0.0, off1: 20.0, taper: 7.0, dz: -0.10, frames: [2, 3],
+     note: "fenced, graded gravel yard at road level (GoPro 003); the LiDAR still shows a 4-10 m bank here"}

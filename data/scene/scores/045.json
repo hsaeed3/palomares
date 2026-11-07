@@ -50,28 +50,28 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 35970,
+   "px_render": 35973,
    "px_seg": 0
   },
   "rock_cut": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 155,
+   "px_render": 162,
    "px_seg": 28380
   },
   "vegetation_tree": {
    "iou": 0.568,
    "precision": 0.9784,
    "recall": 0.5752,
-   "px_render": 65832,
+   "px_render": 65821,
    "px_seg": 111971
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10824,
+   "px_render": 10840,
    "px_seg": 0
   },
   "trunk": {
@@ -85,7 +85,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 78,
+   "px_render": 63,
    "px_seg": 178
   }
  },
@@ -126,24 +126,24 @@
    "px_seg": 1597
   },
   "terrain": {
-   "iou": 0.3043,
-   "precision": 0.4165,
+   "iou": 0.3042,
+   "precision": 0.4163,
    "recall": 0.5305,
-   "px_render": 36153,
+   "px_render": 36163,
    "px_seg": 28380
   },
   "tree": {
    "iou": 0.568,
    "precision": 0.9784,
    "recall": 0.5752,
-   "px_render": 65832,
+   "px_render": 65821,
    "px_seg": 111971
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10824,
+   "px_render": 10840,
    "px_seg": 0
   },
   "trunk": {
@@ -154,17 +154,17 @@
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.6722,
-   "precision": 0.9608,
-   "recall": 0.6912,
-   "px_render": 80545,
+   "iou": 0.6725,
+   "precision": 0.961,
+   "recall": 0.6913,
+   "px_render": 80550,
    "px_seg": 111971
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 78,
+   "px_render": 63,
    "px_seg": 178
   }
  },
@@ -172,7 +172,7 @@
   {
    "id": "post_s0023",
    "cls": "post",
-   "px": 18,
+   "px": 26,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -180,7 +180,7 @@
   {
    "id": "pole_s0014",
    "cls": "pole",
-   "px": 60,
+   "px": 37,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -188,13 +188,13 @@
   {
    "id": "rock_a1m007",
    "cls": "rock",
-   "px": 6,
+   "px": 13,
    "match": 0.0,
    "found": false,
    "occluded": false
   }
  ],
- "score": 0.471,
- "t_render_s": 2.306,
- "t_total_s": 2.496
+ "score": 0.4711,
+ "t_render_s": 4.812,
+ "t_total_s": 4.849
 }

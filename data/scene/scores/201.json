@@ -43,14 +43,14 @@
    "iou": 0.0033,
    "precision": 0.0038,
    "recall": 0.0234,
-   "px_render": 11901,
+   "px_render": 11867,
    "px_seg": 1924
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10718,
+   "px_render": 10654,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,7 +71,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16063,
+   "px_render": 15461,
    "px_seg": 0
   },
   "trunk": {
@@ -92,7 +92,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 1067,
+   "px_render": 1767,
    "px_seg": 1873
   },
   "wall": {
@@ -147,10 +147,10 @@
    "px_seg": 27107
   },
   "terrain": {
-   "iou": 0.014,
-   "precision": 0.0157,
+   "iou": 0.0141,
+   "precision": 0.0158,
    "recall": 0.1145,
-   "px_render": 22646,
+   "px_render": 22548,
    "px_seg": 3108
   },
   "tree": {
@@ -164,7 +164,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16063,
+   "px_render": 15461,
    "px_seg": 0
   },
   "trunk": {
@@ -175,10 +175,10 @@
    "px_seg": 132
   },
   "vegetation": {
-   "iou": 0.2165,
-   "precision": 0.4261,
-   "recall": 0.3057,
-   "px_render": 30886,
+   "iou": 0.2065,
+   "precision": 0.4145,
+   "recall": 0.2915,
+   "px_render": 30284,
    "px_seg": 43053
   },
   "pole": {
@@ -189,10 +189,10 @@
    "px_seg": 256
   },
   "barrier": {
-   "iou": 0.0994,
-   "precision": 0.4758,
+   "iou": 0.0894,
+   "precision": 0.3095,
    "recall": 0.1116,
-   "px_render": 1303,
+   "px_render": 2003,
    "px_seg": 5555
   },
   "building": {
@@ -204,6 +204,14 @@
   }
  },
  "instances": [
+  {
+   "id": "fence_m200",
+   "cls": "fence",
+   "px": 706,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
   {
    "id": "gate_s0011",
    "cls": "gate",
@@ -217,14 +225,6 @@
    "cls": "wall",
    "px": 236,
    "match": 0.123,
-   "found": false,
-   "occluded": false
-  },
-  {
-   "id": "fence_s0087",
-   "cls": "fence",
-   "px": 6,
-   "match": 0.0,
    "found": false,
    "occluded": false
   },
@@ -245,7 +245,7 @@
    "occluded": false
   }
  ],
- "score": 0.4088,
- "t_render_s": 0.135,
- "t_total_s": 0.166
+ "score": 0.4063,
+ "t_render_s": 0.144,
+ "t_total_s": 0.175
 }

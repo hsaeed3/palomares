@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 21452,
+   "px_render": 21454,
    "px_seg": 0
   },
   "vegetation_tree": {
@@ -64,7 +64,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 9369,
+   "px_render": 9372,
    "px_seg": 0
   },
   "trunk": {
@@ -85,7 +85,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 50,
+   "px_render": 41,
    "px_seg": 155
   },
   "guardrail": {
@@ -106,7 +106,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 289,
+   "px_render": 293,
    "px_seg": 26
   },
   "building": {
@@ -171,7 +171,7 @@
    "iou": 0.0148,
    "precision": 0.0157,
    "recall": 0.1945,
-   "px_render": 21502,
+   "px_render": 21504,
    "px_seg": 1738
   },
   "tree": {
@@ -185,7 +185,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 9369,
+   "px_render": 9372,
    "px_seg": 0
   },
   "trunk": {
@@ -197,9 +197,9 @@
   },
   "vegetation": {
    "iou": 0.5706,
-   "precision": 0.8922,
+   "precision": 0.8921,
    "recall": 0.6128,
-   "px_render": 73728,
+   "px_render": 73731,
    "px_seg": 107332
   },
   "sign": {
@@ -213,14 +213,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 50,
+   "px_render": 41,
    "px_seg": 155
   },
   "barrier": {
    "iou": 0.1573,
-   "precision": 0.2128,
+   "precision": 0.2127,
    "recall": 0.3763,
-   "px_render": 10103,
+   "px_render": 10107,
    "px_seg": 5714
   },
   "building": {
@@ -280,14 +280,6 @@
    "occluded": false
   },
   {
-   "id": "post_s0032",
-   "cls": "post",
-   "px": 12,
-   "match": 0.0,
-   "found": false,
-   "occluded": false
-  },
-  {
    "id": "post_s0033",
    "cls": "post",
    "px": 20,
@@ -298,7 +290,7 @@
   {
    "id": "wall_s0005",
    "cls": "wall",
-   "px": 289,
+   "px": 293,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -312,6 +304,14 @@
    "occluded": false
   },
   {
+   "id": "post_s0032",
+   "cls": "post",
+   "px": 3,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  },
+  {
    "id": "mailbox_b3m002",
    "cls": "mailbox",
    "px": 8,
@@ -321,6 +321,6 @@
   }
  ],
  "score": 0.3638,
- "t_render_s": 0.318,
- "t_total_s": 0.351
+ "t_render_s": 0.338,
+ "t_total_s": 0.372
 }

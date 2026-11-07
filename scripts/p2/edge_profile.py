@@ -77,6 +77,9 @@ def compute(road):
         fresh |= (s >= a0) & (s <= a1)
     ss, rows = _survey()
     aprons = _aprons()
+    import terrain_edits
+    from scipy.ndimage import median_filter
+    TOE = terrain_edits.toe(road)
     out = {}
     for side, sgn, seed in (("left", 1, 101), ("right", -1, 202)):
         env = road.env_l if sgn > 0 else road.env_r
@@ -103,6 +106,11 @@ def compute(road):
         mat = np.where(mat == "paved", "dirt", mat)
         # rock / steep cut faces: the shoulder is a little gravel wedge at the toe
         mat = np.where((env == "wall_or_steep_cut") & (mat == "grass"), "dirt", mat)
+        # ---- LiDAR toe: the shoulder ends where the real ground starts to rise / fall (terrain_edits.toe), so a cut
+        # bank or a drop at the pavement edge starts there and is not pushed back behind a 1-2 m flat band
+        toe = median_filter(TOE[f"toe_{side[0]}"], 5, mode="nearest")
+        w = np.minimum(w, np.maximum(toe - 0.1, W_MIN))
+        apron_m = np.zeros(N, bool)
         # ---- driveway aprons (survey assets): 1.8-2.5 m, tapered 3 m each end
         for a0, a1, sd, am in aprons:
             if sd != side:
@@ -110,7 +118,7 @@ def compute(road):
             m = (s >= a0 - 3) & (s <= a1 + 3)
             if not m.any():
                 continue
-            core = (s >= a0) & (s <= a1)
+            core = (s >= a0) & (s <= a1); apron_m |= m
             tap = np.clip(1 - np.maximum(a0 - s, s - a1) / 3.0, 0, 1)
             wa = 1.8 + 0.7 * _noise(s, seed + 17, (7.0, 13.0), (1, 1))
             w = np.where(m, np.maximum(w, w + (wa - w) * tap), w)
@@ -145,6 +153,7 @@ def compute(road):
         mat = np.where(fresh & (mat != "grass") & (mat != "paved"), "dirt", mat)
         si = np.where(fresh, 0.12, si)
         k = side[0]
+        out[f"apron_{k}"] = apron_m
         out[f"sh_w_{k}"] = w; out[f"sh_mat_{k}"] = mat; out[f"ditch_{k}"] = dz
         out[f"line_in_{k}"] = li; out[f"strip_in_{k}"] = si
     out["fresh"] = fresh

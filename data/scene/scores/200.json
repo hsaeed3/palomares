@@ -40,17 +40,17 @@
    "px_seg": 21134
   },
   "terrain_grass": {
-   "iou": 0.0547,
-   "precision": 0.1931,
+   "iou": 0.0544,
+   "precision": 0.1894,
    "recall": 0.0709,
-   "px_render": 6193,
+   "px_render": 6314,
    "px_seg": 16863
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 9019,
+   "px_render": 9326,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,7 +71,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 18686,
+   "px_render": 21317,
    "px_seg": 0
   },
   "trunk": {
@@ -110,10 +110,10 @@
    "px_seg": 49
   },
   "fence": {
-   "iou": 0.1359,
-   "precision": 0.5876,
-   "recall": 0.1503,
-   "px_render": 3637,
+   "iou": 0.0127,
+   "precision": 0.3201,
+   "recall": 0.013,
+   "px_render": 578,
    "px_seg": 14221
   },
   "wall": {
@@ -175,10 +175,10 @@
    "px_seg": 21134
   },
   "terrain": {
-   "iou": 0.2354,
-   "precision": 0.4014,
+   "iou": 0.2316,
+   "precision": 0.3905,
    "recall": 0.3627,
-   "px_render": 15280,
+   "px_render": 15708,
    "px_seg": 16912
   },
   "tree": {
@@ -192,7 +192,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 18686,
+   "px_render": 21317,
    "px_seg": 0
   },
   "trunk": {
@@ -203,10 +203,10 @@
    "px_seg": 39
   },
   "vegetation": {
-   "iou": 0.2936,
-   "precision": 0.3441,
+   "iou": 0.2833,
+   "precision": 0.33,
    "recall": 0.6668,
-   "px_render": 61515,
+   "px_render": 64146,
    "px_seg": 31744
   },
   "sign": {
@@ -224,10 +224,10 @@
    "px_seg": 751
   },
   "barrier": {
-   "iou": 0.1351,
-   "precision": 0.5876,
-   "recall": 0.1493,
-   "px_render": 3637,
+   "iou": 0.0126,
+   "precision": 0.3201,
+   "recall": 0.0129,
+   "px_render": 578,
    "px_seg": 14315
   },
   "building": {
@@ -249,8 +249,8 @@
   {
    "id": "fence_s0085",
    "cls": "fence",
-   "px": 3637,
-   "match": 0.588,
+   "px": 157,
+   "match": 1.0,
    "found": true,
    "occluded": false
   },
@@ -259,6 +259,14 @@
    "cls": "mailbox",
    "px": 316,
    "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
+  {
+   "id": "fence_m200",
+   "cls": "fence",
+   "px": 421,
+   "match": 0.067,
    "found": false,
    "occluded": false
   },
@@ -287,7 +295,7 @@
    "occluded": false
   }
  ],
- "score": 0.4593,
- "t_render_s": 0.336,
- "t_total_s": 0.373
+ "score": 0.4558,
+ "t_render_s": 0.19,
+ "t_total_s": 0.222
 }

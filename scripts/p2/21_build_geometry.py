@@ -19,6 +19,7 @@ sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, CFG, SHOULDER_W, Road, Raster, load_centerline, vertex_normals, grid_tris
 from geom import build_lock; build_lock()  # one build/ writer at a time
 from progress import bar, Section
+import terrain_edits as TE
 import time as _time
 _T0 = _time.time()
 def _tick(name):
@@ -63,8 +64,10 @@ ii = np.repeat(np.arange(N)[:, None], D_ROAD.shape[1], 1)
 RX, RY = road.xy(ii, D_ROAD)
 RZ = road.surface_z(ii, D_ROAD)
 
-# shoulder: edge -> edge+w/2 -> edge+w, w = per-station width (edge_profile.py: road.sh_w_l/r, 0.15-2.6 m),
-# outer z pulled toward DTM but limited; mid column dips by road.ditch_l/r (shallow V ditch / gutter)
+# shoulder: edge -> edge+w/2 -> edge+w, w = per-station width (edge_profile.py: road.sh_w_l/r, 0.15-2.6 m, clamped to
+# the LiDAR toe). Mid and outer z follow the (override-edited) DTM, limited to slopes of SH_MID / SH_OUT (rise/run) from
+# the asphalt edge so the strip never folds; the mid column also dips by road.ditch_l/r (shallow V ditch / gutter).
+SH_MID, SH_OUT = 0.9, 1.2
 def shoulder(side):
     sgn = 1 if side == "L" else -1
     e = road.el if side == "L" else road.er
@@ -74,12 +77,13 @@ def shoulder(side):
     ex, ey, ez = RX[:, col], RY[:, col], RZ[:, col]
     d_out = sgn * (e + W_)
     ox, oy = road.xy(np.arange(N), d_out)
-    zt = dtm(ox, oy)
-    zt = np.where(np.isfinite(zt), zt, ez - 0.05)
-    dz = gaussian_filter1d(np.clip(zt - ez, -0.30, 0.35), 2, mode="nearest")
-    oz = ez + dz
     mx, my = road.xy(np.arange(N), sgn * (e + W_ / 2))
-    mz = ez + 0.5 * dz - np.minimum(0.02, 0.1 * W_) - DZ_   # slight dished edge / ditch V
+    zt = TE.apply(road, ox, oy, dtm(ox, oy)); zm = TE.apply(road, mx, my, dtm(mx, my))
+    zt = np.where(np.isfinite(zt), zt, ez - 0.05); zm = np.where(np.isfinite(zm), zm, 0.5 * (ez + zt))
+    dz = gaussian_filter1d(np.clip(zt - ez, -SH_OUT * W_, SH_OUT * W_), 1.0, mode="nearest")
+    dm = gaussian_filter1d(np.clip(zm - ez, -SH_MID * W_ / 2, SH_MID * W_ / 2), 1.0, mode="nearest")
+    oz = ez + dz
+    mz = ez + np.minimum(dm, 0.5 * dz - np.minimum(0.02, 0.1 * W_) - DZ_)   # LiDAR mid, or the dished edge / ditch V if lower
     return np.stack([ex, mx, ox], 1), np.stack([ey, my, oy], 1), np.stack([ez, mz, oz], 1)
 
 SLX, SLY, SLZ = shoulder("L")
@@ -160,7 +164,7 @@ road_poly = MPath(bound)
 xmin, ymin = full_xy[full["s_m"] <= S_END + 200].min(0) - 155
 xmax, ymax = full_xy[full["s_m"] <= S_END + 200].max(0) + 155
 pts = []
-for step, dmin, dmax in ((1.0, 0, 16), (2.0, 16, 50), (4.0, 50, 148)):
+for step, dmin, dmax in ((1.0, -1.5, 16), (2.0, 16, 50), (4.0, 50, 148)):
     gx = np.arange(math.floor(xmin), xmax, step); gy = np.arange(math.floor(ymin), ymax, step)
     for y0 in range(0, len(gy), 400):
         X, Y = np.meshgrid(gx, gy[y0:y0 + 400]); X = X.ravel(); Y = Y.ravel()
@@ -169,15 +173,19 @@ for step, dmin, dmax in ((1.0, 0, 16), (2.0, 16, 50), (4.0, 50, 148)):
         de = dist - hw
         m = (de >= dmin) & (de < dmax) & (full["s_m"][j] <= S_END + 150)
         pts.append(np.c_[X[m], Y[m]])
+        if step == 1.0:   # 0.5 m lattice within ~3.5 m of the road edge: banks / mounds / ditches right at the shoulder
+            m2 = m & (de < 3.5)
+            for ox_, oy_ in ((0.5, 0.0), (0.0, 0.5), (0.5, 0.5)):
+                pts.append(np.c_[X[m2] + ox_, Y[m2] + oy_])
 pts = np.concatenate(pts)
 # remove grid points inside / too close to the built road polygon
 inside = road_poly.contains_points(pts)
 dmin_b, _ = cKDTree(bound).query(pts)
 bt = cKDTree(np.c_[road.x, road.y]); dc, jc = bt.query(pts)
 _sd_b = (pts[:, 0] - road.x[jc]) * road.nx[jc] + (pts[:, 1] - road.y[jc]) * road.ny[jc]
-hw_b = road.outer(jc, np.where(_sd_b >= 0, 1, -1)) + 0.5     # per-side, per-station outer edge (variable shoulder)
-pts = pts[(~inside) & (dmin_b > 0.6) & ~(dc < hw_b)]
-pz = dtm(pts[:, 0], pts[:, 1])
+hw_b = road.outer(jc, np.where(_sd_b >= 0, 1, -1)) + 0.3     # per-side, per-station outer edge (variable shoulder)
+pts = pts[(~inside) & (dmin_b > 0.35) & ~(dc < hw_b)]
+pz = TE.apply(road, pts[:, 0], pts[:, 1], dtm(pts[:, 0], pts[:, 1]))   # config/terrain_overrides.yaml
 pts, pz = pts[np.isfinite(pz)], pz[np.isfinite(pz)]
 print("terrain points", len(pts), "boundary", nb)
 V = np.concatenate([bound, pts]); VZ = np.concatenate([bound_z, pz])

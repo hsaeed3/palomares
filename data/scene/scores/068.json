@@ -64,7 +64,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12061,
+   "px_render": 11907,
    "px_seg": 0
   },
   "trunk": {
@@ -96,10 +96,10 @@
    "px_seg": 35
   },
   "fence": {
-   "iou": 0.1173,
-   "precision": 0.5667,
+   "iou": 0.1159,
+   "precision": 0.5365,
    "recall": 0.1288,
-   "px_render": 2737,
+   "px_render": 2891,
    "px_seg": 12042
   },
   "wall": {
@@ -178,7 +178,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12061,
+   "px_render": 11907,
    "px_seg": 0
   },
   "trunk": {
@@ -189,10 +189,10 @@
    "px_seg": 52
   },
   "vegetation": {
-   "iou": 0.6165,
-   "precision": 0.8162,
-   "recall": 0.7159,
-   "px_render": 80642,
+   "iou": 0.6151,
+   "precision": 0.8159,
+   "recall": 0.7142,
+   "px_render": 80488,
    "px_seg": 91947
   },
   "sign": {
@@ -210,10 +210,10 @@
    "px_seg": 290
   },
   "barrier": {
-   "iou": 0.1175,
-   "precision": 0.5725,
+   "iou": 0.1162,
+   "precision": 0.542,
    "recall": 0.1289,
-   "px_render": 2737,
+   "px_render": 2891,
    "px_seg": 12161
   },
   "bridge": {
@@ -232,6 +232,14 @@
   }
  },
  "instances": [
+  {
+   "id": "fence_s0015",
+   "cls": "fence",
+   "px": 154,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
+  },
   {
    "id": "driveway_s0012",
    "cls": "driveway",
@@ -305,7 +313,7 @@
    "occluded": false
   }
  ],
- "score": 0.3329,
- "t_render_s": 0.246,
- "t_total_s": 0.282
+ "score": 0.3326,
+ "t_render_s": 4.773,
+ "t_total_s": 4.812
 }

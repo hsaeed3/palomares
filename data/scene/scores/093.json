@@ -12,24 +12,24 @@
    "px_seg": 9768
   },
   "road": {
-   "iou": 0.4727,
-   "precision": 0.6919,
-   "recall": 0.5987,
-   "px_render": 32293,
+   "iou": 0.6792,
+   "precision": 0.7588,
+   "recall": 0.8663,
+   "px_render": 42606,
    "px_seg": 37318
   },
   "marking_yellow": {
-   "iou": 0.013,
-   "precision": 0.0177,
-   "recall": 0.0465,
-   "px_render": 1411,
+   "iou": 0.0836,
+   "precision": 0.0896,
+   "recall": 0.5539,
+   "px_render": 3326,
    "px_seg": 538
   },
   "marking_white": {
-   "iou": 0.0702,
-   "precision": 0.0867,
-   "recall": 0.2692,
-   "px_render": 14654,
+   "iou": 0.0982,
+   "precision": 0.2634,
+   "recall": 0.1355,
+   "px_render": 2426,
    "px_seg": 4717
   },
   "shoulder_dirt": {
@@ -50,42 +50,42 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 21668,
+   "px_render": 21662,
    "px_seg": 0
   },
   "vegetation_tree": {
-   "iou": 0.5843,
+   "iou": 0.5853,
    "precision": 0.953,
-   "recall": 0.6017,
-   "px_render": 68319,
+   "recall": 0.6027,
+   "px_render": 68428,
    "px_seg": 108204
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16677,
+   "px_render": 16697,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 3169,
+   "px_render": 3113,
    "px_seg": 616
   },
   "sign_face": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 207,
+   "px_render": 150,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 234,
+   "px_render": 224,
    "px_seg": 259
   },
   "fence": {
@@ -105,24 +105,24 @@
    "px_seg": 9768
   },
   "road": {
-   "iou": 0.4727,
-   "precision": 0.6919,
-   "recall": 0.5987,
-   "px_render": 32293,
+   "iou": 0.6792,
+   "precision": 0.7588,
+   "recall": 0.8663,
+   "px_render": 42606,
    "px_seg": 37318
   },
   "marking_yellow": {
-   "iou": 0.013,
-   "precision": 0.0177,
-   "recall": 0.0465,
-   "px_render": 1411,
+   "iou": 0.0836,
+   "precision": 0.0896,
+   "recall": 0.5539,
+   "px_render": 3326,
    "px_seg": 538
   },
   "marking_white": {
-   "iou": 0.0702,
-   "precision": 0.0867,
-   "recall": 0.2692,
-   "px_render": 14654,
+   "iou": 0.0982,
+   "precision": 0.2634,
+   "recall": 0.1355,
+   "px_render": 2426,
    "px_seg": 4717
   },
   "shoulder": {
@@ -136,49 +136,49 @@
    "iou": 0.0492,
    "precision": 0.0505,
    "recall": 0.6524,
-   "px_render": 21668,
+   "px_render": 21662,
    "px_seg": 1677
   },
   "tree": {
-   "iou": 0.5843,
+   "iou": 0.5853,
    "precision": 0.953,
-   "recall": 0.6017,
-   "px_render": 68319,
+   "recall": 0.6027,
+   "px_render": 68428,
    "px_seg": 108204
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16677,
+   "px_render": 16697,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 3169,
+   "px_render": 3113,
    "px_seg": 616
   },
   "vegetation": {
-   "iou": 0.7432,
-   "precision": 0.9525,
-   "recall": 0.7717,
-   "px_render": 88165,
+   "iou": 0.7433,
+   "precision": 0.9522,
+   "recall": 0.7721,
+   "px_render": 88238,
    "px_seg": 108820
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 207,
+   "px_render": 150,
    "px_seg": 0
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 234,
+   "px_render": 224,
    "px_seg": 259
   },
   "barrier": {
@@ -195,14 +195,6 @@
    "cls": "fence",
    "px": 6011,
    "match": 0.0,
-   "found": false,
-   "occluded": false
-  },
-  {
-   "id": "marking_s0008",
-   "cls": "marking",
-   "px": 12228,
-   "match": 0.052,
    "found": false,
    "occluded": false
   },
@@ -225,7 +217,7 @@
   {
    "id": "sign_s0031",
    "cls": "sign",
-   "px": 200,
+   "px": 118,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -233,7 +225,7 @@
   {
    "id": "sign_s0030",
    "cls": "sign",
-   "px": 62,
+   "px": 77,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -247,7 +239,7 @@
    "occluded": false
   }
  ],
- "score": 0.4526,
- "t_render_s": 0.228,
- "t_total_s": 0.26
+ "score": 0.5042,
+ "t_render_s": 0.247,
+ "t_total_s": 0.278
 }

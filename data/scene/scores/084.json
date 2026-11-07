@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16790,
+   "px_render": 16785,
    "px_seg": 0
   },
   "rock_cut": {
@@ -92,7 +92,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 9,
+   "px_render": 14,
    "px_seg": 60
   },
   "guardrail": {
@@ -168,10 +168,10 @@
    "px_seg": 3436
   },
   "terrain": {
-   "iou": 0.0518,
-   "precision": 0.0732,
-   "recall": 0.1504,
-   "px_render": 16850,
+   "iou": 0.0517,
+   "precision": 0.0731,
+   "recall": 0.1502,
+   "px_render": 16845,
    "px_seg": 8205
   },
   "tree": {
@@ -213,7 +213,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 9,
+   "px_render": 14,
    "px_seg": 60
   },
   "barrier": {
@@ -304,6 +304,14 @@
    "occluded": false
   },
   {
+   "id": "post_s0032",
+   "cls": "post",
+   "px": 5,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  },
+  {
    "id": "mailbox_b3m002",
    "cls": "mailbox",
    "px": 6,
@@ -313,6 +321,6 @@
   }
  ],
  "score": 0.4493,
- "t_render_s": 0.268,
- "t_total_s": 0.3
+ "t_render_s": 4.703,
+ "t_total_s": 4.742
 }

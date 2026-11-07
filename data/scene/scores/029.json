@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 24738,
+   "px_render": 24730,
    "px_seg": 0
   },
   "rock_cut": {
@@ -71,21 +71,21 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12309,
+   "px_render": 12317,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 1858,
+   "px_render": 1861,
    "px_seg": 0
   },
   "sign_face": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 87,
+   "px_render": 78,
    "px_seg": 0
   },
   "sign_back": {
@@ -99,8 +99,15 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 39,
+   "px_render": 33,
    "px_seg": 57
+  },
+  "fence": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 12,
+   "px_seg": 0
   }
  },
  "groups": {
@@ -140,10 +147,10 @@
    "px_seg": 3918
   },
   "terrain": {
-   "iou": 0.4034,
+   "iou": 0.4032,
    "precision": 0.873,
-   "recall": 0.4285,
-   "px_render": 25023,
+   "recall": 0.4283,
+   "px_render": 25015,
    "px_seg": 50980
   },
   "tree": {
@@ -157,43 +164,50 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 12309,
+   "px_render": 12317,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 1858,
+   "px_render": 1861,
    "px_seg": 0
   },
   "vegetation": {
    "iou": 0.7424,
    "precision": 0.8545,
-   "recall": 0.8498,
-   "px_render": 101915,
+   "recall": 0.8499,
+   "px_render": 101926,
    "px_seg": 102475
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 87,
+   "px_render": 78,
    "px_seg": 54
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 39,
+   "px_render": 33,
    "px_seg": 57
+  },
+  "barrier": {
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": null,
+   "px_render": 12,
+   "px_seg": 0
   }
  },
  "instances": [
   {
    "id": "sign_s0012",
    "cls": "sign",
-   "px": 122,
+   "px": 107,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -213,9 +227,17 @@
    "match": 0.0,
    "found": false,
    "occluded": true
+  },
+  {
+   "id": "gate_s0002",
+   "cls": "gate",
+   "px": 12,
+   "match": 0.0,
+   "found": false,
+   "occluded": false
   }
  ],
  "score": 0.421,
- "t_render_s": 1.859,
- "t_total_s": 2.055
+ "t_render_s": 0.283,
+ "t_total_s": 0.315
 }
