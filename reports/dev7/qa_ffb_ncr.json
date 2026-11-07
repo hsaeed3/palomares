@@ -1,14 +1,37 @@
 {
- "ok": true,
- "fails": [],
+ "ok": false,
+ "fails": [
+  "canyon_rev_road: palomares_niles_assets.kn5 missing",
+  "canyon_rev_road: palomares_niles_timing_canyon_rev_road.kn5 missing",
+  "canyon_rev_track: palomares_niles_assets.kn5 missing",
+  "canyon_rev_track: palomares_niles_timing_canyon_rev_track.kn5 missing",
+  "canyon_rev_track: palomares_niles_kerbs_sb.kn5 missing",
+  "canyon_road: palomares_niles_assets.kn5 missing",
+  "canyon_road: palomares_niles_timing_canyon_road.kn5 missing",
+  "canyon_track: palomares_niles_assets.kn5 missing",
+  "canyon_track: palomares_niles_timing_canyon_track.kn5 missing",
+  "canyon_track: palomares_niles_kerbs_nb.kn5 missing"
+ ],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
   "grass_banktoe_crease_max_deg": {
-   "1GRASS_ncr_rock_03": 99.7,
-   "1GRASS_ncr_rock_04": 96.4,
+   "1GRASS_ncr_rock_03": 96.5,
    "1GRASS_ncr_rock_05": 94.4,
-   "1GRASS_ncr_bank_05": 86.6,
+   "1GRASS_ncr_rock_04": 89.6,
+   "1GRASS_ncr_rock_02": 86.4,
+   "1GRASS_ncr_bank_01": 85.1,
+   "1GRASS_ncr_bank_06": 85.0,
+   "1GRASS_ncr_bank_07": 84.3,
+   "1GRASS_ncr_bank_04": 83.8,
+   "1GRASS_ncr_bank_00": 83.4,
+   "1GRASS_ncr_bank_05": 82.0
+  },
+  "grass_crease_raw_max_deg": {
+   "1GRASS_ncr_rock_03": 160.0,
+   "1GRASS_ncr_rock_06": 118.5,
+   "1GRASS_ncr_rock_04": 114.9,
+   "1GRASS_ncr_rock_05": 94.4,
    "1GRASS_ncr_rock_02": 86.4,
    "1GRASS_ncr_bank_01": 85.1,
    "1GRASS_ncr_bank_06": 85.0,
@@ -16,29 +39,17 @@
    "1GRASS_ncr_bank_04": 83.8,
    "1GRASS_ncr_bank_00": 83.4
   },
-  "grass_crease_raw_max_deg": {
-   "1GRASS_ncr_rock_04": 128.0,
-   "1GRASS_ncr_rock_06": 118.5,
-   "1GRASS_ncr_rock_03": 99.7,
-   "1GRASS_ncr_rock_05": 94.4,
-   "1GRASS_ncr_bank_05": 86.6,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_bank_01": 85.1,
-   "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_07": 84.3,
-   "1GRASS_ncr_bank_04": 83.8
-  },
   "grass_crease_max_deg": {
+   "1GRASS_ncr_ground_03": 41.1,
    "1GRASS_ncr_ground_06": 39.9,
    "1GRASS_ncr_ground_05": 39.8,
-   "1GRASS_ncr_ground_08": 39.0,
-   "1GRASS_ncr_ground_03": 38.5,
    "1GRASS_ncr_bank_02": 38.3,
-   "1GRASS_ncr_bank_01": 37.4,
    "1GRASS_ncr_ground_09": 37.2,
+   "1GRASS_ncr_ground_01": 36.5,
    "1GRASS_ncr_ground_10": 36.3,
-   "1GRASS_ncr_bank_05": 36.1,
-   "1GRASS_ncr_ground_04": 35.2
+   "1GRASS_ncr_bank_01": 36.0,
+   "1GRASS_ncr_bank_05": 35.9,
+   "1GRASS_ncr_ground_00": 34.5
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_ncr_road_asphalt_00": 0.0,
@@ -53,9 +64,9 @@
    "1ROAD_ncr_road_asphalt_08": 0.0
   },
   "road_crease_raw_max_deg": {
+   "1ROAD_ncr_road_asphalt_03": 7.2,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
-   "1ROAD_ncr_road_asphalt_03": 2.9,
    "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
    "1ROAD_ncr_road_asphalt_06": 2.7,
@@ -65,9 +76,9 @@
    "1ROAD_ncr_road_asphalt_00": 1.8
   },
   "road_crease_max_deg": {
+   "1ROAD_ncr_road_asphalt_03": 7.2,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
-   "1ROAD_ncr_road_asphalt_03": 2.9,
    "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
    "1ROAD_ncr_road_asphalt_06": 2.7,
@@ -86,7 +97,52 @@
    "1WALL_ncr_br2L": 1.0,
    "1WALL_ncr_br2R": 1.0
   },
-  "layouts": {},
+  "layouts": {
+   "canyon_rev_road": {
+    "materials": 6,
+    "shader_texture_combos": 4,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 6,
+    "texture_mb": 8.4,
+    "csp_shader_replacements": 0
+   },
+   "canyon_rev_track": {
+    "materials": 6,
+    "shader_texture_combos": 4,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 6,
+    "texture_mb": 8.4,
+    "csp_shader_replacements": 0
+   },
+   "canyon_road": {
+    "materials": 6,
+    "shader_texture_combos": 4,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 6,
+    "texture_mb": 8.4,
+    "csp_shader_replacements": 0
+   },
+   "canyon_track": {
+    "materials": 6,
+    "shader_texture_combos": 4,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 6,
+    "texture_mb": 8.4,
+    "csp_shader_replacements": 0
+   }
+  },
   "wall_tris_total": 4528,
   "wall_tris_per_km": 422,
   "wall_components": 8

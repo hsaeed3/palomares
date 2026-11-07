@@ -61,20 +61,23 @@ def snapshot(src, dst_dir):
 
 
 def cut_copy(src_path, out_path, inside, log):
-    """write src kn5 minus triangles with any vertex inside the zone; returns (kept physics P,T arrays, removed
-    asphalt (1ROAD) triangles P,T) in ENU"""
+    """write src kn5 minus triangles with any vertex inside the zone; returns (kept physics P,T), (removed asphalt
+    (1ROAD) P,T), (all removed physics P,T) in ENU"""
     k = read_kn5(str(src_path))
     mats = []
     for m in k["materials"]:
         props = {p: ((v[3], v[4], v[5]) if p == "ksEmissive" else v[0]) for p, v in m["props"].items()}
         mats.append(Material(m["name"], m["shader"], props, dict(m["textures"]), blend=m["blend"], alpha_tested=m["alpha_tested"]))
     nodes, keptP, keptT, roadP, roadT, nk, nr = [], [], [], [], [], 0, 0
+    allP, allT, na = [], [], 0
     removed = 0
     for m in k["meshes"]:
         P = enu(m["pos"]); T = m["idx"].reshape(-1, 3)
         bad = inside(P[:, :2])[T].any(1)
         removed += int(bad.sum())
         nm = m["name"]; phys = nm[:1].isdigit() and "WALL" not in nm
+        if phys and bad.any():
+            allP.append(P); allT.append(T[bad] + na); na += len(P)
         if phys and bad.any() and nm.startswith("1ROAD"):
             roadP.append(P); roadT.append(T[bad] + nr); nr += len(P)
         Tk = T[~bad]
@@ -88,7 +91,7 @@ def cut_copy(src_path, out_path, inside, log):
     write_kn5(str(out_path), mats, k["textures"], nodes)
     log[out_path.name] = dict(src=str(src_path), removed_tris=removed)
     cat = lambda L, D: np.concatenate(L) if L else np.zeros((0, D))
-    return (cat(keptP, 3), cat(keptT, 3).astype(int)), (cat(roadP, 3), cat(roadT, 3).astype(int))
+    return (cat(keptP, 3), cat(keptT, 3).astype(int)), (cat(roadP, 3), cat(roadT, 3).astype(int)), (cat(allP, 3), cat(allT, 3).astype(int))
 
 
 def open_boundary(P, T):

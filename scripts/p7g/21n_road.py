@@ -63,10 +63,10 @@ pal = load_centerline(CFG["build_end_m"] + 150)
 pkd = cKDTree(np.c_[pal["x_local"], pal["y_local"]])
 rkd = cKDTree(np.c_[road.x[I], road.y[I]])
 # ---- stitch to the shipped Palomares road/terrain (scripts/p7g/stitch.py): cut copies for the dev7 layouts
-CUT = 4.0
+CUT = 10.0          # cut margin past the shoulder: also the length of the junction vertical blend (Palomares climbs ~7 % off the NCR edge)
 dpal_road, _ = pkd.query(np.c_[road.x[I], road.y[I]])
 STITCH = bool((dpal_road < 160).any())
-SEGV = np.zeros((0, 3)); SEGE = np.zeros((0, 2), int); KEPT = ROADCUT = None
+SEGV = np.zeros((0, 3)); SEGE = np.zeros((0, 2), int); KEPT = ROADCUT = ROADALL = None
 
 
 def in_cut(xy):
@@ -79,17 +79,21 @@ def in_cut(xy):
 if STITCH:
     import stitch as STI
     snap = BUILD / "dev7" / "src"
-    kept_all, cut_road = [], []
+    kept_all, cut_road, cut_all = [], [], []
     for nm in ("palomares_terrain", "palomares_road", "palomares_lines_road"):
         src_ = STI.snapshot(ROOT / f"build/palomares_road/{nm}.kn5", snap)
         if not src_.exists():      # full build in progress: develop against the quick copy, re-run before release
             src_ = STI.snapshot(ROOT / f"build_quick/palomares_road/{nm}.kn5", snap / "quick")
         LOG.setdefault("stitch", {}).setdefault("sources", []).append(str(src_))
-        (kp, kt), (rp, rt) = STI.cut_copy(src_, BUILD / "palomares_road" / f"{nm}_dev7.kn5", in_cut, LOG.setdefault("stitch", {}))
+        (kp, kt), (rp, rt), (ap_, at_) = STI.cut_copy(src_, BUILD / "palomares_road" / f"{nm}_dev7.kn5", in_cut, LOG.setdefault("stitch", {}))
         if nm != "palomares_lines_road":
             kept_all.append((kp, kt))
         if len(rt):
             cut_road.append((rp, rt))
+        if len(at_) and nm != "palomares_lines_road":
+            cut_all.append((ap_, at_))
+        if len(at_) and nm == "palomares_road":
+            ROADALL = STI.TriGrid(ap_, at_)          # removed Palomares asphalt + shoulders: blend from the NCR surface
     off_ = np.cumsum([0] + [len(p_) for p_, _ in kept_all])[:-1]
     KP = np.concatenate([p_ for p_, _ in kept_all]); KT = np.concatenate([t_ + o for (_, t_), o in zip(kept_all, off_)])
     # only the kept geometry near this road matters (speed): triangles within 170 m
@@ -98,6 +102,8 @@ if STITCH:
     if cut_road:
         off_ = np.cumsum([0] + [len(p_) for p_, _ in cut_road])[:-1]
         ROADCUT = STI.TriGrid(np.concatenate([p_ for p_, _ in cut_road]), np.concatenate([t_ + o for (_, t_), o in zip(cut_road, off_)]))
+    off_ = np.cumsum([0] + [len(p_) for p_, _ in cut_all])[:-1]
+    CUTALL = STI.TriGrid(np.concatenate([p_ for p_, _ in cut_all]), np.concatenate([t_ + o for (_, t_), o in zip(cut_all, off_)]))
     SEGV, SEGE = STI.open_boundary(KP, KT)
     # keep boundary edges near this road's terrain area (the far outer loop of the Palomares terrain stays open there)
     de_, _ = rkd.query(SEGV[:, :2], workers=2); okv = de_ < 146
@@ -225,6 +231,23 @@ if KEPT is not None:
     mv = np.zeros(len(P3), bool); mv[np.unique(TT[MOUTH])] = True
     if len(SEGV):
         dsv, _ = cKDTree(SEGV[:, :2]).query(P3[:, :2]); mv |= dsv < 4.0
+    # every vertex on removed Palomares surface (asphalt, shoulder, terrain) blends from this road's own value
+    # (asphalt crossfall extension in the mouth, DTM/slope-limited terrain elsewhere) into the SHIPPED surface it
+    # replaces (located on the removed triangles), smoothstep over the CUT margin: at the kept cut edge w = 1, so
+    # old and new meet exactly; the vertical transition is spread over CUT m
+    zS, tS = CUTALL.locate(P3[:, :2]); on = (tS >= 0) & ~FIXED
+    q = P3[on, :2]
+    _, jn = rkd.query(q); jn = I[jn]
+    offn = (q[:, 0] - road.x[jn]) * road.nx[jn] + (q[:, 1] - road.y[jn]) * road.ny[jn]
+    hwn = np.where(offn > 0, road.el[jn], road.er[jn])
+    znew = P3[on, 2].copy()
+    if ROADALL is not None:
+        _, tr_ = ROADALL.locate(q); mo = tr_ >= 0
+        znew[mo] = road.surface_z(jn[mo], np.clip(offn[mo], -road.er[jn[mo]], road.el[jn[mo]]))
+    w_ = np.clip((np.abs(offn) - hwn - SH) / CUT, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
+    P3[on, 2] = (1 - w_) * znew + w_ * zS[on]
+    FIXED[on] = True
+    LOG["stitch"]["blended_vertices"] = int(on.sum())
     mv &= ~FIXED
     nb_ = np.r_[TT[:, [0, 1]], TT[:, [1, 2]], TT[:, [2, 0]]]
     for _it in range(60):
@@ -232,15 +255,6 @@ if KEPT is not None:
         np.add.at(sm, nb_[:, 0], P3[nb_[:, 1], 2]); np.add.at(ct, nb_[:, 0], 1)
         np.add.at(sm, nb_[:, 1], P3[nb_[:, 0], 2]); np.add.at(ct, nb_[:, 1], 1)
         P3[mv, 2] = sm[mv] / np.maximum(ct[mv], 1)
-    # mouth vertices on the cut Palomares asphalt take that (designed, smooth) surface, corrected toward this road's
-    # outline over 4 m (the two surfaces differ by a few cm at the edge); the membrane stays only off the asphalt
-    if ROADCUT is not None:
-        zr_, tr_ = ROADCUT.locate(P3[:, :2]); onr = mv & (tr_ >= 0)
-        bkd = cKDTree(bound); dbd, jb = bkd.query(P3[onr, :2])
-        zrb, trb = ROADCUT.locate(bound[jb]); corr = np.where(trb >= 0, bz[jb] - zrb, 0.0)
-        w_ = np.clip(1 - dbd / 9.0, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
-        P3[onr, 2] = zr_[onr] + w_ * corr
-        LOG["stitch"]["mouth_on_palomares_asphalt"] = int(onr.sum())
     LOG["stitch"]["membrane_vertices"] = int(mv.sum()); LOG["stitch"]["mouth_tris"] = int(MOUTH.sum())
 cr = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]])[:, 2]
 TT[cr < 0] = TT[cr < 0][:, [0, 2, 1]]

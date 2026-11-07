@@ -2,28 +2,32 @@
  "road": "niles_canyon_road",
  "files": [
   "palomares_niles_ncr.kn5",
-  "palomares_niles_ncr_terrain.kn5",
-  "palomares_terrain_dev7.kn5",
-  "palomares_road_dev7.kn5"
+  "palomares_niles_ncr_terrain.kn5"
  ],
  "s": [
-  3300.0,
-  3749.5
+  2.0,
+  10726.5
  ],
  "holes": 0,
  "holes_list": [],
  "steps": 0,
  "steps_list": [],
  "step_max_m": 0.0,
- "slope_breaks_checked": 6,
- "asphalt_kinks": 0,
- "asphalt_kinks_list": [],
+ "slope_breaks_checked": 415,
+ "asphalt_kinks": 1,
+ "asphalt_kinks_list": [
+  [
+   10518.5,
+   6.107181822983258,
+   0.03322212046323614
+  ]
+ ],
  "overlaps": 0,
  "overlaps_list": [],
- "grade_max_pct_25m": 2.679555887517182,
- "grade_max_pct_5m": 2.815696479456875,
- "grade_max_s": 3384.0,
- "camber_change_max_pct_per_m": 0.4839015972057936,
+ "grade_max_pct_25m": 5.719468440648967,
+ "grade_max_pct_5m": 6.5273588000870575,
+ "grade_max_s": 5173.5,
+ "camber_change_max_pct_per_m": 1.4183240975732758,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
  "open_edges_in_band_s": []
