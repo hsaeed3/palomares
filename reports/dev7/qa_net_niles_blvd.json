@@ -1,0 +1,46 @@
+{
+ "road": "niles_blvd",
+ "files": [
+  "palomares_niles_ncr.kn5",
+  "palomares_niles_ncr_terrain.kn5",
+  "palomares_niles_town.kn5",
+  "palomares_niles_town_terrain.kn5"
+ ],
+ "s": [
+  2.0,
+  270.5
+ ],
+ "holes": 0,
+ "holes_list": [],
+ "steps": 0,
+ "steps_list": [],
+ "step_max_m": 0.0,
+ "slope_breaks_checked": 160,
+ "asphalt_kinks": 3,
+ "asphalt_kinks_list": [
+  [
+   148.5,
+   2.956950685530186,
+   0.02321594103329616
+  ],
+  [
+   148.5,
+   3.0439198233398965,
+   0.022852739925475873
+  ],
+  [
+   148.5,
+   2.8699815477204753,
+   0.020881137950635065
+  ]
+ ],
+ "overlaps": 0,
+ "overlaps_list": [],
+ "grade_max_pct_25m": 1.9766007812492603,
+ "grade_max_pct_5m": 2.1822532762758584,
+ "grade_max_s": 144.5,
+ "camber_change_max_pct_per_m": 0.3100212579473016,
+ "open_edges_palomares_junction": 0,
+ "open_edges_in_band": 0,
+ "open_edges_in_band_s": []
+}

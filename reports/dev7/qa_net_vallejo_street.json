@@ -1,0 +1,46 @@
+{
+ "road": "vallejo_street",
+ "files": [
+  "palomares_niles_ncr.kn5",
+  "palomares_niles_ncr_terrain.kn5",
+  "palomares_niles_town.kn5",
+  "palomares_niles_town_terrain.kn5"
+ ],
+ "s": [
+  2.0,
+  270.5
+ ],
+ "holes": 0,
+ "holes_list": [],
+ "steps": 0,
+ "steps_list": [],
+ "step_max_m": 0.0,
+ "slope_breaks_checked": 101,
+ "asphalt_kinks": 3,
+ "asphalt_kinks_list": [
+  [
+   20.5,
+   -4.733909993678026,
+   0.021546665279963406
+  ],
+  [
+   17.5,
+   3.0461093711561635,
+   0.021190283202660254
+  ],
+  [
+   20.5,
+   -4.6125276861478195,
+   0.020869472701139813
+  ]
+ ],
+ "overlaps": 0,
+ "overlaps_list": [],
+ "grade_max_pct_25m": 3.0797247269930494,
+ "grade_max_pct_5m": 4.7294715981649915,
+ "grade_max_s": 231.0,
+ "camber_change_max_pct_per_m": 0.6744503801975554,
+ "open_edges_palomares_junction": 0,
+ "open_edges_in_band": 0,
+ "open_edges_in_band_s": []
+}

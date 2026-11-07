@@ -63,6 +63,66 @@ for gname, lst in G.items():
             for s in np.unique(road.s[j[bad]] // 100 * 100):
                 LOG[(gname, nm.rstrip("0123456789_"), int(s))] += 1
 
+# ---- crease smoothing on drivable non-road surfaces (kerbs, run-off, shoulders): interior vertices of folded edges
+# are relaxed in z towards their neighbours; boundary vertices (shared with road / terrain) never move, so no steps.
+LIM = {"1KERB": 22.0, "1RUNOFF": 22.0, "1GRASS_sh": 40.0}
+SM = collections.Counter()
+
+
+def smooth_creases(m, lim):
+    P = np.asarray(m["P"], float); T = np.asarray(m["T"])
+    if len(T) < 2:
+        return 0
+    key = np.round(P * 1000).astype(np.int64)
+    _, w, inv = np.unique(key, axis=0, return_index=True, return_inverse=True); inv = inv.ravel()
+    Q = P[w].copy(); F = inv[T]
+    E = np.sort(np.r_[F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]], 1); fid = np.r_[np.arange(len(F))] .repeat(1)
+    fid = np.r_[np.arange(len(F)), np.arange(len(F)), np.arange(len(F))]
+    o = np.lexsort((E[:, 1], E[:, 0])); E, fid = E[o], fid[o]
+    same = np.all(E[1:] == E[:-1], 1)
+    bnd = np.ones(len(Q), bool); inner = np.zeros(len(Q), bool)
+    cnt = np.bincount(np.r_[E[:, 0], E[:, 1]], minlength=len(Q))
+    pair_a, pair_b = fid[:-1][same], fid[1:][same]
+    ein = E[:-1][same]
+    inner[np.r_[ein[:, 0], ein[:, 1]]] = True
+    # boundary vertex: touches an edge used once
+    once = np.ones(len(E), bool); once[:-1] &= ~same; once[1:] &= ~same
+    bnd[:] = False; bnd[np.r_[E[once, 0], E[once, 1]]] = True
+    nb = [[] for _ in range(len(Q))]
+    for a_, b_ in ein:
+        nb[a_].append(b_); nb[b_].append(a_)
+    moved = 0
+    for it in range(60):
+        n = np.cross(Q[F[:, 1]] - Q[F[:, 0]], Q[F[:, 2]] - Q[F[:, 0]]); n /= np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-12)
+        ang = np.degrees(np.arccos(np.clip((n[pair_a] * n[pair_b]).sum(1), -1, 1)))
+        hot = ang > lim
+        if not hot.any():
+            break
+        vs = np.unique(np.r_[F[pair_a[hot]].ravel(), F[pair_b[hot]].ravel()])
+        vs = vs[~bnd[vs]]
+        if not len(vs):
+            break
+        for v in vs:
+            if nb[v]:
+                Q[v, 2] = 0.5 * Q[v, 2] + 0.5 * Q[nb[v], 2].mean()
+        moved += len(vs)
+    m["P"] = Q[inv]
+    return moved
+
+
+for gname, lst in G.items():
+    if not isinstance(lst, list):
+        continue
+    for m in lst:
+        if not isinstance(m, dict) or "P" not in m:
+            continue
+        for pre, lim in LIM.items():
+            if m["name"].startswith(pre):
+                k_ = smooth_creases(m, lim)
+                if k_:
+                    SM[m["name"]] += k_
+print(f"21g: crease smoothing moved vertices in {len(SM)} meshes: {dict(SM.most_common(8))}")
+
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 print(f"21g: terrain vertices pushed below asphalt: {TER}; meshes trimmed at {len(LOG)} (group, kind, 100 m) spots")
 by = collections.Counter()

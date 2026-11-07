@@ -1,0 +1,76 @@
+{
+ "road": "limelight_terrace",
+ "files": [
+  "palomares_niles_ncr.kn5",
+  "palomares_niles_ncr_terrain.kn5",
+  "palomares_niles_town.kn5",
+  "palomares_niles_town_terrain.kn5"
+ ],
+ "s": [
+  2.0,
+  90.5
+ ],
+ "holes": 0,
+ "holes_list": [],
+ "steps": 0,
+ "steps_list": [],
+ "step_max_m": 0.0,
+ "slope_breaks_checked": 110,
+ "asphalt_kinks": 9,
+ "asphalt_kinks_list": [
+  [
+   76.0,
+   4.22183320290179,
+   0.027556699227371695
+  ],
+  [
+   77.5,
+   4.236701184119225,
+   0.027163764111200805
+  ],
+  [
+   75.5,
+   4.22183320290179,
+   0.025956819627708683
+  ],
+  [
+   77.5,
+   4.1190150401159125,
+   0.02547718252510478
+  ],
+  [
+   75.5,
+   4.33910634742684,
+   0.024773152364161888
+  ],
+  [
+   77.5,
+   4.354387328122537,
+   0.024022466686879795
+  ],
+  [
+   77.5,
+   4.001328896112602,
+   0.021624938316488596
+  ],
+  [
+   76.0,
+   4.10456005837674,
+   0.02110216349536742
+  ],
+  [
+   76.0,
+   4.33910634742684,
+   0.02060411514582583
+  ]
+ ],
+ "overlaps": 0,
+ "overlaps_list": [],
+ "grade_max_pct_25m": 7.207698814474739,
+ "grade_max_pct_5m": 7.449030953145908,
+ "grade_max_s": 48.0,
+ "camber_change_max_pct_per_m": 0.450476659231569,
+ "open_edges_palomares_junction": 0,
+ "open_edges_in_band": 0,
+ "open_edges_in_band_s": []
+}

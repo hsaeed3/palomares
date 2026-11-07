@@ -1,6 +1,12 @@
 {
- "ok": true,
- "fails": [],
+ "ok": false,
+ "fails": [
+  "palomares_kerbs_nb.kn5:1KERB_NB_m01 crease 34 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m01 crease 34 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m02 crease 31 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1RUNOFF_SB_24 crease 30 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_road.kn5:1GRASS_shRdirt05 crease 64 deg > 45.0 (fold amplitude > 1 cm)"
+ ],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -17,12 +23,36 @@
    "1WALL_R_29": 18.8
   },
   "kerb_crease_raw_max_deg": {
-   "1KERB_NB_15": 11.1,
-   "1KERB_SB_15": 11.1
+   "1KERB_NB_m01": 33.8,
+   "1KERB_SB_m01": 33.8,
+   "1KERB_SB_m02": 30.8,
+   "1KERB_NB_m02": 22.2,
+   "1KERB_NB_m06": 22.1,
+   "1KERB_SB_m04": 21.7,
+   "1KERB_SB_56": 21.1,
+   "1KERB_NB_m04": 20.9,
+   "1KERB_NB_m00": 20.8,
+   "1KERB_SB_m12": 19.0
   },
   "kerb_crease_max_deg": {
-   "1KERB_NB_15": 11.1,
-   "1KERB_SB_15": 11.1
+   "1KERB_NB_m01": 33.8,
+   "1KERB_SB_m01": 33.8,
+   "1KERB_SB_m02": 30.8,
+   "1KERB_NB_m02": 22.2,
+   "1KERB_NB_m06": 22.1,
+   "1KERB_SB_m04": 21.7,
+   "1KERB_SB_56": 21.1,
+   "1KERB_NB_m04": 20.9,
+   "1KERB_NB_m00": 20.8,
+   "1KERB_SB_m12": 19.0
+  },
+  "runoff_crease_raw_max_deg": {
+   "1RUNOFF_SB_24": 29.8,
+   "1RUNOFF_NB_27": 12.3
+  },
+  "runoff_crease_max_deg": {
+   "1RUNOFF_SB_24": 29.8,
+   "1RUNOFF_NB_27": 12.3
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_APR01": 35.5,
@@ -85,16 +115,16 @@
    "1GRASS_tr35": 142.8
   },
   "grass_crease_max_deg": {
+   "1GRASS_shRdirt05": 63.9,
    "1GRASS_tb01": 41.4,
+   "1GRASS_shRdirt07": 39.4,
+   "1GRASS_shLlitter09": 38.7,
    "1GRASS_tb03": 38.7,
+   "1GRASS_shLgrass17": 38.4,
    "1GRASS_tb09": 38.4,
    "1GRASS_tb30": 38.4,
    "1GRASS_tb51": 37.6,
-   "1GRASS_tl01": 37.0,
-   "1GRASS_tl09": 36.9,
-   "1GRASS_tl12": 36.9,
-   "1GRASS_tl18": 36.7,
-   "1GRASS_tb19": 36.7
+   "1GRASS_tl01": 37.0
   },
   "layouts": {
    "road_full": {
@@ -170,81 +200,81 @@
     "csp_shader_replacements": 1
    },
    "track_full": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    },
    "track_full_rev": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    },
    "track_north": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    },
    "track_north_rev": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    },
    "track_summit": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    },
    "track_summit_rev": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 36,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 36,
-    "texture_mb": 160.4,
+    "textures": 37,
+    "texture_mb": 160.6,
     "csp_shader_replacements": 1
    }
   },

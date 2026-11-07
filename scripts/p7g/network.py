@@ -64,6 +64,9 @@ def load_road(name, log=None):
     role = roles()[name].get("role", "town") if "role" in roles()[name] else ("canyon" if name == "niles_canyon_road" else "town")
     z, fx = _bridge_fix(c["s_m"], c["z_navd88"], c.get("struct", np.array([""] * len(c["s_m"]))))
     z = _grade_limit(c["s_m"], z, ROLE_MAX_GRADE.get(role, 0.12))
+    if name != "niles_canyon_road":          # town streets: vertical curves after the grade limit (no 0 -> 12 % kinks)
+        from scipy.ndimage import gaussian_filter1d as _g
+        z = _g(z, 4.0, mode="nearest")
     if log is not None:
         log[name] = dict(bridge_fixes=fx, dz_grade_limit_max=float(np.abs(z - c["z_navd88"]).max()))
     r = Road(None, name=name, z_override=z)
