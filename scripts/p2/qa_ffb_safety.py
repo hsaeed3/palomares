@@ -98,7 +98,7 @@ def boxes_apart(A, B, gap=0.05):
     return False
 
 
-K = {f.name: read_kn5(f) for f in sorted(TRACK.glob(_KN5_GLOB))}
+K = {f.name: read_kn5(f) for f in sorted({q for g in _KN5_GLOB.split(",") for q in TRACK.glob(g)})}   # comma = several globs
 # drivable edge = 1ROAD + shoulder vertices
 road = np.concatenate([enu(m["pos"])[:, :2] for m in K[_ROAD_KN5]["meshes"] if m["name"][:1].isdigit()])
 road_kd = cKDTree(road[::3])

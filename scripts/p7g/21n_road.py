@@ -28,6 +28,7 @@ from kn5 import Mesh, Material, write_kn5, read_kn5, ac_from_local
 ap = argparse.ArgumentParser()
 ap.add_argument("road"); ap.add_argument("--s", default=None, help="station range a-b (small tests)")
 ap.add_argument("--tag", default=None)
+ap.add_argument("--run", type=int, default=None, help="which outside-cluster run (by start station); default the longest")
 ap.add_argument("--no-clusters", action="store_true", help="do not leave the town clusters (21t) out")
 A = ap.parse_args()
 assert BUILD.resolve() != (ROOT / "build").resolve(), "dev7 G writes to its own build dir (PALOMARES_BUILD_DIR=build_dev7)"
@@ -50,7 +51,10 @@ if not A.no_clusters:
     insc = shapely.contains_xy(CLU, road.x, road.y)
     out_ = np.flatnonzero(~insc[i0:i1 + 1]) + i0
     if len(out_):
-        runs = np.split(out_, np.flatnonzero(np.diff(out_) > 1) + 1); run = max(runs, key=len)
+        runs = np.split(out_, np.flatnonzero(np.diff(out_) > 1) + 1)
+        runs = [q for q in runs if len(q) >= 20]
+        run = max(runs, key=len) if A.run is None else runs[A.run]
+        LOG["cluster_runs"] = [[float(road.s[q[0]]), float(road.s[q[-1]])] for q in runs]
         i0, i1 = int(run[0]), int(run[-1])
     LOG["clusters_clip"] = [float(road.s[i0]), float(road.s[i1])]
 I = np.arange(i0, i1 + 1)

@@ -1,0 +1,152 @@
+{
+ "ok": true,
+ "fails": [],
+ "warnings": [],
+ "n_warnings": 0,
+ "stats": {
+  "wall_face_crease_max_deg": {
+   "1WALL_dressing_R_00": 22.0,
+   "1WALL_L_00": 20.4,
+   "1WALL_R_43": 20.3,
+   "1WALL_L_36": 19.9,
+   "1WALL_dressing_R_37": 19.8,
+   "1WALL_R_28": 19.8,
+   "1WALL_R_58": 19.6,
+   "1WALL_dressing_L_50": 19.3,
+   "1WALL_R_55": 19.3,
+   "1WALL_R_29": 18.8
+  },
+  "kerb_crease_raw_max_deg": {
+   "1KERB_NB_m02": 22.2,
+   "1KERB_NB_m06": 22.1,
+   "1KERB_NB_m04": 20.9,
+   "1KERB_NB_m00": 20.8,
+   "1KERB_NB_m01": 19.7,
+   "1KERB_NB_m07": 18.1,
+   "1KERB_NB_21": 17.7,
+   "1KERB_NB_m14": 17.3,
+   "1KERB_NB_m12": 16.8,
+   "1KERB_NB_55": 14.2
+  },
+  "kerb_crease_max_deg": {
+   "1KERB_NB_m02": 22.2,
+   "1KERB_NB_m06": 22.1,
+   "1KERB_NB_m04": 20.9,
+   "1KERB_NB_m00": 20.8,
+   "1KERB_NB_m01": 19.7,
+   "1KERB_NB_m07": 18.1,
+   "1KERB_NB_21": 17.7,
+   "1KERB_NB_m14": 17.3,
+   "1KERB_NB_m12": 16.8,
+   "1KERB_NB_55": 14.2
+  },
+  "runoff_crease_raw_max_deg": {
+   "1RUNOFF_NB_27": 12.3
+  },
+  "runoff_crease_max_deg": {
+   "1RUNOFF_NB_27": 12.3
+  },
+  "road_banktoe_crease_max_deg": {
+   "1ROAD_APR01": 35.5,
+   "1ROAD_APR43": 26.3,
+   "1ROAD_APR13": 11.1,
+   "1ROAD_00": 0.0,
+   "1ROAD_01": 0.0,
+   "1ROAD_02": 0.0,
+   "1ROAD_03": 0.0,
+   "1ROAD_04": 0.0,
+   "1ROAD_05": 0.0,
+   "1ROAD_06": 0.0
+  },
+  "road_crease_raw_max_deg": {
+   "1ROAD_APR01": 35.5,
+   "1ROAD_APR43": 26.3,
+   "1ROAD_APR15": 20.7,
+   "1ROAD_APR14": 11.7,
+   "1ROAD_APR13": 11.1,
+   "1ROAD_APL54": 10.2,
+   "1ROAD_APR16": 9.2,
+   "1ROAD_09": 6.0,
+   "1ROAD_12": 5.7,
+   "1ROAD_14": 5.7
+  },
+  "road_crease_max_deg": {
+   "1ROAD_APR15": 20.7,
+   "1ROAD_APR14": 11.7,
+   "1ROAD_APL54": 10.2,
+   "1ROAD_APR16": 9.2,
+   "1ROAD_APR13": 7.5,
+   "1ROAD_09": 6.0,
+   "1ROAD_APR43": 6.0,
+   "1ROAD_12": 5.7,
+   "1ROAD_14": 5.7,
+   "1ROAD_24": 5.7
+  },
+  "grass_banktoe_crease_max_deg": {
+   "1GRASS_tr46": 100.0,
+   "1GRASS_tr01": 99.9,
+   "1GRASS_tr14": 99.9,
+   "1GRASS_tr28": 99.9,
+   "1GRASS_tr31": 99.9,
+   "1GRASS_tr40": 99.9,
+   "1GRASS_tr53": 99.9,
+   "1GRASS_tr15": 99.8,
+   "1GRASS_tr35": 99.8,
+   "1GRASS_tr44": 99.8
+  },
+  "grass_crease_raw_max_deg": {
+   "1GRASS_tr07": 176.8,
+   "1GRASS_tr12": 174.8,
+   "1GRASS_tr27": 168.4,
+   "1GRASS_tr53": 165.3,
+   "1GRASS_tr28": 157.5,
+   "1GRASS_tr31": 157.0,
+   "1GRASS_tr34": 152.5,
+   "1GRASS_tr32": 151.9,
+   "1GRASS_tr36": 146.5,
+   "1GRASS_tr35": 142.8
+  },
+  "grass_crease_max_deg": {
+   "1GRASS_tb01": 41.4,
+   "1GRASS_shLlitter09": 38.7,
+   "1GRASS_tb03": 38.7,
+   "1GRASS_shLgrass17": 38.4,
+   "1GRASS_tb09": 38.4,
+   "1GRASS_tb30": 38.4,
+   "1GRASS_tb51": 37.6,
+   "1GRASS_tl01": 37.0,
+   "1GRASS_shRlitter04": 36.9,
+   "1GRASS_tl09": 36.9
+  },
+  "layouts": {
+   "freeroam": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "freeroam_track": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   }
+  },
+  "wall_tris_total": 61740,
+  "wall_tris_per_km": 3962,
+  "wall_components": 685
+ }
+}

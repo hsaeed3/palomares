@@ -20,10 +20,10 @@
  "asphalt_kinks_list": [],
  "overlaps": 0,
  "overlaps_list": [],
- "grade_max_pct_25m": 0.9561411411034726,
- "grade_max_pct_5m": 2.102508935641012,
+ "grade_max_pct_25m": 0.9558219646258692,
+ "grade_max_pct_5m": 2.087235156832179,
  "grade_max_s": 49.5,
- "camber_change_max_pct_per_m": 0.17400435920240653,
+ "camber_change_max_pct_per_m": 0.1859701061268204,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
  "open_edges_in_band_s": []

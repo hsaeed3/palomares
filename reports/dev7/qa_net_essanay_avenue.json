@@ -21,9 +21,9 @@
  "overlaps": 0,
  "overlaps_list": [],
  "grade_max_pct_25m": 0.9991126811836892,
- "grade_max_pct_5m": 1.4949363077409572,
+ "grade_max_pct_5m": 1.4896598948414663,
  "grade_max_s": 26.5,
- "camber_change_max_pct_per_m": 0.2649617517451297,
+ "camber_change_max_pct_per_m": 0.23915519930808316,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
  "open_edges_in_band_s": []

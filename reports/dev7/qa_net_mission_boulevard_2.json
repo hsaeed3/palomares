@@ -15,8 +15,8 @@
  "steps": 0,
  "steps_list": [],
  "step_max_m": 0.0,
- "slope_breaks_checked": 250,
- "asphalt_kinks": 4,
+ "slope_breaks_checked": 254,
+ "asphalt_kinks": 3,
  "asphalt_kinks_list": [
   [
    37.5,
@@ -26,12 +26,7 @@
   [
    70.0,
    4.566475625731198,
-   0.02194571510036525
-  ],
-  [
-   8.5,
-   3.9286627681500983,
-   0.0202255627586716
+   0.021945715100358143
   ],
   [
    121.5,
@@ -41,10 +36,10 @@
  ],
  "overlaps": 0,
  "overlaps_list": [],
- "grade_max_pct_25m": 3.064838413514437,
- "grade_max_pct_5m": 3.3414949811575667,
+ "grade_max_pct_25m": 3.0649054534439557,
+ "grade_max_pct_5m": 3.317631532449994,
  "grade_max_s": 73.5,
- "camber_change_max_pct_per_m": 0.5192246754861074,
+ "camber_change_max_pct_per_m": 0.5286464255261691,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
  "open_edges_in_band_s": []

@@ -33,7 +33,7 @@ assert BUILD.resolve() != (ROOT / "build").resolve()
 build_lock("dev7_g")
 T0 = time.time(); TIM = {}; LOG = {}
 def tick(k): TIM[k] = round(time.time() - T0 - sum(TIM.values()), 1)
-CL = A.cluster; TAG = {"niles": "town", "sunol": "sunol"}[CL]
+CL = A.cluster; TAG = {"niles": "town", "sunol": "sunol", "sunol_main": "sunolmain"}[CL]
 BLEND, CURB_MIN, CURB_W, SIDEWALK_W = 16.0, 0.08, 0.30, 1.9
 POLY = NW.cluster_polygon(CL); shapely.prepare(POLY)
 GAP_M = 12.0
@@ -163,7 +163,29 @@ def densify(lines, step):
     return np.concatenate(pts), np.concatenate(segs)
 
 
-bl = shapely.node(shapely.union_all([pave.boundary, WALK.boundary, DOM.boundary]))
+# ---- rail track beds (OSM rail lines at grade inside the cluster; bridges / tunnels are structures, not beds):
+# 3.5 m ballast bed, crowned 0.25 m on a 8 m-smoothed DTM profile, flush with the road at level crossings (RAIL key)
+BED_HW = 1.75
+_rl = []
+for f in json.load(open(DEV7 / "osm_features.geojson"))["features"]:
+    pr_ = f["properties"]
+    if pr_["kind"] == "rail_rail" and f["geometry"]["type"] == "LineString":
+        g = NW._to_local(sg.shape(f["geometry"]))
+        if g.intersects(DOM):
+            _rl.append(g)
+RAIL = sg.Polygon(); RP = np.zeros((0, 2)); RZ = np.zeros(0)
+if _rl:
+    RAIL = shapely.union_all([g.buffer(BED_HW, cap_style="flat") for g in _rl]).intersection(DOM).difference(pave).difference(WALK)
+    RAIL = shapely.set_precision(_clean(RAIL, amin=2.0, wmin=0.6), 0.2)
+    _rp, _rz = [], []
+    for g in _rl:
+        L_ = g.length; t_ = np.linspace(0, L_, max(int(L_), 2)); q_ = np.array([g.interpolate(v).coords[0][:2] for v in t_])
+        z_ = dtm(q_[:, 0], q_[:, 1]); z_ = np.where(np.isfinite(z_), z_, np.nanmean(z_))
+        _rp.append(q_); _rz.append(gaussian_filter1d(z_, 8.0, mode="nearest"))
+    RP, RZ = np.concatenate(_rp), np.concatenate(_rz)
+shapely.prepare(RAIL)
+LOG["areas_m2"]["rail_bed"] = round(RAIL.area)
+bl = shapely.node(shapely.union_all([pave.boundary, WALK.boundary, RAIL.boundary, DOM.boundary]))
 lines = [g for g in shapely.get_parts(shapely.line_merge(bl))]
 BV, BE = densify(lines, 0.75)
 # weld coincident densified ends (mm)
@@ -176,7 +198,7 @@ if len(SEGV):
     remap = -np.ones(len(BV), int); remap[~drop] = np.arange((~drop).sum()); BE = remap[BE]; BE = BE[(BE >= 0).all(1)]; BV = BV[~drop]
 xmin, ymin, xmax, ymax = DOM.bounds
 pts = []
-hard = pave.union(WALK); shapely.prepare(hard)
+hard = pave.union(WALK).union(RAIL); shapely.prepare(hard)
 HB, _ = densify([g for g in shapely.get_parts(hard.boundary)], 0.5); hkd = cKDTree(HB)
 for step in (1.0, 2.0, 4.0):
     gx = np.arange(math.floor(xmin), xmax, step); gy = np.arange(math.floor(ymin), ymax, step)
@@ -325,8 +347,10 @@ _c2 = TV[TT].mean(1)
 TPAVE = shapely.contains_xy(pave, _c2[:, 0], _c2[:, 1]); TWALK = shapely.contains_xy(WALK, _c2[:, 0], _c2[:, 1]) & ~TPAVE
 inP = np.zeros(len(TV), bool); inP[TT[TPAVE].ravel()] = True
 inW = np.zeros(len(TV), bool); inW[TT[TWALK].ravel()] = True; inW &= ~inP
+TRAIL = shapely.contains_xy(RAIL, _c2[:, 0], _c2[:, 1]) & ~TPAVE & ~TWALK
+inR = np.zeros(len(TV), bool); inR[TT[TRAIL].ravel()] = True; inR &= ~inP & ~inW
 # gap slivers between pavement and sidewalk (all three corners already hardscape): sidewalk/curb, not terrain
-_hs = (inP | inW)[TT].all(1) & ~TPAVE & ~TWALK
+_hs = (inP | inW)[TT].all(1) & ~TPAVE & ~TWALK & ~TRAIL
 # (thin gap fillers along a border, near-degenerate; as curb they carry no carriageway crease limit)
 TWALK = TWALK | _hs
 LOG["gap_slivers_reclassed"] = int(_hs.sum())
@@ -373,9 +397,16 @@ for n in order:
     b = dd < best; hq[b] = h_[b]; best[b] = dd[b]
 ramp = np.clip(dp / CURB_W, 0, 1); ramp = ramp * ramp * (3 - 2 * ramp)
 Z[inW] = zc[inW] + hq * ramp + 0.015 * np.maximum(dp - CURB_W, 0)
+# rail bed: crowned bed on the smoothed rail profile, pulled to the road surface within 8 m of the pavement
+if inR.any():
+    dr_, jr_ = cKDTree(RP).query(TV[inR])
+    zb = RZ[jr_] + 0.25 * np.clip(1 - (dr_ / BED_HW) ** 2, 0, 1)
+    dpr, _ = pkd.query(TV[inR]); wr = np.clip(dpr / 8.0, 0, 1); wr = wr * wr * (3 - 2 * wr)
+    Z[inR] = (1 - wr) * zc[inR] + wr * zb
+LOG["rail_vertices"] = int(inR.sum())
 # terrain: DTM blended from the nearest hardscape vertex over 4 m
-inT = ~inP & ~inW & ~FIX
-hv = np.flatnonzero(inP | inW); hk = cKDTree(TV[hv])
+inT = ~inP & ~inW & ~inR & ~FIX
+hv = np.flatnonzero(inP | inW | inR); hk = cKDTree(TV[hv])
 dt, jt = hk.query(TV[inT]); zt = dtm(TV[inT, 0], TV[inT, 1]); zt = np.where(np.isfinite(zt), zt, Z[hv][jt])
 w = np.clip(dt / 4.0, 0, 1); w = w * w * (3 - 2 * w)
 Z[inT] = (1 - w) * Z[hv][jt] + w * zt
@@ -387,7 +418,7 @@ if len(SEGV):
 # pavement next to the fixed NCR asphalt end: the composite (NCR prio) already matches it to noise (~4 mm)
 # terrain folds next to the hardscape (qa_ffb_safety: 1GRASS creases <= 45 deg within 3 m): relax terrain vertices of
 # folded pairs (both faces < 40 deg, crease > 38 deg) within 5 m of a hardscape vertex
-_tt = TT[~(TPAVE | TWALK)]; _ne = np.r_[_tt[:, [0, 1]], _tt[:, [1, 2]], _tt[:, [2, 0]]]
+_tt = TT[~(TPAVE | TWALK | TRAIL)]; _ne = np.r_[_tt[:, [0, 1]], _tt[:, [1, 2]], _tt[:, [2, 0]]]
 _dh = np.full(len(TV), np.inf); _dh[inT] = dt
 for _it in range(40):
     P_ = np.c_[TV, Z]; f_ = np.cross(P_[_tt[:, 1]] - P_[_tt[:, 0]], P_[_tt[:, 2]] - P_[_tt[:, 0]]); f_ /= np.linalg.norm(f_, axis=1, keepdims=True) + 1e-12
@@ -425,15 +456,15 @@ tick("heights")
 
 # ------------------------------------------------------------------ classes -> meshes (1 km tiles, merged)
 cen = P3[TT].mean(1)
-cp, cw = TPAVE, TWALK
+cp, cw, crl = TPAVE, TWALK, TRAIL
 fn = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]]); fn /= np.linalg.norm(fn, axis=1, keepdims=True)
 slope = np.degrees(np.arccos(np.clip(fn[:, 2], -1, 1)))
 carr = shapely.contains_xy(CARR, cen[:, 0], cen[:, 1])
-cls = np.where(cp & ~carr, "apron", np.where(cp, "asphalt", np.where(cw, "walk", np.where(slope > 49, "rock", np.where(slope > 25, "bank", "ground")))))
+cls = np.where(cp & ~carr, "apron", np.where(cp, "asphalt", np.where(cw, "walk", np.where(crl, "rail", np.where(slope > 49, "rock", np.where(slope > 25, "bank", "ground"))))))
 LOG["class_tris"] = {k: int((cls == k).sum()) for k in np.unique(cls)}; print(LOG["class_tris"], "pts", nP, "pave pts", int(shapely.contains_xy(pave, pts[:, 0], pts[:, 1]).sum()))
 tile = (np.floor(cen[:, 0] / 1000).astype(int) * 100 + np.floor(cen[:, 1] / 1000).astype(int)) % 10000
 # apron = paved but off every carriageway (junction fillets, parking lots): qa_ffb_safety apron crease limit
-NAME = {"asphalt": ("1ROAD", "road_asphalt"), "apron": ("1ROAD_AP", "road_asphalt"), "walk": ("1SIDEWALK", "sidewalk"), "ground": ("1GRASS", "ground"),
+NAME = {"asphalt": ("1ROAD", "road_asphalt"), "apron": ("1ROAD_AP", "road_asphalt"), "walk": ("1SIDEWALK", "sidewalk"), "rail": ("1RAIL", "ballast"), "ground": ("1GRASS", "ground"),
         "bank": ("1GRASS", "bank"), "rock": ("1GRASS", "rock")}
 groups = {"road": [], "terrain": []}
 for t in np.unique(tile):
@@ -442,9 +473,39 @@ for t in np.unique(tile):
         if not sel.any():
             continue
         Tk = TT[sel]; used, inv = np.unique(Tk, return_inverse=True); Pk = P3[used]; Tk = inv.reshape(-1, 3)
-        g = "road" if k in ("asphalt", "apron", "walk") else "terrain"
+        g = "road" if k in ("asphalt", "apron", "walk", "rail") else "terrain"
         groups[g].append(dict(name=f"{key}_{TAG}_{mat}_{len(groups[g]):02d}", mat=mat, P=Pk, T=Tk,
-                              UV=Pk[:, :2] / (12.0 if k == "asphalt" else 4.0 if k == "walk" else 8.0), N=vertex_normals(Pk, Tk)))
+                              UV=Pk[:, :2] / (12.0 if k in ("asphalt", "apron") else 3.0 if k in ("walk", "rail") else 8.0), N=vertex_normals(Pk, Tk)))
+# ---- bridge parapets (OSM bridge spans of the cluster's roads): 1WALL slab (collision_conv.slab, 1.3 m, 0.6 m deep)
+# and a visible 0.95 m concrete parapet, outside the sidewalk when the bridge has one
+import collision_conv as CC
+groups["walls"] = []
+_br = [(f["properties"]["road"], f["properties"]["s_start_m"], f["properties"]["s_end_m"])
+       for f in json.load(open(DEV7 / "features.geojson"))["features"] if f["properties"]["kind"] == "bridge_osm"]
+LOG["parapets"] = []
+for bi, (rn, a, b) in enumerate(_br):
+    if rn not in roads or rn == "niles_canyon_road" and CL != "sunol_main":
+        continue
+    r = roads[rn]; a, b = max(a, r.s[r.lo]), min(b, r.s[r.hi])
+    if b - a < 6:
+        continue
+    F = CC.Frame({"s_m": r.s, "x_local": r.x, "y_local": r.y, "z_navd88": r.z, "edge_left_m": r.el, "edge_right_m": r.er})
+    sst = np.arange(a, b + 0.01, 2.0); ii = np.clip(np.round(sst).astype(int), 0, len(r.s) - 1)
+    for side, nm in ((1, "L"), (-1, "R")):
+        e = np.where(side > 0, r.el[ii], r.er[ii]); h_ = np.where(side > 0, r.curb_l[ii], r.curb_r[ii])
+        d = gaussian_filter1d(e + np.where(h_ > 0.03, CURB_W + SIDEWALK_W + 0.1, 0.5), 3.0, mode="nearest")   # smooth face
+        x_, y_ = F.xy(sst, side * d)
+        # median side of twin carriageway bridges (Mission Blvd): the other deck is right there -> no parapet between
+        others = [road_poly(roads[o]).buffer(3.0) for o in roads if o != rn]
+        if others and shapely.contains_xy(shapely.union_all(others), x_, y_).mean() > 0.3:
+            continue
+        zb = gaussian_filter1d(composite(np.c_[x_, y_]) + np.where(h_ > 0.03, h_, 0), 2.0, mode="nearest") - 0.3
+        P, T, Nn = CC.slab(F, sst, d, zb, zb + 1.6, side, depth=np.full(len(sst), 0.6))
+        groups["walls"].append(dict(name=f"1WALL_{TAG}_br{bi}{nm}", mat="invisible", P=P, T=T, N=Nn, UV=np.zeros((len(P), 2)),
+                                    visible=True, renderable=False, cast_shadows=False))
+        Pv, Tv, Nv = CC.slab(F, sst, d, zb + 0.3, zb + 1.25, side, depth=np.full(len(sst), 0.35))
+        groups["walls"].append(dict(name=f"{TAG}_parapet{bi}{nm}", mat="sidewalk", P=Pv, T=Tv, N=Nv, UV=Pv[:, [0, 2]] / 3))
+    LOG["parapets"].append([rn, float(a), float(b)])
 tick("meshes")
 
 # ------------------------------------------------------------------ kn5
@@ -455,14 +516,19 @@ for nm in ("road_asphalt", "ground", "bank"):
     m = SM[nm]; props = {p: ((v[3], v[4], v[5]) if p == "ksEmissive" else v[0]) for p, v in m["props"].items()}
     mats.append(Material(nm, m["shader"], props, dict(m["textures"]))); texs.update({t: src["textures"][t] for t in m["textures"].values()})
 mats.append(Material("rock", "ksPerPixel", None, {"txDiffuse": "bank_d.dds"}))
-# sidewalk: the fresh-asphalt diffuse brightened by the material (no concrete texture in the shipped set yet)
-mats.append(Material("sidewalk", "ksPerPixel", {"ksAmbient": 0.75, "ksDiffuse": 0.85, "ksSpecular": 0.05, "ksSpecularEXP": 8.0,
-                                                 "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}, {"txDiffuse": "asphalt_fresh_d.dds"}))
-texs["asphalt_fresh_d.dds"] = src["textures"]["asphalt_fresh_d.dds"]
+# sidewalk / curbs / parapets: ambientCG Concrete034; rail beds: Gravel022 (CC0, scripts/p7g/20t_textures.py)
+_PL = {"ksAmbient": 0.6, "ksDiffuse": 0.7, "ksSpecular": 0.05, "ksSpecularEXP": 8.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
+mats.append(Material("sidewalk", "ksPerPixel", dict(_PL), {"txDiffuse": "concrete_d.dds"}))
+mats.append(Material("ballast", "ksPerPixel", dict(_PL), {"txDiffuse": "ballast_d.dds"}))
+mats.append(Material("invisible", "ksPerPixel", None, {"txDiffuse": "concrete_d.dds"}))
+for _t in ("concrete_d", "ballast_d"):
+    texs[f"{_t}.dds"] = (BUILD / "dev7" / "tex" / f"{_t}.dds").read_bytes()
 OUT = BUILD / "palomares_road"
 summary = {}
 for g, fname in (("road", f"palomares_niles_{TAG}.kn5"), ("terrain", f"palomares_niles_{TAG}_terrain.kn5")):
-    nodes = [Mesh(m["name"], ac_from_local(m["P"]), ac_from_local(m["N"]), m["UV"], m["T"].reshape(-1), m["mat"]) for m in groups[g]]
+    lst = groups[g] + (groups["walls"] if g == "road" else [])
+    nodes = [Mesh(m["name"], ac_from_local(m["P"]), ac_from_local(m["N"]), m["UV"], m["T"].reshape(-1), m["mat"],
+                  cast_shadows=m.get("cast_shadows", True), visible=m.get("visible", True), renderable=m.get("renderable", True)) for m in lst]
     used = {n.material for n in nodes}; ms = [m for m in mats if m.name in used]
     write_kn5(str(OUT / fname), ms, {t: texs[t] for m in ms for t in m.textures.values()}, nodes)
     k = read_kn5(str(OUT / fname)); vmax = max(len(m["pos"]) for m in k["meshes"])

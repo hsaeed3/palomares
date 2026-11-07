@@ -1,17 +1,6 @@
 {
- "ok": false,
- "fails": [
-  "palomares_niles_assets.kn5:1WALL_R_00 not watertight (6 open/non-manifold edges)",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=200",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=200",
-  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=200",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=202",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=202",
-  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=202",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=202",
-  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=202",
-  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=202"
- ],
+ "ok": true,
+ "fails": [],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -85,9 +74,9 @@
    "1GRASS_ncr_rock_03": 159.7,
    "1GRASS_tr28": 157.5,
    "1GRASS_tr31": 157.0,
+   "1GRASS_town_rock_05": 152.8,
    "1GRASS_tr34": 152.5,
-   "1GRASS_tr32": 151.9,
-   "1GRASS_tr36": 146.5
+   "1GRASS_tr32": 151.9
   },
   "grass_crease_max_deg": {
    "1GRASS_ncr_ground_06": 39.9,
@@ -121,7 +110,7 @@
    "1ROAD_APR13": 11.1,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_AP_town_road_asphalt_07": 7.8,
+   "1ROAD_AP_town_road_asphalt_09": 7.5,
    "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_09": 6.0
   },
@@ -130,67 +119,67 @@
    "1ROAD_APR14": 11.7,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_AP_town_road_asphalt_07": 7.8,
    "1ROAD_APR13": 7.5,
    "1ROAD_AP_ncr_road_asphalt_03": 7.4,
+   "1ROAD_AP_town_road_asphalt_09": 7.3,
    "1ROAD_09": 6.0,
    "1ROAD_APR43": 6.0,
    "1ROAD_12": 5.7
   },
   "layouts": {
    "canyon_rev_road": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 37,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 34,
-    "texture_mb": 158.7,
+    "textures": 36,
+    "texture_mb": 159.1,
     "csp_shader_replacements": 0
    },
    "canyon_rev_track": {
-    "materials": 38,
-    "shader_texture_combos": 38,
+    "materials": 39,
+    "shader_texture_combos": 40,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 38,
-    "texture_mb": 160.1,
+    "textures": 40,
+    "texture_mb": 160.5,
     "csp_shader_replacements": 0
    },
    "canyon_road": {
-    "materials": 35,
-    "shader_texture_combos": 35,
+    "materials": 36,
+    "shader_texture_combos": 37,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 34,
-    "texture_mb": 158.7,
+    "textures": 36,
+    "texture_mb": 159.1,
     "csp_shader_replacements": 0
    },
    "canyon_track": {
-    "materials": 38,
-    "shader_texture_combos": 38,
+    "materials": 39,
+    "shader_texture_combos": 40,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
      "ksPerPixelMultiMap",
      "ksPerPixelNM"
     ],
-    "textures": 38,
-    "texture_mb": 160.1,
+    "textures": 40,
+    "texture_mb": 160.5,
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 24494,
-  "wall_tris_per_km": 2283,
-  "wall_components": 83
+  "wall_tris_total": 25092,
+  "wall_tris_per_km": 2339,
+  "wall_components": 81
  }
 }

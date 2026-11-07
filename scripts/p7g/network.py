@@ -129,8 +129,17 @@ def cluster_polygon(name):
             m = load_centerline(None, DEV7 / f"centerline_{n}.csv")
             parts.append(sg.LineString(np.c_[m["x_local"], m["y_local"]]).buffer(30.0))
         return shapely.union_all(parts).buffer(0)
+    if name == "sunol_main":
+        # Sunol Main St loop: Main St (both NCR junctions, the UP level crossing at Main St s 384) + NCR 9860-10520,
+        # 30 m bands, the area the loop encloses filled
+        import shapely
+        c = load_centerline(None, DEV7 / "centerline_niles_canyon_road.csv"); m = load_centerline(None, DEV7 / "centerline_main_street.csv")
+        k = (c["s_m"] >= 9860) & (c["s_m"] <= 10520)
+        u = shapely.union_all([sg.LineString(np.c_[m["x_local"], m["y_local"]]).buffer(30.0),
+                               sg.LineString(np.c_[c["x_local"][k], c["y_local"][k]]).buffer(30.0)]).buffer(0)
+        return sg.Polygon(u.exterior) if u.geom_type == "Polygon" else u
     raise KeyError(name)
 
 
-CLUSTERS = ("niles", "sunol")
+CLUSTERS = ("niles", "sunol", "sunol_main")
 _CLU_CACHE = {}

@@ -3,8 +3,7 @@
  "palomares_src": "/home/user/palomares/build/palomares_road",
  "dev7_src": "/home/user/palomares/build_dev7/palomares_road",
  "fails": [
-  "ffb_canyon: qa_ffb_safety: 10 fails, 0 warnings; wall tris 24494 (2283/km), 83 wall components -> reports/dev7/qa_ffb_package_canyon.json ",
-  "ffb_freeroam:  k (most recent call last):\n  File \"/home/user/palomares/scripts/p2/qa_ffb_safety.py\", line 188, in <module>\n    thick = float(np.ptp((Pc[:, :2] - Pc[:, :2].mean(0)) @ vt[1]))\n                                                           ~~^^^\nIndexError: index 1 is out of bounds for axis 0 with size 1\n"
+  "ffb_freeroam_niles: qa_ffb_safety: 3 fails, 0 warnings; wall tris 27348 (2549/km), 97 wall components -> reports/dev7/qa_ffb_package_freeroam_niles.json "
  ],
  "layouts": {
   "palomares": [
@@ -46,8 +45,8 @@
    "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_niles_canyon_road.json"
   },
   "ffb_canyon": {
-   "rc": 1,
-   "last": "qa_ffb_safety: 10 fails, 0 warnings; wall tris 24494 (2283/km), 83 wall components -> reports/dev7/qa_ffb_package_canyon.json"
+   "rc": 0,
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 25092 (2339/km), 81 wall components -> reports/dev7/qa_ffb_package_canyon.json"
   },
   "on_road_freeroam_palomares": {
    "rc": 0,
@@ -69,10 +68,14 @@
    "rc": 0,
    "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_mission_boulevard.json"
   },
-  "ffb_freeroam": {
+  "ffb_freeroam_palomares": {
+   "rc": 0,
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 61740 (3962/km), 685 wall components -> reports/dev7/qa_ffb_package_freeroam_palomares.json"
+  },
+  "ffb_freeroam_niles": {
    "rc": 1,
-   "last": ""
+   "last": "qa_ffb_safety: 3 fails, 0 warnings; wall tris 27348 (2549/km), 97 wall components -> reports/dev7/qa_ffb_package_freeroam_niles.json"
   }
  },
- "secs": 95.8
+ "secs": 103.3
 }
