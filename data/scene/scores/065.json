@@ -19,10 +19,10 @@
    "px_seg": 34290
   },
   "marking_yellow": {
-   "iou": 0.2542,
+   "iou": 0.2541,
    "precision": 0.2544,
    "recall": 0.9963,
-   "px_render": 4178,
+   "px_render": 4179,
    "px_seg": 1067
   },
   "marking_white": {
@@ -41,16 +41,16 @@
   },
   "terrain_grass": {
    "iou": 0.0003,
-   "precision": 0.037,
+   "precision": 0.0345,
    "recall": 0.0003,
-   "px_render": 162,
+   "px_render": 174,
    "px_seg": 20503
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10430,
+   "px_render": 10562,
    "px_seg": 0
   },
   "rock_cut": {
@@ -61,31 +61,31 @@
    "px_seg": 0
   },
   "vegetation_tree": {
-   "iou": 0.5727,
-   "precision": 0.867,
-   "recall": 0.6279,
-   "px_render": 62716,
+   "iou": 0.576,
+   "precision": 0.8676,
+   "recall": 0.6315,
+   "px_render": 63031,
    "px_seg": 86599
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 17322,
+   "px_render": 18164,
    "px_seg": 0
   },
   "trunk": {
-   "iou": 0.0091,
-   "precision": 0.0107,
+   "iou": 0.0092,
+   "precision": 0.0108,
    "recall": 0.0562,
-   "px_render": 2420,
+   "px_render": 2403,
    "px_seg": 463
   },
   "sign_face": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 49,
+   "px_render": 17,
    "px_seg": 0
   },
   "pole": {
@@ -106,7 +106,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 3285,
+   "px_render": 2019,
    "px_seg": 5582
   },
   "wall": {
@@ -127,7 +127,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 3,
+   "px_render": 16,
    "px_seg": 0
   }
  },
@@ -147,10 +147,10 @@
    "px_seg": 34290
   },
   "marking_yellow": {
-   "iou": 0.2542,
+   "iou": 0.2541,
    "precision": 0.2544,
    "recall": 0.9963,
-   "px_render": 4178,
+   "px_render": 4179,
    "px_seg": 1067
   },
   "marking_white": {
@@ -168,45 +168,45 @@
    "px_seg": 19830
   },
   "terrain": {
-   "iou": 0.244,
-   "precision": 0.5753,
+   "iou": 0.2426,
+   "precision": 0.5676,
    "recall": 0.2976,
-   "px_render": 10604,
+   "px_render": 10748,
    "px_seg": 20503
   },
   "tree": {
-   "iou": 0.5727,
-   "precision": 0.867,
-   "recall": 0.6279,
-   "px_render": 62716,
+   "iou": 0.576,
+   "precision": 0.8676,
+   "recall": 0.6315,
+   "px_render": 63031,
    "px_seg": 86599
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 17322,
+   "px_render": 18164,
    "px_seg": 0
   },
   "trunk": {
-   "iou": 0.0091,
-   "precision": 0.0107,
+   "iou": 0.0092,
+   "precision": 0.0108,
    "recall": 0.0562,
-   "px_render": 2420,
+   "px_render": 2403,
    "px_seg": 463
   },
   "vegetation": {
-   "iou": 0.5583,
-   "precision": 0.7365,
-   "recall": 0.6976,
-   "px_render": 82458,
+   "iou": 0.5695,
+   "precision": 0.7408,
+   "recall": 0.7113,
+   "px_render": 83598,
    "px_seg": 87062
   },
   "sign": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 49,
+   "px_render": 17,
    "px_seg": 0
   },
   "pole": {
@@ -220,7 +220,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 3285,
+   "px_render": 2019,
    "px_seg": 5708
   },
   "bridge": {
@@ -234,7 +234,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 3,
+   "px_render": 16,
    "px_seg": 0
   }
  },
@@ -250,7 +250,7 @@
   {
    "id": "fence_s0018",
    "cls": "fence",
-   "px": 3270,
+   "px": 2014,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -266,7 +266,7 @@
   {
    "id": "sign_s0021",
    "cls": "sign",
-   "px": 49,
+   "px": 17,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -274,7 +274,7 @@
   {
    "id": "mailbox_s0005",
    "cls": "mailbox",
-   "px": 0,
+   "px": 1,
    "match": 0.0,
    "found": false,
    "occluded": true
@@ -290,21 +290,21 @@
   {
    "id": "fence_b3m001",
    "cls": "fence",
-   "px": 15,
+   "px": 5,
    "match": 0.0,
    "found": false,
-   "occluded": false
+   "occluded": true
   },
   {
    "id": "mailbox_s0006",
    "cls": "mailbox",
-   "px": 3,
+   "px": 15,
    "match": 0.0,
    "found": false,
-   "occluded": true
+   "occluded": false
   }
  ],
- "score": 0.4728,
- "t_render_s": 1.403,
- "t_total_s": 1.545
+ "score": 0.4752,
+ "t_render_s": 0.238,
+ "t_total_s": 0.272
 }

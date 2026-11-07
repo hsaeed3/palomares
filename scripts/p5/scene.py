@@ -74,7 +74,7 @@ def undistort(a, order=1, ow=AW, oh=AH):
 ROAD_MAT = {"road_asphalt": "road", "road_asphalt_fresh": "road", "road_edge": "road", "shoulder_dirt": "shoulder_dirt",
             "litter": "shoulder_dirt", "ground": "terrain_grass", "bank": "terrain_bare"}
 LINE_MAT = {"paint_white": "marking_white", "paint_white_fresh": "marking_white", "paint_yellow_dbl": "marking_yellow",
-            "paint_yellow_dbl_fresh": "marking_yellow", "road_decal": "marking_white"}
+            "paint_yellow_dbl_fresh": "marking_yellow", "paint_yellow": "marking_yellow", "road_decal": "road"}
 TREE_MAT = {"tree_leaves": "vegetation_tree", "tree_trunk": "trunk", "shrub": "shrub"}
 
 
