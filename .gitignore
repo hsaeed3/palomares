@@ -10,3 +10,4 @@ build/
 *.bin
 data/scene/seg_raw/
 data/scene/cache/
+data/cache/

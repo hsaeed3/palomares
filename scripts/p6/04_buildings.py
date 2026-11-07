@@ -189,7 +189,9 @@ def main():
         # cylinder test (water tanks)
         circ = 4 * math.pi * P.area / P.length ** 2; mrr = P.minimum_rotated_rectangle; ex = np.asarray(mrr.exterior.coords)
         e1, e2 = np.hypot(*(ex[1] - ex[0])), np.hypot(*(ex[2] - ex[1])); asp = max(e1, e2) / max(min(e1, e2), .1)
-        if min(e1, e2) < 2.6 or P.area < 12: rej["small"] += 1; continue      # thin strips = hedges / fence rows / canopy edges
+        if min(e1, e2) < 2.6 or P.area < 12: rej["small"] += 1; continue
+        if asp > 4.5 and min(e1, e2) < 8: rej["thin"] += 1; continue                 # hedge rows / canopy strips
+        if P.area < 25 and np.percentile(ph, 90) < 3.2: rej["low"] += 1; continue  # bushes / vehicles in fields      # thin strips = hedges / fence rows / canopy edges
         form = "tank" if (P.area < 80 and circ > 0.82 and asp < 1.25) else max(parts, key=lambda q: q["Lu"] * q["Lv"])["form"]
         dx, dy = cx0 - CLX[j], cy0 - CLY[j]; s = float(cl["s_m"][j] + dx * TX[j] + dy * TY[j]); off = float(-TY[j] * dx + TX[j] * dy)   # + = left
         iou = 0.0
