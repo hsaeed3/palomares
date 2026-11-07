@@ -43,7 +43,7 @@ def main():
         if o.get("status") not in ("placed", "todo", "rejected"): E(i, f"status {o.get('status')!r}")
         if o.get("side") not in ("L", "R"): E(i, f"side {o.get('side')!r}")
         if o.get("conf") not in (None, "high", "med", "low"): Wn(i, f"conf {o.get('conf')!r}")
-        if o.get("src") not in (None, "seg", "survey", "lidar", "manual"): Wn(i, f"src {o.get('src')!r}")
+        if o.get("src") not in (None, "seg", "survey", "lidar", "manual", "mapillary", "naip", "osm"): Wn(i, f"src {o.get('src')!r}")
         try:
             s = float(o.get("s")); off = float(o.get("off", 0))
         except (TypeError, ValueError): E(i, "s/off not numeric"); continue

@@ -3250,3 +3250,1428 @@ assets:
   frames: []
   generator: scripts/p5/assets.py:g_measured
   desc: house/barn generated from its measured LiDAR footprint parts and roof fit (dev6, world coordinates)
+- id: sign.flasher_mast
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.3
+    W: 4.0
+    H: 6.0
+  proxy:
+    shape: box
+    w: 0.3
+    d: 4.0
+    h: 6.0
+  z0: 0.0
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: galvanised pole with cantilever arm over the lane, yellow warning panel (params.panel) and 2 amber flashing beacons (CSP emissive blink)
+  dev7: true
+  notes: 'dev7 package M (Mapillary survey); no generator yet, package A builds it. the ''flashing warning signs before the railroad underpasses''
+    on Niles Canyon Rd; params: dir, panel, advisory, beacons, arm_m'
+- id: sign.warning_text_rect
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 1.2
+    H: 2.4
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 1.2
+    h: 2.4
+  z0: 1.5
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: yellow rectangular warning text panel on 2 posts (params.text)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. text is generic font only
+- id: sign.reverse_turn
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: MUTCD W1-3/W1-4 reverse turn/curve diamond (params.first L/R)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.turn_left
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: MUTCD W1-1L sharp turn left diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.turn_right
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: MUTCD W1-1R sharp turn right diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.side_road_left
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: MUTCD W2-2L side road left diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.side_road_right
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: MUTCD W2-2R side road right diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.text_diamond
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.9
+    H: 2.3
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.9
+    h: 2.3
+  z0: 1.4
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: yellow warning diamond with text (params.text, e.g. NARROW SUBWAY)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.clearance
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.9
+    H: 2.3
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.9
+    h: 2.3
+  z0: 1.4
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: low-clearance / height warning (params.text e.g. 14'-6")
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. mly warning--height-restriction
+- id: sign.bicycle_warning
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.4
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.4
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W11-1 bicycle diamond (+ SHARE THE ROAD plaque)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.deer
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W11-3 deer crossing diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.falling_rocks
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W8-14 fallen rocks diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.slippery
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W8-5 slippery when wet diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.signal_ahead
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W3-3 signal ahead diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.stop_ahead
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W3-1 stop ahead diamond
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.rr_advance
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.9
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.9
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W10-1 round yellow railroad advance warning
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.ped_crossing
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: W11-2 pedestrian crossing (yellow-green)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.no_parking
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.45
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.45
+    h: 2.1
+  z0: 1.5
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: R7 no parking / no stopping regulatory panel
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.yield
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.9
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.9
+    h: 2.1
+  z0: 1.3
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: R1-2 yield
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.do_not_enter
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.75
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.75
+    h: 2.1
+  z0: 1.35
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: R5-1 do not enter
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.one_way
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.9
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.9
+    h: 2.1
+  z0: 1.6
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: R6-1 one way arrow
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.guide_green
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.1
+    W: 2.5
+    H: 3.5
+  proxy:
+    shape: plane
+    w: 0.1
+    d: 2.5
+    h: 3.5
+  z0: 2.0
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: green guide / direction sign on 2 posts (params.text)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.city_limit
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 1.2
+    H: 2.4
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 1.2
+    h: 2.4
+  z0: 1.6
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: green community / city-limit name sign (params.text)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.route_shield
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.6
+    H: 2.3
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.6
+    h: 2.3
+  z0: 1.6
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: California state route shield (params.route), green spade
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.text_white_rect
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.06
+    W: 0.6
+    H: 2.1
+  proxy:
+    shape: plane
+    w: 0.06
+    d: 0.6
+    h: 2.1
+  z0: 1.4
+  collision: true
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: white regulatory text panel (params.text, e.g. FINE FOR LITTERING)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: sign.store_text
+  cls: sign
+  linear: false
+  dims_m:
+    L: 0.1
+    W: 3.0
+    H: 0.8
+  proxy:
+    shape: plane
+    w: 0.1
+    d: 3.0
+    h: 0.8
+  z0: 3.0
+  collision: false
+  seg_class: sign_face
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: plain business-name text board on a facade (params.text, generic font, no logo)
+  dev7: true
+  notes: 'dev7 package M (Mapillary survey); no generator yet, package A builds it. PLAN.md naming rule: storefronts show only their plain name,
+    e.g. DEVOUT'
+- id: pole.traffic_signal
+  cls: pole
+  linear: false
+  dims_m:
+    L: 0.4
+    W: 6.0
+    H: 6.5
+  proxy:
+    shape: cylinder
+    r: 3.0
+    h: 6.5
+    w: 0.4
+    d: 6.0
+  z0: 0.0
+  collision: true
+  seg_class: pole
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: signal pole with mast arm and 3-section heads (params.heads)
+  dev7: true
+  notes: 'dev7 package M (Mapillary survey); no generator yet, package A builds it. town junctions: Mission/NCR, Mission/Niles'
+- id: pole.lamp_ornamental
+  cls: pole
+  linear: false
+  dims_m:
+    L: 0.3
+    W: 1.2
+    H: 4.5
+  proxy:
+    shape: cylinder
+    r: 0.6
+    h: 4.5
+    w: 0.3
+    d: 1.2
+  z0: 0.0
+  collision: true
+  seg_class: pole
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: black ornamental acorn/arm lamp post with banner brackets (Niles Blvd)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.bench
+  cls: prop
+  linear: false
+  dims_m:
+    L: 1.8
+    W: 0.6
+    H: 0.9
+  proxy:
+    shape: box
+    w: 1.8
+    d: 0.6
+    h: 0.9
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: street bench (wood slats, black iron frame)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.trash_can
+  cls: prop
+  linear: false
+  dims_m:
+    L: 0.6
+    W: 0.6
+    H: 1.0
+  proxy:
+    shape: cylinder
+    r: 0.3
+    h: 1.0
+    w: 0.6
+    d: 0.6
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: street litter bin (black metal)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.planter
+  cls: prop
+  linear: false
+  dims_m:
+    L: 0.9
+    W: 0.9
+    H: 0.7
+  proxy:
+    shape: cylinder
+    r: 0.45
+    h: 0.7
+    w: 0.9
+    d: 0.9
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: round concrete planter with shrub
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.water_barrier
+  cls: prop
+  linear: false
+  dims_m:
+    L: 1.8
+    W: 0.5
+    H: 0.8
+  proxy:
+    shape: box
+    w: 1.8
+    d: 0.5
+    h: 0.8
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: orange plastic water-filled barrier (temporary)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.crash_cushion
+  cls: prop
+  linear: false
+  dims_m:
+    L: 3.0
+    W: 0.9
+    H: 0.9
+  proxy:
+    shape: box
+    w: 3.0
+    d: 0.9
+    h: 0.9
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: yellow crash cushion / attenuator at a barrier end
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.rail_crossing_signal
+  cls: prop
+  linear: false
+  dims_m:
+    L: 0.4
+    W: 2.0
+    H: 4.0
+  proxy:
+    shape: box
+    w: 0.4
+    d: 2.0
+    h: 4.0
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: 'railroad crossing signal: crossbuck, 2 red flashing lights, optional gate arm (params.gates)'
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.rail_crossbuck
+  cls: prop
+  linear: false
+  dims_m:
+    L: 0.2
+    W: 1.2
+    H: 3.0
+  proxy:
+    shape: plane
+    w: 0.2
+    d: 1.2
+    h: 3.0
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: passive crossbuck on a post
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.rail_platform
+  cls: prop
+  linear: false
+  dims_m:
+    L: 60
+    W: 4.0
+    H: 0.6
+  proxy:
+    shape: box
+    w: 60
+    d: 4.0
+    h: 0.6
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: low station platform (params.length_m) with edge strip
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: prop.rail_car_generic
+  cls: prop
+  linear: false
+  dims_m:
+    L: 24
+    W: 3.1
+    H: 4.3
+  proxy:
+    shape: box
+    w: 24
+    d: 3.1
+    h: 4.3
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: generic period passenger coach / freight car, plain livery, no lettering (params.type, colour)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. rolling stock is generic per PLAN.md
+- id: wall.jersey_barrier
+  cls: wall
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.6
+    H: 0.81
+  proxy:
+    shape: box
+    w: 1
+    d: 0.6
+    h: 0.81
+  z0: 0.0
+  collision: true
+  seg_class: wall
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: concrete K-rail / jersey barrier
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: wall.masonry_parapet
+  cls: wall
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.45
+    H: 0.9
+  proxy:
+    shape: box
+    w: 1
+    d: 0.45
+    h: 0.9
+  z0: 0.0
+  collision: true
+  seg_class: wall
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: old low parapet wall (params.material stone|concrete)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: wall.rock_cut_face
+  cls: wall
+  linear: true
+  dims_m:
+    L: 1
+    W: 1.0
+    H: 10
+  proxy:
+    shape: box
+    w: 1
+    d: 1.0
+    h: 10
+  z0: 0.0
+  collision: true
+  seg_class: wall
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: steep exposed rock cut face (terrain + collision, not a built wall)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. use rock_cut material; collision wall where the face is vertical
+- id: wall.retaining_block
+  cls: wall
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.4
+    H: 3.5
+  proxy:
+    shape: box
+    w: 1
+    d: 0.4
+    h: 3.5
+  z0: 0.0
+  collision: true
+  seg_class: wall
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: tan split-face concrete block retaining wall (params.fence_on_top)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. Mission Blvd lowered section
+- id: fence.screen_curved
+  cls: fence
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.1
+    H: 3.0
+  proxy:
+    shape: plane
+    w: 1
+    d: 0.1
+    h: 3.0
+  z0: 0.0
+  collision: true
+  seg_class: fence
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: curved chain-link protective screen on a bridge over railway
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: fence.construction_mesh
+  cls: fence
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.05
+    H: 1.2
+  proxy:
+    shape: plane
+    w: 1
+    d: 0.05
+    h: 1.2
+  z0: 0.0
+  collision: false
+  seg_class: fence
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: orange plastic construction mesh (temporary)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: fence.picket
+  cls: fence
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.05
+    H: 1.0
+  proxy:
+    shape: plane
+    w: 1
+    d: 0.05
+    h: 1.0
+  z0: 0.0
+  collision: true
+  seg_class: fence
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: white wooden picket fence
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.parapet_balustrade
+  cls: bridge
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.35
+    H: 1.1
+  proxy:
+    shape: box
+    w: 1
+    d: 0.35
+    h: 1.1
+  z0: 0.0
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: historic panelled concrete bridge parapet with raised sidewalk
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.rail_truss_through
+  cls: bridge
+  linear: false
+  dims_m:
+    L: 46
+    W: 5.0
+    H: 9.0
+  proxy:
+    shape: box
+    w: 46
+    d: 5.0
+    h: 9.0
+  z0: 4.6
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: steel through-truss railway span over the road (params.span_m, clearance_m) on concrete piers
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.rail_deck_girder
+  cls: bridge
+  linear: false
+  dims_m:
+    L: 25
+    W: 5.0
+    H: 2.5
+  proxy:
+    shape: box
+    w: 25
+    d: 5.0
+    h: 2.5
+  z0: 4.6
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: steel deck / plate-girder railway span over the road (params.span_m, count)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.rail_concrete_girder
+  cls: bridge
+  linear: false
+  dims_m:
+    L: 18
+    W: 8.0
+    H: 2.0
+  proxy:
+    shape: box
+    w: 18
+    d: 8.0
+    h: 2.0
+  z0: 4.3
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: concrete girder railway underpass with concrete abutments, wing walls, pipe railing
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.abutment_concrete
+  cls: bridge
+  linear: false
+  dims_m:
+    L: 6
+    W: 3.0
+    H: 6.0
+  proxy:
+    shape: box
+    w: 6
+    d: 3.0
+    h: 6.0
+  z0: 0.0
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: concrete bridge abutment / pier beside the road
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: bridge.abutment_stone
+  cls: bridge
+  linear: false
+  dims_m:
+    L: 6
+    W: 3.0
+    H: 6.0
+  proxy:
+    shape: box
+    w: 6
+    d: 3.0
+    h: 6.0
+  z0: 0.0
+  collision: true
+  seg_class: bridge
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: cut-stone (ashlar) bridge abutment beside the road
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: building.storefront
+  cls: building
+  linear: false
+  dims_m:
+    L: 15
+    W: 15
+    H: 8
+  proxy:
+    shape: box
+    w: 15
+    d: 15
+    h: 8
+  z0: 0.0
+  collision: true
+  seg_class: building
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: 'town storefront (params: storeys, height_m, facade, colour, sign_text)'
+  dev7: true
+  notes: 'dev7 package M (Mapillary survey); no generator yet, package A builds it. facades: brick_firehouse, stucco_arched, flat_parapet, victorian_bay,
+    western_false_front, brick, stucco_mission, cafe_patio, board_batten_gable'
+- id: building.storefront_row
+  cls: building
+  linear: false
+  dims_m:
+    L: 40
+    W: 15
+    H: 6
+  proxy:
+    shape: box
+    w: 40
+    d: 15
+    h: 6
+  z0: 0.0
+  collision: true
+  seg_class: building
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: 'row of attached storefronts from s to s1 (params.shops: plain names)'
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: building.depot
+  cls: building
+  linear: false
+  dims_m:
+    L: 25
+    W: 8
+    H: 7
+  proxy:
+    shape: box
+    w: 25
+    d: 8
+    h: 7
+  z0: 0.0
+  collision: true
+  seg_class: building
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: wooden railway depot / freight station (params.facade)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: building.town_generic
+  cls: building
+  linear: false
+  dims_m:
+    L: 12
+    W: 10
+    H: 6
+  proxy:
+    shape: box
+    w: 12
+    d: 10
+    h: 6
+  z0: 0.0
+  collision: true
+  seg_class: building
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: town building from the OSM/LiDAR footprint (params.footprint local xy, height_m LiDAR p90, osm tag); facade unverified
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. src lidar
+- id: driveway.parking_lot
+  cls: driveway
+  linear: true
+  dims_m:
+    L: 10
+    W: 20
+    H: 0.05
+  proxy:
+    shape: plane_h
+    w: 10
+    d: 20
+    h: 0.05
+  z0: 0.0
+  collision: false
+  seg_class: road
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: asphalt or gravel parking lot (params.polygon local xy when from OSM)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it. package G builds the surface
+- id: marking.keep_clear
+  cls: marking
+  linear: false
+  dims_m:
+    L: 6
+    W: 3.0
+    H: 0.02
+  proxy:
+    shape: plane_h
+    w: 6
+    d: 3.0
+    h: 0.02
+  z0: 0.0
+  collision: false
+  seg_class: marking_white
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: KEEP CLEAR stencil
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: marking.angle_parking
+  cls: marking
+  linear: true
+  dims_m:
+    L: 1
+    W: 5.5
+    H: 0.02
+  proxy:
+    shape: plane_h
+    w: 1
+    d: 5.5
+    h: 0.02
+  z0: 0.0
+  collision: false
+  seg_class: marking_white
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: angled parking stall lines (params.angle_deg)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
+- id: tree.palm_row
+  cls: tree_add
+  linear: true
+  dims_m:
+    L: 1
+    W: 6
+    H: 15
+  proxy:
+    shape: cylinder
+    r: 3.0
+    h: 15
+    w: 1
+    d: 6
+  z0: 0.0
+  collision: true
+  seg_class: vegetation_tree
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: row of Canary Island date palms (params.count)
+  dev7: true
+  notes: 'dev7 package M (Mapillary survey); no generator yet, package A builds it. vegetation module: tall single trunk palm asset'
+- id: tree.plane_row
+  cls: tree_add
+  linear: true
+  dims_m:
+    L: 1
+    W: 10
+    H: 14
+  proxy:
+    shape: cylinder
+    r: 5.0
+    h: 14
+    w: 1
+    d: 10
+  z0: 0.0
+  collision: true
+  seg_class: vegetation_tree
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: null
+  frames: []
+  generator: null
+  desc: row of London plane street trees (params.spacing_m)
+  dev7: true
+  notes: dev7 package M (Mapillary survey); no generator yet, package A builds it.
