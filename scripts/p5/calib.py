@@ -11,7 +11,7 @@ Cost: symmetric chamfer (truncated 25 px at half resolution).
   python3 scripts/p5/calib.py calib  [--frames ...]   # joint fit of f, dcx, dcy, k1 (+ per-frame poses)
   python3 scripts/p5/calib.py register [--frames ...] # per-frame 6-DoF with fixed intrinsics -> data/scene/poses_cam.json
 """
-import argparse, json, os, sys, time
+import argparse, json, os, pathlib, sys, time
 import numpy as np
 from PIL import Image
 from scipy import ndimage, optimize
@@ -146,10 +146,18 @@ def main():
     pins = json.load(open(SC.SCENE / "pose_pins.json"))
     jobs = [(f, pvec(P[f]), K, 15.0 if str(f) in pins else 30.0, tuple(a.hbox)) for f in frames if f in P]
     t0 = time.time()
-    with mp.Pool(a.workers) as pool:
-        R = pool.map(_fitjob, jobs, chunksize=1)
-    out = {f: dict(p=q.tolist(), cost=float(c), res=r) for f, q, c, r in R}
-    json.dump(dict(K=K, hbox=a.hbox, frames=out), open(a.out, "w"), indent=1)
+    # resumable: per-frame results are appended to <out>.part.jsonl as they finish
+    part = pathlib.Path(a.out + ".part.jsonl"); out = {}
+    if part.exists():
+        for ln in open(part):
+            r = json.loads(ln); out[r["f"]] = dict(p=r["p"], cost=r["cost"], res=r["res"])
+    jobs = [j for j in jobs if j[0] not in out]
+    print(f"resume: {len(out)} done, {len(jobs)} to go", flush=True)
+    with mp.Pool(a.workers) as pool, open(part, "a") as fh:
+        for f, q, c, r in pool.imap_unordered(_fitjob, jobs, chunksize=1):
+            out[f] = dict(p=q.tolist(), cost=float(c), res=r)
+            fh.write(json.dumps(dict(f=f, **out[f])) + "\n"); fh.flush()
+    json.dump(dict(K=K, hbox=a.hbox, frames={k: out[k] for k in sorted(out)}), open(a.out, "w"), indent=1)
     cs = [v["cost"] for v in out.values()]
     print(f"K={K} n={len(cs)} cost mean {np.mean(cs):.2f} median {np.median(cs):.2f}  h median "
           f"{np.median([v['p'][2] for v in out.values()]):.2f}  {time.time()-t0:.0f}s", flush=True)

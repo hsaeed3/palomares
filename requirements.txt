@@ -10,3 +10,4 @@ requests
 pyyaml
 pypdf
 triangle
+etcpak==0.9.15
