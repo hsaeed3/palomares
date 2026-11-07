@@ -1,0 +1,94 @@
+{
+ "ok": true,
+ "fails": [],
+ "warnings": [],
+ "n_warnings": 0,
+ "stats": {
+  "road_banktoe_crease_max_deg": {
+   "1ROAD_ncr_00": 0.0,
+   "1ROAD_ncr_01": 0.0,
+   "1ROAD_ncr_02": 0.0,
+   "1ROAD_ncr_03": 0.0,
+   "1ROAD_ncr_04": 0.0,
+   "1ROAD_ncr_05": 0.0,
+   "1ROAD_ncr_06": 0.0,
+   "1ROAD_ncr_07": 0.0,
+   "1ROAD_ncr_08": 0.0,
+   "1ROAD_ncr_09": 0.0
+  },
+  "road_crease_raw_max_deg": {
+   "1ROAD_ncr_16": 4.1,
+   "1ROAD_ncr_17": 3.6,
+   "1ROAD_ncr_21": 3.2,
+   "1ROAD_ncr_18": 3.1,
+   "1ROAD_ncr_19": 3.0,
+   "1ROAD_ncr_15": 2.9,
+   "1ROAD_ncr_28": 2.8,
+   "1ROAD_ncr_42": 2.8,
+   "1ROAD_ncr_22": 2.7,
+   "1ROAD_ncr_23": 2.7
+  },
+  "road_crease_max_deg": {
+   "1ROAD_ncr_16": 4.1,
+   "1ROAD_ncr_17": 3.6,
+   "1ROAD_ncr_21": 3.2,
+   "1ROAD_ncr_18": 3.1,
+   "1ROAD_ncr_19": 3.0,
+   "1ROAD_ncr_15": 2.9,
+   "1ROAD_ncr_28": 2.8,
+   "1ROAD_ncr_42": 2.8,
+   "1ROAD_ncr_22": 2.7,
+   "1ROAD_ncr_23": 2.7
+  },
+  "grass_banktoe_crease_max_deg": {
+   "1GRASS_ncr_tr07": 99.7,
+   "1GRASS_ncr_tr08": 96.4,
+   "1GRASS_ncr_tr06": 95.4,
+   "1GRASS_ncr_tr10": 94.4,
+   "1GRASS_ncr_tb11": 86.6,
+   "1GRASS_ncr_tr04": 86.4,
+   "1GRASS_ncr_tb03": 85.1,
+   "1GRASS_ncr_tb12": 85.0,
+   "1GRASS_ncr_tb15": 84.3,
+   "1GRASS_ncr_tb08": 83.8
+  },
+  "grass_crease_raw_max_deg": {
+   "1GRASS_ncr_tr08": 128.0,
+   "1GRASS_ncr_tr12": 118.5,
+   "1GRASS_ncr_tr07": 99.7,
+   "1GRASS_ncr_tr06": 95.4,
+   "1GRASS_ncr_tr10": 94.4,
+   "1GRASS_ncr_tb11": 86.6,
+   "1GRASS_ncr_tr04": 86.4,
+   "1GRASS_ncr_tb03": 85.1,
+   "1GRASS_ncr_tb12": 85.0,
+   "1GRASS_ncr_tb15": 84.3
+  },
+  "grass_crease_max_deg": {
+   "1GRASS_ncr_tg12": 39.9,
+   "1GRASS_ncr_tg10": 39.8,
+   "1GRASS_ncr_tg16": 39.0,
+   "1GRASS_ncr_tg06": 38.5,
+   "1GRASS_ncr_tb05": 38.3,
+   "1GRASS_ncr_tb03": 37.4,
+   "1GRASS_ncr_tg19": 37.2,
+   "1GRASS_ncr_tg21": 36.3,
+   "1GRASS_ncr_tb11": 36.1,
+   "1GRASS_ncr_tg07": 35.3
+  },
+  "wall_face_crease_max_deg": {
+   "1WALL_ncr_br1R": 7.1,
+   "1WALL_ncr_br1L": 5.6,
+   "1WALL_ncr_br3L": 2.0,
+   "1WALL_ncr_br3R": 1.8,
+   "1WALL_ncr_br0R": 1.7,
+   "1WALL_ncr_br0L": 1.4,
+   "1WALL_ncr_br2L": 1.0,
+   "1WALL_ncr_br2R": 1.0
+  },
+  "layouts": {},
+  "wall_tris_total": 4528,
+  "wall_tris_per_km": 422,
+  "wall_components": 8
+ }
+}
