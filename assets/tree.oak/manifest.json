@@ -1,0 +1,43 @@
+{
+ "type": "tree.oak",
+ "cls": "tree_add",
+ "desc": "coast live oak: wide, multi-trunk, lobed spreading crown (crown ~1.5 h)",
+ "source_hash": "10dd5677c4caccf45c40d94f8552de726e14e1cd",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 32,
+ "tris": 16,
+ "frames": [
+  101,
+  131
+ ],
+ "built": "2026-11-07 06:08:37"
+}

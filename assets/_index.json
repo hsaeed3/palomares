@@ -1,0 +1,32 @@
+{
+ "fence.chainlink": {
+  "cls": "fence",
+  "verts": 224,
+  "tris": 112,
+  "source_hash": "0d2eb9e76d1cfa7682990c1b08995e2f05cb3661"
+ },
+ "shrub.coyote_brush": {
+  "cls": "shrub",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "ee0684ff03b10f09688064bd79d045d2775af8d6"
+ },
+ "sign.curve_left": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "e3467c7ee55cd98f9b34bc0c5a52bd343776a791"
+ },
+ "tree.oak": {
+  "cls": "tree_add",
+  "verts": 32,
+  "tris": 16,
+  "source_hash": "10dd5677c4caccf45c40d94f8552de726e14e1cd"
+ },
+ "tree3d.oak": {
+  "cls": "tree",
+  "verts": 758,
+  "tris": 764,
+  "source_hash": "afc9487ab427426b10cff2b9ad1b14247a7a07af"
+ }
+}

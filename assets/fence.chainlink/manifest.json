@@ -1,0 +1,66 @@
+{
+ "type": "fence.chainlink",
+ "cls": "fence",
+ "desc": "chainlink panels on posts",
+ "source_hash": "0d2eb9e76d1cfa7682990c1b08995e2f05cb3661",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 224,
+ "tris": 112,
+ "frames": [
+  2,
+  3,
+  4,
+  7,
+  8,
+  14,
+  17,
+  23,
+  24,
+  54,
+  55,
+  68,
+  98,
+  148,
+  154,
+  169,
+  175,
+  176,
+  184,
+  198,
+  203,
+  204,
+  217,
+  218,
+  219
+ ],
+ "built": "2026-11-07 06:09:04"
+}
