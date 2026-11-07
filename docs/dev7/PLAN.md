@@ -55,6 +55,8 @@ Same conventions as Palomares:
 ### K: real track assets
 - **Palomares GP** (`track_*` layouts on Palomares): kerbs in red/yellow/green blocks in the style of Spa-Francorchamps, plus generic race furniture: "Palomares GP" banners, marshal posts, distance boards, a start gantry. Use our own text and designs only; no real circuit or sponsor logos.
 - **Niles Canyon** (`canyon_track`, `canyon_rev_track`): red/white kerbs with green-painted run-off in the style of the Red Bull Ring. The kerb and run-off structure is placed from the AI racing line (apex and exit by curvature, run-off on the outside of exits where the terrain allows).
+  - **Yellow sausage kerbs** sit at the outer end of each green run-off: the extended track limit on exits, as at real circuits that use them. Model them as low, rounded, yellow bumps with safe collision (no FFB spikes, passes qa_ffb_safety).
+  - **Nothing on the main road.** No kerb, run-off paint or sausage kerb may sit on the existing pavement (inside road.outer). They all go beyond the pavement edge. The lint check enforces this.
 - **Free-roam track variant** `freeroam_track`: the whole map is free to drive with all track assets in place. The kerb direction comes from the main layouts: Niles Canyon from the Mission Blvd start, Palomares from the Niles Canyon start.
 
 ### B: Blender round-trip for final tweaks
