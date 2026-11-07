@@ -161,10 +161,18 @@ def check(rname, s_arg):
         zl2[sl] = Z[np.arange(len(I_)), jl]; zr2[sl] = Z[np.arange(len(I_)), jr]
     # grade / camber of the built surface
     ok = np.isfinite(ztop_cl)
-    g5 = np.gradient(np.convolve(ztop_cl, np.ones(10) / 10, "same"), 0.5)
-    w25 = min(50, max(len(st) // 4, 1))
-    zc = np.convolve(np.where(ok, ztop_cl, np.nanmean(ztop_cl)), np.ones(w25) / w25, "same")
-    g25 = np.gradient(zc, 0.5)[w25:-w25]
+    # windowed means over valid samples only (a window touching a NaN sample - outside the built area - is skipped)
+    def _wmean(z, w):
+        v = np.isfinite(z); zz = np.where(v, z, 0.0)
+        cs = np.r_[0, np.cumsum(zz)]; cv = np.r_[0, np.cumsum(v)]
+        m = np.full(len(z), np.nan); h = w // 2
+        for i in range(h, len(z) - h):
+            if cv[i + h] - cv[i - h] == 2 * h:
+                m[i] = (cs[i + h] - cs[i - h]) / (2 * h)
+        return m
+    g5 = np.gradient(_wmean(ztop_cl, 10), 0.5)
+    w25 = min(50, max(len(st) // 4, 2))
+    g25 = np.gradient(_wmean(ztop_cl, w25), 0.5)[w25:-w25] if len(ztop_cl) > 2 * w25 else np.gradient(_wmean(ztop_cl, w25), 0.5)
     cam = (zl2 - zr2) / 4.0; dcam = np.abs(np.diff(cam[::2]))
     res.update(holes=len(holes), holes_list=holes[:50], steps=len(steps),
                steps_list=sorted(steps, key=lambda t: -t[2])[:50],
