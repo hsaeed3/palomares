@@ -1,6 +1,6 @@
 {
  "version": "0.3.0-dev7",
- "palomares_src": "build_quick/palomares_road",
+ "palomares_src": "/home/user/palomares/build/palomares_road",
  "dev7_src": "/home/user/palomares/build_dev7/palomares_road",
  "fails": [],
  "layouts": {
@@ -27,7 +27,25 @@
  },
  "ext_config_blocks": 1,
  "layout_count": 16,
+ "qa": {
+  "on_road_palomares": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/qa_on_road.json"
+  },
+  "ffb_palomares": {
+   "rc": 0,
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 61740 (3962/km), 685 wall components -> reports/dev7/qa_ffb_package_palomares.json"
+  },
+  "on_road_niles_canyon": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_niles_canyon_road.json"
+  },
+  "ffb_canyon": {
+   "rc": 0,
+   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 23476 (2188/km), 79 wall components -> reports/dev7/qa_ffb_package_canyon.json"
+  }
+ },
  "zip": "dist/palomares_road_dev7_v0.3.0-dev7.zip",
- "zip_mb": 577.9,
- "secs": 18.1
+ "zip_mb": 595.2,
+ "secs": 81.2
 }

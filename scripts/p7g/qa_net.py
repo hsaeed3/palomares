@@ -79,6 +79,9 @@ def cast(xy):
 
 
 i0, i1 = 2, N - 3
+_bj = BUILD / "dev7" / f"{TAG}_build.json"
+if not A.s and _bj.exists() and "clusters_clip" in json.load(open(_bj)).get("profile", {}):
+    _c = json.load(open(_bj))["profile"]["clusters_clip"]; A.s = f"{_c[0] + 2}-{_c[1] - 2}"   # 21n's built range
 if A.s:
     a_, b_ = (float(v) for v in A.s.split("-")); i0, i1 = int(max(a_, 2)), int(min(b_, N - 3))
 st = np.arange(i0, i1, 0.5)

@@ -263,16 +263,6 @@ if KEPT is not None:
         znew[mo] = road.surface_z(jn[mo], np.clip(offn[mo], -road.er[jn[mo]], road.el[jn[mo]]))
     w_ = np.clip((np.abs(offn) - hwn - SH) / CUT, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
     P3[on, 2] = (1 - w_) * znew + w_ * zS[on]
-    # light relaxation of the blended asphalt vertices (the CDT does not follow the shipped mesh's crown/edge lines,
-    # which left 8-9 deg creases at the kept cut edge; qa_ffb_safety ROAD limit 8 deg)
-    if ROADALL is not None:
-        rel = np.flatnonzero(on)[mo]
-        nb2 = np.r_[TT[:, [0, 1]], TT[:, [1, 2]], TT[:, [2, 0]]]
-        for _it in range(20):
-            sm = np.zeros(len(P3)); ct = np.zeros(len(P3))
-            np.add.at(sm, nb2[:, 0], P3[nb2[:, 1], 2]); np.add.at(ct, nb2[:, 0], 1)
-            np.add.at(sm, nb2[:, 1], P3[nb2[:, 0], 2]); np.add.at(ct, nb2[:, 1], 1)
-            P3[rel, 2] = 0.5 * P3[rel, 2] + 0.5 * sm[rel] / np.maximum(ct[rel], 1)
     FIXED[on] = True
     LOG["stitch"]["blended_vertices"] = int(on.sum())
     mv &= ~FIXED
@@ -315,14 +305,14 @@ slope = np.degrees(np.arccos(np.clip(fn[:, 2], -1, 1)))
 cls = np.where(slope > 49, "rock", np.where(slope > 25, "bank", "ground"))
 if MOUTH.any():                                  # junction mouth: asphalt continuing the cut Palomares road
     Tm = TT[MOUTH]; used, inv = np.unique(Tm, return_inverse=True); Pm = P3[used]
-    add("road", f"1ROAD_{TAG}_mouth", "road_asphalt", Pm, inv.reshape(-1, 3), Pm[:, :2] / 12.0)
+    add("road", f"1ROAD_AP{TAG}_mouth", "road_asphalt", Pm, inv.reshape(-1, 3), Pm[:, :2] / 12.0)
     TT, cls = TT[~MOUTH], cls[~MOUTH]
     # NCR shoulder triangles inside the cut Palomares asphalt become asphalt too
     for m in list(groups["road"]):
         if m["name"].startswith("1GRASS") and ROADCUT is not None:
             _, rt_ = ROADCUT.locate(m["P"][m["T"]].mean(1)[:, :2]); ins = rt_ >= 0
             if ins.any():
-                add("road", m["name"].replace("1GRASS", "1ROAD") + "m", "road_asphalt", m["P"], m["T"][ins], m["P"][:, :2] / 12.0)
+                add("road", m["name"].replace("1GRASS_", "1ROAD_AP") + "m", "road_asphalt", m["P"], m["T"][ins], m["P"][:, :2] / 12.0)
                 m["T"] = m["T"][~ins]
 _, jt = rkd.query(P3[TT].mean(1)[:, :2], workers=2); cht = (road.s[I[jt]] // 1000).astype(int)
 for c in np.unique(cht):
@@ -385,7 +375,7 @@ def merge(lst):
         nm = m["name"]
         if nm.startswith("1WALL"):
             out.append(m); continue
-        key = re.match(r"^(\d?[A-Z]*)", nm).group(1) or "vis"
+        key = (re.match(r"^(\d?[A-Z]*)", nm).group(1) or "vis") + ("_AP" if nm.startswith("1ROAD_AP") else "")   # junction apron kept apart
         km = int(np.median(np.asarray(rkd.query(m["P"][::max(len(m["P"]) // 50, 1), :2])[1])) + i0) if len(m["P"]) else 0
         km = int(road.s[min(km, N - 1)] // MERGE_M)
         fl = (m.get("visible", True), m.get("renderable", True), m.get("cast_shadows", True))

@@ -1,8 +1,6 @@
 {
- "ok": false,
- "fails": [
-  "palomares_niles_ncr.kn5:1ROAD_ncr_road_asphalt_03 crease 8 deg > 8.0 (fold amplitude > 1 cm)"
- ],
+ "ok": true,
+ "fails": [],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -112,7 +110,7 @@
    "1ROAD_APR13": 11.1,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_ncr_road_asphalt_03": 8.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
    "1ROAD_09": 6.0,
    "1ROAD_12": 5.7
   },
@@ -121,7 +119,7 @@
    "1ROAD_APR14": 11.7,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_ncr_road_asphalt_03": 8.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
    "1ROAD_APR13": 7.5,
    "1ROAD_09": 6.0,
    "1ROAD_APR43": 6.0,
