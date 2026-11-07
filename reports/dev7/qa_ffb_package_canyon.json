@@ -1,6 +1,17 @@
 {
- "ok": true,
- "fails": [],
+ "ok": false,
+ "fails": [
+  "overlapping colliders palomares_niles_ncr.kn5:1WALL_ncr_br2R / palomares_niles_assets.kn5:1WALL_R_42 at s=10662",
+  "overlapping colliders palomares_niles_ncr.kn5:1WALL_ncr_br2L / palomares_niles_assets.kn5:1WALL_L_42 at s=10660",
+  "canyon_rev_road: palomares_niles_sunol.kn5 missing",
+  "canyon_rev_road: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_rev_track: palomares_niles_sunol.kn5 missing",
+  "canyon_rev_track: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_road: palomares_niles_sunol.kn5 missing",
+  "canyon_road: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_track: palomares_niles_sunol.kn5 missing",
+  "canyon_track: palomares_niles_sunol_terrain.kn5 missing"
+ ],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -71,7 +82,7 @@
    "1GRASS_tr12": 174.8,
    "1GRASS_tr27": 168.4,
    "1GRASS_tr53": 165.3,
-   "1GRASS_ncr_rock_03": 160.5,
+   "1GRASS_ncr_rock_03": 159.7,
    "1GRASS_tr28": 157.5,
    "1GRASS_tr31": 157.0,
    "1GRASS_tr34": 152.5,
@@ -79,16 +90,16 @@
    "1GRASS_tr36": 146.5
   },
   "grass_crease_max_deg": {
-   "1GRASS_ncr_ground_05": 39.8,
-   "1GRASS_ncr_bank_02": 39.0,
-   "1GRASS_ncr_ground_03": 39.0,
-   "1GRASS_ncr_ground_08": 39.0,
-   "1GRASS_ncr_bank_05": 38.1,
+   "1GRASS_ncr_ground_06": 39.9,
+   "1GRASS_ncr_bank_02": 37.9,
+   "1GRASS_ncr_ground_03": 37.9,
+   "1GRASS_ncr_ground_10": 37.5,
    "1GRASS_ncr_ground_09": 37.2,
    "1GRASS_ncr_ground_01": 36.5,
    "1GRASS_ncr_bank_03": 36.3,
-   "1GRASS_ncr_ground_10": 36.3,
-   "1GRASS_ncr_bank_01": 36.0
+   "1GRASS_ncr_bank_01": 35.9,
+   "1GRASS_ncr_ground_02": 35.8,
+   "1GRASS_ncr_ground_05": 35.2
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_APR01": 35.5,
@@ -110,26 +121,26 @@
    "1ROAD_APR13": 11.1,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
-   "1ROAD_09": 6.0,
-   "1ROAD_12": 5.7
+   "1ROAD_AP_town_road_asphalt_07": 7.8,
+   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
+   "1ROAD_09": 6.0
   },
   "road_crease_max_deg": {
    "1ROAD_APR15": 20.7,
    "1ROAD_APR14": 11.7,
    "1ROAD_APL54": 10.2,
    "1ROAD_APR16": 9.2,
-   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
+   "1ROAD_AP_town_road_asphalt_07": 7.8,
    "1ROAD_APR13": 7.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_09": 6.0,
    "1ROAD_APR43": 6.0,
-   "1ROAD_12": 5.7,
-   "1ROAD_14": 5.7
+   "1ROAD_12": 5.7
   },
   "layouts": {
    "canyon_rev_road": {
-    "materials": 34,
-    "shader_texture_combos": 34,
+    "materials": 35,
+    "shader_texture_combos": 35,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -140,8 +151,8 @@
     "csp_shader_replacements": 0
    },
    "canyon_rev_track": {
-    "materials": 37,
-    "shader_texture_combos": 37,
+    "materials": 38,
+    "shader_texture_combos": 38,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -153,8 +164,8 @@
     "csp_shader_replacements": 0
    },
    "canyon_road": {
-    "materials": 34,
-    "shader_texture_combos": 34,
+    "materials": 35,
+    "shader_texture_combos": 35,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -165,8 +176,8 @@
     "csp_shader_replacements": 0
    },
    "canyon_track": {
-    "materials": 37,
-    "shader_texture_combos": 37,
+    "materials": 38,
+    "shader_texture_combos": 38,
     "shaders": [
      "ksPerPixel",
      "ksPerPixelAT",
@@ -178,8 +189,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 23476,
-  "wall_tris_per_km": 2188,
+  "wall_tris_total": 24084,
+  "wall_tris_per_km": 2245,
   "wall_components": 79
  }
 }

@@ -1,8 +1,6 @@
 {
- "ok": false,
- "fails": [
-  "palomares_road.kn5:1GRASS_shRdirt05 crease 64 deg > 45.0 (fold amplitude > 1 cm)"
- ],
+ "ok": true,
+ "fails": [],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -111,16 +109,16 @@
    "1GRASS_tr35": 142.8
   },
   "grass_crease_max_deg": {
-   "1GRASS_shRdirt05": 63.9,
    "1GRASS_tb01": 41.4,
-   "1GRASS_shRdirt07": 39.4,
    "1GRASS_shLlitter09": 38.7,
    "1GRASS_tb03": 38.7,
    "1GRASS_shLgrass17": 38.4,
    "1GRASS_tb09": 38.4,
    "1GRASS_tb30": 38.4,
    "1GRASS_tb51": 37.6,
-   "1GRASS_tl01": 37.0
+   "1GRASS_tl01": 37.0,
+   "1GRASS_shRlitter04": 36.9,
+   "1GRASS_tl09": 36.9
   },
   "layouts": {
    "road_full": {
