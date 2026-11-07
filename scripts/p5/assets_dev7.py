@@ -308,11 +308,11 @@ def g_lamp_ornamental(L, p):
 _PH = {}
 
 
-def ph_mesh(name, cell, scale_to=None):
+def ph_mesh(name, cell, scale_to=None, skip=("rust", "aged", "cap_0", "chain")):
     """Poly Haven glTF -> MB part on the ledger7 atlas (diffuse packed at 256 px, UVs remapped into its rect)"""
-    k = (name, cell)
+    k = (name, cell, tuple(skip))
     if k not in _PH:
-        out = MB(); A = atlas(); meshes = TX.load_gltf(name)
+        out = MB(); A = atlas(); meshes = TX.load_gltf(name, skip)
         for i, (P, N, UV, T, tex) in enumerate(meshes):
             P, N, UV, T = TX.decimate(P, N, UV, T, cell)
             if not len(T):
@@ -336,7 +336,10 @@ def ph_mesh(name, cell, scale_to=None):
 
 
 def g_bench(L, p):
-    m = ph_mesh("painted_wooden_bench", 0.0 if not p.get("lod") else 0.05); return m
+    """Poly Haven modular_street_seating (CC0): the assembled 2.4 m slatted bench with back and arm rests
+    (kit parts at x > 0.5 m: spare seat / connectors are dropped)"""
+    return ph_mesh("modular_street_seating", 0.02 if not p.get("lod") else 0.06,
+                   skip=("suspended_support_02", "connector", "seat_bench"))
 
 
 def g_trash_can(L, p):
@@ -919,8 +922,8 @@ reg("pole.traffic_signal", "pole", g_traffic_signal, (0.4, 6.0, 6.5), dict(shape
     sources=("ambientCG Metal032", "ambientCG PaintedMetal004"), licence=CC0_TEX, parts=("sig_r", "sig_y", "sig_g"))
 reg("pole.lamp_ornamental", "pole", g_lamp_ornamental, (0.3, 1.2, 4.6), dict(shape="cylinder", r=0.16, h=4.6), False, 14, desc="black acorn lamp post with banner brackets; globe = lamp_glow (CSP NIGHT_SMOOTH emissive)",
     sources=("ambientCG PaintedMetal004",), licence=CC0_TEX, parts=("lamp_glow",))
-reg("prop.bench", "prop", g_bench, (1.8, 0.6, 0.9), dict(shape="box", w=1.8, d=0.6, h=0.9), False, 24, desc="Poly Haven painted_wooden_bench (CC0)",
-    sources=("Poly Haven painted_wooden_bench",), licence="Poly Haven CC0 1.0")
+reg("prop.bench", "prop", g_bench, (1.8, 0.6, 0.9), dict(shape="box", w=1.8, d=0.6, h=0.9), False, 24, desc="Poly Haven modular_street_seating (CC0), assembled bench",
+    sources=("Poly Haven modular_street_seating",), licence="Poly Haven CC0 1.0")
 reg("prop.trash_can", "prop", g_trash_can, (0.6, 0.6, 1.0), dict(shape="cylinder", r=0.3, h=1.0), False, 24, desc="Poly Haven metal_trash_can (CC0), decimated",
     sources=("Poly Haven metal_trash_can",), licence="Poly Haven CC0 1.0")
 reg("prop.planter", "prop", g_planter, (0.9, 0.9, 1.2), dict(shape="cylinder", r=0.45, h=0.7), False, 24, desc="round concrete planter (ambientCG concrete) with shrub card",

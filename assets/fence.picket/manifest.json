@@ -2,7 +2,7 @@
  "type": "fence.picket",
  "cls": "fence",
  "desc": "white picket fence",
- "source_hash": "945516e9172dc7fedc203a00d900f10c7656414c",
+ "source_hash": "9e4823303182f4cc8bc51749444247b51e4a899d",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 180,
  "tris": 90,
  "frames": [],
- "built": "2026-11-07 14:32:09",
+ "built": "2026-11-07 14:39:34",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "125680400586999",

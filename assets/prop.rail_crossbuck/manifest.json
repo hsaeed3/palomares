@@ -2,7 +2,7 @@
  "type": "prop.rail_crossbuck",
  "cls": "prop",
  "desc": "passive crossbuck on a post",
- "source_hash": "8cde25f11cae439dcf12c2e655bbb26fb94ddb12",
+ "source_hash": "cf339e0aab4f8594f0a1541889f13ba59ce10209",
  "sources": [
   "ambientCG Metal032",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 272,
  "tris": 128,
  "frames": [],
- "built": "2026-11-07 14:32:22",
+ "built": "2026-11-07 14:40:30",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [],
  "ledger_row": "d7m_eye_0083",

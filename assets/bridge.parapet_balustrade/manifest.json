@@ -2,7 +2,7 @@
  "type": "bridge.parapet_balustrade",
  "cls": "bridge",
  "desc": "panelled concrete parapet on a raised sidewalk",
- "source_hash": "c6e8dafd51cc8c9293f41e82e8ee9bf01ac38dee",
+ "source_hash": "8219be2e03cca1be5cd1d24b598abc620c525f02",
  "sources": [
   "ambientCG Concrete034",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 184,
  "tris": 92,
  "frames": [],
- "built": "2026-11-07 14:31:56",
+ "built": "2026-11-07 14:38:40",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "179096894106286",

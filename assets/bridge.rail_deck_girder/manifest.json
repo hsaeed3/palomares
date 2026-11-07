@@ -2,7 +2,7 @@
  "type": "bridge.rail_deck_girder",
  "cls": "bridge",
  "desc": "steel plate-girder railway span(s) (params.span_m, count) on concrete piers",
- "source_hash": "85a8728d1cc4fe995c6cd2ef2409045637984174",
+ "source_hash": "eaca3ac6866d1e3fa4d9bc4f90da8635fc36ad4c",
  "sources": [
   "ambientCG PaintedMetal004",
   "ambientCG Concrete018",
@@ -37,7 +37,7 @@
  "verts": 1660,
  "tris": 830,
  "frames": [],
- "built": "2026-11-07 14:31:58",
+ "built": "2026-11-07 14:38:51",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "272300397921637",

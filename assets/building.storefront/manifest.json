@@ -2,7 +2,7 @@
  "type": "building.storefront",
  "cls": "building",
  "desc": "storefront box: CC0 facade (brick / stucco / siding by params.facade, colour), shop-window bays, sign_text board (DEVOUT etc.)",
- "source_hash": "ae8f207f6d98d39c83a2a73ff8f8e8a2c66cdaa4",
+ "source_hash": "b6460f9524600a4fd7d1036a5b8c6bbc1b54d3ca",
  "sources": [
   "ambientCG Bricks066 / PaintedPlaster017 / WoodSiding008/011",
   "licence: ambientCG CC0 1.0 (textures); own text"
@@ -36,7 +36,7 @@
  "verts": 168,
  "tris": 84,
  "frames": [],
- "built": "2026-11-07 14:34:16",
+ "built": "2026-11-07 14:39:08",
  "licence": "ambientCG CC0 1.0 (textures); own text",
  "mly": [
   "233555958567005",

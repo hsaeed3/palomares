@@ -2,7 +2,7 @@
  "type": "fence.construction_mesh",
  "cls": "fence",
  "desc": "orange construction mesh on T-posts",
- "source_hash": "3a1844ba434ba9f94c80252f18d89c3ae504f6f0",
+ "source_hash": "0d57ab11a66a2f174d0f5663b6ebbd70fb69ae23",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 180,
  "tris": 90,
  "frames": [],
- "built": "2026-11-07 14:32:08",
+ "built": "2026-11-07 14:39:29",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "195764839883271",

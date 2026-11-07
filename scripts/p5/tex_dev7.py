@@ -35,7 +35,8 @@ AMBIENTCG = {
     "PavingStones070": "cut-stone ashlar (stone abutment, parapet)",
 }
 POLYHAVEN = {
-    "painted_wooden_bench": "prop.bench",
+    "painted_wooden_bench": "(evaluated, indoor style: not used)",
+    "modular_street_seating": "prop.bench",
     "metal_trash_can": "prop.trash_can",
     "fire_hydrant": "(reference only, dev5 hydrant kept)",
     "planter_box_01": "(reference only)",

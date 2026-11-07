@@ -2,7 +2,7 @@
  "type": "prop.rail_crossing_signal",
  "cls": "prop",
  "desc": "crossbuck + 2 red flashers (xing_a/xing_b alternate via CSP) + bell, gate arm raised (params.gates)",
- "source_hash": "943698b624ea18ab8108433e8127f943d8cff2e1",
+ "source_hash": "68802e5e28c7c908fade763ed9eb29db7f68eb2b",
  "sources": [
   "ambientCG Metal032",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -54,7 +54,7 @@
  "verts": 372,
  "tris": 168,
  "frames": [],
- "built": "2026-11-07 14:32:23",
+ "built": "2026-11-07 14:40:35",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "1624385567971079",

@@ -2,7 +2,7 @@
  "type": "building.town_generic",
  "cls": "building",
  "desc": "OSM footprint extruded to the LiDAR p90 height (params.footprint, height_m), CC0 walls, window bays",
- "source_hash": "95e3f5ef46ffb552bc024b53f52475500562df07",
+ "source_hash": "f91856e08a7e63f5f7f40f9ba994104cc8c331b2",
  "sources": [
   "ambientCG PaintedPlaster017 / WoodSiding008 / Bricks066",
   "OSM footprint (ODbL)",
@@ -38,7 +38,7 @@
  "verts": 134,
  "tris": 66,
  "frames": [],
- "built": "2026-11-07 14:34:27",
+ "built": "2026-11-07 14:39:19",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [],
  "ledger_row": "d7m_bld_0169",

@@ -2,7 +2,7 @@
  "type": "bridge.abutment_concrete",
  "cls": "bridge",
  "desc": "concrete abutment / pier (params.arch_opening)",
- "source_hash": "d3ec2990566e178cbb3e547dae82a96132c76be6",
+ "source_hash": "2379871206726a08dc314751f14fce6be88a4632",
  "sources": [
   "ambientCG Concrete018",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 24,
  "tris": 12,
  "frames": [],
- "built": "2026-11-07 14:31:52",
+ "built": "2026-11-07 14:38:30",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "256078143846347"

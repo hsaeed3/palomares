@@ -2,7 +2,7 @@
  "type": "bridge.rail_concrete_girder",
  "cls": "bridge",
  "desc": "UP concrete girder underpass, abutments, wing walls, pipe railing",
- "source_hash": "e23e7392926c3588c7eccf3164f800d7dc28996c",
+ "source_hash": "2c2a19bef8f3cfcb0d00c677797edb80aad4071d",
  "sources": [
   "ambientCG Concrete034",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 660,
  "tris": 330,
  "frames": [],
- "built": "2026-11-07 14:31:57",
+ "built": "2026-11-07 14:38:46",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "245974991574265",

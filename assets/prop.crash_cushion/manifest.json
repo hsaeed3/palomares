@@ -2,7 +2,7 @@
  "type": "prop.crash_cushion",
  "cls": "prop",
  "desc": "yellow crash cushion, striped nose",
- "source_hash": "d7dcdd085ac3fed0c25adcd6e173c1227cf26af3",
+ "source_hash": "05e7a68210dbc8fc69d26b7e05a211b9d92fdf45",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 104,
  "tris": 52,
  "frames": [],
- "built": "2026-11-07 14:32:18",
+ "built": "2026-11-07 14:40:14",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "1317721509140372",

@@ -2,7 +2,7 @@
  "type": "prop.rail_platform",
  "cls": "prop",
  "desc": "low station platform (params.length_m), yellow edge strip",
- "source_hash": "0db072d0e1a8931f8d407a6c22de6a96592e7e54",
+ "source_hash": "4ced98fd56fffb7e3f118378c70e7af5df359038",
  "sources": [
   "ambientCG Concrete018/034",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 40,
  "tris": 20,
  "frames": [],
- "built": "2026-11-07 14:32:24",
+ "built": "2026-11-07 14:40:41",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "1351599299124704",

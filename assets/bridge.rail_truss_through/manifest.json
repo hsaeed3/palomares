@@ -2,7 +2,7 @@
  "type": "bridge.rail_truss_through",
  "cls": "bridge",
  "desc": "steel through-truss railway span (params.span_m, clearance_m) across the road (span along y) on concrete piers",
- "source_hash": "784fa995521e29690470f15d38cf497678bde326",
+ "source_hash": "f795ff7391bbc65825f58a89cd05907d41db6d52",
  "sources": [
   "ambientCG PaintedMetal004",
   "ambientCG Concrete018",
@@ -37,7 +37,7 @@
  "verts": 692,
  "tris": 346,
  "frames": [],
- "built": "2026-11-07 14:31:59",
+ "built": "2026-11-07 14:38:57",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "256078143846347",

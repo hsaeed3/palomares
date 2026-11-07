@@ -2,7 +2,7 @@
  "type": "prop.trash_can",
  "cls": "prop",
  "desc": "Poly Haven metal_trash_can (CC0), decimated",
- "source_hash": "72a4da53a4a1ae7389389d01232b38a783ea60ea",
+ "source_hash": "8a4cd312ee675ecefca2658c929eba87a5ab5513",
  "sources": [
   "Poly Haven metal_trash_can",
   "licence: Poly Haven CC0 1.0"
@@ -36,7 +36,7 @@
  "verts": 2452,
  "tris": 3370,
  "frames": [],
- "built": "2026-11-07 14:32:26",
+ "built": "2026-11-07 14:40:46",
  "licence": "Poly Haven CC0 1.0",
  "mly": [
   "1624385567971079",

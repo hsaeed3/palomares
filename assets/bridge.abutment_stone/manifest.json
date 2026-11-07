@@ -2,7 +2,7 @@
  "type": "bridge.abutment_stone",
  "cls": "bridge",
  "desc": "cut-stone ashlar abutment",
- "source_hash": "31de774abafd8047816964afd42df58bfdee353f",
+ "source_hash": "1fbc0a48b5c65656773654303337173be59e2877",
  "sources": [
   "ambientCG PavingStones070",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 20,
  "tris": 10,
  "frames": [],
- "built": "2026-11-07 14:31:54",
+ "built": "2026-11-07 14:38:35",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "847155870082512",

@@ -2,7 +2,7 @@
  "type": "pole.traffic_signal",
  "cls": "pole",
  "desc": "signal pole + mast arm + 3-section heads (sig_r/sig_y/sig_g emissive parts)",
- "source_hash": "43b631027b9e5b7e6ca6cfc6d43250d2886d4f9f",
+ "source_hash": "f25ea0ef753c7054ad7088d9d0839de9bbd10367",
  "sources": [
   "ambientCG Metal032",
   "ambientCG PaintedMetal004",
@@ -64,7 +64,7 @@
  "verts": 296,
  "tris": 114,
  "frames": [],
- "built": "2026-11-07 14:32:16",
+ "built": "2026-11-07 14:40:01",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [],
  "ledger_row": null,

@@ -1,10 +1,10 @@
 {
  "type": "prop.bench",
  "cls": "prop",
- "desc": "Poly Haven painted_wooden_bench (CC0)",
- "source_hash": "e71982fd674ec43e6d1d8ed636c4126ff196dafd",
+ "desc": "Poly Haven modular_street_seating (CC0), assembled bench",
+ "source_hash": "dfd9505f9192de4bec9cd0e688f44246fb9177fb",
  "sources": [
-  "Poly Haven painted_wooden_bench",
+  "Poly Haven modular_street_seating",
   "licence: Poly Haven CC0 1.0"
  ],
  "parts": [
@@ -33,10 +33,10 @@
   }
  ],
  "collision": "collision.json",
- "verts": 677,
- "tris": 630,
+ "verts": 3887,
+ "tris": 4206,
  "frames": [],
- "built": "2026-11-07 14:32:17",
+ "built": "2026-11-07 14:40:06",
  "licence": "Poly Haven CC0 1.0",
  "mly": [],
  "ledger_row": "d7m_osm_0036",

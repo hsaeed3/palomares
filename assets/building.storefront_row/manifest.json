@@ -2,7 +2,7 @@
  "type": "building.storefront_row",
  "cls": "building",
  "desc": "row of attached storefronts (params.shops, plain names)",
- "source_hash": "c67cc557e4e93df4d3499d2fa8b785f30897f142",
+ "source_hash": "77113cb17cbf18297eb740444f0772dbd71cfdc6",
  "sources": [
   "ambientCG PaintedPlaster017 / WoodSiding008/011",
   "licence: ambientCG CC0 1.0 (textures); own text"
@@ -36,7 +36,7 @@
  "verts": 248,
  "tris": 124,
  "frames": [],
- "built": "2026-11-07 14:34:22",
+ "built": "2026-11-07 14:39:13",
  "licence": "ambientCG CC0 1.0 (textures); own text",
  "mly": [
   "656483176129170",

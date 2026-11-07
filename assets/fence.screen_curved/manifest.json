@@ -2,7 +2,7 @@
  "type": "fence.screen_curved",
  "cls": "fence",
  "desc": "curved chain-link screen on a bridge",
- "source_hash": "3fbde25ab09581f7972e4fd761a045eb6fffbd5a",
+ "source_hash": "cb0edbcb158b7c98c535970890fe73852367f920",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 208,
  "tris": 104,
  "frames": [],
- "built": "2026-11-07 14:32:10",
+ "built": "2026-11-07 14:39:40",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "284653800910911",

@@ -2,7 +2,7 @@
  "type": "prop.water_barrier",
  "cls": "prop",
  "desc": "orange water-filled barrier (params.count)",
- "source_hash": "b66db1dd00a4335ac85a5348e7f707ae46ced22e",
+ "source_hash": "873048bfdaed7203b14863caa245f1abaa1077da",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 120,
  "tris": 60,
  "frames": [],
- "built": "2026-11-07 14:32:27",
+ "built": "2026-11-07 14:40:54",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "1229674597705531",

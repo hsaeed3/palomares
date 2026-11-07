@@ -2,7 +2,7 @@
  "type": "marking.keep_clear",
  "cls": "marking",
  "desc": "KEEP CLEAR stencil",
- "source_hash": "fd8c3cc71d6ef63ea1cde743463b44c057ca1357",
+ "source_hash": "eed6b17130de1911f6f4baf27520546efd895615",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 4,
  "tris": 2,
  "frames": [],
- "built": "2026-11-07 14:32:13",
+ "built": "2026-11-07 14:39:50",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "233555958567005",
