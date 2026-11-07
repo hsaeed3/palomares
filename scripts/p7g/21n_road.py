@@ -28,6 +28,7 @@ from kn5 import Mesh, Material, write_kn5, read_kn5, ac_from_local
 ap = argparse.ArgumentParser()
 ap.add_argument("road"); ap.add_argument("--s", default=None, help="station range a-b (small tests)")
 ap.add_argument("--tag", default=None)
+ap.add_argument("--no-clusters", action="store_true", help="do not leave the town clusters (21t) out")
 A = ap.parse_args()
 assert BUILD.resolve() != (ROOT / "build").resolve(), "dev7 G writes to its own build dir (PALOMARES_BUILD_DIR=build_dev7)"
 build_lock("dev7_g")
@@ -40,6 +41,18 @@ N = len(road.s)
 i0, i1 = 0, N - 1
 if A.s:
     a, b = (float(v) for v in A.s.split("-")); i0, i1 = int(max(a, 0)), int(min(b, road.s[-1]))
+# town clusters (scripts/p7g/21t_cluster.py builds them as one surface): this road stops at the cluster polygon
+# and its terrain stays out of it; 21t stitches to this road's open boundary there
+import shapely
+CLU = None
+if not A.no_clusters:
+    CLU = shapely.union_all([NW.cluster_polygon(c) for c in NW.CLUSTERS]); shapely.prepare(CLU)
+    insc = shapely.contains_xy(CLU, road.x, road.y)
+    out_ = np.flatnonzero(~insc[i0:i1 + 1]) + i0
+    if len(out_):
+        runs = np.split(out_, np.flatnonzero(np.diff(out_) > 1) + 1); run = max(runs, key=len)
+        i0, i1 = int(run[0]), int(run[-1])
+    LOG["clusters_clip"] = [float(road.s[i0]), float(road.s[i1])]
 I = np.arange(i0, i1 + 1)
 DTM = Raster(DEV7 / "dtm_r100_b150.tif"); DTM5 = Raster(DEV7 / "dtm_r050_b40.tif")
 dtm = lambda x, y: np.where(np.isfinite(DTM5.sample(x, y)), DTM5.sample(x, y), DTM.sample(x, y))
@@ -182,6 +195,8 @@ for step, dmin, dmax in ((1.0, -1.0, 16), (2.0, 16, 50), (4.0, 50, 146)):
         m = (de >= dmin) & (de < dmax) & (dist < hw + dmax) & (j > 0) & (j < len(I) - 1)
         pts.append(np.c_[X[m], Y[m]])
 pts = np.concatenate(pts)
+if CLU is not None:
+    pts = pts[~shapely.contains_xy(CLU, pts[:, 0], pts[:, 1])]
 if STITCH:
     _, kt_ = KEPT.locate(pts); pts = pts[kt_ < 0]
     if len(SEGV):
@@ -221,6 +236,8 @@ assert len(TV) == len(V), "triangle inserted Steiner points"
 P3 = np.c_[TV, VZ]
 e = np.stack([np.linalg.norm(P3[TT[:, a], :2] - P3[TT[:, b], :2], axis=1) for a, b in ((0, 1), (1, 2), (2, 0))], 1).max(1)
 TT = TT[e < 9.0]
+if CLU is not None:
+    _c = P3[TT].mean(1); TT = TT[~shapely.contains_xy(CLU, _c[:, 0], _c[:, 1])]
 MOUTH = np.zeros(len(TT), bool)
 if KEPT is not None:
     cen = P3[TT].mean(1)[:, :2]

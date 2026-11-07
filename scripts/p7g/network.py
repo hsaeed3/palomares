@@ -81,3 +81,29 @@ def load_road(name, log=None):
         if log is not None:
             log[name]["deck_crown_stations"] = int(deck.sum())
     return r
+
+
+# ------------------------------------------------------------------ clusters (town cores built as one surface)
+def _to_local(geom):
+    from pyproj import Transformer
+    import shapely.ops
+    o = json.load(open(DEV7.parents[1] / "config/origin.json")) if (DEV7.parents[1] / "config/origin.json").exists() else None
+    o = o or json.load(open(pathlib.Path(__file__).resolve().parents[2] / "config/origin.json"))
+    tr = Transformer.from_crs(4326, 26910, always_xy=True)
+    return shapely.ops.transform(lambda x, y, z=None: (np.asarray(tr.transform(x, y)[0]) - o["x0"], np.asarray(tr.transform(x, y)[1]) - o["y0"]), geom)
+
+
+def cluster_polygon(name):
+    """local-coordinate shapely polygon of a cluster: 'niles' = scope town polygon (Niles Blvd + 230 m),
+    'sunol' = 140 m around the NCR east end (Main St / Pleasanton-Sunol Rd / Paloma Rd all-way stop)."""
+    import shapely.geometry as sg
+    if name == "niles":
+        sc = json.load(open(DEV7 / "scope.geojson"))
+        return _to_local(sg.shape([f for f in sc["features"] if f["properties"]["area"] == "town"][0]["geometry"]))
+    if name == "sunol":
+        c = load_centerline(None, DEV7 / "centerline_niles_canyon_road.csv")
+        return sg.Point(c["x_local"][-1], c["y_local"][-1]).buffer(140.0, 32)
+    raise KeyError(name)
+
+
+CLUSTERS = ("niles", "sunol")
