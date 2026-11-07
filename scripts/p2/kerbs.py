@@ -145,7 +145,7 @@ def build(road, K, RX, RY, RZ, SH, P3, TT, guardrails, add, chunk_of, shoulder_w
                     z[:, -1] = zsh[:, -1] - 0.002                             # outer edge sinks into the shoulder
                     x[:, 0], y[:, 0], z[:, 0] = RX[i, col], RY[i, col], RZ[i, col]   # == road-edge vertex
                     uu = P_["u0"] + (P_["u1"] - P_["u0"]) * t
-                    vv = road.s[i] / (2 * P_["stripe_length_m"])
+                    vv = road.s[i] / (len(K.get("style", {}).get(K.get("style_use", "palomares"), {}).get("blocks", [0, 0])) * P_["stripe_length_m"])
                     if side == "right":                                        # columns must increase to the left
                         x, y, z, uu = x[:, ::-1], y[:, ::-1], z[:, ::-1], uu[::-1]
                     Pm = np.stack([x, y, z], -1).reshape(-1, 3)

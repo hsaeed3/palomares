@@ -70,3 +70,13 @@ runoff:
   max_step_across_m: 0.20          # reject rows rougher than this between columns
   max_rise_m: 0.35                 # ... or rising/falling more than this across the strip
   tex_m: 2.0                       # texture repeat
+
+# dev7 K: kerb paint styles. A texture cycle holds one block of each colour (kerbs.py: v = s / (n_blocks * stripe)).
+# Block lengths per type stay types.<type>.stripe_length_m. Profiles / heights are unchanged (FFB-safe dev6 values).
+style_use: palomares               # style of the Palomares track_* kerbs (kerb_d.png, 22_build_kn5.py)
+style:
+  palomares:                       # "Palomares GP": Spa-Francorchamps-style red / yellow / green blocks
+    blocks: [[198, 30, 34], [242, 196, 22], [28, 128, 62]]
+  niles_canyon:                    # Red-Bull-Ring-style red / white, green-painted run-off, yellow sausage kerbs
+    blocks: [[198, 30, 34], [236, 234, 228]]
+    runoff_rgb: [42, 140, 70]

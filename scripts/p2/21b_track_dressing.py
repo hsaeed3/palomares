@@ -81,7 +81,7 @@ for i in range(3):   # checker ends
         for xs in (i * 32 + 16, S - 16 - (i + 1) * 32):
             dr.rectangle((xs, 22 + j * 30, xs + 31, 22 + j * 30 + 29), fill=WHITE if (i + j) % 2 else (12, 12, 12))
 logo_mark(185, 128, 76, WHITE, NAVY)
-dr.text((1110, 104), "PALOMARES HILL CLIMB", fill=WHITE, font=F(112), anchor="mm")
+dr.text((1110, 104), "PALOMARES GP", fill=WHITE, font=F(112), anchor="mm")
 dr.text((1110, 196), "ALAMEDA COUNTY  ·  NILES CANYON  →  CASTRO VALLEY", fill=GOLD, font=F(38, False), anchor="mm")
 region("banner", 0, 0, S, TS)
 
@@ -107,10 +107,11 @@ def m_clock(cx, cy, fg, bg):
     dr.ellipse((cx - 64, cy - 64, cx + 64, cy + 64), outline=fg, width=12)
     dr.line((cx, cy, cx, cy - 44), fill=fg, width=10); dr.line((cx, cy, cx + 34, cy + 16), fill=fg, width=10)
     dr.rectangle((cx - 14, cy - 86, cx + 14, cy - 68), fill=fg)
-sponsor(0, (18, 18, 20), GOLD, "SUNOL RIDGE", "MOTOR OIL · EST. 1931", m_drop)
-sponsor(1, (230, 230, 226), (20, 20, 20), "CANYON TYRE", "GRIP FOR EVERY BEND", m_tyre)
-sponsor(2, (92, 52, 30), (246, 232, 206), "EDEN VALLEY", "ROASTERS · CASTRO VALLEY", m_cup)
-sponsor(3, (200, 32, 36), WHITE, "REDTAIL", "TIMING SYSTEMS", m_clock)
+# dev7 K: generic "Palomares GP" event boards only (our own text, no real or fictional sponsor brands)
+sponsor(0, (18, 18, 20), GOLD, "PALOMARES GP", "HILL CLIMB · EST. 2024", m_tyre)
+sponsor(1, (230, 230, 226), (20, 20, 20), "PALOMARES GP", "DRIVE SAFELY", m_clock)
+sponsor(2, (28, 128, 62), WHITE, "PALOMARES GP", "NILES CANYON → SUMMIT", m_tyre)
+sponsor(3, (200, 32, 36), WHITE, "PALOMARES GP", "OFFICIAL TIMING", m_clock)
 
 # --- row 2: barrier materials
 def t_galv(b):

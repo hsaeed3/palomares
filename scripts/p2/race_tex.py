@@ -25,20 +25,31 @@ def _normal_from_height(h, strength):
 RED, WHITE = np.array([196, 28, 32.]), np.array([236, 234, 228.])
 
 
-def kerb_atlas(H=1024, W=1024, seed=11):
+def kerb_style(name="palomares"):
+    """block colour sequence of a kerb style (config/kerbs.yaml style.<name>.blocks, RGB)"""
+    import yaml, pathlib
+    st = yaml.safe_load(open(pathlib.Path(__file__).resolve().parents[2] / "config/kerbs.yaml")).get("style", {})
+    return [np.array(c, float) for c in st.get(name, {}).get("blocks", [RED.tolist(), WHITE.tolist()])]
+
+
+def kerb_atlas(H=1024, W=1024, seed=11, blocks=None):
     """left half: apex kerb (u 0..0.5, ridged); right half: exit kerb (u 0.5..1, flat, smoother paint).
-    v: one texture height = one red block + one white block (blocks are 512 px)."""
-    r = np.random.default_rng(seed)
+    v: one texture height = one cycle of the style's blocks (2 = red/white, 3 = Spa-style red/yellow/green);
+    kerbs.py maps v = s / (n_blocks * stripe_length_m)."""
+    blocks = blocks if blocks is not None else kerb_style("palomares")
+    nb = len(blocks); r = np.random.default_rng(seed)
     v = np.arange(H)[:, None] / H; u = np.arange(W)[None, :] / W
-    red = (v < 0.5) ^ False
+    bi = np.minimum((v * nb).astype(int), nb - 1)
+    fv = v * nb - bi
     # 6 px soft transition between blocks
-    blend = np.clip(np.minimum(np.abs(v - 0.5), np.minimum(v, 1 - v)) * H / 3.0, 0, 1)
-    col = np.where(red[..., None], RED, WHITE)
-    col = col * (0.85 + 0.15 * blend[..., None]) + (1 - blend[..., None]) * 0.15 * (RED + WHITE) / 2
+    blend = np.clip(np.minimum(fv, 1 - fv) * H / nb / 3.0, 0, 1)
+    pal = np.stack(blocks)
+    col = pal[np.broadcast_to(bi, (H, W))]
+    col = col * (0.85 + 0.15 * blend[..., None]) + (1 - blend[..., None]) * 0.15 * pal.mean(0)
     apex = u < 0.5
     ua = np.where(apex, u * 2, (u - 0.5) * 2)          # 0 = road edge .. 1 = outer edge, per half
     # height field: apex = transverse ridges (10 per block, ~12 cm), exit = fine grain
-    ridge = 0.5 + 0.5 * np.cos(2 * np.pi * v * 20)
+    ridge = 0.5 + 0.5 * np.cos(2 * np.pi * v * 10 * nb)
     grain = _noise(r, H, W, 8)
     h = np.where(apex, 0.8 * ridge ** 2 + 0.08 * grain, 0.12 * grain)
     # wear: rubber at the inner (road) edge, dirt / dust toward the outer edge, paint chips
