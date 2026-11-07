@@ -2,7 +2,7 @@
  "type": "sign.clearance",
  "cls": "sign",
  "desc": "clearance sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "2de7001da7a3b3cc97c4c8f5af8acccf5964857a",
+ "source_hash": "5ba80afd9f8c819d184ce9d2a0bcc184e167a108",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:32",
+ "built": "2026-11-07 14:44:42",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "186082583372652",

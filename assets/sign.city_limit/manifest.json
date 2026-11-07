@@ -2,7 +2,7 @@
  "type": "sign.city_limit",
  "cls": "sign",
  "desc": "city limit sign (MUTCD layout redrawn) on 2 posts",
- "source_hash": "cc2607a0fe952c37f458922bfba97f6e3675699a",
+ "source_hash": "b0c0f93778e8679feac5243df4bb2e8d947897fb",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 48,
  "tris": 24,
  "frames": [],
- "built": "2026-11-07 14:32:31",
+ "built": "2026-11-07 14:44:37",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "175835645393089",

@@ -2,7 +2,7 @@
  "type": "sign.bicycle_warning",
  "cls": "sign",
  "desc": "bicycle warning sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "896a81d899fcd0620077521f24d219607f9d1466",
+ "source_hash": "a317d80e8388ea220e6d837554ba935c53bd912a",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 36,
  "tris": 18,
  "frames": [],
- "built": "2026-11-07 14:32:29",
+ "built": "2026-11-07 14:44:31",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "280219694613554",

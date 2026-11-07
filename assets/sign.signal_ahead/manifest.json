@@ -2,7 +2,7 @@
  "type": "sign.signal_ahead",
  "cls": "sign",
  "desc": "signal ahead sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "1fe96a2a3c1ac06df165b2492913993e7d79300d",
+ "source_hash": "88a662c4fff1b28a3f46efe862ee6b02040dc24a",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:48",
+ "built": "2026-11-07 14:46:10",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "198247818783975",

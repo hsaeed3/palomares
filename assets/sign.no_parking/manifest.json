@@ -2,7 +2,7 @@
  "type": "sign.no_parking",
  "cls": "sign",
  "desc": "no parking sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "9b7ef8ba84a271594e117c7444d7fb20bbe03797",
+ "source_hash": "7dff99e283f591e53bf77565c96ffcfc5de227c0",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:38",
+ "built": "2026-11-07 14:45:14",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "1949810342063877",

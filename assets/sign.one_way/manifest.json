@@ -2,7 +2,7 @@
  "type": "sign.one_way",
  "cls": "sign",
  "desc": "one way sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "9c8ab9243a2bd179386570d2b840f2b0809cb63e",
+ "source_hash": "2fa3da0281ecdf0ec9991425cdbae601c043c1d5",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:40",
+ "built": "2026-11-07 14:45:19",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "336083607850050",

@@ -2,7 +2,7 @@
  "type": "rail.track",
  "cls": "rail",
  "desc": "standard-gauge track: ballast (ambientCG Rock030), ties, rails",
- "source_hash": "ca52ac03bbf53b1ee56a6eafe036709a9d02470b",
+ "source_hash": "7e53898910b46d00470185850939390c1335dcdd",
  "sources": [
   "ambientCG Rock030",
   "ambientCG Rust004",
@@ -37,7 +37,7 @@
  "verts": 408,
  "tris": 204,
  "frames": [],
- "built": "2026-11-07 14:32:28",
+ "built": "2026-11-07 14:40:59",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [],
  "ledger_row": null,

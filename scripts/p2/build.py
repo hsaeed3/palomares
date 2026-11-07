@@ -7,6 +7,7 @@
   python3 scripts/p2/build.py quick [--s 9300-9500]   # ledger edit -> 21e + changed kn5 only, in build_quick/ (<1 min)
 See docs/PIPELINE.md.
 """
+from geom import BUILD
 import argparse, os, subprocess, sys, time, pathlib
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -66,6 +67,13 @@ def main():
     if a.from_step:
         k0 = next(i for i, (cmd, _) in enumerate(steps) if a.from_step in (cmd if isinstance(cmd, str) else " ".join(cmd)))
         steps = steps[k0:]
+        names = [cmd for cmd, _ in steps if isinstance(cmd, str)]
+        ck = BUILD / "geometry_21.pkl"
+        if "21_build_geometry.py" not in names and any(n.startswith("21") and n != "21_build_geometry.py" for n in names):
+            if not ck.exists():
+                sys.exit("--from: no build/geometry_21.pkl checkpoint; run the full package once (21 is not re-entrant)")
+            import shutil; shutil.copyfile(ck, BUILD / "geometry.pkl")
+            print(f"  restored geometry.pkl from the step-21 checkpoint ({ck.name})", flush=True)
     env = dict(os.environ, PYTHONUNBUFFERED="1")
     if TTY:
         env.setdefault("PALOMARES_TTY", "1")  # child steps keep colours/progress bars when we pipe through
@@ -88,6 +96,8 @@ def main():
             print(c("1;31", f"\n[{k}/{len(steps)}] FAILED: {label} ({cmd if isinstance(cmd, str) else ' '.join(cmd)}) exit {rc} after {fmt(dt)}"), file=sys.stderr)
             sys.exit(rc)
         print(c("32", f"  done {fmt(dt)}"), flush=True)
+        if cmd == "21_build_geometry.py":       # checkpoint: later steps modify geometry.pkl in place and are not re-entrant
+            import shutil; shutil.copyfile(BUILD / "geometry.pkl", BUILD / "geometry_21.pkl")
     total = time.time() - t_all
     print("\n" + c("1;36", bar))
     print(c("1", "  Summary"))

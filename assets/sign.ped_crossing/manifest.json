@@ -2,7 +2,7 @@
  "type": "sign.ped_crossing",
  "cls": "sign",
  "desc": "ped crossing sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "7af344d0a19d09cd822c8e7463125465d59dd9a6",
+ "source_hash": "e93b2359ef73ed2ec3cbd597a7c8b120765e914e",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:41",
+ "built": "2026-11-07 14:45:25",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "272053081304588"

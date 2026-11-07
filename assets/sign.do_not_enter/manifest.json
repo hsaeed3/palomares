@@ -2,7 +2,7 @@
  "type": "sign.do_not_enter",
  "cls": "sign",
  "desc": "do not enter sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "f058a14527ea781fcec6de2db31bf2a2e56d059a",
+ "source_hash": "56147becbea0f589ad5338bb05d3d35184ebe127",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:35",
+ "built": "2026-11-07 14:44:52",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [],
  "ledger_row": null,

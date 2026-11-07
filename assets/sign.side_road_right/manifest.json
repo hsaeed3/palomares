@@ -2,7 +2,7 @@
  "type": "sign.side_road_right",
  "cls": "sign",
  "desc": "side road right sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "ee1174221f135dfa3234bae2e2d8d3f33596d58f",
+ "source_hash": "73f327ed368cd18425a6c2d6becd2e1c58ec2f5e",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:47",
+ "built": "2026-11-07 14:46:04",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "1050655132620108",

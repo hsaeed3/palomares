@@ -2,7 +2,7 @@
  "type": "sign.guide_green",
  "cls": "sign",
  "desc": "guide green sign (MUTCD layout redrawn) on 2 posts",
- "source_hash": "a006413c0d088124b5902aa9ba2192451edb338c",
+ "source_hash": "e97bc32cbb92db65a8b74f564925a89fe81520c9",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 48,
  "tris": 24,
  "frames": [],
- "built": "2026-11-07 14:32:37",
+ "built": "2026-11-07 14:45:08",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "510600293452962"

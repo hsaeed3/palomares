@@ -48,6 +48,16 @@ for gname, lst in G.items():
         if not bad.any():
             continue
         T = np.asarray(m["T"]); kill = bad[T].any(1)
+        if nm.startswith("1WALL"):
+            # collision: keep the shell closed -> slide the intruding vertices out to the asphalt edge (+5 cm)
+            d_, jj = KD.query(P[:, :2]); jj = np.clip(jj, 0, N - 1)
+            off = (P[:, 0] - road.x[jj]) * road.nx[jj] + (P[:, 1] - road.y[jj]) * road.ny[jj]
+            half = np.where(off > 0, road.el[jj], road.er[jj]); sg = np.where(off >= 0, 1.0, -1.0)
+            mv = bad; dd = (sg * (half + 0.05) - off)[mv]
+            P = P.copy(); P[mv, 0] += dd * road.nx[jj[mv]]; P[mv, 1] += dd * road.ny[jj[mv]]; m["P"] = P
+            for s in np.unique(road.s[j[bad]] // 100 * 100):
+                LOG[(gname, nm.rstrip("0123456789_"), int(s))] += 1
+            continue
         if kill.any():
             m["T"] = T[~kill]
             for s in np.unique(road.s[j[bad]] // 100 * 100):

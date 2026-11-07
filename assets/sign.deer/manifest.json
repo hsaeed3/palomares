@@ -2,7 +2,7 @@
  "type": "sign.deer",
  "cls": "sign",
  "desc": "deer sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "0bed1e3b5a00f6ed421f4eda12ea412d9e01a46f",
+ "source_hash": "97aaef99d441c024f48b58b26e5742d016be532b",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:33",
+ "built": "2026-11-07 14:44:47",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "6994717610563062",

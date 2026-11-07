@@ -2,7 +2,7 @@
  "type": "sign.flasher_mast",
  "cls": "sign",
  "desc": "galvanised pole + cantilever arm over the lane, warning panel (params.panel) + advisory plaque, 2 amber beacons blinking via CSP (beacon_a/beacon_b)",
- "source_hash": "05069987286b672894f9035dd426609644730a70",
+ "source_hash": "58d7aad179f14ce7b4ebc343b113f8464c6683c5",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -55,7 +55,7 @@
  "verts": 320,
  "tris": 146,
  "frames": [],
- "built": "2026-11-07 14:31:02",
+ "built": "2026-11-07 14:45:03",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "2514402612051254",

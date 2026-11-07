@@ -44,6 +44,8 @@ for f in sorted(p.name for p in TRK.glob(a.kn5)):
             bad = inside & (p[:, 2] > zr + 0.02)       # terrain poking through the asphalt
         else:
             bad = inside & (p[:, 2] > zr + 0.02) & (p[:, 2] < zr + 4.5)
+        used = np.zeros(len(p), bool); used[np.asarray(m["idx"], int).ravel()] = True
+        bad &= used                                     # vertices no triangle references are invisible
         if bad.any():
             ss = sorted({int(road.s[x] // 25 * 25) for x in j[bad]})
             hits.append({"kn5": f, "mesh": m["name"], "verts": int(bad.sum()), "stations": ss[:20], "n_stations": len(ss)})

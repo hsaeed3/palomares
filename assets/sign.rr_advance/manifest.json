@@ -2,7 +2,7 @@
  "type": "sign.rr_advance",
  "cls": "sign",
  "desc": "rr advance sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "3eed5d9bcb20a5d05cb15a5116ac200fe0a412ad",
+ "source_hash": "61d104d424446db4047b8c233b6d559c85efe812",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:45",
+ "built": "2026-11-07 14:45:54",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [],
  "ledger_row": "d7m_mf_0517",

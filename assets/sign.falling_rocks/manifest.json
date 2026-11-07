@@ -2,7 +2,7 @@
  "type": "sign.falling_rocks",
  "cls": "sign",
  "desc": "falling rocks sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "8cd9c35ff3515b4dbf24a0966db189bb4508155a",
+ "source_hash": "9ed6d6fe463b03e586fbd608aec17573ff060d4c",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:36",
+ "built": "2026-11-07 14:44:58",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "829811575357013"
