@@ -1,0 +1,40 @@
+{
+ "type": "post.delineator_yellow",
+ "cls": "post",
+ "desc": "yellow delineator",
+ "source_hash": "d8f6b1f0b98f9698feae17ad7258643650da2d13",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 40,
+ "tris": 20,
+ "frames": [],
+ "built": "2026-11-07 06:15:05"
+}

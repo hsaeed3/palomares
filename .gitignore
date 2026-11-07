@@ -12,3 +12,7 @@ data/scene/seg_raw/
 data/scene/cache/
 data/cache/
 build_quick/
+# P asset library: meshes + DDS are rebuilt by scripts/p2/assetlib.py (~90 s); manifests, collision, previews tracked
+assets/_textures/
+assets/*/lod*.npz
+reports/view/

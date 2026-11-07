@@ -27,7 +27,9 @@ def tri_colors(UV, T, tex, alpha_test=True):
     """UV (n,2), T (m,3), tex PIL RGBA -> (m,3) uint8 colours, (m,) keep mask"""
     a = np.asarray(tex.convert("RGBA"), np.uint8); th, tw = a.shape[:2]
     def at(uv):
-        u = np.mod(uv[..., 0], 1.0); v = np.mod(uv[..., 1], 1.0)
+        # pipeline convention: mesh v is measured from the image top of the UNflipped tile sheet, the stored PNG/DDS is
+        # flipped top-bottom (roadside_tex.Atlas.png) and kn5.py writes -v, so a texture row is (1 - v)
+        u = np.mod(uv[..., 0], 1.0); v = np.mod(-uv[..., 1], 1.0)
         return a[np.clip((v * th).astype(int), 0, th - 1), np.clip((u * tw).astype(int), 0, tw - 1)]
     tuv = UV[T]                                   # (m,3,2)
     samples = np.stack([at(tuv.mean(1))] + [at(0.6 * tuv[:, k] + 0.4 * tuv.mean(1)) for k in range(3)], 1)  # (m,4,4)

@@ -1,0 +1,44 @@
+{
+ "type": "debris.rockfall_pile",
+ "cls": "debris",
+ "desc": "angular talus / rockfall pile on the shoulder",
+ "source_hash": "5642e4242aa880370d89a18ed3356a77b76553ab",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 496,
+ "tris": 168,
+ "frames": [
+  1,
+  15,
+  22
+ ],
+ "built": "2026-11-07 06:14:33"
+}

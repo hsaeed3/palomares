@@ -1,0 +1,44 @@
+{
+ "type": "sign.object_marker",
+ "cls": "sign",
+ "desc": "MUTCD-style sign on a galvanised post (object marker); front design + grey back",
+ "source_hash": "72ceb314b32fdae070bf6853aaa78849f7305ef9",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [
+  138,
+  162,
+  163
+ ],
+ "built": "2026-11-07 06:15:35"
+}

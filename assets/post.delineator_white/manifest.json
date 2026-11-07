@@ -1,0 +1,112 @@
+{
+ "type": "post.delineator_white",
+ "cls": "post",
+ "desc": "white flexible delineator, amber reflector",
+ "source_hash": "eebd06cc0efb613f2861d6c91c402d23c143138d",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 40,
+ "tris": 20,
+ "frames": [
+  1,
+  5,
+  7,
+  9,
+  13,
+  15,
+  17,
+  21,
+  22,
+  28,
+  32,
+  34,
+  36,
+  38,
+  39,
+  40,
+  44,
+  45,
+  46,
+  49,
+  50,
+  60,
+  65,
+  67,
+  73,
+  74,
+  83,
+  86,
+  88,
+  93,
+  95,
+  96,
+  102,
+  103,
+  104,
+  105,
+  107,
+  108,
+  111,
+  112,
+  113,
+  114,
+  115,
+  116,
+  117,
+  118,
+  119,
+  120,
+  121,
+  128,
+  130,
+  131,
+  133,
+  136,
+  140,
+  141,
+  158,
+  159,
+  162,
+  173,
+  181,
+  182,
+  187,
+  193,
+  196,
+  199,
+  200,
+  201,
+  202,
+  204,
+  205
+ ],
+ "built": "2026-11-07 06:15:04"
+}

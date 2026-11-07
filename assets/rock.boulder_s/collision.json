@@ -1,0 +1,19 @@
+{
+ "collide": false,
+ "prims": [
+  {
+   "shape": "box",
+   "min": [
+    -0.343,
+    -0.24,
+    -0.098
+   ],
+   "max": [
+    0.314,
+    0.292,
+    0.366
+   ]
+  }
+ ],
+ "note": "from the generator; 21d replaces per-prop boxes by its slab convention"
+}

@@ -1,0 +1,45 @@
+{
+ "type": "mailbox.single",
+ "cls": "mailbox",
+ "desc": "",
+ "source_hash": "5b76489e000c50b8cdebc66c1ba360771b44a46b",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 60,
+ "tris": 30,
+ "frames": [
+  59,
+  67,
+  69,
+  72
+ ],
+ "built": "2026-11-07 06:14:59"
+}

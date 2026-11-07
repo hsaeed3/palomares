@@ -1,0 +1,40 @@
+{
+ "type": "guardrail.cable",
+ "cls": "guardrail",
+ "desc": "",
+ "source_hash": "bf0135bee51fea7c239fe4dca1992f860843e28b",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 124,
+ "tris": 62,
+ "frames": [],
+ "built": "2026-11-07 06:14:48"
+}

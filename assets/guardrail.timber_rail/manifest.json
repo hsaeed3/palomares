@@ -1,0 +1,42 @@
+{
+ "type": "guardrail.timber_rail",
+ "cls": "guardrail",
+ "desc": "two-rail timber guard rail",
+ "source_hash": "0e80a2cae64cc62fdacfc3423a5caf901bcbe00b",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 236,
+ "tris": 118,
+ "frames": [
+  56
+ ],
+ "built": "2026-11-07 06:14:49"
+}

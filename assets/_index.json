@@ -1,9 +1,453 @@
 {
+ "bridge.parapet_concrete": {
+  "cls": "bridge",
+  "verts": 208,
+  "tris": 104,
+  "source_hash": "fc48fa35fc29c71cd22ff1d984a63d10239c5e89"
+ },
+ "bridge.parapet_rail": {
+  "cls": "bridge",
+  "verts": 348,
+  "tris": 174,
+  "source_hash": "8deeaf929b598cf117df9e1f1226ca00cd1a7eb5"
+ },
+ "bridge.parapet_stone": {
+  "cls": "bridge",
+  "verts": 208,
+  "tris": 104,
+  "source_hash": "a409b047561657cbef13589ce0d1873a7b9e5e3b"
+ },
+ "bridge.steel_girder": {
+  "cls": "bridge",
+  "verts": 696,
+  "tris": 348,
+  "source_hash": "141cf2674f7cb54e96189bfab986c5d36d6cd982"
+ },
+ "bridge.timber_rail": {
+  "cls": "bridge",
+  "verts": 304,
+  "tris": 152,
+  "source_hash": "2d8ce5950aac3c4390811b20c78c5aa1f0c85b9f"
+ },
+ "building.barn": {
+  "cls": "building",
+  "verts": 66,
+  "tris": 32,
+  "source_hash": "08239fef904783f19372024e18d0c1dc028f09d9"
+ },
+ "building.carport": {
+  "cls": "building",
+  "verts": 88,
+  "tris": 44,
+  "source_hash": "4465153f2d4c923619be7384aace9d43b6ae11ae"
+ },
+ "building.garage": {
+  "cls": "building",
+  "verts": 50,
+  "tris": 24,
+  "source_hash": "9f8860952ebfa84015f58029eba3d395934b3466"
+ },
+ "building.house_two_storey": {
+  "cls": "building",
+  "verts": 54,
+  "tris": 26,
+  "source_hash": "f5f5cfbf2f9d2ae3ad5c88b8642063f4b6d92163"
+ },
+ "building.measured": {
+  "cls": "building",
+  "verts": 54,
+  "tris": 26,
+  "source_hash": "4f4e04d41baefb0bbf4f076874d7f0900cdc5d48"
+ },
+ "building.ranch_house": {
+  "cls": "building",
+  "verts": 62,
+  "tris": 30,
+  "source_hash": "b40953ab55e9954cd3fe0fd9fc67083db2d9f949"
+ },
+ "building.shed": {
+  "cls": "building",
+  "verts": 30,
+  "tris": 14,
+  "source_hash": "8724f2aa06d505829562d28e4f1c5dd7aab2cbba"
+ },
+ "building.stable": {
+  "cls": "building",
+  "verts": 70,
+  "tris": 34,
+  "source_hash": "988313cbbf6f0b6b47ad91de91123197e58afc52"
+ },
+ "building.trailer": {
+  "cls": "building",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "d88dc819252096a3eb50d1427135fef8b37b6c42"
+ },
+ "building.water_tank": {
+  "cls": "building",
+  "verts": 168,
+  "tris": 72,
+  "source_hash": "c47538dfd4060ea1efd6cdcf630c6aeea983cf57"
+ },
+ "building.water_tank_green": {
+  "cls": "building",
+  "verts": 168,
+  "tris": 72,
+  "source_hash": "57060b1efcd49457d180ff15572a328c81b7c9cb"
+ },
+ "building.water_tank_steel": {
+  "cls": "building",
+  "verts": 168,
+  "tris": 72,
+  "source_hash": "6050ef6c926e9cb7557a747b75ddaa57f674bfdd"
+ },
+ "culvert.cmp_end": {
+  "cls": "culvert",
+  "verts": 402,
+  "tris": 168,
+  "source_hash": "077a6eb8b4e8666fd0b3f99d4a160ae00f81829e"
+ },
+ "culvert.drop_inlet": {
+  "cls": "culvert",
+  "verts": 20,
+  "tris": 10,
+  "source_hash": "02c87275a1681f6df538ed7e8cb413283fcf5225"
+ },
+ "culvert.headwall": {
+  "cls": "culvert",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "063113a0d64d38b03eafdebea0e44e2a9efcea66"
+ },
+ "curb.concrete": {
+  "cls": "wall",
+  "verts": 68,
+  "tris": 34,
+  "source_hash": "68c7a18296d4d339aba7d942d8e4a92bfdd41cd0"
+ },
+ "debris.branch_pile": {
+  "cls": "debris",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "fe136d073920f008751363fc22317b243a3a5934"
+ },
+ "debris.leaf_litter": {
+  "cls": "debris",
+  "verts": 16,
+  "tris": 8,
+  "source_hash": "fbd65c197006446557c77cbaf1ca12d61bf1c273"
+ },
+ "debris.log": {
+  "cls": "debris",
+  "verts": 32,
+  "tris": 16,
+  "source_hash": "0df71567fee04e8b4f20b48e872fc21c9f40b21d"
+ },
+ "debris.rockfall_pile": {
+  "cls": "debris",
+  "verts": 496,
+  "tris": 168,
+  "source_hash": "5642e4242aa880370d89a18ed3356a77b76553ab"
+ },
+ "debris.stump": {
+  "cls": "debris",
+  "verts": 49,
+  "tris": 21,
+  "source_hash": "d12d376f59f91b27c885c2f6505cc841bf08844e"
+ },
+ "driveway.asphalt": {
+  "cls": "driveway",
+  "verts": 96,
+  "tris": 48,
+  "source_hash": "eb0c72ebf102b262fb5e55b599780216d60008c4"
+ },
+ "driveway.gravel": {
+  "cls": "driveway",
+  "verts": 96,
+  "tris": 48,
+  "source_hash": "293f1f25aad62f3c3f11406408094dc75dfc7a7e"
+ },
+ "fence.board_3rail": {
+  "cls": "fence",
+  "verts": 164,
+  "tris": 82,
+  "source_hash": "cc49012e7dbed0bb90ad6501ba6b74af7f05e3ce"
+ },
  "fence.chainlink": {
   "cls": "fence",
   "verts": 224,
   "tris": 112,
   "source_hash": "0d2eb9e76d1cfa7682990c1b08995e2f05cb3661"
+ },
+ "fence.iron_picket": {
+  "cls": "fence",
+  "verts": 216,
+  "tris": 108,
+  "source_hash": "a8f831e210391ddca25eafd531b6751e1707ac9f"
+ },
+ "fence.lattice": {
+  "cls": "fence",
+  "verts": 204,
+  "tris": 102,
+  "source_hash": "b03f3e928d8cde7d80af598bd3f2ee46a313e804"
+ },
+ "fence.pipe_rail": {
+  "cls": "fence",
+  "verts": 152,
+  "tris": 76,
+  "source_hash": "849057a22c7ae14f9866402053847d82af3e9169"
+ },
+ "fence.privacy": {
+  "cls": "fence",
+  "verts": 164,
+  "tris": 82,
+  "source_hash": "b5c137acae8f6ae6b8174ad73d9b7ee66f8ec67b"
+ },
+ "fence.ranch_wire": {
+  "cls": "fence",
+  "verts": 116,
+  "tris": 58,
+  "source_hash": "d7de70d104afc1cf87a8eccfa0af40cc9f446bd6"
+ },
+ "fence.split_rail": {
+  "cls": "fence",
+  "verts": 152,
+  "tris": 76,
+  "source_hash": "2e5aa5c84d6df5eaf33f0a5e8e9bce0358328257"
+ },
+ "fence.white_rail": {
+  "cls": "fence",
+  "verts": 164,
+  "tris": 82,
+  "source_hash": "a93889e0971bdad4af1a919002f2074e6ec56df8"
+ },
+ "gate.chainlink_swing": {
+  "cls": "gate",
+  "verts": 160,
+  "tris": 80,
+  "source_hash": "f6913a3d440e613ab6859d458bd5330967c1cad3"
+ },
+ "gate.estate_brick_iron": {
+  "cls": "gate",
+  "verts": 176,
+  "tris": 88,
+  "source_hash": "acf9e0e3747dcd4450a7bffdd132c34118455831"
+ },
+ "gate.pipe_ranch": {
+  "cls": "gate",
+  "verts": 96,
+  "tris": 48,
+  "source_hash": "3955cac9d4dfdb199e41fc6446a352780e9d1271"
+ },
+ "gate.white_rail": {
+  "cls": "gate",
+  "verts": 104,
+  "tris": 52,
+  "source_hash": "099aec2bb8195b5d4f4e9662308498ca1fbc2394"
+ },
+ "guardrail.cable": {
+  "cls": "guardrail",
+  "verts": 124,
+  "tris": 62,
+  "source_hash": "bf0135bee51fea7c239fe4dca1992f860843e28b"
+ },
+ "guardrail.timber_rail": {
+  "cls": "guardrail",
+  "verts": 236,
+  "tris": 118,
+  "source_hash": "0e80a2cae64cc62fdacfc3423a5caf901bcbe00b"
+ },
+ "guardrail.wbeam_steel": {
+  "cls": "guardrail",
+  "verts": 192,
+  "tris": 96,
+  "source_hash": "493e438f78c8ddd33e79707ebc2b2c4e20dbf108"
+ },
+ "guardrail.wbeam_wood": {
+  "cls": "guardrail",
+  "verts": 192,
+  "tris": 96,
+  "source_hash": "b4c5acfa8e651a55652c7147a3d20de063f502f1"
+ },
+ "hedge.blackberry_thicket": {
+  "cls": "hedge",
+  "verts": 96,
+  "tris": 48,
+  "source_hash": "bc0396431aa8cd48b94619d4b93510b5c6f8155b"
+ },
+ "hedge.clipped": {
+  "cls": "hedge",
+  "verts": 68,
+  "tris": 34,
+  "source_hash": "a68e2bc25e40deb1ad0909b01c6a9be519e1d880"
+ },
+ "hedge.coyote_brush": {
+  "cls": "hedge",
+  "verts": 128,
+  "tris": 64,
+  "source_hash": "0e7775c39abc284c9a4cef6114a0d4e67e68da68"
+ },
+ "hedge.cypress_row": {
+  "cls": "hedge",
+  "verts": 48,
+  "tris": 24,
+  "source_hash": "ecbead0596d1c01295ae87ea1cc1f562dbd8185d"
+ },
+ "hedge.grass_verge": {
+  "cls": "hedge",
+  "verts": 304,
+  "tris": 152,
+  "source_hash": "83f5e9e804aa492f035995666d51524496eedcb4"
+ },
+ "hedge.ivy_band": {
+  "cls": "hedge",
+  "verts": 576,
+  "tris": 288,
+  "source_hash": "91e2be1440c52c39c69e11dc47f9df43151ac11c"
+ },
+ "mailbox.brick_column": {
+  "cls": "mailbox",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "2fe0f89474127a912c7c746d6a74b36e8bb653ad"
+ },
+ "mailbox.cbu": {
+  "cls": "mailbox",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "81c054c956d844ec84814850bad9637e0908ee85"
+ },
+ "mailbox.cluster": {
+  "cls": "mailbox",
+  "verts": 100,
+  "tris": 50,
+  "source_hash": "064c200eea034f66b0972e5efbdd088f45dcc3c9"
+ },
+ "mailbox.single": {
+  "cls": "mailbox",
+  "verts": 60,
+  "tris": 30,
+  "source_hash": "5b76489e000c50b8cdebc66c1ba360771b44a46b"
+ },
+ "marking.hump": {
+  "cls": "marking",
+  "verts": 120,
+  "tris": 60,
+  "source_hash": "039fb473e868aa27b631087a999b915cffa13266"
+ },
+ "marking.stop_bar": {
+  "cls": "marking",
+  "verts": 12,
+  "tris": 6,
+  "source_hash": "796210af509fc1a9bc16be4342af1f489cba2344"
+ },
+ "pole.streetlight": {
+  "cls": "pole",
+  "verts": 64,
+  "tris": 32,
+  "source_hash": "540b1c43181dfdde597fcc027f635e6795121bd0"
+ },
+ "pole.utility_transformer": {
+  "cls": "pole",
+  "verts": 184,
+  "tris": 88,
+  "source_hash": "6145aefc320ee11357e4d845a2675be25048d4ff"
+ },
+ "pole.utility_wood": {
+  "cls": "pole",
+  "verts": 128,
+  "tris": 64,
+  "source_hash": "475e9f7b583c8f32ed75dbe5f6460bbe87367546"
+ },
+ "post.delineator_white": {
+  "cls": "post",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "eebd06cc0efb613f2861d6c91c402d23c143138d"
+ },
+ "post.delineator_yellow": {
+  "cls": "post",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "d8f6b1f0b98f9698feae17ad7258643650da2d13"
+ },
+ "post.hazard_marker": {
+  "cls": "post",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "3fe44e744d3dd25b121f288635511ce68f5d9d39"
+ },
+ "post.t_post": {
+  "cls": "post",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "54d1949aeb6ffdfe02e62c8032817289dfbf2e1a"
+ },
+ "post.wood_bollard": {
+  "cls": "post",
+  "verts": 20,
+  "tris": 10,
+  "source_hash": "0d22310343d7bd2caf6cf2be4ced625bb96c5344"
+ },
+ "prop.flag_pole": {
+  "cls": "prop",
+  "verts": 142,
+  "tris": 68,
+  "source_hash": "e82180a4d02076a689dba77ce8b12846c407acc3"
+ },
+ "prop.hydrant": {
+  "cls": "prop",
+  "verts": 76,
+  "tris": 34,
+  "source_hash": "03ead31054a96ea80f3e81aa3fdcbdc22df3fd80"
+ },
+ "prop.trash_bins": {
+  "cls": "prop",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "3ac575cd445b4816833ccae601c72dc60e5ebc3f"
+ },
+ "prop.utility_box": {
+  "cls": "prop",
+  "verts": 20,
+  "tris": 10,
+  "source_hash": "569bbbf5c364a423523a75d20c74fe600bf44a7a"
+ },
+ "rock.boulder_l": {
+  "cls": "rock",
+  "verts": 96,
+  "tris": 32,
+  "source_hash": "f9fe49e830afaa4bd1896ec93c669f4be14c9f0c"
+ },
+ "rock.boulder_m": {
+  "cls": "rock",
+  "verts": 96,
+  "tris": 32,
+  "source_hash": "ac59153348cde541173b2840640d0613e7124ad0"
+ },
+ "rock.boulder_s": {
+  "cls": "rock",
+  "verts": 96,
+  "tris": 32,
+  "source_hash": "02ceb2f46985999b0ef831c016808a9f0a337379"
+ },
+ "rock.cluster": {
+  "cls": "rock",
+  "verts": 384,
+  "tris": 128,
+  "source_hash": "1db16d2955e5ce8e771a9d290271c1809494ab02"
+ },
+ "rock.outcrop": {
+  "cls": "rock",
+  "verts": 192,
+  "tris": 64,
+  "source_hash": "d70a5f26031bb7cfe5a5ff26593feba3cfac6b49"
+ },
+ "shrub.blackberry": {
+  "cls": "shrub",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "0e57e52187820e52ddd1f962c0647c98f25d1ba3"
  },
  "shrub.coyote_brush": {
   "cls": "shrub",
@@ -11,22 +455,274 @@
   "tris": 12,
   "source_hash": "ee0684ff03b10f09688064bd79d045d2775af8d6"
  },
+ "shrub.fern": {
+  "cls": "shrub",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "d7ddafc1f01b875b1471772bc17125c5f8c0c89e"
+ },
+ "shrub.grass_clump": {
+  "cls": "shrub",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "61aaf685221b53dd9ee08f566f452dd844d57e77"
+ },
+ "shrub.ivy": {
+  "cls": "shrub",
+  "verts": 64,
+  "tris": 32,
+  "source_hash": "10503b346946993bc91e03ada683cadf9a54ed35"
+ },
+ "shrub.poison_oak": {
+  "cls": "shrub",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "d7960b6019cbf574d1ba1fb3ce8980eb3949c3f0"
+ },
+ "shrub.toyon": {
+  "cls": "shrub",
+  "verts": 72,
+  "tris": 36,
+  "source_hash": "b6220b3153cdd38f3e696d6bf8114364faed961b"
+ },
+ "sign.address_fire": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "0e621dc9a075fa742a2fa36047b16653fa1e0837"
+ },
+ "sign.advisory_15": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "16c7ad6da4a0f04c761a0788b70bb4391a20f257"
+ },
+ "sign.advisory_25": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "e416b6fda642942049b11ce550994c5b8673cd19"
+ },
+ "sign.arrow_left": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "7b8acbead3bef379a03b7c292e6dbf2223cdadaf"
+ },
+ "sign.arrow_right": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "f8dd7906baf3e39155af9f94ac4bf4531ea0b265"
+ },
+ "sign.back_diamond": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "fb21281f86aa459de4f1e4e7e3784454447b611f"
+ },
+ "sign.back_rect": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "dbc5b5f412e55e9e80f63320458ae44ab9b62812"
+ },
+ "sign.blank_white": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "2aec8725a098ab1fcbb40519a85c03f81af72c75"
+ },
+ "sign.chevron_left": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "2b8fa3da47e41ebefafa622c16fbf7759c8d6e01"
+ },
+ "sign.chevron_right": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "edcfaf1fdabbd427bfca578dad6d22ec66526cb1"
+ },
  "sign.curve_left": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
   "source_hash": "e3467c7ee55cd98f9b34bc0c5a52bd343776a791"
  },
+ "sign.curve_right": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "99652a035e47af9505c20c3f3439ac88c9928124"
+ },
+ "sign.hump": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "a95dc0e0155f304b89f1ef90bbb2bfacdcc78219"
+ },
+ "sign.mile_marker": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "e49e85af5fbb452402b4398b1b5e5432060dc53b"
+ },
+ "sign.mirror": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "36943cb3e45e6cdd9019389c3f3af4f25e33e459"
+ },
+ "sign.narrow_bridge": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "63011e2ba812dc313f07d6c23b8a1e12f7fcceca"
+ },
+ "sign.object_marker": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "72ceb314b32fdae070bf6853aaa78849f7305ef9"
+ },
+ "sign.round_prohibition": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "3e741148d520926800dfb63fe76e6014acb7d2df"
+ },
+ "sign.slow": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "f798ce442d32bed058afc2e78d09cd875dd18651"
+ },
+ "sign.speed_limit": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "e7763cab0a07cc89b242530c08fd71f4a3e36201"
+ },
+ "sign.stop": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "a41ef8cddc234654445dc63f9e476c51913d9665"
+ },
+ "sign.street_name": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "5f638320b379a47fe723e65cadd0372ccfbcc526"
+ },
+ "sign.text_private": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "182a76d475526ae8b082169efff6de42357d4605"
+ },
+ "sign.warning_blank": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "23bd2c1be9dc8e40c0c96385e5bbdeca6c600e13"
+ },
+ "tree.conifer": {
+  "cls": "tree_add",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "e7c74be945d1b3692da87adfd425977e97cb8263"
+ },
  "tree.oak": {
   "cls": "tree_add",
   "verts": 32,
   "tris": 16,
-  "source_hash": "10dd5677c4caccf45c40d94f8552de726e14e1cd"
+  "source_hash": "2cbae49218537a4cc04255cbe9c95c620764f874"
+ },
+ "tree.winter_poplar": {
+  "cls": "tree_add",
+  "verts": 16,
+  "tris": 8,
+  "source_hash": "b2c649b81ab743409a89415963755d0126e30650"
+ },
+ "tree.winter_sycamore": {
+  "cls": "tree_add",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "a655af4f5e15dabf0dd79acc8235598272bd2351"
+ },
+ "tree3d.bare": {
+  "cls": "tree",
+  "verts": 363,
+  "tris": 356,
+  "source_hash": "40291a00630789f3691d8dbe88d265554dcc1a9b"
+ },
+ "tree3d.bay": {
+  "cls": "tree",
+  "verts": 620,
+  "tris": 624,
+  "source_hash": "f929ed9d68a67cc51d244cd57e3e180e85fed879"
+ },
+ "tree3d.con": {
+  "cls": "tree",
+  "verts": 703,
+  "tris": 716,
+  "source_hash": "64b115e838ca5db88f0aa20044519f74e68ef93a"
+ },
+ "tree3d.euc": {
+  "cls": "tree",
+  "verts": 433,
+  "tris": 436,
+  "source_hash": "1884aa513841a768416162723018a11df7d1c356"
  },
  "tree3d.oak": {
   "cls": "tree",
   "verts": 758,
   "tris": 764,
   "source_hash": "afc9487ab427426b10cff2b9ad1b14247a7a07af"
+ },
+ "tree3d.syc": {
+  "cls": "tree",
+  "verts": 528,
+  "tris": 532,
+  "source_hash": "7e1aa3d0ac7878d97b02d12dde3f424233d1513a"
+ },
+ "wall.brick_low": {
+  "cls": "wall",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "74033b56c42d6c34ff05356317213f63d2c4c85e"
+ },
+ "wall.retaining_concrete": {
+  "cls": "wall",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "913f0d75851efe6c26e32f1fe7549196348407c4"
+ },
+ "wall.retaining_stone": {
+  "cls": "wall",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "f9b5af09267ad11a7d24180e224ad754e75506d4"
+ },
+ "wall.rockfall_mesh": {
+  "cls": "wall",
+  "verts": 600,
+  "tris": 256,
+  "source_hash": "125673a2cf59d4946d64df8e079261d3849b231a"
+ },
+ "wall.sackcrete": {
+  "cls": "wall",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "3796ec82e2b97b3ee6709fbec1380d382da198ce"
+ },
+ "wall.timber_crib": {
+  "cls": "wall",
+  "verts": 896,
+  "tris": 448,
+  "source_hash": "fdf4e87fbaf5c6ebb185517db40c4367dc88f929"
  }
 }

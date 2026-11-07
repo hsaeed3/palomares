@@ -1,0 +1,12 @@
+{
+ "collide": false,
+ "prims": [
+  {
+   "shape": "cylinder",
+   "r": 0.4666666666666667,
+   "z0": 0.0,
+   "z1": 4.0,
+   "note": "trunk only; 21d convention: no per-tree collision, forest-line slabs"
+  }
+ ]
+}

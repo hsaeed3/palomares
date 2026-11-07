@@ -1,0 +1,45 @@
+{
+ "type": "bridge.parapet_stone",
+ "cls": "bridge",
+ "desc": "stone masonry parapet",
+ "source_hash": "a409b047561657cbef13589ce0d1873a7b9e5e3b",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 208,
+ "tris": 104,
+ "frames": [
+  91,
+  138,
+  162,
+  163
+ ],
+ "built": "2026-11-07 06:14:15"
+}

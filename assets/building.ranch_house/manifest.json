@@ -1,0 +1,55 @@
+{
+ "type": "building.ranch_house",
+ "cls": "building",
+ "desc": "ranch house",
+ "source_hash": "b40953ab55e9954cd3fe0fd9fc67083db2d9f949",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 62,
+ "tris": 30,
+ "frames": [
+  34,
+  127,
+  135,
+  144,
+  145,
+  153,
+  154,
+  160,
+  164,
+  170,
+  190,
+  192,
+  201,
+  205
+ ],
+ "built": "2026-11-07 06:14:21"
+}

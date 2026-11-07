@@ -1,0 +1,61 @@
+{
+ "type": "mailbox.cluster",
+ "cls": "mailbox",
+ "desc": "row of rural mailboxes on a board",
+ "source_hash": "064c200eea034f66b0972e5efbdd088f45dcc3c9",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 100,
+ "tris": 50,
+ "frames": [
+  5,
+  54,
+  98,
+  127,
+  129,
+  132,
+  144,
+  145,
+  148,
+  153,
+  155,
+  162,
+  163,
+  165,
+  169,
+  176,
+  187,
+  192,
+  200,
+  205
+ ],
+ "built": "2026-11-07 06:14:58"
+}

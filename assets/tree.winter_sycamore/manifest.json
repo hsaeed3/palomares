@@ -1,0 +1,43 @@
+{
+ "type": "tree.winter_sycamore",
+ "cls": "tree_add",
+ "desc": "bare winter sycamore / cottonwood: pale forking limbs, twig mesh",
+ "source_hash": "a655af4f5e15dabf0dd79acc8235598272bd2351",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 24,
+ "tris": 12,
+ "frames": [
+  206,
+  207
+ ],
+ "built": "2026-11-07 06:15:45"
+}

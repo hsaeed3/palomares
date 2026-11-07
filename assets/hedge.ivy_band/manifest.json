@@ -1,0 +1,40 @@
+{
+ "type": "hedge.ivy_band",
+ "cls": "hedge",
+ "desc": "",
+ "source_hash": "91e2be1440c52c39c69e11dc47f9df43151ac11c",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 576,
+ "tris": 288,
+ "frames": [],
+ "built": "2026-11-07 06:14:56"
+}

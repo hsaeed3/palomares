@@ -1,0 +1,51 @@
+{
+ "type": "sign.chevron_left",
+ "cls": "sign",
+ "desc": "MUTCD-style sign on a galvanised post (chevron left); front design + grey back",
+ "source_hash": "2b8fa3da47e41ebefafa622c16fbf7759c8d6e01",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [
+  79,
+  109,
+  112,
+  114,
+  115,
+  116,
+  117,
+  118,
+  120,
+  159
+ ],
+ "built": "2026-11-07 06:15:27"
+}

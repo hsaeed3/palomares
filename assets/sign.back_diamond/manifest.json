@@ -1,0 +1,49 @@
+{
+ "type": "sign.back_diamond",
+ "cls": "sign",
+ "desc": "MUTCD-style sign on a galvanised post (back of diamond); front design + grey back",
+ "source_hash": "fb21281f86aa459de4f1e4e7e3784454447b611f",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [
+  5,
+  56,
+  76,
+  92,
+  141,
+  154,
+  155,
+  165
+ ],
+ "built": "2026-11-07 06:15:25"
+}

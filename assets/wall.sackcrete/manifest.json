@@ -1,0 +1,40 @@
+{
+ "type": "wall.sackcrete",
+ "cls": "wall",
+ "desc": "rock wall",
+ "source_hash": "3796ec82e2b97b3ee6709fbec1380d382da198ce",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 92,
+ "tris": 46,
+ "frames": [],
+ "built": "2026-11-07 06:15:53"
+}

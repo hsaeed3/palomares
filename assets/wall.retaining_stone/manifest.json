@@ -1,0 +1,47 @@
+{
+ "type": "wall.retaining_stone",
+ "cls": "wall",
+ "desc": "stone wall",
+ "source_hash": "f9b5af09267ad11a7d24180e224ad754e75506d4",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 92,
+ "tris": 46,
+ "frames": [
+  13,
+  47,
+  89,
+  126,
+  134,
+  160
+ ],
+ "built": "2026-11-07 06:15:51"
+}

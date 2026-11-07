@@ -1,0 +1,62 @@
+{
+ "type": "fence.split_rail",
+ "cls": "fence",
+ "desc": "splitrail panels on posts",
+ "source_hash": "2e5aa5c84d6df5eaf33f0a5e8e9bce0358328257",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 152,
+ "tris": 76,
+ "frames": [
+  56,
+  76,
+  121,
+  122,
+  123,
+  124,
+  144,
+  145,
+  146,
+  149,
+  152,
+  156,
+  158,
+  159,
+  161,
+  162,
+  163,
+  164,
+  188,
+  192,
+  205
+ ],
+ "built": "2026-11-07 06:14:43"
+}

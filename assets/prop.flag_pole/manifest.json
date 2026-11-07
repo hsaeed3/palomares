@@ -1,0 +1,40 @@
+{
+ "type": "prop.flag_pole",
+ "cls": "prop",
+ "desc": "flagpole + US flag (public-domain design, no logos)",
+ "source_hash": "e82180a4d02076a689dba77ce8b12846c407acc3",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 142,
+ "tris": 68,
+ "frames": [],
+ "built": "2026-11-07 06:15:08"
+}

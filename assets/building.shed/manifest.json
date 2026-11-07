@@ -1,0 +1,44 @@
+{
+ "type": "building.shed",
+ "cls": "building",
+ "desc": "shed",
+ "source_hash": "8724f2aa06d505829562d28e4f1c5dd7aab2cbba",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 30,
+ "tris": 14,
+ "frames": [
+  113,
+  147,
+  150
+ ],
+ "built": "2026-11-07 06:14:22"
+}

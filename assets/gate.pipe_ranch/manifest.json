@@ -1,0 +1,45 @@
+{
+ "type": "gate.pipe_ranch",
+ "cls": "gate",
+ "desc": "pipe ranch",
+ "source_hash": "3955cac9d4dfdb199e41fc6446a352780e9d1271",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 96,
+ "tris": 48,
+ "frames": [
+  113,
+  136,
+  164,
+  165
+ ],
+ "built": "2026-11-07 06:14:46"
+}

@@ -1,0 +1,40 @@
+{
+ "type": "shrub.poison_oak",
+ "cls": "shrub",
+ "desc": "poisonoak card clump",
+ "source_hash": "d7960b6019cbf574d1ba1fb3ce8980eb3949c3f0",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 24,
+ "tris": 12,
+ "frames": [],
+ "built": "2026-11-07 06:15:19"
+}

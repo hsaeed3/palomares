@@ -1,0 +1,40 @@
+{
+ "type": "bridge.steel_girder",
+ "cls": "bridge",
+ "desc": "steel girder fascia + tube railing",
+ "source_hash": "141cf2674f7cb54e96189bfab986c5d36d6cd982",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 696,
+ "tris": 348,
+ "frames": [],
+ "built": "2026-11-07 06:14:16"
+}

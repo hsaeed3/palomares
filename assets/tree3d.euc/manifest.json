@@ -1,0 +1,50 @@
+{
+ "type": "tree3d.euc",
+ "cls": "tree",
+ "desc": "trees3d prototype 'euc' variant 0 (of 4), nominal height 28.0 m, crown radius 5.0 m; instanced at LiDAR positions scaled to height/crown (21_build_geometry.py)",
+ "source_hash": "1884aa513841a768416162723018a11df7d1c356",
+ "sources": [
+  "scripts/p2/trees3d.py",
+  "scripts/p2/foliage_photo.py",
+  "22_build_kn5.py tree textures"
+ ],
+ "parts": [
+  {
+   "name": "tree_trunk",
+   "mesh": "lod0_tree_trunk.npz",
+   "texture": "_textures/tree_trunk.dds",
+   "material": "tree_trunk",
+   "alpha_tested": false
+  },
+  {
+   "name": "tree_leaves",
+   "mesh": "lod0_tree_leaves.npz",
+   "texture": "_textures/tree_leaves.dds",
+   "material": "tree_leaves",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_tree_trunk.npz",
+    "lod0_tree_leaves.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_tree_trunk.npz",
+    "lod1_tree_leaves.npz"
+   ],
+   "lod_out": null
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 433,
+ "tris": 436,
+ "frames": [],
+ "built": "2026-11-07 06:15:47"
+}

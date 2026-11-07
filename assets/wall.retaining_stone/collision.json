@@ -1,0 +1,15 @@
+{
+ "collide": true,
+ "prims": [
+  {
+   "prim": [
+    "line",
+    0.225,
+    -0.7,
+    1.4,
+    0.2025
+   ]
+  }
+ ],
+ "note": "from the generator; 21d replaces per-prop boxes by its slab convention"
+}

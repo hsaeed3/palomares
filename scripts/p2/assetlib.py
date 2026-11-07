@@ -61,7 +61,7 @@ def preview(d, man):
     view.OUT = d
     p = view.view_asset(man["type"])
     (d / "preview.png").unlink(missing_ok=True)
-    Image.open(p).save(d / "preview.png"); p.unlink(); p.with_suffix(".html").unlink(missing_ok=True)
+    im = Image.open(p); im.thumbnail((800, 800)); im.convert("RGB").quantize(128).save(d / "preview.png", optimize=True); p.unlink(); p.with_suffix(".html").unlink(missing_ok=True)
 
 
 def write_asset(aid, cls, src_hash, sources, parts, collision, frames, desc, lods_extra=None):

@@ -1,0 +1,42 @@
+{
+ "type": "sign.round_prohibition",
+ "cls": "sign",
+ "desc": "MUTCD-style sign on a galvanised post (round); front design + grey back",
+ "source_hash": "3e741148d520926800dfb63fe76e6014acb7d2df",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [
+  1
+ ],
+ "built": "2026-11-07 06:15:36"
+}

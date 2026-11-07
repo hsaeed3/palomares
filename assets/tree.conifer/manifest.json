@@ -1,0 +1,48 @@
+{
+ "type": "tree.conifer",
+ "cls": "tree_add",
+ "desc": "dark redwood / pine cone, tiered boughs",
+ "source_hash": "e7c74be945d1b3692da87adfd425977e97cb8263",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 24,
+ "tris": 12,
+ "frames": [
+  64,
+  85,
+  99,
+  106,
+  148,
+  169,
+  183
+ ],
+ "built": "2026-11-07 06:15:42"
+}

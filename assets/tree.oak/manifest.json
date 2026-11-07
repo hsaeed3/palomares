@@ -2,7 +2,7 @@
  "type": "tree.oak",
  "cls": "tree_add",
  "desc": "coast live oak: wide, multi-trunk, lobed spreading crown (crown ~1.5 h)",
- "source_hash": "10dd5677c4caccf45c40d94f8552de726e14e1cd",
+ "source_hash": "2cbae49218537a4cc04255cbe9c95c620764f874",
  "sources": [
   "scripts/p5/assets.py",
   "config/asset_catalog.yaml"
@@ -39,5 +39,5 @@
   101,
   131
  ],
- "built": "2026-11-07 06:08:37"
+ "built": "2026-11-07 06:15:43"
 }

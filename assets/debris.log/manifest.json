@@ -1,0 +1,40 @@
+{
+ "type": "debris.log",
+ "cls": "debris",
+ "desc": "",
+ "source_hash": "0df71567fee04e8b4f20b48e872fc21c9f40b21d",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 32,
+ "tris": 16,
+ "frames": [],
+ "built": "2026-11-07 06:14:32"
+}

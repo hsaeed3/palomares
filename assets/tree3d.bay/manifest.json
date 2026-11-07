@@ -1,0 +1,50 @@
+{
+ "type": "tree3d.bay",
+ "cls": "tree",
+ "desc": "trees3d prototype 'bay' variant 0 (of 4), nominal height 13.0 m, crown radius 4.5 m; instanced at LiDAR positions scaled to height/crown (21_build_geometry.py)",
+ "source_hash": "f929ed9d68a67cc51d244cd57e3e180e85fed879",
+ "sources": [
+  "scripts/p2/trees3d.py",
+  "scripts/p2/foliage_photo.py",
+  "22_build_kn5.py tree textures"
+ ],
+ "parts": [
+  {
+   "name": "tree_trunk",
+   "mesh": "lod0_tree_trunk.npz",
+   "texture": "_textures/tree_trunk.dds",
+   "material": "tree_trunk",
+   "alpha_tested": false
+  },
+  {
+   "name": "tree_leaves",
+   "mesh": "lod0_tree_leaves.npz",
+   "texture": "_textures/tree_leaves.dds",
+   "material": "tree_leaves",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_tree_trunk.npz",
+    "lod0_tree_leaves.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_tree_trunk.npz",
+    "lod1_tree_leaves.npz"
+   ],
+   "lod_out": null
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 620,
+ "tris": 624,
+ "frames": [],
+ "built": "2026-11-07 06:15:46"
+}

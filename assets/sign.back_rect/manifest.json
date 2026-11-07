@@ -1,0 +1,44 @@
+{
+ "type": "sign.back_rect",
+ "cls": "sign",
+ "desc": "MUTCD-style sign on a galvanised post (back of sign); front design + grey back",
+ "source_hash": "dbc5b5f412e55e9e80f63320458ae44ab9b62812",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [
+  1,
+  122,
+  200
+ ],
+ "built": "2026-11-07 06:15:25"
+}

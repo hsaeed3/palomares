@@ -1,0 +1,45 @@
+{
+ "type": "fence.privacy",
+ "cls": "fence",
+ "desc": "privacy panels on posts",
+ "source_hash": "b5c137acae8f6ae6b8174ad73d9b7ee66f8ec67b",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 164,
+ "tris": 82,
+ "frames": [
+  153,
+  154,
+  158,
+  180
+ ],
+ "built": "2026-11-07 06:14:41"
+}

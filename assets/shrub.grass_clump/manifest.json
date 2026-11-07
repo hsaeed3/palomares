@@ -1,0 +1,43 @@
+{
+ "type": "shrub.grass_clump",
+ "cls": "shrub",
+ "desc": "grass card clump",
+ "source_hash": "61aaf685221b53dd9ee08f566f452dd844d57e77",
+ "sources": [
+  "scripts/p5/assets.py",
+  "config/asset_catalog.yaml"
+ ],
+ "parts": [
+  {
+   "name": "ledger",
+   "mesh": "lod0_ledger.npz",
+   "texture": "_textures/ledger.dds",
+   "material": "ledger",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger.npz"
+   ],
+   "lod_out": 450.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 24,
+ "tris": 12,
+ "frames": [
+  166,
+  196
+ ],
+ "built": "2026-11-07 06:15:17"
+}
