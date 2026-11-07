@@ -31,8 +31,8 @@ const mats = sc.materials.map(m => { let t = null;
     // ksPerPixelMultiMap: diffuse * detail(uv * detailUVMultiplier) where diffuse alpha = 0 (terrain macro layer);
     // terrain is opaque: force alpha 1 (as 24_visual_render.js)
     mm.onBeforeCompile = sh => { sh.uniforms.tDet = {value: d}; sh.uniforms.dMul = {value: m.dmul};
-      sh.fragmentShader = 'uniform sampler2D tDet; uniform float dMul;\n' + sh.fragmentShader.replace('#include <map_fragment>',
-        '#include <map_fragment>\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);\n diffuseColor.a = 1.0;'); };
+      sh.fragmentShader = 'uniform sampler2D tDet; uniform float dMul;\\n' + sh.fragmentShader.replace('#include <map_fragment>',
+        '#include <map_fragment>\\n diffuseColor.rgb *= mix(texture2D(tDet, vMapUv * dMul).rgb, vec3(1.0), texture2D(map, vMapUv).a);\\n diffuseColor.a = 1.0;'); };
     mm.customProgramCacheKey = () => 'det' + m.dmul; }
   return mm; });
 for (const m of sc.meshes) { const g = new THREE.BufferGeometry(); let o = m.off;

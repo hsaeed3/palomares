@@ -1,25 +1,25 @@
 {
  "terrain_before": {
-  "pairs_near": 1662908,
-  "max_crease_deg": 152.75280049410497,
-  "p99_crease_deg": 27.146083459887098,
-  "n_crease_over": 21930,
-  "max_spike_m": 4.231134605382195,
-  "n_spike_over": 133592,
-  "max_slope_deg": 85.03843925077734
+  "pairs_near": 2325263,
+  "max_crease_deg": 148.20708649519062,
+  "p99_crease_deg": 23.85135191981641,
+  "n_crease_over": 19825,
+  "max_spike_m": 4.96090148686266,
+  "n_spike_over": 137724,
+  "max_slope_deg": 86.32610874954828
  },
  "terrain_after": {
-  "pairs_near": 1662908,
-  "max_crease_deg": 56.25925217898194,
-  "p99_crease_deg": 24.627734512578424,
-  "n_crease_over": 14462,
-  "max_spike_m": 0.12425563494890923,
-  "n_spike_over": 1,
-  "max_slope_deg": 78.37301404277302
+  "pairs_near": 2325263,
+  "max_crease_deg": 56.941418352416356,
+  "p99_crease_deg": 24.580963003285728,
+  "n_crease_over": 20594,
+  "max_spike_m": 0.2999921469013316,
+  "n_spike_over": 46158,
+  "max_slope_deg": 81.77534577580812
  },
- "open_edges_near": 9,
- "open_edges_near_filled": 9,
+ "open_edges_near": 8,
+ "open_edges_near_filled": 8,
  "holes_filled": 2,
- "tree_colliders": 4197,
- "walls_thickened": 127
+ "tree_colliders": 4203,
+ "walls_thickened": 132
 }

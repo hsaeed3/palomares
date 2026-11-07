@@ -25,6 +25,11 @@ import collide as CO
 
 NEAR, FAR = 30.0, 55.0
 CREASE_DEG, SPIKE = 25.0, 0.12
+# dev5: keep the LiDAR's near-road relief (cut-bank toes, mounds, ditches seen in the GoPro frames). Taubin runs at
+# RELIEF_W strength out to RELIEF_R m from the edge (ramping to full at NEAR); the crease clamp only acts within
+# CLAMP_R m (where a car actually runs off), and beyond it the spike clamp only removes outliers > SPIKE_FAR m.
+RELIEF_R, RELIEF_W = 15.0, 0.4
+CLAMP_R, SPIKE_FAR = 3.0, 0.30
 QA_R = 25.0
 TREE_R = 25.0
 
@@ -51,7 +56,8 @@ else:
     rk = {tuple(r) for r in np.round(np.concatenate([m["P"][:, :2] for m in road_ms]), 3)}
     pinned = np.array([tuple(r) in rk for r in uk])
     d_edge, _ = cKDTree(edge_xy).query(uk, workers=4)
-    w = np.clip((FAR - d_edge) / (FAR - NEAR), 0, 1); w[pinned] = 0
+    w = np.clip((FAR - d_edge) / (FAR - NEAR), 0, 1)
+    w = w * (RELIEF_W + (1 - RELIEF_W) * np.clip((d_edge - RELIEF_R) / (NEAR - RELIEF_R), 0, 1)); w[pinned] = 0
     print(f"terrain: {nU} unique vertices, {len(Tg)} tris, {pinned.sum()} pinned (road stitch)")
 
     e = np.r_[Tg[:, [0, 1]], Tg[:, [1, 2]], Tg[:, [2, 0]]]
@@ -98,7 +104,8 @@ else:
         bad = np.zeros(nU, bool)
         hit = ang > CREASE_DEG
         bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True
-        bad |= np.abs(L(z)) > SPIKE
+        bad &= d_edge < CLAMP_R
+        bad |= np.abs(L(z)) > np.where(d_edge < CLAMP_R, SPIKE, SPIKE_FAR)
         bad &= (d_edge < QA_R + 5) & ~pinned
         if not bad.any():
             break
