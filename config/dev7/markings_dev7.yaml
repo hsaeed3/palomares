@@ -1,0 +1,21 @@
+# dev7 road markings (scripts/p7g/21m_markings.py). The dev7 centerline paint_* (LiDAR intensity) columns are empty,
+# so the rules come from Mapillary (CC-BY-SA; 15k NCR images: double yellow + white edge lines + bike symbols on the
+# shoulder the whole canyon) and OSM lane / oneway tags, per road class:
+#   two_way  : centre double yellow (+ white edges where `edge: solid`)
+#   one_way  : (Mission Blvd carriageways) yellow left edge, white right edge, broken white lane lines (OSM lanes)
+#   none     : residential / service streets (no centre paint in the Mapillary frames of Niles side streets)
+default: none
+roads:
+  niles_canyon_road: {type: two_way, edge: solid}
+  niles_blvd: {type: two_way, edge: none}          # parking both sides, curbs
+  mission_boulevard: {type: one_way}
+  mission_boulevard_2: {type: one_way}
+  mission_boulevard_3: {type: one_way}
+  mission_boulevard_4: {type: one_way}
+  paloma_road: {type: two_way, edge: solid}        # SR-84 continues east
+  pleasanton_sunol_road: {type: two_way, edge: solid}
+  main_street: {type: two_way, edge: none}         # Sunol (crosswalks in Mapillary), built with the Main St cluster
+  old_canyon_road: {type: two_way, edge: none}
+  sullivan_underpass: {type: two_way, edge: none}
+# spans: [{road, s0, s1, center: double_yellow|none, edge_left: solid|none, edge_right: solid|none, note}]
+spans: []

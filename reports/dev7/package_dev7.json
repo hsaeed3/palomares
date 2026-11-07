@@ -2,7 +2,10 @@
  "version": "0.3.0-dev7",
  "palomares_src": "/home/user/palomares/build/palomares_road",
  "dev7_src": "/home/user/palomares/build_dev7/palomares_road",
- "fails": [],
+ "fails": [
+  "ffb_canyon: qa_ffb_safety: 10 fails, 0 warnings; wall tris 24494 (2283/km), 83 wall components -> reports/dev7/qa_ffb_package_canyon.json ",
+  "ffb_freeroam:  k (most recent call last):\n  File \"/home/user/palomares/scripts/p2/qa_ffb_safety.py\", line 188, in <module>\n    thick = float(np.ptp((Pc[:, :2] - Pc[:, :2].mean(0)) @ vt[1]))\n                                                           ~~^^^\nIndexError: index 1 is out of bounds for axis 0 with size 1\n"
+ ],
  "layouts": {
   "palomares": [
    "road_full",
@@ -22,11 +25,13 @@
    "canyon_rev_road",
    "canyon_rev_track",
    "canyon_road",
-   "canyon_track"
+   "canyon_track",
+   "freeroam",
+   "freeroam_track"
   ]
  },
  "ext_config_blocks": 1,
- "layout_count": 16,
+ "layout_count": 18,
  "qa": {
   "on_road_palomares": {
    "rc": 0,
@@ -41,9 +46,33 @@
    "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_niles_canyon_road.json"
   },
   "ffb_canyon": {
+   "rc": 1,
+   "last": "qa_ffb_safety: 10 fails, 0 warnings; wall tris 24494 (2283/km), 83 wall components -> reports/dev7/qa_ffb_package_canyon.json"
+  },
+  "on_road_freeroam_palomares": {
    "rc": 0,
-   "last": "qa_ffb_safety: 0 fails, 0 warnings; wall tris 23772 (2216/km), 77 wall components -> reports/dev7/qa_ffb_package_canyon.json"
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/qa_on_road.json"
+  },
+  "on_road_freeroam_niles_canyon_road": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_niles_canyon_road.json"
+  },
+  "on_road_freeroam_niles_blvd": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_niles_blvd.json"
+  },
+  "on_road_freeroam_main_street": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_main_street.json"
+  },
+  "on_road_freeroam_mission_boulevard": {
+   "rc": 0,
+   "last": "qa_on_road: 0 meshes with geometry on the asphalt -> /home/user/palomares/reports/dev7/qa_on_road_mission_boulevard.json"
+  },
+  "ffb_freeroam": {
+   "rc": 1,
+   "last": ""
   }
  },
- "secs": 69.4
+ "secs": 95.8
 }

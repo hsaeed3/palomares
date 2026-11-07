@@ -1,6 +1,17 @@
 {
- "ok": true,
- "fails": [],
+ "ok": false,
+ "fails": [
+  "palomares_niles_assets.kn5:1WALL_R_00 not watertight (6 open/non-manifold edges)",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=200",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=200",
+  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=200",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=202",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=202",
+  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=202",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall thinner than 0.5 m (0.00) at s=202",
+  "palomares_niles_assets.kn5:1WALL_R_00 wall lower than 1.2 m at s=202",
+  "palomares_niles_assets.kn5:1WALL_R_00 small-prop collider (0.0x0.0 m) at s=202"
+ ],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -178,8 +189,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 23772,
-  "wall_tris_per_km": 2216,
-  "wall_components": 77
+  "wall_tris_total": 24494,
+  "wall_tris_per_km": 2283,
+  "wall_components": 83
  }
 }
