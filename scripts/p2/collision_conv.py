@@ -20,6 +20,7 @@ thicken_away) are NOT shipped any more.  They are used only as a *description* o
   * output: one invisible mesh per side per 250 m chunk: 1WALL_L_NN / 1WALL_R_NN, plus 1WALL_bld_NN, 1WALL_start,
     1WALL_end.  visible=True, renderable=False, cast_shadows=False, material "invisible".
 """
+import collections
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 from scipy.sparse import coo_matrix
@@ -280,6 +281,28 @@ def _core(G, F, groups, trees, prefix, block):
                         UV=np.zeros((len(P), 2)), N=np.concatenate(Ns), **FLAGS)); nslab += 1
     # buildings: one closed box each, skipped when it would sit on the drivable surface
     PB, TB, NB, k = [], [], [], 0
+    # parts of one building (house + garage + porch boxes) overlap: merge overlapping footprints into ONE box so
+    # colliders never nest or intersect
+    for _pass in range(6):
+      if blds:
+          bb = np.array([[q[:, 0].min(), q[:, 1].min(), q[:, 0].max(), q[:, 1].max()] for q in blds])
+          par = list(range(len(blds)))
+          def fnd(i):
+              while par[i] != i:
+                  par[i] = par[par[i]]; i = par[i]
+              return i
+          kd = cKDTree((bb[:, :2] + bb[:, 2:]) / 2); rad = np.hypot(bb[:, 2] - bb[:, 0], bb[:, 3] - bb[:, 1]).max()
+          for i in range(len(blds)):
+              for j in kd.query_ball_point((bb[i, :2] + bb[i, 2:]) / 2, rad + 0.2):
+                  if j > i and bb[i, 0] < bb[j, 2] + 0.2 and bb[j, 0] < bb[i, 2] + 0.2 and bb[i, 1] < bb[j, 3] + 0.2 and bb[j, 1] < bb[i, 3] + 0.2:
+                      par[fnd(i)] = fnd(j)
+          cl_ = collections.defaultdict(list)
+          for i in range(len(blds)):
+              cl_[fnd(i)].append(blds[i])
+          stats["building_clusters"] = len(cl_)
+          n0 = len(blds); blds = [obb_box(np.concatenate(v))[0] for v in cl_.values()]
+          if len(blds) == n0:
+              break
     for Pc in blds:
         P, T, N = obb_box(Pc)
         s, d, j = F.sd(P[:, :2])

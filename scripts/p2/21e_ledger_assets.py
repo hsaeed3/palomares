@@ -234,7 +234,7 @@ def place_point(r, cat):
     xa, ya = point_axes(r, f)
     if m.meta.get("world"):     # dev6 measured houses: generator already wrote absolute local coords (scripts/p6/p6_houses.py)
         acc = ACC[chunk_of(f.s)]; acc.add(P, T, UV, N_)
-        if cat.get("collision") and f.off <= 15.0:
+        if cat.get("collision"):        # dev6: buildings collide at any distance
             for c in m.col:
                 if c[0] == "box":
                     _, cx, cy, L, Wd, z0, z1, yaw = c; fw = np.array([math.cos(yaw), math.sin(yaw)])
@@ -259,7 +259,7 @@ def place_point(r, cat):
         SIGNCHK.append(dict(s=float(f.s), key=m.meta["key"], nb=bool(nb), t=[float(f.t[0]), float(f.t[1])], face=[float(face[0]), float(face[1])],
                             cdir=p.get("_dir"), P=np.round(np.c_[W, Z][k:k + 4], 3).tolist(), UV=np.round(UV[k:k + 4], 5).tolist(),
                             N=np.round(Nw[k], 3).tolist(), rect=[], src="ledger", id=r["id"]))
-    lim = 15.0 if r["cls"] == "building" else FAR
+    lim = 1e9 if r["cls"] == "building" else FAR   # dev6: buildings collide at any distance
     if cat.get("collision") and f.off <= lim:
         for c in m.col:
             if c[0] == "box":
@@ -437,6 +437,7 @@ def tree_edits(rows):
 # ------------------------------------------------------------------ main
 import yaml
 CATY = {a["id"]: a for a in (yaml.safe_load(open(ROOT / "config/asset_catalog.yaml")) or {}).get("assets", [])} if (ROOT / "config/asset_catalog.yaml").exists() else {}
+NOCOL_PREFIX = ("tree.", "shrub", "hedge", "bush", "understorey", "veg")
 nbad = 0
 for r in ROWS:
     c = r.get("cls")
@@ -445,7 +446,8 @@ for r in ROWS:
     a = r.get("asset")
     if a not in AS.CATALOG:
         print(f"  WARN {r.get('id')}: asset {a!r} not in the catalog, skipped"); nbad += 1; continue
-    ce = dict(CATY.get(a, {}), collision=AS.CATALOG[a]["collide"])
+    # dev6 collision convention (docs/AC_CONVENTIONS.md): vegetation (trees, shrubs, hedges, bushes) never collides
+    ce = dict(CATY.get(a, {}), collision=AS.CATALOG[a]["collide"] and not str(a).startswith(NOCOL_PREFIX) and c not in ("shrub", "hedge", "tree"))
     try:
         if AS.CATALOG[a]["linear"]:
             place_linear(r, ce)

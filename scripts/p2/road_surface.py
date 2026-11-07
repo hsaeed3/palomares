@@ -160,13 +160,13 @@ def asphalt_atlas(base_rgb, base_nrm, base_rough, size=2048, seed=11):
             if r.random() < 0.35:
                 continue
             x = (0.5 + (dc + r.normal(0, 0.06)) / ATLAS_M) * size; y = r.uniform(0, size)
-            pts = _walk(r, x, y, math.pi / 2 + r.normal(0, 0.04), int(r.uniform(25, 80)), px * 0.08, 0.08)
-            _lines_wrapped(ds, pts, size, size, int(r.uniform(170, 235)), int(round(px * r.uniform(0.035, 0.06))))
+            pts = _walk(r, x, y, math.pi / 2 + r.normal(0, 0.02), int(r.uniform(25, 80)), px * 0.08, 0.025)
+            _lines_wrapped(ds, pts, size, size, int(r.uniform(140, 200)), int(round(px * r.uniform(0.025, 0.04))))
     for _ in range(3):
         y = r.uniform(0, size); x = (0.5 + r.uniform(-3, 3) / ATLAS_M) * size
-        pts = _walk(r, x, y, r.choice([0, math.pi]) + r.normal(0, 0.08), int(r.uniform(12, 30)), px * 0.08, 0.12)
-        _lines_wrapped(ds, pts, size, size, int(r.uniform(150, 220)), int(round(px * 0.04)))
-    seal = np.asarray(sl.filter(ImageFilter.GaussianBlur(1.2)), float)[..., None] / 255
+        pts = _walk(r, x, y, r.choice([0, math.pi]) + r.normal(0, 0.08), int(r.uniform(12, 30)), px * 0.08, 0.05)
+        _lines_wrapped(ds, pts, size, size, int(r.uniform(130, 190)), int(round(px * 0.03)))
+    seal = 0.8 * np.asarray(sl.filter(ImageFilter.GaussianBlur(1.0)), float)[..., None] / 255
     seal = seal * np.clip(0.85 + 0.3 * pnoise((size, size), 30, seed + 9), 0.5, 1.0)[..., None]
     col = col * (1 - seal) + seal * np.array([34.0, 34.0, 36.0])
     crack = np.maximum(crack, 0.6 * seal)

@@ -365,7 +365,11 @@ _tick("trees")
 srng = np.random.default_rng(11)
 SH_P, SH_T, SH_UV, SH_C, SH_N = [], [], [], [], []
 _rx, _ry, _rnx, _rny = road.x.tolist(), road.y.tolist(), road.nx.tolist(), road.ny.tolist()  # scalar fast path
-for i in bar(range(0, N, 2), "shrubs"):
+# dev6: ONE source for shrubs. When the scene ledger carries the LiDAR+NDVI measured understorey (shrub./hedge. rows in
+# data/scene/ledger_parts/p6_measured.jsonl, placed by 21e), these procedural clumps are skipped.
+_ledger_shrubs = any('"cls": "shrub"' in l for f in (ROOT / "data/scene/ledger_parts").glob("*.jsonl") for l in open(f))
+print("understorey: ledger measured shrubs present -> procedural clumps off" if _ledger_shrubs else "understorey: procedural clumps")
+for i in bar(range(0, N, 2) if not _ledger_shrubs else [], "shrubs"):
     for side in (-1, 1):
         for _ in range(2):
             off = 2.2 + 23.8 * srng.uniform() ** 1.8  # denser right at the road edge / on the banks
@@ -398,7 +402,7 @@ for i in bar(range(0, N, 2), "shrubs"):
             SH_P += cP; SH_N += cN; SH_UV += cUV; SH_T += [(t0 + b, t1 + b, t2 + b) for (t0, t1, t2) in cT]
             SH_C += [chunk_of(i)] * len(cP)
 SH_P = np.array(SH_P); SH_T = np.array(SH_T); SH_UV = np.array(SH_UV); SH_C = np.array(SH_C); SH_N = np.array(SH_N)
-for c in range(nchunks):
+for c in range(nchunks if len(SH_T) else 0):
     m = SH_C[SH_T[:, 0]] == c
     if not m.any():
         continue

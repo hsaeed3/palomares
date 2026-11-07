@@ -233,20 +233,27 @@ def runoff_clamp():
     te = np.r_[np.sort(Tg[:, [0, 1]], 1), np.sort(Tg[:, [1, 2]], 1), np.sort(Tg[:, [2, 0]], 1)]
     tid = np.tile(np.arange(len(Tg)), 3); o = np.lexsort((te[:, 1], te[:, 0])); te, tid = te[o], tid[o]
     same = (te[1:] == te[:-1]).all(1); a, b = tid[:-1][same], tid[1:][same]
+    act = ~(pin[Tg[a]].all(1) & pin[Tg[b]].all(1))
+    a, b = a[act], b[act]                                   # only pairs that can change
+    ut, tinv = np.unique(np.r_[a, b], return_inverse=True); la, lb = tinv[:len(a)], tinv[len(a):]
+    Ts = Tg[ut]
     lim = np.where(apron[a] | apron[b], APRON_CREASE, RUNOFF_CREASE)
     xy = ky
 
     def ang_(zz):
-        P3 = np.c_[xy, zz]; fn = np.cross(P3[Tg[:, 1]] - P3[Tg[:, 0]], P3[Tg[:, 2]] - P3[Tg[:, 0]])
-        fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
-        an = np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
+        P3 = np.c_[xy[Ts.ravel()], zz[Ts.ravel()]].reshape(-1, 3, 3)
+        fn = np.cross(P3[:, 1] - P3[:, 0], P3[:, 2] - P3[:, 0]); fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
+        an = np.degrees(np.arccos(np.clip((fn[la] * fn[lb]).sum(1), -1, 1)))
         # only folds a wheel can roll over: both faces drivable-ish (< 40 deg slope) or a fold-over (> 100 deg).
         # Cut-bank toes (flat -> steep face) are real terrain and stay (steep faces are walled where it matters).
-        flatish = (np.abs(fn[a, 2]) > np.cos(np.radians(40))) & (np.abs(fn[b, 2]) > np.cos(np.radians(40)))
+        flatish = (np.abs(fn[la, 2]) > np.cos(np.radians(40))) & (np.abs(fn[lb, 2]) > np.cos(np.radians(40)))
         return np.where(flatish | (an > 100), an, 0.0)
-    z0 = z.copy(); ang = ang_(z); before = float(ang.max()); nb = int((ang > lim).sum())
+    z0 = z.copy(); ang = ang_(z); before = float(ang.max()) if len(ang) else 0.0; nb = int((ang > lim).sum())
+    it = 0
     for it in range(1200):
         hit = ang > lim
+        if not hit.any():
+            break
         bad = np.zeros(nU, bool); bad[Tg[a[hit]].ravel()] = True; bad[Tg[b[hit]].ravel()] = True
         if it > 150:                                       # stubborn folds: widen to the 1-ring
             bad |= (A @ bad.astype(float)) > 0
@@ -256,8 +263,7 @@ def runoff_clamp():
         L = Dinv @ (A @ z) - z
         z[bad] += 0.6 * L[bad]
         ang = ang_(z)
-    act = ~(pin[Tg[a]].all(1) & pin[Tg[b]].all(1))
-    after = float(ang[act].max()) if act.any() else 0.0
+    after = float(ang.max()) if len(ang) else 0.0
     for m, o_ in zip(sel, off[:-1]):
         ii = inv[o_:o_ + len(m["P"])]
         if np.abs(z[ii] - m["P"][:, 2]).max() > 1e-6:
@@ -268,11 +274,16 @@ def runoff_clamp():
                 np.add.at(N, T[:, k], fn)
             m["N"] = N / (np.linalg.norm(N, axis=1, keepdims=True) + 1e-12)
     r = dict(max_crease_before=round(before, 1), n_over_before=nb, max_crease_after_unpinned=round(after, 1),
-             n_over_after=int(((ang > lim) & act).sum()), iters=it, max_dz=round(float(np.abs(z - z0).max()), 3),
+             n_over_after=int((ang > lim).sum()), iters=it, max_dz=round(float(np.abs(z - z0).max()), 3),
              mean_dz_moved=round(float(np.abs(z - z0)[np.abs(z - z0) > 1e-6].mean()) if (np.abs(z - z0) > 1e-6).any() else 0.0, 3))
-    bad_ = (ang > lim) & act
+    bad_ = ang > lim
     if bad_.any():
         dd = dr[Tg[a[bad_]]].min(1); pp = pin[Tg[a[bad_]]].sum(1) + pin[Tg[b[bad_]]].sum(1)
+        if __import__("os").environ.get("RC_DEBUG"):
+            for q in np.nonzero(bad_)[0][np.argsort(-ang[bad_])][:8]:
+                for t_ in (a[q], b[q]):
+                    P3 = np.c_[xy[Tg[t_]], z[Tg[t_]]]; e_ = np.linalg.norm(np.roll(P3, 1, 0) - P3, axis=1)
+                    print("   ", round(ang[q]), "tri", t_, "apron" if apron[t_] else "", "edges", e_.round(3), "dz", np.ptp(P3[:, 2]).round(3), "pins", pin[Tg[t_]].astype(int), "dr", dr[Tg[t_]].round(2), "xy", P3[0].round(1))
         r["left_by_dist"] = np.histogram(dd, [0, 0.9, 1.5, 2.5, 3.5, 4.5, 99])[0].tolist(); r["left_pins"] = np.bincount(pp, minlength=7).tolist()
     print(f"run-off crease clamp: {r}")
     return r
