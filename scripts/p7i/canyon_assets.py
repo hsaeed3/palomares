@@ -154,6 +154,19 @@ def rail_crossing(s):
     return min(c, key=lambda x: (abs(x["ncr_s"] - s), "bridge" not in x["kind"])) if c else None
 
 
+def snap_to_centreline(cx, ya):
+    """OSM road and refined centreline differ by up to ~8 m (s 2061): move the crossing point along the rail
+    direction ya until it lies on the refined centreline, so the span is centred on the real road"""
+    p = np.array([cx["x_local"], cx["y_local"]], float)
+    for _ in range(4):
+        _, j = KD.query(p); nrm = np.array([road.nx[j], road.ny[j]])
+        off = (p - [road.x[j], road.y[j]]) @ nrm; k = ya @ nrm
+        if abs(k) < 0.2 or abs(off) < 0.05:
+            break
+        p = p - ya * off / k
+    return float(p[0]), float(p[1])
+
+
 def axes(r, t, n, sg):
     if r["cls"] == "bridge" and r["asset"].startswith("bridge.rail") and (cx := rail_crossing(float(r["s"]))):
         th = math.radians(cx["rail_yaw_enu_deg"]); ya = np.array([math.cos(th), math.sin(th)])   # span (local y) along the rail
@@ -181,7 +194,7 @@ def place_point(r):
     else:
         xa, ya = axes(r, t, n, sg)
         if r["asset"].startswith("bridge.rail") and (cx := rail_crossing(float(r["s"]))):
-            x, y = cx["x_local"], cx["y_local"]                 # centre on the OSM rail / road crossing
+            x, y = snap_to_centreline(cx, ya)                   # OSM crossing slid along the rail onto the refined centreline
     for mat, mb in parts.items():
         P, T, UV, Nn = mb.arrays()
         if not len(P):
