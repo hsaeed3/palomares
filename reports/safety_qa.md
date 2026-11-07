@@ -38,7 +38,6 @@ track_full_rev kerb cross-sections (789): max height above base 55 mm (p95 45 mm
 | severity | kind | n |
 |---|---|---|
 | HIGH | kerb_ride | 49 |
-| HIGH | prop_on_road | 5 |
 | HIGH | unprotected_drop | 4 |
 | HIGH | vertical_accel | 10 |
 | MED | crest_unload | 132 |
@@ -101,11 +100,6 @@ track_full_rev kerb cross-sections (789): max height above base 55 mm (p95 45 mm
 | HIGH | kerb_ride | track_full_rev | 13766 | R | riding the kerb at 151 km/h: body accel 2.6 g, min tyre load 0%, step 0.3 cm |  |
 | HIGH | kerb_ride | track_full_rev | 14369 | L | riding the kerb at 168 km/h: body accel 2.1 g, min tyre load 0%, step 0.2 cm |  |
 | HIGH | kerb_ride | track_full_rev | 15199 | R | riding the kerb at 177 km/h: body accel 4.6 g, min tyre load 0%, step 0.4 cm |  |
-| HIGH | prop_on_road | palomares_roadside | 1800 | - | lg_09 has geometry over the asphalt below 4.5 m |  |
-| HIGH | prop_on_road | palomares_roadside | 1850 | - | lg_09 has geometry over the asphalt below 4.5 m |  |
-| HIGH | prop_on_road | palomares_roadside | 2850 | - | lg_14 has geometry over the asphalt below 4.5 m |  |
-| HIGH | prop_on_road | palomares_roadside | 7600 | - | lg_38 has geometry over the asphalt below 4.5 m |  |
-| HIGH | prop_on_road | palomares_roadside | 14700 | - | lg_73 has geometry over the asphalt below 4.5 m |  |
 | HIGH | unprotected_drop | track_* nb | 6708 | right | steep drop (10 m) on the outside at 151 km/h, line gap 0.40 m — no guardrail / event barrier |  |
 | HIGH | unprotected_drop | track_* nb | 12000 | right | steep drop (10 m) on the outside at 141 km/h, line gap 1.44 m — no guardrail / event barrier |  |
 | HIGH | unprotected_drop | track_* sb | 2849 | left | steep drop (12 m) on the outside at 138 km/h, line gap 0.49 m — no guardrail / event barrier |  |

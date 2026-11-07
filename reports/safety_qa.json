@@ -532,51 +532,6 @@
    "fix": ""
   },
   {
-   "layout": "palomares_roadside",
-   "s": 1800.0,
-   "side": "-",
-   "severity": "HIGH",
-   "kind": "prop_on_road",
-   "msg": "lg_09 has geometry over the asphalt below 4.5 m",
-   "fix": ""
-  },
-  {
-   "layout": "palomares_roadside",
-   "s": 1850.0,
-   "side": "-",
-   "severity": "HIGH",
-   "kind": "prop_on_road",
-   "msg": "lg_09 has geometry over the asphalt below 4.5 m",
-   "fix": ""
-  },
-  {
-   "layout": "palomares_roadside",
-   "s": 2850.0,
-   "side": "-",
-   "severity": "HIGH",
-   "kind": "prop_on_road",
-   "msg": "lg_14 has geometry over the asphalt below 4.5 m",
-   "fix": ""
-  },
-  {
-   "layout": "palomares_roadside",
-   "s": 7600.0,
-   "side": "-",
-   "severity": "HIGH",
-   "kind": "prop_on_road",
-   "msg": "lg_38 has geometry over the asphalt below 4.5 m",
-   "fix": ""
-  },
-  {
-   "layout": "palomares_roadside",
-   "s": 14700.0,
-   "side": "-",
-   "severity": "HIGH",
-   "kind": "prop_on_road",
-   "msg": "lg_73 has geometry over the asphalt below 4.5 m",
-   "fix": ""
-  },
-  {
    "layout": "track_* nb",
    "s": 6708.0,
    "side": "right",
@@ -3457,5 +3412,5 @@
    "fix": "covered by 21b event barrier"
   }
  ],
- "runtime_s": 196.77409386634827
+ "runtime_s": 196.52445554733276
 }

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0-dev5
+
+**SAFETY WARNING: do not drive this build with strong force feedback or a direct-drive wheel.** Collisions with
+trees, barriers, fences and terrain can produce violent force-feedback spikes and pass-through. dev6 rebuilds all
+collision geometry to standard AC conventions. Until then, lower FFB gain substantially or use a gamepad.
+
+- New GoPro-registered workflow: segmentation of all 219 frames, per-frame camera poses (44 pinned by eye),
+  a scene ledger (634 roadside objects) and a fast photo-vs-render scorer.
+- 118-type procedural asset catalog (bridges, houses, fences, signs, shrubs, props) placed from the ledger.
+- Near-road terrain now follows LiDAR (banks rise at the edge, small mounds kept); frame-3 yard flattened.
+- Solid white edge lines everywhere (LiDAR had missed long stretches).
+- Litmus: 8 fixed frames rendered from the registered poses (reports/litmus.html).
+- Known: one ranch-wire fence at s 9303-9345 has a collision gap; ~a dozen frames have weak poses
+  (26, 62-64, 66, 70-72, 76, 106, 138, 178, 180, 186, 187); many assets and textures still differ from the photos.
+
 ## 0.1.0 — first drivable build (Phase 2)
 - Layouts `road_summit` and `track_summit`: SR-84 → summit (s = 20 m → 7392 m, 7372 m timed), road modelled 250 m past the finish as run-off.
 - Road surface swept along the LiDAR-refined centerline: 13 vertices across, 1 m along, measured width and per-side crossfall (lightly smoothed), ≤4 mm long-wave surface noise.
