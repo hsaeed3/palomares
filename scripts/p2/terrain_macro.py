@@ -56,16 +56,20 @@ def macro_map(mc, ortho, pal, lab, rgb, tile_gray, seed):
     L = lab(o.clip(0, 255))
     Lo = L[..., 0]
     # open (bright, sunlit dry grass in the summer ortho) -> spring grass; dark (canopy / shade) -> leaf litter
-    w = np.clip((Lo - np.median(Lo)) / 18 + 0.55, 0, 1)
+    # dev6 (user: "grass still golden-brown summer colour"): the corridor is mostly dark in the summer ortho, so the
+    # old 0.55 bias gave a khaki macro (G-R ~ +4). Spring (GoPro): open ground is lush green, and even under the
+    # canopy new grass / green understorey covers the leaf litter -> bias to grass, and green the litter target 40 %.
+    w = np.clip((Lo - np.median(Lo)) / 18 + 0.78, 0, 1)
     w = gaussian_filter(w, 2.0)
     gp, lp = np.array(pal["grass"]["lab_mean"]), np.array(pal["litter"]["lab_mean"])
+    lp = 0.6 * lp + 0.4 * gp
     tgt = lp[None, None] * (1 - w[..., None]) + gp[None, None] * w[..., None]
     px = mc["size"] / N
     tgt[..., 0] += 0.25 * (Lo - Lo.mean())
     tgt[..., 0] += _fbm(r, N, ((6 / px, 2.5), (20 / px, 2.5), (60 / px, 3.0)))
     tgt[..., 1] += _fbm(r, N, ((30 / px, 2.5), (90 / px, 2.0)))      # green <-> olive drift
     tgt[..., 2] += _fbm(r, N, ((25 / px, 2.5), (80 / px, 2.5)))      # fresh <-> yellowing
-    c0 = macro_ref(pal, rgb)
+    c0 = rgb((0.25 * lp + 0.75 * gp)[None, None]).astype(np.float32)[0, 0] / 255   # damp toward spring green, not khaki
     c = rgb(tgt).astype(np.float32) / 255
     c = c0 + MACRO_VAR * (c - c0)                                        # ortho + fbm colour variation, damped
     c[..., 2] = np.minimum(c[..., 2], 0.5 * (c[..., 0] + c[..., 1]))   # spring: never bluer than neutral

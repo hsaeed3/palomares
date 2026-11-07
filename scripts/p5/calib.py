@@ -165,6 +165,6 @@ def overlay(f, p, K, path, extra=None):
     for k, col in (("y", (255, 0, 0)), ("wl", (0, 255, 255)), ("e", (255, 0, 255))):
         X = P[k]; near = np.abs(X[:, 0] - eye[0]) + np.abs(X[:, 1] - eye[1]) < 200
         q, z = project(p, K, X[near], F["w"], F["h"]); q = q[(z > 2) & (z < 150)] / 2
-        for x, y in q:
-            d.point((x, y), fill=col)
+        for x, y in q[:: max(len(q) // 3000, 1)]:
+            d.ellipse((x - 1.5, y - 1.5, x + 1.5, y + 1.5), fill=col)
     im.save(path, quality=88)

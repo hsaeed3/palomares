@@ -318,6 +318,13 @@ species = np.where((th_ > 24) & (ratio < 0.3), "euc", np.where(ratio > 0.42, "oa
 _zl = np.array([np.percentile(tz_[np.abs(ts_ - s) < 300], 25) if np.any(np.abs(ts_ - s) < 300) else -1e9 for s in ts_])
 _h = (np.arange(len(tr)) * 2654435761) % 1000 / 1000.0  # stable per-tree hash
 species = np.where(((species == "euc") & (_h < 0.5)) | ((species != "oak") & (tz_ < _zl) & (_h < 0.6)), "syc", species)
+# dev6: conifers (Monterey cypress / pine): tall narrow crowns that are not euc-tall, ~1/3 of them; the cypress row of
+# GoPro frames 210-211 (s 14700-15000) is all conifer. Winter-bare sycamores of frames 206-208 (s 14380-14700):
+# every non-oak there is bare.
+species = species.astype("<U8")
+_con = ((ratio < 0.30) & (th_ > 12) & (th_ <= 24) & (_h > 0.66)) | ((ts_ > 14700) & (ts_ < 15000) & (species != "oak") & (th_ > 8))
+species = np.where(_con, "con", species)
+species = np.where((ts_ > 14380) & (ts_ < 14700) & (species != "oak") & (species != "con"), "bare", species)
 TREE_NEAR = 18.0   # m past the road edge: full prototype (twigs, all clusters); beyond: simpler LOD prototype
 PROTOS = {(sp, v, lod): T3.make_proto(sp, v, lod) for sp in T3.SPECIES for v in range(T3.N_PROTO) for lod in (0, 1)}
 trng = np.random.default_rng(21)
@@ -615,13 +622,14 @@ if SURF_SPANS:   # observed condition spans override the evenly-spaced survey he
             _scr[_m] = 0.0; _spa[_m] = 0.0
 # survey-driven decals (scripts/p2/road_surface.py): meandering crack-seal ribbons (3-6 cm, soft edges), feathered rounded-rectangle
 # patches in 3 tones, alligator crazing only where the survey says severe; none on fresh pavement (road.fresh + fresh_overlay spans).
-# One alpha-blended mesh per chunk (road_decal), lifts 1.6-2.0 cm, no depth write.
+# dev6: only the surveyed patches remain as geometry (crack seal / crazing baked into the asphalt atlas); one alpha-TESTED
+# mesh per chunk (road_decal, ksPerPixelAT), 1.0 cm lift, depth write on.
 _NOTES = RS.load_surface_notes(ROOT)
 _DEC, _dst = RS.build_decals(road, surf_pt, grid_tris, CHUNK, nchunks, SURF_SPANS, _SURV0, _NOTES, seed=1234)
 for c in sorted(_DEC):
     _P, _T, _UV = _DEC[c]
     assert len(_P) < 65000, f"decal chunk {c}: {len(_P)} verts"
-    add("lines_road", f"decal_{c:02d}", "road_decal", _P, _T, _UV, cast_shadows=False, transparent=True)
+    add("lines_road", f"decal_{c:02d}", "road_decal", _P, _T, _UV, cast_shadows=False)
 print("decals", _dst, "verts", sum(len(v[0]) for v in _DEC.values()))
 
 _tick("markings + decals")

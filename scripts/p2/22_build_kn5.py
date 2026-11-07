@@ -6,6 +6,7 @@ sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
 from geom import ROOT, DER, BUILD, CFG
 from geom import build_lock; build_lock()  # one build/ writer at a time
 from kn5 import Material, Mesh, Dummy, write_kn5, ac_from_local
+import foliage_photo as _FP  # dev6: photographic CC0 leaf-cluster atlas
 
 VERSION = (ROOT / "VERSION").read_text().strip()
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
@@ -408,7 +409,7 @@ T = {
     "shrub.png": png(shrub_atlas()),
     "backdrop_d.png": png(backdrop_img),
     # 3D trees (21 + trees3d.py): leaf-cluster atlas + bark strips. foliage() card atlases kept for reference, unused
-    "tree_leaves.png": png(leaf_atlas()), "tree_trunk.png": png(trunk_atlas()),
+    "tree_leaves.png": png(_FP.leaf_atlas()), "tree_trunk.png": png(trunk_atlas()),
     **dict(zip(("kerb_d.png", "kerb_n.png"), map(png, kerb_tex()))), "runoff_d.png": png(__import__("race_tex").runoff_tex()),
     "guardrail.png": png(guardrail_tex()), "black.png": png(solid((0, 0, 0))),
     **road_surface_tex(),
@@ -458,9 +459,10 @@ MATS = {
     "paint_yellow": Material("paint_yellow", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow.png"}, alpha_tested=True),
     "paint_yellow_dbl": Material("paint_yellow_dbl", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.12, "ksSpecularEXP": 25.0}, {"txDiffuse": "paint_yellow_dbl.png"}, alpha_tested=True),
     "rpm_yellow": Material("rpm_yellow", "ksPerPixel", {**BASE, "ksSpecular": 0.5, "ksSpecularEXP": 60.0}, {"txDiffuse": "rpm.png"}),
-    # crack-seal / patches / crazing: alpha-BLENDED (blend=1, depth mode 1 = no depth write) so edges carry a soft texture-space alpha
-    # ramp; non-physical (not 1ROAD), low specular, and NOT in CSP LINES_MATERIALS
-    "road_decal": Material("road_decal", "ksPerPixelAlpha", {**BASE, "ksSpecular": 0.05, "ksSpecularEXP": 18.0}, {"txDiffuse": "road_decal.png"}, blend=1, alpha_tested=False, depth=1),
+    # surveyed asphalt patches (dev6): alpha-TESTED like the paint (ksPerPixelAT, opaque blend, depth write on), 1.0 cm lift,
+    # low specular, non-physical (not 1ROAD) and NOT in CSP LINES_MATERIALS. Crack seal / crazing are baked into asphalt_d.
+    # (dev5 used an alpha-blended no-depth-write "ksPerPixelAlpha" layer: sorted/z-fought and showed whole quads in AC)
+    "road_decal": Material("road_decal", "ksPerPixelAT", {**BASE, "ksAlphaRef": 0.5, "ksSpecular": 0.02, "ksSpecularEXP": 12.0}, {"txDiffuse": "road_decal.png"}, alpha_tested=True),
     "kerb": Material("kerb", "ksPerPixelNM", {**BASE, "ksSpecular": 0.18, "ksSpecularEXP": 24.0}, {"txDiffuse": "kerb_d.png", "txNormal": "kerb_n.png"}),
     "runoff": Material("runoff", "ksPerPixel", {**BASE, "ksSpecular": 0.08, "ksSpecularEXP": 15.0}, {"txDiffuse": "runoff_d.png"}),
     "guardrail": Material("guardrail", "ksPerPixel", {**BASE, "ksSpecular": 0.4, "ksSpecularEXP": 40.0}, {"txDiffuse": "guardrail.png"}),
@@ -518,22 +520,41 @@ MATS["rock"] = Material("rock", "ksPerPixelMultiMap", {**_TMP, "detailUVMultipli
                         {"txDiffuse": "ter_rock_d.png", "txNormal": "ter_flat_n.png", "txMaps": "ter_maps.png", "txDetail": "ter_rock_det.png"})
 _ortho = _TM.Ortho(DER / "ortho_r100.tif", json.load(open(ROOT / "config/origin.json")))
 _tile = _TM.tile_gray_from(jpg_tex("Ground048", "Color"))
-_macro = {}
-for _m in G.get("terrain", []):
-    mc = _m.get("macro")
-    if not mc:
-        continue
-    c = mc["chunk"]
-    if c not in _macro:
-        _macro[c] = f"ter_macro_{c:02d}.png"
-        T[_macro[c]] = png(_TM.macro_map(mc, _ortho, PAL, _lab, _rgb, _tile, seed=1000 + c))
+# dev6 (NVIDIA DXCache bloat, docs/AC_CONVENTIONS.md "Materials / shader cache"): dev5 had one material + one PNG per
+# (class, chunk) = 189 terrain materials.  Now every chunk uses the same window size S, its macro map is a 1024 cell
+# of a 4096 atlas (16 chunks per atlas), so the terrain needs (3 classes x n_atlas) + rock materials.
+_terr = [_m for _m in G.get("terrain", []) if _m.get("macro")]
+_S = max([_m["macro"]["size"] for _m in _terr] or [1.0])
+_PAD = 2.0 / _TM.MACRO_PX      # cell padding (UV fraction of a cell) against mip bleed
+_cells = {}
+for _m in _terr:
+    mc = _m["macro"]; c = mc["chunk"]
+    if c not in _cells:
+        _cells[c] = _TM.macro_map(dict(mc, size=_S), _ortho, PAL, _lab, _rgb, _tile, seed=1000 + c)
+    k = sorted({_mm["macro"]["chunk"] for _mm in _terr}).index(c)
+    a_, cell = divmod(k, 16); cx, cy = cell % 4, cell // 4
+    uv = np.asarray(_m["UV"], float) * (mc["size"] / _S)            # same window size for every chunk
+    _m["UV"] = np.c_[(cx + _PAD + uv[:, 0] * (1 - 2 * _PAD)) / 4, (cy + _PAD + uv[:, 1] * (1 - 2 * _PAD)) / 4]
+    _m["material"] = f"ter_{mc['cls']}_a{a_}"
+    _m["_atlas"] = (a_, cx, cy, c)
     if _m["material"] not in MATS:
         MATS[_m["material"]] = Material(_m["material"], "ksPerPixelMultiMap",
-                                        {**_TMP, "detailUVMultiplier": round(mc["size"] / _TM.DETAIL_PERIOD[mc["cls"]], 3)},
-                                        {"txDiffuse": _macro[c], "txNormal": "ter_flat_n.png", "txMaps": "ter_maps.png",
+                                        {**_TMP, "detailUVMultiplier": round(4 * _S / (1 - 2 * _PAD) / _TM.DETAIL_PERIOD[mc["cls"]], 3)},
+                                        {"txDiffuse": f"ter_macro_a{a_}.png", "txNormal": "ter_flat_n.png", "txMaps": "ter_maps.png",
                                          "txDetail": f"ter_{mc['cls']}_det.png"})
+_atl = {}
+for _m in _terr:
+    a_, cx, cy, c = _m["_atlas"]
+    _atl.setdefault(a_, {})[c] = (cx, cy)
+from PIL import Image as _Im
+_macro = {}
+for a_, cells in _atl.items():
+    W = _TM.MACRO_PX; img = _Im.new("RGBA", (4 * W, 4 * W), (90, 90, 60, 255))
+    for c, (cx, cy) in cells.items():
+        img.paste(_cells[c].convert("RGBA").resize((W, W)), (cx * W, cy * W))
+    T[f"ter_macro_a{a_}.png"] = png(img); _macro[a_] = 1
 del _ortho
-print(f"  terrain macro: {len(_macro)} chunk maps, {sum(k.startswith('ter_') for k in MATS)} terrain materials")
+print(f"  terrain macro: {len(_cells)} chunk cells in {len(_macro)} atlases, window {_S:.0f} m, {sum(k.startswith('ter_') for k in MATS)} terrain materials")
 
 
 def merge_by(meshes, key):

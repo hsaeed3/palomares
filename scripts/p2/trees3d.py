@@ -10,11 +10,14 @@ tree_leaves.png = 4x4 cells, row = species (bottom-up in v), column = cluster va
 import math
 import numpy as np
 
-SPECIES = ("oak", "bay", "euc", "syc")
-STRIP = {"oak": 0, "bay": 1, "euc": 2, "syc": 3}
-LEAFROW = {"oak": 0, "bay": 1, "euc": 2, "syc": 3}
-H0 = {"oak": 12.0, "bay": 13.0, "euc": 28.0, "syc": 17.0}   # prototype height (m)
-R0 = {"oak": 8.0, "bay": 4.5, "euc": 5.0, "syc": 6.0}       # prototype crown radius (m)
+SPECIES = ("oak", "bay", "euc", "syc", "con", "bare")
+STRIP = {"oak": 0, "bay": 1, "euc": 2, "syc": 3, "con": 0, "bare": 3}
+# dev6: leaf atlas = photographic Poly Haven leaf clusters (scripts/p2/foliage_photo.py), 4 cols x ROWS rows
+ROWS = 5
+LEAFROW = {"oak": 0, "bay": 1, "euc": 2, "syc": 3, "con": 4, "bare": 3}
+LEAFCOLS = {"syc": (0, 1), "bare": (2, 3)}                  # syc row: cols 0-1 leafy, 2-3 bare winter twigs
+H0 = {"oak": 12.0, "bay": 13.0, "euc": 28.0, "syc": 17.0, "con": 18.0, "bare": 17.0}   # prototype height (m)
+R0 = {"oak": 8.0, "bay": 4.5, "euc": 5.0, "syc": 6.0, "con": 3.5, "bare": 6.0}       # prototype crown radius (m)
 N_PROTO = 4
 _UP = np.array([0.0, 0.0, 1.0])
 
@@ -58,7 +61,7 @@ class _B:
         for (su, sv, uu, vv) in ((-1, -1, 0, 0), (1, -1, 1, 0), (1, 1, 1, 1), (-1, 1, 0, 1)):
             p = c + u * su * h + v * sv * h
             self.lP.append(p); self.lN.append(_unit(_unit(p - centre) + np.array([0, 0, 0.25])))
-            self.lUV.append(((col + 0.02 + 0.96 * uu) / 4.0, (row + 0.02 + 0.96 * vv) / 4.0))
+            self.lUV.append(((col + 0.02 + 0.96 * uu) / 4.0, (row + 0.02 + 0.96 * vv) / ROWS))
         self.lT += [(b0, b0 + 1, b0 + 2), (b0, b0 + 2, b0 + 3), (b0, b0 + 2, b0 + 1), (b0, b0 + 3, b0 + 2)]
 
 
@@ -66,16 +69,22 @@ class _B:
 # droop (oak limbs arc out and down), leaf clusters (near, far LOD), cluster size (m, near; far x FAR_LS),
 # trunk radius / height, crown volume: base / top as fraction of H, edge droop (fraction of H), lobe irregularity
 _SP = {
-    "oak": dict(limbs=(4, 6), ang=(50, 74), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(64, 16), ls=(2.6, 4.0), r0=0.034,
+    "oak": dict(limbs=(4, 6), ang=(50, 74), trunk=0.22, depth=2, kids=(2, 3), spread=0.65, droop=0.10, nl=(170, 40), ls=(1.3, 2.0), r0=0.034,
                 cz=(0.26, 1.0), cdroop=0.20, lobe=0.18),
-    "bay": dict(limbs=(4, 6), ang=(8, 26), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(56, 14), ls=(2.4, 3.7), r0=0.014,
+    "bay": dict(limbs=(4, 6), ang=(8, 26), trunk=0.0, depth=2, kids=(2, 3), spread=0.45, droop=0.0, nl=(140, 34), ls=(1.2, 1.9), r0=0.014,
                 cz=(0.05, 1.0), cdroop=0.04, lobe=0.12),
-    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(36, 10), ls=(2.3, 3.5), r0=0.020,
+    "euc": dict(limbs=(1, 1), ang=(0, 4), trunk=0.45, depth=2, kids=(2, 3), spread=0.55, droop=0.03, nl=(100, 26), ls=(1.2, 1.9), r0=0.020,
                 cz=(0.34, 1.0), cdroop=0.06, lobe=0.22),
-    "syc": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(46, 12), ls=(2.4, 3.8), r0=0.022,
+    "syc": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(120, 30), ls=(1.3, 2.0), r0=0.022,
                 cz=(0.22, 1.0), cdroop=0.08, lobe=0.18),
+    # Monterey cypress / pine: straight leader, short near-horizontal limbs, conical crown of dense sprays
+    "con": dict(limbs=(8, 11), ang=(70, 95), trunk=0.85, depth=1, kids=(2, 2), spread=0.5, droop=0.05, nl=(130, 32), ls=(1.2, 1.8), r0=0.024,
+                cz=(0.06, 1.0), cdroop=0.0, lobe=0.10, cone=True),
+    # winter (bare) sycamore: the syc skeleton, its outer twigs visible as twig cards, fewer of them
+    "bare": dict(limbs=(2, 4), ang=(15, 35), trunk=0.28, depth=2, kids=(2, 2), spread=0.6, droop=0.0, nl=(60, 18), ls=(1.8, 2.6), r0=0.022,
+                cz=(0.22, 1.0), cdroop=0.0, lobe=0.18),
 }
-FAR_LS = 2.0
+FAR_LS = 1.9
 PE = 2.6  # crown superellipsoid exponent (fuller, rounder-shouldered crowns than an ellipsoid)
 
 
@@ -103,7 +112,7 @@ def make_proto(kind, seed, lod=0):
             if kind in ("syc", "euc", "bay") and depth <= 1:
                 d = _unit(d + _UP * 0.08)
             p = p + d * ln / nsub; pts.append(p.copy()); rr.append(rad * (1 - 0.45 * (i + 1) / nsub))
-        if depth <= 1:  # small branches are hidden inside the leaf clusters: no tubes
+        if depth <= 1 or kind == "bare":  # small branches are hidden inside the leaf clusters: no tubes (bare: shown)
             if not lod or kind == "bay":  # far LOD: trunk only (bay: its stems), limbs hidden in the big clusters
                 tubes.append((np.array(pts), rr, (4 if not lod else 3)))
             ends.append(p.copy())
@@ -161,6 +170,9 @@ def make_proto(kind, seed, lod=0):
         e = (rho ** PE + abs(rel[2] / rz) ** PE) ** (1 / PE); lim = shell(az, el) * 0.95
         if e > lim:
             rel = rel * lim / e; rho *= lim / e
+        if S.get("cone"):  # conical crown: radius shrinks linearly to the top
+            t = np.clip((centre[2] + rel[2] - z0c) / (z1c - z0c), 0, 1)
+            rel[:2] *= max(0.08, 1.05 * (1 - t))
         q = centre + rel
         q[2] -= S["cdroop"] * H * min(rho, 1.2) ** 3
         return q
@@ -182,6 +194,8 @@ def make_proto(kind, seed, lod=0):
         # tint: outer / upper clusters fresh lime (col 3), interior / lower darker old leaves (col 0)
         sc_ = 0.55 * frac + 0.35 * (rel[2] / rz + 1) / 2 + r.normal(0, 0.18)
         col = int(np.clip(sc_ * 4 - 0.6, 0, 3))
+        if kind in LEAFCOLS:
+            col = LEAFCOLS[kind][int(col >= 2)]
         sz_ = r.uniform(*S["ls"]) * (FAR_LS if lod else 1.0) * (0.8 + 0.3 * frac)
         B.leaf(q, sz_, centre, row, col, r, outward=bool(r.uniform() < 0.68))
 

@@ -110,3 +110,17 @@ light comes through hills, NVIDIA warnings on load. Findings and the rules now e
   (< 0.5 m) or short (< 1.2 m) walls, open (non-watertight) wall shells, overlapping colliders, creases > 30 deg on a
   wall's road face, tiny/degenerate/sliver physics tris, NaN, bad normals/tangents, creases on 1ROAD/1KERB,
   terrain creases near the edge, PNG/NPOT/unmipped textures, non-shadow-casting terrain, unknown physics keys.
+
+### Materials / shader cache (dev6; user report: CSP "GPU drivers are accessing 8192 MB of their caches ... NVIDIA\DXCache")
+- Only our track triggers it, so the cause is in our content. The driver caches one compiled pipeline per
+  shader permutation x material state. CSP builds per-material variants (shader replacements, GrassFX/RainFX
+  lists), so variants grow with the material count. dev5 had **191 materials in palomares_terrain.kn5 alone**:
+  one per (terrain class, 250 m chunk), each with its own 1024 PNG macro map, 71 PNG textures, a 4096x5256 NPOT
+  backdrop and no mipmaps anywhere. Community tracks have tens of materials.
+- dev6: the chunk macro maps are 1024 cells of 4096 atlases (16 chunks per atlas, one shared window size), so
+  the terrain uses 3 classes x 4 atlases + rock = 13 materials. Every texture is DDS (DXT1 or DXT5) with a full
+  mip chain, power-of-two and at most 4096. Tangents are orthogonal to the normals, and normals are unit and finite.
+- Gate (qa_ffb_safety.py) per layout: <= 80 materials, <= 80 unique shader/texture combinations, <= 64 textures,
+  <= 400 MB of textures, and the number of CSP shader replacements is reported.
+- Not verifiable here: whether the cache warning disappears. The user should clear `%LOCALAPPDATA%\NVIDIA\DXCache`
+  once (Ctrl+X on that CSP screen) before testing dev6.

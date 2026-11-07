@@ -172,6 +172,35 @@ for i, A in enumerate(wb):
                 fail(f"overlapping colliders {A[0]} / {B[0]} at s={max(A[1], B[1]):.0f}")
 if nov > 20:
     fail(f"... {nov} overlapping collider pairs in total")
+# materials / shader permutations / textures per layout (NVIDIA DXCache bloat: dev5 had 189 terrain materials,
+# 71 terrain PNGs; a typical community track has tens of materials)
+MAX_MATS, MAX_COMBOS, MAX_TEX, MAX_TEX_MB = 80, 80, 64, 400
+lay_stats = {}
+for ini in sorted(TRACK.glob("models_*.ini")):
+    lay = ini.stem[len("models_"):]
+    files = [l.split("=", 1)[1].strip() for l in ini.read_text().splitlines() if l.startswith("FILE=")]
+    mats, combos, tex, tb, shaders = set(), set(), set(), 0, set()
+    for f in files:
+        k = K.get(f)
+        if k is None:
+            fail(f"{lay}: {f} missing"); continue
+        for mt in k["materials"]:
+            mats.add(mt["name"]); shaders.add(mt["shader"])
+            combos.add((mt["shader"], mt["alpha_tested"], mt["blend"], tuple(sorted(mt["textures"].items()))))
+        for n, b in k["textures"].items():
+            if n not in tex:
+                tex.add(n); tb += len(b)
+    ext = TRACK / "extension" / "ext_config.ini"
+    nrep = len(re.findall(r"^\[SHADER_REPLACEMENT", ext.read_text(), re.M)) if ext.exists() else 0
+    lay_stats[lay] = dict(materials=len(mats), shader_texture_combos=len(combos), shaders=sorted(shaders), textures=len(tex),
+                          texture_mb=round(tb / 1e6, 1), csp_shader_replacements=nrep)
+    if len(mats) > MAX_MATS or len(combos) > MAX_COMBOS or len(tex) > MAX_TEX or tb / 1e6 > MAX_TEX_MB:
+        fail(f"{lay}: {len(mats)} materials / {len(combos)} shader-texture combos / {len(tex)} textures / {tb / 1e6:.0f} MB "
+             f"(limits {MAX_MATS}/{MAX_COMBOS}/{MAX_TEX}/{MAX_TEX_MB} MB)")
+stats["layouts"] = lay_stats
+for lay, v in lay_stats.items():
+    print(f"  {lay:18s} materials {v['materials']:3d}  combos {v['shader_texture_combos']:3d}  textures {v['textures']:3d} "
+          f"({v['texture_mb']} MB)  shaders {','.join(v['shaders'])}  CSP replacements {v['csp_shader_replacements']}")
 km = float(F.s[-1]) / 1000
 stats["wall_tris_total"] = n_wall_tris; stats["wall_tris_per_km"] = round(n_wall_tris / km)
 stats["wall_components"] = len(wall_boxes)
@@ -179,7 +208,7 @@ if n_wall_tris / km > MAX_WALL_TRIS_PER_KM:
     fail(f"{n_wall_tris / km:.0f} wall tris per km > {MAX_WALL_TRIS_PER_KM} (physics meshes too high-poly)")
 
 out = dict(ok=not fails, fails=fails, warnings=warns[:200], n_warnings=len(warns),
-           stats={k: (dict(sorted(v.items(), key=lambda kv: -kv[1])[:10]) if isinstance(v, dict) else v) for k, v in stats.items()})
+           stats={k: (dict(sorted(v.items(), key=lambda kv: -kv[1])[:10]) if isinstance(v, dict) and k != "layouts" else v) for k, v in stats.items()})
 (ROOT / "reports").mkdir(exist_ok=True)
 json.dump(out, open(ROOT / "reports" / "qa_ffb_safety.json", "w"), indent=1)
 for s in fails[:60]:
