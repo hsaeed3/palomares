@@ -1,0 +1,24 @@
+{
+ "near_zone_m": 60.0,
+ "far_zone_m": [
+  60.0,
+  150.0
+ ],
+ "far_trees": 12226,
+ "species": {
+  "bay": 6424,
+  "con": 1140,
+  "euc": 584,
+  "oak": 4078
+ },
+ "height_m": [
+  0.1,
+  16.2,
+  159.8
+ ],
+ "draw_calls": 80,
+ "far_chunk_m": 500.0,
+ "lod_out_m": 1400.0,
+ "near_lidar_trees": 9067,
+ "seconds": 9.0
+}
