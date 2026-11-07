@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 4866,
+   "px_render": 5003,
    "px_seg": 144
   },
   "vegetation_tree": {
@@ -64,7 +64,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 17479,
+   "px_render": 17198,
    "px_seg": 0
   },
   "trunk": {
@@ -92,7 +92,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 388,
+   "px_render": 389,
    "px_seg": 1069
   },
   "guardrail": {
@@ -103,10 +103,10 @@
    "px_seg": 11
   },
   "fence": {
-   "iou": 0.1897,
-   "precision": 0.3215,
-   "recall": 0.3164,
-   "px_render": 8180,
+   "iou": 0.2053,
+   "precision": 0.3404,
+   "recall": 0.3408,
+   "px_render": 8323,
    "px_seg": 8312
   },
   "wall": {
@@ -175,10 +175,10 @@
    "px_seg": 29082
   },
   "terrain": {
-   "iou": 0.0133,
-   "precision": 0.0246,
+   "iou": 0.0132,
+   "precision": 0.0243,
    "recall": 0.028,
-   "px_render": 12376,
+   "px_render": 12513,
    "px_seg": 10846
   },
   "tree": {
@@ -192,7 +192,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 17479,
+   "px_render": 17198,
    "px_seg": 0
   },
   "trunk": {
@@ -203,10 +203,10 @@
    "px_seg": 61
   },
   "vegetation": {
-   "iou": 0.6543,
-   "precision": 0.7187,
+   "iou": 0.6562,
+   "precision": 0.721,
    "recall": 0.8796,
-   "px_render": 88299,
+   "px_render": 88018,
    "px_seg": 72150
   },
   "sign": {
@@ -220,14 +220,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 388,
+   "px_render": 389,
    "px_seg": 1069
   },
   "barrier": {
-   "iou": 0.1882,
-   "precision": 0.3213,
-   "recall": 0.3124,
-   "px_render": 8186,
+   "iou": 0.2036,
+   "precision": 0.3401,
+   "recall": 0.3365,
+   "px_render": 8329,
    "px_seg": 8420
   },
   "building": {
@@ -256,8 +256,8 @@
   {
    "id": "fence_s0035",
    "cls": "fence",
-   "px": 8180,
-   "match": 0.322,
+   "px": 8323,
+   "match": 0.34,
    "found": false,
    "occluded": false
   },
@@ -280,7 +280,7 @@
   {
    "id": "post_s0080",
    "cls": "post",
-   "px": 8,
+   "px": 9,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -318,7 +318,7 @@
    "occluded": false
   }
  ],
- "score": 0.4759,
- "t_render_s": 0.775,
- "t_total_s": 0.884
+ "score": 0.4763,
+ "t_render_s": 1.056,
+ "t_total_s": 1.195
 }

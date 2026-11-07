@@ -5,10 +5,10 @@
  "seg": "seg",
  "classes": {
   "sky": {
-   "iou": 0.5301,
-   "precision": 0.5606,
-   "recall": 0.9069,
-   "px_render": 37346,
+   "iou": 0.5306,
+   "precision": 0.5609,
+   "recall": 0.9077,
+   "px_render": 37365,
    "px_seg": 23088
   },
   "road": {
@@ -50,21 +50,21 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 11303,
+   "px_render": 9623,
    "px_seg": 0
   },
   "vegetation_tree": {
-   "iou": 0.5902,
-   "precision": 0.9452,
+   "iou": 0.5892,
+   "precision": 0.9426,
    "recall": 0.6111,
-   "px_render": 61261,
+   "px_render": 61430,
    "px_seg": 94747
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8581,
+   "px_render": 10572,
    "px_seg": 0
   },
   "trunk": {
@@ -85,7 +85,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 842,
+   "px_render": 845,
    "px_seg": 503
   },
   "guardrail": {
@@ -96,10 +96,10 @@
    "px_seg": 23
   },
   "fence": {
-   "iou": 0.1471,
-   "precision": 0.2534,
-   "recall": 0.2596,
-   "px_render": 9474,
+   "iou": 0.2587,
+   "precision": 0.4174,
+   "recall": 0.4048,
+   "px_render": 8970,
    "px_seg": 9249
   },
   "building": {
@@ -120,16 +120,16 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 3,
+   "px_render": 5,
    "px_seg": 0
   }
  },
  "groups": {
   "sky": {
-   "iou": 0.5301,
-   "precision": 0.5606,
-   "recall": 0.9069,
-   "px_render": 37346,
+   "iou": 0.5306,
+   "precision": 0.5609,
+   "recall": 0.9077,
+   "px_render": 37365,
    "px_seg": 23088
   },
   "road": {
@@ -161,24 +161,24 @@
    "px_seg": 17285
   },
   "terrain": {
-   "iou": 0.0068,
-   "precision": 0.007,
+   "iou": 0.0077,
+   "precision": 0.008,
    "recall": 0.1454,
-   "px_render": 13766,
+   "px_render": 12086,
    "px_seg": 667
   },
   "tree": {
-   "iou": 0.5902,
-   "precision": 0.9452,
+   "iou": 0.5892,
+   "precision": 0.9426,
    "recall": 0.6111,
-   "px_render": 61261,
+   "px_render": 61430,
    "px_seg": 94747
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8581,
+   "px_render": 10572,
    "px_seg": 0
   },
   "trunk": {
@@ -189,10 +189,10 @@
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.664,
-   "precision": 0.917,
-   "recall": 0.7064,
-   "px_render": 72991,
+   "iou": 0.6832,
+   "precision": 0.9176,
+   "recall": 0.7279,
+   "px_render": 75151,
    "px_seg": 94747
   },
   "sign": {
@@ -206,14 +206,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 842,
+   "px_render": 845,
    "px_seg": 503
   },
   "barrier": {
-   "iou": 0.1469,
-   "precision": 0.2534,
-   "recall": 0.259,
-   "px_render": 9474,
+   "iou": 0.2582,
+   "precision": 0.4174,
+   "recall": 0.4038,
+   "px_render": 8970,
    "px_seg": 9272
   },
   "building": {
@@ -227,7 +227,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 16,
+   "px_render": 18,
    "px_seg": 0
   }
  },
@@ -235,23 +235,23 @@
   {
    "id": "fence_s0045",
    "cls": "fence",
-   "px": 8186,
-   "match": 0.279,
-   "found": false,
+   "px": 7777,
+   "match": 0.477,
+   "found": true,
    "occluded": false
   },
   {
    "id": "fence_s0046",
    "cls": "fence",
-   "px": 1254,
-   "match": 0.092,
+   "px": 1169,
+   "match": 0.028,
    "found": false,
    "occluded": false
   },
   {
    "id": "pole_s0055",
    "cls": "pole",
-   "px": 742,
+   "px": 743,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -275,7 +275,7 @@
   {
    "id": "fence_s0047",
    "cls": "fence",
-   "px": 18,
+   "px": 12,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -307,7 +307,7 @@
   {
    "id": "fence_s0048",
    "cls": "fence",
-   "px": 16,
+   "px": 12,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -337,6 +337,14 @@
    "occluded": true
   },
   {
+   "id": "post_f154a",
+   "cls": "post",
+   "px": 2,
+   "match": 0.0,
+   "found": false,
+   "occluded": true
+  },
+  {
    "id": "pole_s0058",
    "cls": "pole",
    "px": 2,
@@ -345,7 +353,7 @@
    "occluded": true
   }
  ],
- "score": 0.4853,
- "t_render_s": 0.676,
- "t_total_s": 0.773
+ "score": 0.4905,
+ "t_render_s": 0.946,
+ "t_total_s": 1.121
 }

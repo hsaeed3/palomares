@@ -5,10 +5,10 @@
  "seg": "seg",
  "classes": {
   "sky": {
-   "iou": 0.431,
-   "precision": 0.568,
+   "iou": 0.4312,
+   "precision": 0.5682,
    "recall": 0.6413,
-   "px_render": 13210,
+   "px_render": 13204,
    "px_seg": 11700
   },
   "road": {
@@ -43,14 +43,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 185,
+   "px_render": 186,
    "px_seg": 0
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 23814,
+   "px_render": 23821,
    "px_seg": 0
   },
   "rock_cut": {
@@ -61,24 +61,24 @@
    "px_seg": 20204
   },
   "vegetation_tree": {
-   "iou": 0.6796,
-   "precision": 0.9107,
-   "recall": 0.7281,
-   "px_render": 78355,
+   "iou": 0.6794,
+   "precision": 0.9098,
+   "recall": 0.7284,
+   "px_render": 78468,
    "px_seg": 98013
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8563,
+   "px_render": 8455,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 7464,
+   "px_render": 7462,
    "px_seg": 0
   },
   "sign_face": {
@@ -92,14 +92,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 418,
+   "px_render": 385,
    "px_seg": 1836
   },
   "fence": {
-   "iou": 0.0129,
-   "precision": 0.165,
-   "recall": 0.0138,
-   "px_render": 618,
+   "iou": 0.0091,
+   "precision": 0.1115,
+   "recall": 0.0098,
+   "px_render": 646,
    "px_seg": 7370
   },
   "wall": {
@@ -112,10 +112,10 @@
  },
  "groups": {
   "sky": {
-   "iou": 0.431,
-   "precision": 0.568,
+   "iou": 0.4312,
+   "precision": 0.5682,
    "recall": 0.6413,
-   "px_render": 13210,
+   "px_render": 13204,
    "px_seg": 11700
   },
   "road": {
@@ -147,38 +147,38 @@
    "px_seg": 6052
   },
   "terrain": {
-   "iou": 0.3366,
-   "precision": 0.4639,
+   "iou": 0.3365,
+   "precision": 0.4637,
    "recall": 0.551,
-   "px_render": 23999,
+   "px_render": 24007,
    "px_seg": 20204
   },
   "tree": {
-   "iou": 0.6796,
-   "precision": 0.9107,
-   "recall": 0.7281,
-   "px_render": 78355,
+   "iou": 0.6794,
+   "precision": 0.9098,
+   "recall": 0.7284,
+   "px_render": 78468,
    "px_seg": 98013
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 8563,
+   "px_render": 8455,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 7464,
+   "px_render": 7462,
    "px_seg": 0
   },
   "vegetation": {
-   "iou": 0.7771,
-   "precision": 0.8914,
-   "recall": 0.8583,
-   "px_render": 94382,
+   "iou": 0.7776,
+   "precision": 0.8917,
+   "recall": 0.8587,
+   "px_render": 94385,
    "px_seg": 98013
   },
   "sign": {
@@ -192,14 +192,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 418,
+   "px_render": 385,
    "px_seg": 1836
   },
   "barrier": {
-   "iou": 0.0129,
-   "precision": 0.1632,
-   "recall": 0.0138,
-   "px_render": 625,
+   "iou": 0.0091,
+   "precision": 0.1103,
+   "recall": 0.0098,
+   "px_render": 653,
    "px_seg": 7370
   }
  },
@@ -207,15 +207,15 @@
   {
    "id": "fence_s0105",
    "cls": "fence",
-   "px": 605,
-   "match": 0.169,
+   "px": 637,
+   "match": 0.113,
    "found": false,
    "occluded": false
   },
   {
    "id": "pole_s0086",
    "cls": "pole",
-   "px": 377,
+   "px": 340,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -223,7 +223,7 @@
   {
    "id": "pole_s0089",
    "cls": "pole",
-   "px": 36,
+   "px": 40,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -231,7 +231,7 @@
   {
    "id": "fence_s0103",
    "cls": "fence",
-   "px": 13,
+   "px": 9,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -253,7 +253,7 @@
    "occluded": true
   }
  ],
- "score": 0.5474,
- "t_render_s": 1.905,
- "t_total_s": 2.086
+ "score": 0.5475,
+ "t_render_s": 1.697,
+ "t_total_s": 1.832
 }
