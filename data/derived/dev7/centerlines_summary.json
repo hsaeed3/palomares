@@ -19,16 +19,16 @@
  "niles_canyon_road": {
   "length_m": 10729.0,
   "width_p5_50_95": [
-   5.83,
-   7.75,
+   5.84,
+   7.74,
    13.33
   ],
   "z_min": 24.34,
-  "z_max": 77.36,
-  "max_abs_grade": 0.6528,
+  "z_max": 76.88,
+  "max_abs_grade": 0.3033,
   "snap_p50_p95": [
-   0.86,
-   2.92
+   0.85,
+   2.93
   ],
   "bridges": [
    [
@@ -38,7 +38,7 @@
    ],
    [
     10570.0,
-    10664.0,
+    10665.0,
     "lidar"
    ],
    [
@@ -47,7 +47,7 @@
     "interp"
    ]
   ],
-  "under_rail_m": 92
+  "under_rail_m": 81
  },
  "2nd_street": {
   "length_m": 951.0,

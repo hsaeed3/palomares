@@ -53,7 +53,7 @@ locomotive_common,100,0,0
 locomotive_common,200,0,0
 main_street,0,0,0
 main_street,100,0,0
-main_street,200,123,2023
+main_street,200,121,2023
 main_street,300,35,2023
 main_street,400,0,0
 main_street,500,0,0
@@ -153,8 +153,8 @@ niles_canyon_road,4600,89,2023
 niles_canyon_road,4700,142,2023
 niles_canyon_road,4800,114,2023
 niles_canyon_road,4900,179,2023
-niles_canyon_road,5000,186,2023
-niles_canyon_road,5100,156,2023
+niles_canyon_road,5000,187,2023
+niles_canyon_road,5100,155,2023
 niles_canyon_road,5200,181,2023
 niles_canyon_road,5300,149,2023
 niles_canyon_road,5400,166,2023
@@ -180,8 +180,8 @@ niles_canyon_road,7300,195,2023
 niles_canyon_road,7400,190,2023
 niles_canyon_road,7500,178,2023
 niles_canyon_road,7600,196,2023
-niles_canyon_road,7700,206,2023
-niles_canyon_road,7800,196,2023
+niles_canyon_road,7700,205,2023
+niles_canyon_road,7800,197,2023
 niles_canyon_road,7900,137,2023
 niles_canyon_road,8000,168,2023
 niles_canyon_road,8100,209,2023
@@ -193,8 +193,8 @@ niles_canyon_road,8600,191,2023
 niles_canyon_road,8700,176,2023
 niles_canyon_road,8800,145,2023
 niles_canyon_road,8900,224,2023
-niles_canyon_road,9000,195,2023
-niles_canyon_road,9100,170,2023
+niles_canyon_road,9000,194,2023
+niles_canyon_road,9100,171,2023
 niles_canyon_road,9200,190,2023
 niles_canyon_road,9300,154,2023
 niles_canyon_road,9400,205,2023
@@ -203,8 +203,8 @@ niles_canyon_road,9600,151,2023
 niles_canyon_road,9700,124,2023
 niles_canyon_road,9800,118,2023
 niles_canyon_road,9900,118,2023
-niles_canyon_road,10000,173,2023
-niles_canyon_road,10100,68,2023
+niles_canyon_road,10000,172,2023
+niles_canyon_road,10100,71,2023
 niles_canyon_road,10200,28,2018
 niles_canyon_road,10300,27,2018
 niles_canyon_road,10400,24,2018

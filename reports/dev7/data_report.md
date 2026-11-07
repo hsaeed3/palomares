@@ -18,7 +18,7 @@ The Sunol "traffic light / stop sign" is the all-way STOP at Niles Canyon Rd / M
 
 | Road | Role | Length (m) | Width p5/p50/p95 (m) | z min-max (m) | max abs grade | snap vs OSM p50/p95 (m) |
 |---|---|---|---|---|---|---|
-| niles_canyon_road | canyon | 10729 | 5.8/7.8/13.3 | 24.3-77.4 | 65.3% | 0.9/2.9 |
+| niles_canyon_road | canyon | 10729 | 5.8/7.7/13.3 | 24.3-76.9 | 30.3% | 0.8/2.9 |
 | niles_blvd | town | 1082 | 6.8/8.9/10.2 | 21.7-25.7 | 5.1% | 0.6/2.9 |
 | 3rd_street | town | 963 | 7.8/9.1/10.2 | 21.1-24.2 | 2.6% | 1.1/2.2 |
 | 2nd_street | town | 951 | 7.5/8.8/9.9 | 20.0-25.3 | 2.1% | 0.8/2.7 |
@@ -66,14 +66,14 @@ Mission Blvd is split into its OSM carriageway pieces (`mission_boulevard`, `_2`
 ![profile](profile_niles_canyon_road.png)
 
 - Length 10729 m. Start z 24.3 m, end z 75.6 m, net +51.3 m.
-- Highest point 77.4 m at s=10096 m; lowest 24.3 m at s=0 m. The canyon climbs gently eastward along Alameda Creek, with no summit in the hill-climb sense. The "climb" is the creek gradient.
-- Grade (25 m mean): p50 +0.40%, p5 -1.47%, p95 +2.77%, max abs 22.4% (s=10109 m). Share of length > 4%: 2.5%.
-- Total ascent 86 m, descent 35 m (W to E, on the smoothed profile).
-- Width p5/p50/p95 5.8/7.8/13.3 m. Curvature: tightest radius 22 m.
-- **rail_underpass** (3): 2072 Niles Canyon Railway (DSM 6.84 m over road); 3565 Niles Canyon Railway (DSM 6.78 m over road); 10109 UP Oakland Subdivision (DSM 5.12 m over road)
+- Highest point 76.9 m at s=10279 m; lowest 24.3 m at s=0 m. The canyon climbs gently eastward along Alameda Creek, with no summit in the hill-climb sense. The "climb" is the creek gradient.
+- Grade (25 m mean): p50 +0.40%, p5 -1.47%, p95 +2.72%, max abs 11.4% (s=4395 m). Share of length > 4%: 2.1%.
+- Total ascent 81 m, descent 30 m (W to E, on the smoothed profile).
+- Width p5/p50/p95 5.8/7.7/13.3 m. Curvature: tightest radius 21 m.
+- **rail_underpass** (3): 2072 Niles Canyon Railway (DSM 6.84 m over road); 3565 Niles Canyon Railway (DSM 6.78 m over road); 10110 UP Oakland Subdivision (DSM 5.86 m over road)
 - **road_over_rail** (1): 5948 UP Oakland Subdivision
 - **bridge_osm** (4): 4242-4387 Niles Canyon Road; 5884-6187 Niles Canyon Road; 10075-10097; 10569-10664 Niles Canyon Road
-- **bridge_lidar_class17** (4): 4338-4355; 5887-6192; 10087-10098; 10568-10665
+- **bridge_lidar_class17** (3): 4338-4355; 5887-6192; 10569-10665
 - **culvert_candidate** (8): 1552; 2445; 2492; 3430 Stonybrook Creek; 4919; 5660; 6719; 7548
 - **stream_crossing_bridge** (3): 4337 Alameda Creek; 6072 Alameda Creek; 10625 Arroyo de la Laguna
 - **traffic_signals** (1): 16
@@ -84,14 +84,14 @@ Mission Blvd is split into its OSM carriageway pieces (`mission_boulevard`, `_2`
 | kind | count |
 |---|---|
 | barrier_osm | 8 |
-| bridge_lidar_class17 | 6 |
+| bridge_lidar_class17 | 5 |
 | bridge_osm | 6 |
 | canyon_high_point | 1 |
 | canyon_low_point | 1 |
 | crossing | 59 |
 | culvert_candidate | 15 |
 | curb | 149 |
-| guardrail_candidate | 43 |
+| guardrail_candidate | 44 |
 | junction | 144 |
 | level_crossing | 4 |
 | lidar_gap | 10 |
@@ -100,11 +100,11 @@ Mission Blvd is split into its OSM carriageway pieces (`mission_boulevard`, `_2`
 | rail_tunnel_under_road | 1 |
 | rail_underpass | 9 |
 | road_over_rail | 1 |
-| steep_drop | 16 |
+| steep_drop | 17 |
 | stop | 24 |
 | stream_crossing_bridge | 5 |
 | traffic_signals | 4 |
-| wall_or_steep_cut | 30 |
+| wall_or_steep_cut | 28 |
 
 The railway underpass(es) on SR-84 are where the Niles Canyon Railway / UP lines cross over the road. `dsm_over_road_m` is the first-surface height above the road surface, which is the top of the structure, not the clearance. The flashing warning signs before the underpass are not in OSM and LiDAR can't resolve them. Package M must place them from Mapillary.
 
@@ -131,7 +131,7 @@ Ground-return gaps longer than 5 m on a centerline (gap length = run with no ret
 | mission_boulevard_2 | 158-161 | 8.3 | 1.00 | 0 | dense canopy |
 | niles_blvd | 858-865 | 16.4 | 1.00 | 0 | dense canopy |
 | niles_canyon_road | 4332-4343 | 16.1 | 0.20 | 79 | bridge/structure |
-| niles_canyon_road | 10099-10114 | 28.4 | 0.51 | 0 | dense canopy |
+| niles_canyon_road | 10090-10114 | 43.1 | 0.50 | 0 | structure/vehicle/water or overpass |
 | sullivan_underpass | 82-94 | 24.1 | 0.80 | 0 | dense canopy |
 
 ## Mapillary coverage (index only, CC-BY-SA 4.0)
@@ -140,9 +140,9 @@ Ground-return gaps longer than 5 m on a centerline (gap length = run with no ret
 
 | road | images | 100 m bins covered | newest |
 |---|---|---|---|
-| niles_canyon_road | 15310 | 108/108 | 2023 |
+| niles_canyon_road | 15312 | 108/108 | 2023 |
 | mission_boulevard_2 | 458 | 7/7 | 2023 |
-| main_street | 158 | 2/7 | 2023 |
+| main_street | 156 | 2/7 | 2023 |
 | niles_blvd | 85 | 6/11 | 2018 |
 | mission_boulevard | 76 | 8/8 | 2023 |
 | pleasanton_sunol_road | 52 | 2/2 | 2018 |
