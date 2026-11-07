@@ -246,7 +246,10 @@ def place_point(r, cat):
                 fw = xa * math.cos(yaw) + ya * math.sin(yaw)
                 X = f.x + cx * xa[0] + cy * ya[0]; Y = f.y + cx * xa[1] + cy * ya[1]
                 acc.col.box(X, Y, fw, L, Wd, f.z + z0, f.z + z1)
-                need_col(r["asset"], [(X, Y)], [f.z], f.s, f.s)
+                # QA sample: the face nearest the road (a box centre deep inside a building is > 0.3 m from any face)
+                fl = np.array([-fw[1], fw[0]]); cand = [np.array([X, Y]) + v for v in (fw * L / 2, -fw * L / 2, fl * Wd / 2, -fl * Wd / 2)]
+                q = min(cand, key=lambda c_: abs(station_lateral(np.array([[*c_, 0.0]]))[1][0]))
+                need_col(r["asset"], [tuple(q)], [f.z], f.s, f.s)
     elif cat.get("collision"):
         SKIP[r["cls"]] += 1
     if r["cls"] == "pole" and "wire_z" in m.meta:
@@ -280,8 +283,8 @@ def place_linear(r, cat):
             Q = np.c_[np.clip(a if ln.sgn > 0 else ln.L - a, -0.5, ln.L + 0.5), np.full(len(a), yl), np.zeros(len(a))]
             Wq, _ = ln.map(Q, np.zeros_like(Q))
             # extend 0.5 m past the ends along the tangent (map() clips a to [0, L])
-            for e_, sg in ((0, -1), (-1, 1)):
-                tdir = ln.t[0 if e_ == 0 else -1] * sg
+            for e_ in (0, -1):           # Wq is in NB order on both sides (Q undoes map()'s R-side reversal)
+                tdir = -ln.t[0] if e_ == 0 else ln.t[-1]
                 Wq[e_, :2] = Wq[e_, :2] + tdir * 0.5
             sq, _, _ = station_lateral(Wq); chq = np.array([chunk_of(v) for v in sq])
             for cc in np.unique(chq):

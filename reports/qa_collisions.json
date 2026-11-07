@@ -1,118 +1,268 @@
 {
  "kn5_files": 17,
- "physics_meshes": 130,
- "collision_triangles": 215402,
- "solid_items": 509,
- "uncovered_items": 1,
+ "physics_meshes": 190,
+ "collision_triangles": 217386,
+ "solid_items": 478,
+ "uncovered_items": 15,
  "per_type": {
   "guardrail_candidate": {
    "items": 12,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "guardrail_wbeam": {
-   "items": 50,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
   "road_sign": {
-   "items": 107,
+   "items": 40,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "utility_pole": {
-   "items": 89,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "chainlink_fence": {
-   "items": 27,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "gate_estate": {
-   "items": 12,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "mailbox_cluster": {
-   "items": 24,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "ranch_wire_fence": {
-   "items": 34,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "retaining_wall_stone": {
-   "items": 6,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "wood_board_fence": {
-   "items": 15,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "retaining_wall_timber": {
+  "sign.street_name": {
    "items": 3,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "rockfall_mesh": {
+  "pole.utility_wood": {
+   "items": 78,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.round_prohibition": {
    "items": 1,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "culvert_headwall": {
+  "sign.back_rect": {
    "items": 3,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "bridge_parapet_concrete": {
+  "fence.chainlink": {
+   "items": 22,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.curve_left": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate.chainlink_swing": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.warning_blank": {
+   "items": 14,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.back_diamond": {
+   "items": 7,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "mailbox.cluster": {
+   "items": 20,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.ranch_wire": {
+   "items": 30,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "guardrail.wbeam_wood": {
+   "items": 13,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wall.retaining_stone": {
+   "items": 6,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.board_3rail": {
+   "items": 14,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.speed_limit": {
    "items": 4,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "wood_split_rail_fence": {
-   "items": 21,
+  "guardrail.wbeam_steel": {
+   "items": 29,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wall.timber_crib": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wall.rockfall_mesh": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "culvert.headwall": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "bridge.parapet_concrete": {
+   "items": 4,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.text_private": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.blank_white": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.mirror": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.hump": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.split_rail": {
+   "items": 17,
    "uncovered": 1,
    "uncovered_m": 0.5
   },
-  "white_rail_fence": {
-   "items": 18,
+  "fence.white_rail": {
+   "items": 14,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "bridge_parapet_stone": {
-   "items": 5,
+  "mailbox.single": {
+   "items": 4,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "cypress_row": {
-   "items": 57,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "solid_wood_privacy_fence": {
-   "items": 5,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "retaining_wall_concrete": {
+  "fence.iron_picket": {
    "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "building": {
-   "items": 14,
+  "gate.white_rail": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate.estate_brick_iron": {
+   "items": 6,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.chevron_left": {
+   "items": 9,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.stop": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "bridge.parapet_stone": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.object_marker": {
+   "items": 4,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.mile_marker": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.narrow_bridge": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate.pipe_ranch": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "hedge.cypress_row": {
+   "items": 59,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.privacy": {
+   "items": 4,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wall.retaining_concrete": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.lattice": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building.ranch_house": {
+   "items": 8,
+   "uncovered": 8,
+   "uncovered_m": 4.0
+  },
+  "building.shed": {
+   "items": 2,
+   "uncovered": 2,
+   "uncovered_m": 1.0
+  },
+  "building.house_two_storey": {
+   "items": 1,
+   "uncovered": 1,
+   "uncovered_m": 0.5
+  },
+  "building.barn": {
+   "items": 2,
+   "uncovered": 2,
+   "uncovered_m": 1.0
+  },
+  "sign.chevron_right": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building.water_tank": {
+   "items": 1,
+   "uncovered": 1,
+   "uncovered_m": 0.5
+  },
+  "sign.arrow_left": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.curve_right": {
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   }
  },
  "failures": [
-  "1 solid items lack collision within 0.3 m / 1.25 m height"
+  "15 solid items lack collision within 0.3 m / 1.25 m height"
  ],
  "tolerance_m": 0.3,
  "min_height_m": 1.25
