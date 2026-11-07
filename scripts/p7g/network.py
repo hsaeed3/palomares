@@ -101,8 +101,24 @@ def cluster_polygon(name):
     'sunol' = 140 m around the NCR east end (Main St / Pleasanton-Sunol Rd / Paloma Rd all-way stop)."""
     import shapely.geometry as sg
     if name == "niles":
+        # scope town polygon, widened by 30 m around every street that enters it (Mission Blvd runs along its edge:
+        # the bare polygon cut its carriageways lengthwise)
+        if "niles" in _CLU_CACHE:
+            return _CLU_CACHE["niles"]
+        import shapely
         sc = json.load(open(DEV7 / "scope.geojson"))
-        return _to_local(sg.shape([f for f in sc["features"] if f["properties"]["area"] == "town"][0]["geometry"]))
+        town = _to_local(sg.shape([f for f in sc["features"] if f["properties"]["area"] == "town"][0]["geometry"]))
+        parts = [town]
+        for n in json.load(open(DEV7 / "centerlines_summary.json")):
+            if n in ("niles_canyon_road", "palomares_road"):
+                continue
+            c = load_centerline(None, DEV7 / f"centerline_{n}.csv")
+            ins = shapely.contains_xy(town.buffer(5), c["x_local"], c["y_local"])
+            if ins.sum() >= 5:
+                idx = np.flatnonzero(ins)
+                parts.append(sg.LineString(np.c_[c["x_local"], c["y_local"]][idx.min():idx.max() + 1]).buffer(30.0))
+        _CLU_CACHE["niles"] = shapely.union_all(parts).buffer(0)
+        return _CLU_CACHE["niles"]
     if name == "sunol":
         c = load_centerline(None, DEV7 / "centerline_niles_canyon_road.csv")
         return sg.Point(c["x_local"][-1], c["y_local"][-1]).buffer(140.0, 32)
@@ -110,3 +126,4 @@ def cluster_polygon(name):
 
 
 CLUSTERS = ("niles", "sunol")
+_CLU_CACHE = {}

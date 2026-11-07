@@ -28,40 +28,40 @@
  "n_warnings": 0,
  "stats": {
   "grass_banktoe_crease_max_deg": {
-   "1GRASS_ncr_rock_03": 92.9,
+   "1GRASS_ncr_rock_03": 98.0,
    "1GRASS_ncr_rock_04": 92.1,
    "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_bank_10": 87.6,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_rock_01": 86.2,
+   "1GRASS_ncr_rock_02": 85.4,
    "1GRASS_ncr_bank_06": 85.0,
    "1GRASS_ncr_bank_03": 84.6,
-   "1GRASS_ncr_bank_04": 83.9,
-   "1GRASS_ncr_bank_02": 81.1
+   "1GRASS_ncr_bank_04": 84.2,
+   "1GRASS_ncr_bank_02": 81.6,
+   "1GRASS_ncr_bank_01": 81.4,
+   "1GRASS_ncr_bank_09": 79.8
   },
   "grass_crease_raw_max_deg": {
-   "1GRASS_ncr_rock_03": 160.5,
+   "1GRASS_ncr_rock_03": 160.6,
+   "1GRASS_ncr_rock_04": 128.0,
    "1GRASS_ncr_rock_06": 118.5,
-   "1GRASS_ncr_rock_00": 118.2,
-   "1GRASS_ncr_rock_04": 107.2,
+   "1GRASS_ncr_rock_00": 116.8,
    "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_bank_10": 87.6,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_rock_01": 86.2,
+   "1GRASS_ncr_rock_02": 85.4,
    "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_03": 84.6
+   "1GRASS_ncr_bank_03": 84.6,
+   "1GRASS_ncr_bank_04": 84.2,
+   "1GRASS_ncr_bank_02": 81.6
   },
   "grass_crease_max_deg": {
+   "1GRASS_ncr_ground_06": 39.9,
    "1GRASS_ncr_ground_05": 39.8,
-   "1GRASS_ncr_bank_02": 39.0,
+   "1GRASS_ncr_bank_02": 39.1,
    "1GRASS_ncr_ground_03": 39.0,
-   "1GRASS_ncr_ground_08": 39.0,
-   "1GRASS_ncr_bank_05": 38.1,
-   "1GRASS_ncr_ground_09": 37.2,
+   "1GRASS_ncr_ground_09": 37.7,
+   "1GRASS_ncr_ground_10": 37.5,
    "1GRASS_ncr_ground_01": 36.5,
    "1GRASS_ncr_bank_03": 36.3,
-   "1GRASS_ncr_ground_10": 36.3,
-   "1GRASS_ncr_bank_01": 36.0
+   "1GRASS_ncr_bank_01": 35.9,
+   "1GRASS_ncr_bank_05": 35.9
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_ncr_road_asphalt_00": 0.0,
@@ -76,7 +76,7 @@
    "1ROAD_ncr_road_asphalt_08": 0.0
   },
   "road_crease_raw_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 10.5,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,
@@ -88,7 +88,7 @@
    "1ROAD_ncr_road_asphalt_08": 2.2
   },
   "road_crease_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 8.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 10.5,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,

@@ -36,6 +36,7 @@ def tick(k): TIM[k] = round(time.time() - T0 - sum(TIM.values()), 1)
 CL = A.cluster; TAG = {"niles": "town", "sunol": "sunol"}[CL]
 BLEND, CURB_MIN, CURB_W, SIDEWALK_W = 16.0, 0.08, 0.30, 1.9
 POLY = NW.cluster_polygon(CL); shapely.prepare(POLY)
+GAP_M = 12.0
 DTM = Raster(DEV7 / "dtm_r100_b150.tif"); DTM5 = Raster(DEV7 / "dtm_r050_b40.tif")
 def dtm(x, y):
     a = DTM5.sample(x, y); return np.where(np.isfinite(a), a, DTM.sample(x, y))
@@ -47,7 +48,7 @@ for name in summ:
     if name == "palomares_road":                # shipped Palomares
         continue
     c = NW.load_centerline(None, DEV7 / f"centerline_{name}.csv")
-    ins = shapely.contains_xy(POLY.buffer(5), c["x_local"], c["y_local"])
+    ins = shapely.contains_xy(POLY.buffer(GAP_M + 5), c["x_local"], c["y_local"])
     if ins.sum() < 5:
         continue
     r = NW.load_road(name, LOG)
@@ -103,11 +104,11 @@ if fixed:
     KP = np.concatenate([p for p, _ in fixed]); KT = np.concatenate([t + o for (_, t), o in zip(fixed, off_)])
     KEPT = STI.TriGrid(KP, KT)
     SEGV, SEGE = STI.open_boundary(KP, KT)
-    okv = shapely.contains_xy(POLY.buffer(1.0), SEGV[:, 0], SEGV[:, 1])
+    okv = shapely.contains_xy(POLY.buffer(GAP_M + 1.0), SEGV[:, 0], SEGV[:, 1])
     oke = okv[SEGE].all(1); used, inv = np.unique(SEGE[oke], return_inverse=True)
     SEGV, SEGE = SEGV[used], inv.reshape(-1, 2)
-    FIXPOLY = shapely.union_all([sg.Polygon(KP[t]) for t in KT if shapely.contains_xy(POLY.buffer(5), *KP[t].mean(0)[:2])]).buffer(0.01) \
-        if len(KT) < 400000 else None
+    _ct = KP[KT].mean(1); _sel = shapely.contains_xy(POLY.buffer(GAP_M + 5), _ct[:, 0], _ct[:, 1])
+    FIXPOLY = shapely.union_all(shapely.polygons(KP[KT[_sel]][:, :, :2])).buffer(0.01) if _sel.any() else None
 LOG["fixed_boundary_vertices"] = int(len(SEGV))
 tick("fixed")
 
@@ -127,9 +128,9 @@ for n in order:
     for side, h in ((1, r.curb_l), (-1, r.curb_r)):
         walk += side_bands(r, side, 0.0, CURB_W + SIDEWALK_W, h > 0.03)
 WALK = shapely.union_all(walk).difference(pave) if walk else sg.Polygon()
-DOM = POLY
+DOM = POLY.buffer(GAP_M)      # reaches the fixed neighbours' boundary (NCR end row sits ~1 station outside POLY)
 if KEPT is not None and FIXPOLY is not None:
-    DOM = POLY.difference(FIXPOLY)
+    DOM = DOM.difference(FIXPOLY)
 pave = pave.intersection(DOM).buffer(0).simplify(0.05)
 def _clean(g, amin=0.5, wmin=0.4):
     # drop slivers (curb bands vs fillet edges): opening by wmin/2, then parts under amin m2
@@ -170,8 +171,8 @@ key = np.round(BV, 3); U, inv = np.unique(key, axis=0, return_inverse=True); inv
 BV = BV[np.unique(inv, return_index=True)[1]] if False else U; BE = inv[BE]; BE = BE[BE[:, 0] != BE[:, 1]]
 # keep the fixed (NCR) boundary away from new boundary points
 if len(SEGV):
-    dfx, _ = cKDTree(SEGV[:, :2]).query(BV)
-    drop = dfx < 0.3
+    _fl = shapely.multilinestrings([SEGV[e, :2] for e in SEGE]); shapely.prepare(_fl)
+    drop = shapely.dwithin(_fl, shapely.points(BV), 0.3)      # near a fixed boundary EDGE (not only its vertices)
     remap = -np.ones(len(BV), int); remap[~drop] = np.arange((~drop).sum()); BE = remap[BE]; BE = BE[(BE >= 0).all(1)]; BV = BV[~drop]
 xmin, ymin, xmax, ymax = DOM.bounds
 pts = []
@@ -193,7 +194,7 @@ pts = pts[~shapely.dwithin(_bl, shapely.points(pts), 0.25)]      # not on / next
 if KEPT is not None:
     _, kt = KEPT.locate(pts); pts = pts[kt < 0]
     if len(SEGV):
-        dsv, _ = cKDTree(SEGV[:, :2]).query(pts); pts = pts[dsv > 0.35]
+        pts = pts[~shapely.dwithin(_fl, shapely.points(pts), 0.35)]
 # no two input vertices closer than 5 cm (slivers / degenerate triangles otherwise)
 _t = cKDTree(BV); _pr = _t.query_pairs(0.15, output_type="ndarray")
 if len(_pr):
@@ -330,6 +331,12 @@ _hs = (inP | inW)[TT].all(1) & ~TPAVE & ~TWALK
 TWALK = TWALK | _hs
 LOG["gap_slivers_reclassed"] = int(_hs.sum())
 zc = composite(TV)
+# next to the fixed NCR boundary: carry its exact height offset (noise, crossfall end) into the composite over 4 m
+if len(SEGV):
+    _corr = SEGV[:, 2] - composite(SEGV[:, :2])
+    _d, _j = cKDTree(SEGV[:, :2]).query(TV)
+    _w = np.clip(1 - _d / 4.0, 0, 1); _w = _w * _w * (3 - 2 * _w)
+    zc = zc + _w * _corr[_j]
 # fold-targeted smoothing of the composite field over the pavement triangles (junction blends, crowns meeting at
 # an angle): qa_ffb_safety ROAD crease <= 8 deg; fixed NCR vertices stay
 _tp = TT[TPAVE]

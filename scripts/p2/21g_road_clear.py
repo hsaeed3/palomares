@@ -100,6 +100,58 @@ for gname in ("kerbs_nb", "kerbs_sb"):
             drop_folded(m)
 print(f"21g: folded kerb pieces dropped: {dict(DROP)}")
 
+# ---- shoulder folds (cut-bank toes): round off folds > SH_LIM on drivable shoulders. Each hot vertex moves to the
+# mean of its neighbours; the same move is applied to every coincident vertex in shoulder and terrain meshes so the
+# seam stays closed. Asphalt (1ROAD) vertices are pinned.
+SH_LIM = 40.0
+
+
+def _edges_angles(Q, F):
+    n = np.cross(Q[F[:, 1]] - Q[F[:, 0]], Q[F[:, 2]] - Q[F[:, 0]]); l = np.linalg.norm(n, axis=1)
+    n /= np.maximum(l[:, None], 1e-12)
+    E = np.sort(np.r_[F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]], 1); fid = np.tile(np.arange(len(F)), 3)
+    o = np.lexsort((E[:, 1], E[:, 0])); E, fid = E[o], fid[o]; sm = np.all(E[1:] == E[:-1], 1)
+    a, b = fid[:-1][sm], fid[1:][sm]
+    ok = (l[a] > 1e-6) & (l[b] > 1e-6)
+    return a[ok], b[ok], np.degrees(np.arccos(np.clip((n[a[ok]] * n[b[ok]]).sum(1), -1, 1))), E[:-1][sm][ok]
+
+
+pin = set()
+for m in G.get("road", []):
+    if m["name"].startswith("1ROAD"):
+        pin.update(map(tuple, np.round(np.asarray(m["P"])[:, :2] * 1000).astype(np.int64).tolist()))
+shm = [m for m in G.get("road", []) + G.get("terrain", []) if isinstance(m, dict) and m["name"].startswith("1GRASS")]
+NFIX = 0
+for it in range(8):
+    moves = {}
+    for m in shm:
+        if not m["name"].startswith("1GRASS_sh"):
+            continue
+        P = np.asarray(m["P"], float); T = np.asarray(m["T"])
+        key = np.round(P * 1000).astype(np.int64); u, w, inv = np.unique(key, axis=0, return_index=True, return_inverse=True)
+        F = inv.ravel()[T]; Q = P[w]
+        a, b, ang, E = _edges_angles(Q, F)
+        hot = ang > SH_LIM
+        if not hot.any():
+            continue
+        nb = collections.defaultdict(set)
+        for x_, y_ in np.r_[F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]]:
+            nb[x_].add(y_); nb[y_].add(x_)
+        for v in np.unique(np.r_[F[a[hot]].ravel(), F[b[hot]].ravel()]):
+            k2 = tuple(u[v, :2])
+            if k2 in pin or not nb[v]:
+                continue
+            moves[k2] = Q[list(nb[v]), 2].mean() - Q[v, 2]
+    if not moves:
+        break
+    for m in shm:
+        P = np.asarray(m["P"], float); k2 = np.round(P[:, :2] * 1000).astype(np.int64)
+        dz = np.array([moves.get((x_, y_), 0.0) for x_, y_ in k2.tolist()])
+        if np.any(dz):
+            P = P.copy(); P[:, 2] += 0.6 * dz; m["P"] = P
+    NFIX += len(moves)
+print(f"21g: shoulder fold vertices rounded (incl. coincident terrain): {NFIX}")
+
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 print(f"21g: terrain vertices pushed below asphalt: {TER}; meshes trimmed at {len(LOG)} (group, kind, 100 m) spots")
 by = collections.Counter()

@@ -7,7 +7,7 @@
   "palomares_niles_town_terrain.kn5"
  ],
  "s": [
-  21.0,
+  2.0,
   65.5
  ],
  "holes": 0,
@@ -15,14 +15,14 @@
  "steps": 0,
  "steps_list": [],
  "step_max_m": 0.0,
- "slope_breaks_checked": 17,
+ "slope_breaks_checked": 48,
  "asphalt_kinks": 0,
  "asphalt_kinks_list": [],
  "overlaps": 0,
  "overlaps_list": [],
- "grade_max_pct_25m": 1.7426401680161518,
- "grade_max_pct_5m": 2.0962680458950445,
- "grade_max_s": 54.5,
+ "grade_max_pct_25m": 0.9561411411034726,
+ "grade_max_pct_5m": 2.102508935641012,
+ "grade_max_s": 49.5,
  "camber_change_max_pct_per_m": 0.17400435920240653,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
