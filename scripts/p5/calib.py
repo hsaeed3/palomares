@@ -5,7 +5,8 @@ RECTILINEAR (pinhole) reprojection, hand-cropped (sizes 1986..2066 x 1400..1496)
 centre plus a global offset and the focal length (viewer zoom) is shared, in screenshot pixels.
 Model: x = cx + f*u/z*(1 + k1*r^2), r^2 = (u^2+v^2)/z^2;  cx = w/2 + dcx, cy = h/2 + dcy.
 Features (from data/scene/seg, mapped to screenshot px): yellow line, white line, road(+marking) boundary.
-Model geometry: cached class-3/4 triangles (the track's own painted lines) and the pavement edge (geom.Road.outer).
+Model geometry: cached class-3/4 triangles (the track's own painted lines) and the ASPHALT edge (geom.Road.el/er; not
+Road.outer, which adds the dirt shoulder).
 Cost: symmetric chamfer (truncated 25 px at half resolution).
 
   python3 scripts/p5/calib.py calib  [--frames ...]   # joint fit of f, dcx, dcy, k1 (+ per-frame poses)
@@ -55,7 +56,7 @@ def geo(s):
             t = np.linspace(0, 1, 9)[:, None, None]
             P[n] = np.concatenate([(T[:, a] * (1 - t) + T[:, b] * t).reshape(-1, 3) for a, b in ((0, 1), (1, 2), (2, 0))])
             P[n] = np.unique(np.round(P[n], 1), axis=0)
-        es, eL, eR = SC.pavement_edges()
+        es, eL, eR = SC.asphalt_edges()          # asphalt edge, not road.outer (asphalt + dirt shoulder)
         ss = np.arange(max(k * SC.CHUNK - 40, 0), min((k + 2) * SC.CHUNK + 40, SC.S_MAX), 0.5)
         x, y, z = (np.interp(ss, SC.S, a) for a in (SC.X, SC.Y, SC.Z)); i = np.round(ss).astype(int).clip(0, len(SC.S) - 1)
         L = np.interp(ss, es, eL); R = np.interp(ss, es, eR)

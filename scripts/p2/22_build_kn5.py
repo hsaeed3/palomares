@@ -12,11 +12,20 @@ VERSION = (ROOT / "VERSION").read_text().strip()
 geo = pickle.load(open(BUILD / "geometry.pkl", "rb"))
 G, meta = geo["groups"], geo["meta"]
 TRACK = BUILD / "palomares_road"
-if TRACK.exists():
+# P (docs/PIPELINE.md): PALOMARES_KN5_QUICK=1 reuses the materials/textures a full run cached in <build>/kn5_cache/ and
+# rewrites only the kn5 files whose input hash changed (scripts/p2/kn5_quick.py). The full run always rewrites everything.
+import os as _os, hashlib as _hl
+QUICK = _os.environ.get("PALOMARES_KN5_QUICK") == "1"
+KCACHE = BUILD / "kn5_cache"
+if TRACK.exists() and not QUICK:
     shutil.rmtree(TRACK)
-TRACK.mkdir(parents=True)
+TRACK.mkdir(parents=True, exist_ok=True)
 TEX = ROOT / "data/raw/textures"
 rng = np.random.default_rng(3)
+if QUICK:
+    import kn5_quick as _KQ
+    exec(_KQ.quick_section(__file__, G, BUILD, KCACHE), globals())
+    sys.exit(0)
 
 
 def png(img):
@@ -557,6 +566,11 @@ del _ortho
 print(f"  terrain macro: {len(_cells)} chunk cells in {len(_macro)} atlases, window {_S:.0f} m, {sum(k.startswith('ter_') for k in MATS)} terrain materials")
 
 
+if not QUICK:   # cache for the quick path: textures, materials, final terrain UV/material per mesh
+    import kn5_quick as _KQ
+    _KQ.save_cache(KCACHE, MATS, T, G)
+
+
 def merge_by(meshes, key):
     """merge visual meshes sharing (key(name), material) to cut draw calls"""
     out = {}
@@ -617,8 +631,14 @@ def write(fname, groups, extra_nodes=(), merge=None):
     texn = sorted({t for u in used for t in MATS[u].textures.values()})
     nodes = [to_kn5_mesh(m) for m in ms] + list(extra_nodes)
     DRAWS[fname] = sum(-(-len(m["P"]) // 65535) for m in ms if m.get("renderable", True) and not m["name"].startswith("1WALL"))
-    write_kn5(TRACK / fname, mats, {t: T[t] for t in texn}, nodes)
     write.n = getattr(write, "n", 0) + 1
+    h = _KQ.input_hash(nodes, mats, {t: T[t] for t in texn})
+    if QUICK and (TRACK / fname).exists() and _KQ.HASHES.get(fname) == h:
+        print(f"  [kn5 {write.n:2d}] {fname:28s} unchanged (input hash {h[:10]})")
+        return
+    write_kn5(TRACK / fname, mats, {t: T[t] for t in texn}, nodes)
+    _KQ.HASHES[fname] = h; _KQ.save_hashes(TRACK)
+    write.written = getattr(write, "written", []) + [fname]
     print(f"  [kn5 {write.n:2d}] {fname:28s} {len(nodes):4d} nodes  {(TRACK / fname).stat().st_size / 1e6:6.1f} MB")
 
 

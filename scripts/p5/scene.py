@@ -200,6 +200,22 @@ def pavement_edges():
     return _EDGE
 
 
+_ASPH = None
+
+
+def asphalt_edges():
+    """station-indexed ASPHALT half widths (geom.Road.el/er, no shoulder), cached in cache/asphalt.npz.
+    Use this (not pavement_edges = road.outer) when matching the photo's road edge."""
+    global _ASPH
+    if _ASPH is None:
+        f = CACHE / "asphalt.npz"
+        if not f.exists():
+            import sys; sys.path.insert(0, str(ROOT / "scripts/p2")); import geom
+            r = geom.Road(None); np.savez(f, s=r.s, L=r.el, R=r.er)
+        d = np.load(f); _ASPH = (d["s"], d["L"], d["R"])
+    return _ASPH
+
+
 def ledger_place(o):
     """ledger object -> list of world points along it (linear: s..s1 every 2 m) with (x, y, zground, heading)"""
     es, eL, eR = pavement_edges()
