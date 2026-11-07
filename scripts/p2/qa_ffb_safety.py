@@ -150,10 +150,17 @@ for fn_, k in K.items():
         elif key in ("ROAD", "KERB", "RUNOFF", "GRASS"):
             lim = {"ROAD": ROAD_CREASE, "KERB": KERB_CREASE, "RUNOFF": KERB_CREASE, "GRASS": TERR_CREASE}[key]
             ang, a, b, _ = creases(P, T, fnr)
-            if key == "GRASS":
-                dr, _ = road_kd.query(P[T].mean(1)[:, :2])
-                sel = (dr[a] < TERR_R) & (dr[b] < TERR_R)
-                ang = ang[sel]
+            if key in ("GRASS", "ROAD"):
+                # folds a wheel rolls over: both faces < 40 deg slope, or a fold-over (> 100 deg); cut-bank toes
+                # (flat -> steep face) are real terrain and reported separately
+                c40 = np.cos(np.radians(40))
+                flat = (np.abs(fnr[a, 2]) > c40) & (np.abs(fnr[b, 2]) > c40)
+                toe = ang[~flat & (ang <= 100)]
+                stats[f"{key.lower()}_banktoe_crease_max_deg"][nm] = round(float(toe.max()), 1) if len(toe) else 0.0
+                ang = ang[flat | (ang > 100)]
+                if key == "GRASS":
+                    dr, _ = road_kd.query(P[T].mean(1)[:, :2])
+                    ang = ang[((dr[a] < TERR_R) & (dr[b] < TERR_R))[flat | (np.degrees(np.arccos(np.clip((fnr[a] * fnr[b]).sum(1), -1, 1))) > 100)]]
             mx = float(ang.max()) if len(ang) else 0.0
             stats[f"{key.lower()}_crease_max_deg"][nm] = round(mx, 1)
             if mx > lim:

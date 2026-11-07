@@ -11,3 +11,11 @@
 Content Patch (CSP) is not required. If timing doesn't start or stop under vanilla AC, try with CSP (A-B timing support varies; see CHANGELOG known issues).
 
 The first load takes a while: about 100 MB of uncompressed PNG textures and geometry.
+
+## Data sources and attribution
+
+- Road centerline and some building outlines: © OpenStreetMap contributors, ODbL (openstreetmap.org/copyright).
+- Terrain, buildings (footprints, roof shapes), fence/rail lines and understorey: USGS 3DEP LiDAR, Alameda County 2021 (public domain).
+- Aerial imagery and roof colours: USGS imagery and USDA FSA NAIP 2022 (public domain).
+- Street-level reference images: © Mapillary contributors, CC-BY-SA 4.0 (mapillary.com). Used as reference only; no Mapillary pixels are in the track.
+- Textures: ambientCG / Poly Haven (CC0) and procedural.

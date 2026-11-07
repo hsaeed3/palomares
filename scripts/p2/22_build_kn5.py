@@ -780,7 +780,8 @@ def cams(L_):
 
 
 ATTR = ("Data: centerline from OpenStreetMap contributors (ODbL, openstreetmap.org/copyright); "
-        "terrain from USGS 3DEP LiDAR CA_AlamedaCounty_2021_B21 and USGS imagery (public domain); "
+        "terrain, buildings, fences and understorey from USGS 3DEP LiDAR CA_AlamedaCounty_2021_B21, USGS imagery and "
+        "USDA NAIP 2022 (public domain); roadside reference from Mapillary contributors (CC-BY-SA 4.0, mapillary.com); "
         "textures ambientCG (CC0). Fan-made, not affiliated with Alameda County.")
 for lay, L_ in LAYOUTS.items():
     (TRACK / f"models_{lay}.ini").write_text("".join(f"[MODEL_{i}]\nFILE={f}\nPOSITION=0,0,0\nROTATION=0,0,0\n\n" for i, f in enumerate(L_["files"])))

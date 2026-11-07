@@ -25,3 +25,16 @@ All rasters are GeoTIFF in **EPSG:26910 (UTM 10N, m)**, with heights in **NAVD88
 | `gaps.csv` | Ground-return gaps > 5 m along the centerline (none after counting bridge-deck returns) |
 | `markings.csv` | Per-50 m paint-intensity scores and center/edge line classification |
 | `epqs_check.csv` | Centerline z vs USGS EPQS 1 m DEM at 12 stations |
+
+## dev6 measured scenery (scripts/p6, run 01 → 07 in order; 09 = review plots)
+
+| File | Description |
+|---|---|
+| `derived/naip2022_r060.tif` | NAIP 2022-05-19, 0.6 m, RGB+NIR, within 170 m of the road (public domain, USDA FSA via Planetary Computer) |
+| `derived/osm_buildings_barriers.geojson` | OSM building footprints (26) near the road (ODbL); no barrier ways exist in OSM here |
+| `derived/buildings.geojson` | LiDAR-measured buildings: footprint, rectangle parts, roof form/eave/ridge, NAIP roof colour, NDVI, OSM IoU |
+| `derived/fences_detected.geojson` | LiDAR line detections: fence/wall/hedge (segment detector) and guardrail (lateral-profile detector) |
+| `derived/understory.tif` | 1 m: band 1 = share of returns 0.3–3 m above ground, band 2 = NAIP NDVI |
+| `derived/understory.geojson` | verge hedge rows (0.3–4 m beyond the edge) and bank shrubs (4–12 m) derived from understory.tif |
+| `derived/mapillary_images.geojson` | Mapillary images within 40 m (CC-BY-SA 4.0); thumbnails in `cache/p6/mapillary/` |
+| `cache/p6/nodes/` | reduced EPT nodes (not in git) |

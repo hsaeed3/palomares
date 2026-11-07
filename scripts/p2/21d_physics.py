@@ -207,7 +207,7 @@ print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill}
 # position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
 # 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
 # surface and every vertex within KERB_KEEP m of it (kerbs are draped there) are pinned.  Heights only.
-RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 22.0, 6.0, 10.0, 0.9
+RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 25.0, 6.0, 4.5, 0.9
 
 
 def runoff_clamp():
@@ -237,7 +237,11 @@ def runoff_clamp():
     def ang_(zz):
         P3 = np.c_[xy, zz]; fn = np.cross(P3[Tg[:, 1]] - P3[Tg[:, 0]], P3[Tg[:, 2]] - P3[Tg[:, 0]])
         fn /= np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12
-        return np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
+        an = np.degrees(np.arccos(np.clip((fn[a] * fn[b]).sum(1), -1, 1)))
+        # only folds a wheel can roll over: both faces drivable-ish (< 40 deg slope) or a fold-over (> 100 deg).
+        # Cut-bank toes (flat -> steep face) are real terrain and stay (steep faces are walled where it matters).
+        flatish = (np.abs(fn[a, 2]) > np.cos(np.radians(40))) & (np.abs(fn[b, 2]) > np.cos(np.radians(40)))
+        return np.where(flatish | (an > 100), an, 0.0)
     z0 = z.copy(); ang = ang_(z); before = float(ang.max()); nb = int((ang > lim).sum())
     for it in range(400):
         hit = ang > lim
