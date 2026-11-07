@@ -3,6 +3,9 @@
 
   python3 scripts/p2/build.py package          # quick installable zip (make package)
   python3 scripts/p2/build.py full             # full Phase 2 incl. QA + renders (run_phase2.sh)
+  python3 scripts/p2/build.py quick-seed       # copy build/ -> build_quick/ and run one full 22 there (~9 min, once)
+  python3 scripts/p2/build.py quick [--s 9300-9500]   # ledger edit -> 21e + changed kn5 only, in build_quick/ (<1 min)
+See docs/PIPELINE.md.
 """
 import argparse, os, subprocess, sys, time, pathlib
 
@@ -46,8 +49,14 @@ def fmt(t):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("target", nargs="?", default="package", choices=["package", "full"])
+    ap.add_argument("target", nargs="?", default="package", choices=["package", "full", "quick", "quick-seed"])
+    ap.add_argument("--s", default=None, help="quick: station range a-b (m) to report / check; default: chunks whose ledger rows changed")
+    ap.add_argument("--dir", default=str(ROOT / "build_quick"), help="quick: build dir (never build/ while others use it)")
+    ap.add_argument("--no-21e", action="store_true", help="quick: kn5 only (geometry.pkl already updated)")
     a = ap.parse_args()
+    if a.target in ("quick", "quick-seed"):
+        import quick
+        sys.exit(quick.main(a))
     steps = PACKAGE if a.target == "package" else FULL
     env = dict(os.environ, PYTHONUNBUFFERED="1")
     if TTY:

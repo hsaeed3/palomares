@@ -48,11 +48,13 @@ class Roads:
 
     def project(self, x, y, road=None, k=40):
         """nearest centerline point (optionally restricted to one road) -> dict(road, s, side, lat, off, z)"""
-        d, ii = self.T.query([x, y], k=k)
-        for dd, i in zip(np.atleast_1d(d), np.atleast_1d(ii)):
-            rd, j = self.idx[i]
-            if road and rd != road:
-                continue
+        if road:
+            a = self.R[road]; dd2 = np.hypot(a["x_local"] - x, a["y_local"] - y)
+            cand = [(float(dd2.min()), (road, int(dd2.argmin())))]
+        else:
+            d, ii = self.T.query([x, y], k=1)
+            cand = [(float(d), self.idx[int(ii)])]
+        for dd, (rd, j) in cand:
             a = self.R[rd]; j0, j1 = max(j - 1, 0), min(j + 1, len(a) - 1)
             tx, ty = a["x_local"][j1] - a["x_local"][j0], a["y_local"][j1] - a["y_local"][j0]
             n = np.hypot(tx, ty) or 1.0
