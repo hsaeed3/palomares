@@ -73,3 +73,40 @@ Status: scripts/p2/kn5.py writes the 16 floats in this order, and `locator()` in
   (CSP-only, optional). Not verified in game.
 - Kerbs and brake boards of the `track_*` layouts are derived from the same line (config/kerbs.yaml `placement`,
   config/racing_line.yaml); plots in reports/racing_line/.
+
+## Collision convention (v0.2.0-dev6, FFB-safety rebuild; scripts/p2/collision_conv.py, qa_ffb_safety.py)
+
+User report on dev4/dev5 (FFB wheel): cars glitch through walls, hitting trees/barriers gives violent FFB spikes,
+light comes through hills, NVIDIA warnings on load. Findings and the rules now enforced:
+
+| Rule | Source | Status |
+|---|---|---|
+| Collision is by **mesh name**: `<digit><KEY>...`; AC "only really supports wall type collisions": anything solid is a `1WALL` mesh. Don't put two keywords in one name. | assettocorsamods.net "Build your first track - basic guide" (thread 12); "BIG PROBLEM WITH WALLS" (thread 2061) | community, consistent across sources |
+| Walls = **new, separate, simplest-possible invisible meshes** placed along the visual barrier (renderable=false), not renamed visual geometry. Complex wall geometry makes cars get stuck and costs CPU. | thread 2061 (moderator); Steam RTB discussion ("let the invisible Collision Wall handle collisions, the string object can be complex") | community |
+| Wall normals point **outward / toward the car**; inverted normals let cars drive through. | thread 2061 | community |
+| Two collidable wall objects **must not be close to each other or overlap**. | assettocorsamods.net / GTPlanet AC mods thread (search results 2020-24) | community |
+| Seams in physics meshes (merged/split geometry where a wheel can drop) cause wheels dropping/snagging. | GTPlanet AC PC mods general discussion (Imola seam report) | community |
+| Trees and small props: community and Kunos tracks give them **no collision**; dense forest is kept out with a smooth invisible boundary wall, not per-trunk colliders. No source documents per-trunk colliders as standard; forum users asking for tree hits find only "invisible walls". | search results above; inspection of the dev4 design | community practice + inference |
+| Textures embedded as **DDS with mipmaps**, power-of-two sizes (Kunos kn5s carry .dds). PNG works but has no mips; a 4096x5256 NPOT PNG was in dev5. | moppius exporter (embeds DDS if source is DDS), Kunos content | partly verified (format); the NVIDIA-warning cause is inferred |
+| Vertex tangents must be perpendicular to the normal. dev1-5 wrote tangent=+X on every vertex: degenerate TBN on east/west-facing surfaces with normal-mapped shaders. | AcTools Kn5 vertex layout (pos, nrm, uv, tangent) + shader math | inferred |
+| Distant terrain (backdrop hills) must cast shadows, otherwise sun shines "through" the hills. dev1-5 had backdrop cast_shadows=False. | measured in the kn5 | fixed |
+
+### What dev6 builds (21d -> collision_conv.rebuild)
+- Every per-object 1WALL box from 21b/21c/21e/race_assets is discarded after being used as a *position description*.
+- **Barriers, fences, walls, cut banks, crowd barriers**: merged per road side into one offset function; swept as ONE
+  welded, closed, invisible slab per side per 250 m chunk (`1WALL_L_NN`, `1WALL_R_NN`): road face at the visual barrier
+  face, 1.0 m deep, ground-following, >= 1.6 m tall, smoothed (no creases), flared ends (turn away 0.8 m over 4 m)
+  so there is no square corner to snag on. No overlaps or nesting by construction (nearest face wins).
+- **Trees: no collision.** A **forest-line wall** (same slab) runs where >= 4 trunks stand within +-10 m along the road
+  and <= 14 m past the drivable edge, at the 25th-percentile trunk offset, never closer than 2 m past the edge.
+  Guidance for the tree rework: whatever tree models are used, keep them non-physical (no digit prefix); the forest
+  line is computed from data/derived/trees.csv (x_local, y_local, ground_z), so it follows the data, not the models.
+  If simple colliders are ever wanted, use one smooth wall per forest edge, never per-trunk prisms.
+- **Small props** (poles, signs, mailboxes, cones, bales, gantry legs, overhead banners): no collision.
+- **Buildings / large solids** (footprint >= 1.8 m): one closed 8-vertex box each, never on the drivable surface.
+- `1WALL_start` / `1WALL_end`: one 2 m deep closed box each.
+- Flags: visible=True, renderable=False, cast_shadows=False, material `invisible`.
+- Gate: scripts/p2/qa_ffb_safety.py (in build.py and `make qa-ffb`) fails the build on: tree/prop colliders, thin
+  (< 0.5 m) or short (< 1.2 m) walls, open (non-watertight) wall shells, overlapping colliders, creases > 30 deg on a
+  wall's road face, tiny/degenerate/sliver physics tris, NaN, bad normals/tangents, creases on 1ROAD/1KERB,
+  terrain creases near the edge, PNG/NPOT/unmipped textures, non-shadow-casting terrain, unknown physics keys.

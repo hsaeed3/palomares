@@ -27,6 +27,9 @@ ledger-seed:
 physics:
 	python3 scripts/p2/21d_physics.py
 
+qa-ffb:
+	python3 scripts/p2/qa_ffb_safety.py
+
 qa-collisions:
 	python3 scripts/p2/qa_collisions.py
 

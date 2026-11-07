@@ -139,14 +139,28 @@ def obb_box(Pc):
 
 
 def rebuild(G, cl, trees, log=print):
+    """shared colliders (all groups but 'dressing') -> G['roadside']; track-layout-only dressing colliders ->
+    G['dressing'] (only where the shared slab is not already in front, so the two never overlap)"""
     F = Frame(cl)
+    shared = [g for g in G if g != "dressing"]
+    out1, st1, near1 = _core(G, F, shared, trees, "1WALL", None)
+    G.setdefault("roadside", []).extend(out1)
+    out2, st2, _ = _core(G, F, [g for g in G if g == "dressing"], None, "1WALL_dressing", near1)
+    G.setdefault("dressing", []).extend(out2)
+    log(f"collision rebuild (shared): {st1}")
+    log(f"collision rebuild (track dressing): {st2}")
+    return dict(shared=st1, dressing=st2, new_meshes=st1["new_meshes"] + st2["new_meshes"])
+
+
+def _core(G, F, groups, trees, prefix, block):
     s_max = float(F.s[-1]); ns = int(s_max // STEP) + 1
     grid = np.arange(ns) * STEP
     near = {+1: np.full(ns, np.inf), -1: np.full(ns, np.inf)}
     zlo = {+1: np.full(ns, np.nan), -1: np.full(ns, np.nan)}; zhi = {+1: np.full(ns, np.nan), -1: np.full(ns, np.nan)}
     src = {+1: np.zeros(ns, "U6"), -1: np.zeros(ns, "U6")}
     blds, across, stats = [], [], dict(linear=0, building=0, prop=0, across=0, old_meshes=0, old_tris=0)
-    for gn, ms in G.items():
+    for gn in groups:
+        ms = G[gn]
         keep = []
         for m in ms:
             if not m["name"].startswith("1WALL"):
@@ -180,8 +194,12 @@ def rebuild(G, cl, trees, log=print):
                     stats["prop"] += 1
         G[gn] = keep
 
+    if block is not None:   # stations where the shared slab already stands in front (or within 1.2 m behind)
+        for side in (+1, -1):
+            kill = near[side] > block[side] - 1.2
+            near[side][kill] = np.inf
     # forest line
-    tx, ty, tz = trees
+    tx, ty, tz = trees if trees is not None else (np.zeros(0),) * 3
     ts, td, tj = F.sd(np.c_[tx, ty])
     nforest = 0
     for side in (+1, -1):
@@ -197,12 +215,14 @@ def rebuild(G, cl, trees, log=print):
             fd = max(float(np.percentile(dd[lo[bi]:hi[bi]], 25)), edge[ei[bi]] + FOREST_MIN_GAP)
             if fd < near[side][bi]:
                 near[side][bi] = fd; src[side][bi] = "forest"
-                zlo[side][bi] = np.nan; zhi[side][bi] = np.nan; nforest += 1
+                zw = zz[lo[bi]:hi[bi]]; zcl = np.interp(grid[bi], F.s, F.z)
+                zlo[side][bi] = min(zw.min(), zcl) - 2.0; zhi[side][bi] = max(zw.max(), zcl) + 2.5; nforest += 1
 
     # ground for stations without barrier z (forest): centreline z (bottom well below, top well above)
     zc = np.interp(grid, F.s, F.z)
     out, nslab, nrun = [], 0, 0
     acc = {}
+    claimed = {+1: np.zeros(ns, bool), -1: np.zeros(ns, bool)}
     for side in (+1, -1):
         has = np.isfinite(near[side])
         # bridge short gaps between stations with similar offsets
@@ -221,18 +241,31 @@ def rebuild(G, cl, trees, log=print):
             while j + 1 < ns and has[j + 1] and abs(near[side][j + 1] - near[side][j]) < JUMP and src[side][j + 1] == src[side][i]:
                 j += 1
             r = np.arange(i, j + 1); i = j + 1
-            if len(r) < 2:
-                continue
             d = near[side][r].copy()
             if len(r) >= 5:   # smooth but never move the face toward the road by more than 5 cm or away by > 15 cm
                 ds = gaussian_filter1d(d, 1.5, mode="nearest"); d = np.clip(ds, d - 0.15, d + 0.05)
-            s = grid[r].astype(float)
-            # flared ends: last FLARE m turn away from the road
-            ramp = np.clip((FLARE - np.minimum(s - s[0], s[-1] - s)) / FLARE, 0, 1)
-            if s[-1] - s[0] > 2 * FLARE:
-                d = d + FLARE_D * ramp ** 2
             lo_ = zlo[side][r]; hi_ = zhi[side][r]
             lo_ = np.where(np.isfinite(lo_), lo_, zc[r] - 3.0); hi_ = np.where(np.isfinite(hi_), hi_, zc[r] + 4.0)
+            # flared ends: the slab continues FLARE m past each end of the barrier into free stations, turning away
+            # from the road (guardrail-terminal shape) - the barrier itself stays fully covered, and a car sliding
+            # along it never meets a square corner
+            ne = int(round(FLARE / STEP))
+            free = lambda k: 0 <= k < ns and not has[k] and not claimed[side][k]
+            pre, post = [], []
+            while len(pre) < ne and free(r[0] - 1 - len(pre)):
+                pre.append(r[0] - 1 - len(pre))
+            while len(post) < ne and free(r[-1] + 1 + len(post)):
+                post.append(r[-1] + 1 + len(post))
+            pre = pre[::-1]
+            rr = np.r_[np.array(pre, int), r, np.array(post, int)]
+            if len(rr) < 2:
+                continue
+            claimed[side][rr] = True
+            fl = np.r_[np.arange(len(pre), 0, -1), np.zeros(len(r)), np.arange(1, len(post) + 1)] / max(ne, 1)
+            d = np.r_[np.full(len(pre), d[0]), d, np.full(len(post), d[-1])] + FLARE_D * fl ** 2
+            lo_ = np.r_[np.full(len(pre), lo_[0]), lo_, np.full(len(post), lo_[-1])]
+            hi_ = np.r_[np.full(len(pre), hi_[0]), hi_, np.full(len(post), hi_[-1])]
+            r = rr; s = grid[r].astype(float)
             lo_ = gaussian_filter1d(lo_, 1.0, mode="nearest") - 0.3
             hi_ = np.maximum(gaussian_filter1d(hi_, 1.0, mode="nearest"), lo_ + WALL_TOP + 0.3)
             P, T, N = slab(F, s, d, lo_, hi_, side)
@@ -243,7 +276,7 @@ def rebuild(G, cl, trees, log=print):
         for P, T, N in parts:
             Ps.append(P); Ts.append(T + k); Ns.append(N); k += len(P)
         P = np.concatenate(Ps); assert len(P) < 65000
-        out.append(dict(name=f"1WALL_{'L' if side > 0 else 'R'}_{ch:02d}", material="invisible", P=P, T=np.concatenate(Ts),
+        out.append(dict(name=f"{prefix}_{'L' if side > 0 else 'R'}_{ch:02d}", material="invisible", P=P, T=np.concatenate(Ts),
                         UV=np.zeros((len(P), 2)), N=np.concatenate(Ns), **FLAGS)); nslab += 1
     # buildings: one closed box each, skipped when it would sit on the drivable surface
     PB, TB, NB, k = [], [], [], 0
@@ -256,7 +289,7 @@ def rebuild(G, cl, trees, log=print):
         PB.append(P); TB.append(T + k); NB.append(N); k += 8
     for i0 in range(0, len(PB), 4000):
         P = np.concatenate(PB[i0:i0 + 4000]); T = np.concatenate([t - 8 * i0 for t in TB[i0:i0 + 4000]])
-        out.append(dict(name=f"1WALL_bld_{i0 // 4000:02d}", material="invisible", P=P, T=T, UV=np.zeros((len(P), 2)),
+        out.append(dict(name=f"{prefix}_bld_{i0 // 4000:02d}", material="invisible", P=P, T=T, UV=np.zeros((len(P), 2)),
                         N=np.concatenate(NB[i0:i0 + 4000]), **FLAGS))
     for nm, Pc in across:
         nm = "1WALL_start" if nm.startswith("1WALL_start") else "1WALL_end"
@@ -267,8 +300,6 @@ def rebuild(G, cl, trees, log=print):
         z0, z1 = Pc[:, 2].min(), Pc[:, 2].max()
         P, T, N = obb_box(np.r_[np.c_[ring, np.full(4, z0)], np.c_[ring, np.full(4, z1)]])
         out.append(dict(name=nm, material="invisible", P=P, T=T, UV=np.zeros((8, 2)), N=N, **FLAGS))
-    G.setdefault("roadside", []).extend(out)
     stats.update(slab_meshes=nslab, runs=nrun, forest_stations=nforest,
                  new_tris=int(sum(len(m["T"]) for m in out)), new_meshes=len(out))
-    log(f"collision rebuild: {stats}")
-    return stats
+    return out, stats, near

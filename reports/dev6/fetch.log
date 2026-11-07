@@ -1,64 +1,15 @@
-/home/user/palomares/scripts/p6/01_fetch_lidar_nonground.py:31: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+/home/user/palomares/scripts/p6/01_fetch_lidar_nonground.py:33: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   pc = prep(shp_tf(lambda x, y, z=None: T_UTM_WM.transform(x, y), corr))
-CA_AlamedaCo_1_2021 3050 nodes
-CA_AlamedaCo_2_2021 85 nodes
-CA_AlamedaCo_3_2021 7 nodes
 3142 nodes, 3142 to do
-50/3142 5s
-100/3142 10s
-150/3142 15s
-200/3142 21s
-250/3142 27s
-300/3142 33s
-350/3142 38s
-400/3142 43s
-450/3142 47s
-500/3142 52s
-550/3142 56s
-600/3142 61s
-650/3142 65s
-700/3142 69s
-750/3142 73s
-800/3142 78s
-850/3142 82s
-900/3142 86s
-950/3142 91s
-1000/3142 94s
-1050/3142 99s
-1100/3142 103s
-1150/3142 107s
-1200/3142 112s
-1250/3142 116s
-1300/3142 121s
-1350/3142 126s
-1400/3142 130s
-1450/3142 135s
-1500/3142 140s
-1550/3142 145s
-1600/3142 149s
-1650/3142 153s
-1700/3142 158s
-1750/3142 162s
-1800/3142 167s
-1850/3142 171s
-1900/3142 176s
-1950/3142 180s
-2000/3142 185s
-2050/3142 191s
-2100/3142 196s
-2150/3142 201s
-2200/3142 206s
-2250/3142 211s
-2300/3142 216s
-2350/3142 221s
-2400/3142 226s
-2450/3142 231s
-2500/3142 236s
-2550/3142 240s
-2600/3142 245s
-2650/3142 251s
-2700/3142 258s
-2750/3142 262s
-2800/3142 267s
-2850/3142 272s
-2900/3142 277s
+50/3142 6s
+100/3142 12s
+150/3142 18s
+200/3142 24s
+250/3142 31s
+300/3142 38s
+350/3142 45s
+400/3142 50s
+450/3142 56s
+500/3142 61s
+550/3142 66s
+600/3142 71s

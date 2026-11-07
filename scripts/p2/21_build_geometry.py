@@ -271,7 +271,7 @@ for ty in range(4):
         T = Tg[m]
         if len(T):
             used, inv = np.unique(T, return_inverse=True)
-            add("backdrop", f"backdrop_{ty}{tx}", "backdrop", Pb[used], inv.reshape(-1, 3), UVb[used], cast_shadows=False)
+            add("backdrop", f"backdrop_{ty}{tx}", "backdrop", Pb[used], inv.reshape(-1, 3), UVb[used], cast_shadows=True)  # dev6: hills must cast shadows (light leaked through them)
 
 _tick("backdrop")
 # ------------------------------------------------------------------ trees: procedural 3D (scripts/p2/trees3d.py)

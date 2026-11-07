@@ -108,10 +108,10 @@ def main():
             n = m["name"]
             if n[:1].isdigit() and not any(re.match(rf"\d{k}", n) for k in keys):
                 fail(f"{f}:{n} digit-prefixed name with no surfaces.ini KEY")
-            if f == "palomares_trees.kn5" and n[:1].isdigit() and not n.startswith("1WALL_tree"):
+            if f == "palomares_trees.kn5" and n[:1].isdigit():
                 fail(f"{f}:{n} tree mesh with a physical name")
-    if stats["tree_colliders_tris"] == 0:
-        fail("no 1WALL_tree trunk colliders")
+    if stats["tree_colliders_tris"]:
+        fail("1WALL_tree trunk colliders present (dev6 convention: trees get no collision, forest-line slabs instead)")
     print(f"  raw flag bytes OK on {stats['flag_bytes_ok']} physics meshes; trunk collider tris {stats['tree_colliders_tris']}")
     cloud = np.concatenate(clouds); tree = cKDTree(cloud)
     print(f"  {stats['physics_meshes']} physics meshes, {stats['collision_tris']} triangles, {len(cloud)} surface samples")
@@ -126,6 +126,12 @@ def main():
     worst = []
     for it in side:
         xy = np.array(it["pts"], float); z = np.array(it["z"], float)
+        # dev6 convention (docs/AC_CONVENTIONS.md "Collision convention"): only barrier lines (>= 3 m) and buildings
+        # carry collision; poles, signs, mailboxes, trees, hedges, rocks and other props are visual only
+        _len = float(np.hypot(*np.diff(xy, axis=0).T).sum()) if len(xy) > 1 else 0.0
+        if not (it["type"].startswith("building") or (_len >= 3.0 and not it["type"].startswith(("hedge", "tree", "pole", "rock")))):
+            per_type["(prop, no collision) " + it["type"]][0] += 0
+            continue
         if len(xy) > 1:   # densify to <= 0.5 m
             seg = np.hypot(*np.diff(xy, axis=0).T); n = np.maximum(1, np.ceil(seg / 0.5).astype(int))
             xs, zs = [xy[:1]], [z[:1]]

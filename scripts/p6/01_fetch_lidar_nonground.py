@@ -4,7 +4,9 @@ only what the measured-scenery steps need. Nothing raw is cached on disk; each E
 EPSG:3857 -> UTM 10N, reduced, and written to data/cache/p6/nodes/<ds>_<key>.npz (idempotent: done nodes are skipped).
 
 Kept per node (UTM metres, NAVD88 z, HAG = z - dtm_r100_b150):
-  bld  : class 6 within 160 m of the refined centerline         (x, y, z, rn, nr)
+  bld  : building candidates within 160 m of the refined centerline: class 6, or (this delivery has NO class 6 / 3-5:
+         Phase 1 found classes 1, 2, 7, 9, 17, 18, 20 only) class 1 single-return points with HAG >= 1.8 m.
+         Roofs return one echo; canopy mostly several. Planarity is tested later in 04.   (x, y, z, h, rn, nr)
   low  : class 1/3/4/5 with 0.25 <= HAG <= 3.5 within 70 m        (x, y, z, hag, c, i)
   cnt  : 1 m grid (dtm_r100 grid) index + count of all first returns / ground returns within 70 m
 Run: nice -n5 python3 scripts/p6/01_fetch_lidar_nonground.py [--workers 3]
@@ -70,14 +72,16 @@ def hag_of(x, y, z):
 
 def proc(job):
     ds, key = job; fo = OUT / f"{ds}_{key}.npz"
+    if fo.exists() and "bh" not in np.load(fo).files: fo.unlink()
     if fo.exists(): return 0
     las = laspy.read(io.BytesIO(get(f"{EPT_BASE}/{ds}/ept-data/{key}.laz")))
     x, y = T_WM_UTM.transform(np.asarray(las.x), np.asarray(las.y)); z = np.asarray(las.z, np.float64)
     c = np.asarray(las.classification); rn = np.asarray(las.return_number); nr = np.asarray(las.number_of_returns)
     dd = TREE.query(np.c_[x, y], distance_upper_bound=BLD_BUF)[0]
     o = {}
-    mb = (c == 6) & (dd <= BLD_BUF)
-    o.update(bx=x[mb], by=y[mb], bz=z[mb].astype(np.float32), brn=rn[mb].astype(np.uint8), bnr=nr[mb].astype(np.uint8))
+    mb = (dd <= BLD_BUF) & ((c == 6) | ((c == 1) & (nr == 1)))
+    hb, _ = hag_of(x[mb], y[mb], z[mb]); k = (c[mb] == 6) | (hb >= 1.8); mb[mb] = k; hb = hb[k]
+    o.update(bx=x[mb], by=y[mb], bz=z[mb].astype(np.float32), bh=hb.astype(np.float32), brn=rn[mb].astype(np.uint8), bnr=nr[mb].astype(np.uint8))
     near = dd <= LOW_BUF
     hag, cell = hag_of(x[near], y[near], z[near]); cn = c[near]
     ml = np.isin(cn, (1, 3, 4, 5)) & (hag >= 0.25) & (hag <= 3.5)
@@ -99,7 +103,7 @@ if __name__ == "__main__":
         for ds in EPT_SETS:
             ks = nodes_for(ds); print(ds, len(ks), "nodes", flush=True); jobs += [(ds, k) for k in ks]
         json.dump(jobs, open(jf, "w"))
-    todo = [j for j in jobs if not (OUT / f"{j[0]}_{j[1]}.npz").exists()]
+    todo = jobs
     print(len(jobs), "nodes,", len(todo), "to do", flush=True); n = 0; t0 = time.time()
     with ThreadPoolExecutor(a.workers) as ex:
         for k, _ in enumerate(ex.map(proc, todo), 1):

@@ -24,7 +24,9 @@ EDGE_RIBBON = LINE_W + 2 * 0.03
 LINE_PERIOD_M = 8.0                                   # v period of the line textures (wear pattern)
 BROKEN = (3.05, 12.19)
 RPM_SPACING = 24.0
-# lifts above the road surface (1.6-2.4 cm, layered; decals are alpha-blended without depth write so they cannot z-fight)
+# lifts above the road surface. dev6: the only decal GEOMETRY left is the surveyed patches (alpha-TESTED ksPerPixelAT, depth
+# write on, 1.0 cm lift); crack seal, hairlines and crazing are baked into the 12 m asphalt atlas (asphalt_atlas). The old
+# alpha-blended no-depth-write decal layer sorted/z-fought in AC and showed its whole quads ("random textures in the road").
 # decal atlas (2048 px, v measured from the top of the image). Cells are inset 1.5 px against bilinear bleed.
 #   y   0..256 : 8 crack-seal ribbon cells (128x256 px = ribbon width x 0.5 m of crack) | 8 hairline-crack cells
 #   y 256..1504: 3 patch tones (0 new/black, 1 mid, 2 old/grey), 416 px each: lane 1024x416 | strip 1024x192 + 2 small 512x224
@@ -48,7 +50,7 @@ for _t in range(3):
 PATCH_ASPECT = dict(lane=1024 / 416, strip=1024 / 192, small=512 / 224)   # long side / short side in the cell
 CELLS["patch"] = PATCH_CELLS
 SEAL_CELL_M = (0.15, 0.5)      # ribbon width (m) x crack length per cell (m) at unit scale
-LIFT = dict(patch=0.016, network=0.018, hair=0.019, seal=0.020, line=0.023, rpm=0.024)
+LIFT = dict(patch=0.010, network=0.018, hair=0.019, seal=0.020, line=0.023, rpm=0.024)
 
 
 def paint_colours(root):
@@ -150,6 +152,24 @@ def asphalt_atlas(base_rgb, base_nrm, base_rough, size=2048, seed=11):
         _lines_wrapped(dr, pts, size, size, int(r.uniform(80, 150)), 1)
     crack = np.asarray(cr.filter(ImageFilter.GaussianBlur(0.6)), float)[..., None] / 255
     col = col * (1 - 0.55 * crack)
+    # dev6: baked crack SEAL (was floating decal ribbons): broken, meandering 3-6 cm tar bands at the centre joint, wheel
+    # paths and lane edges, plus a few transverse; dark, low-gloss (see maps below). Sparse: the real road is mostly plain.
+    sl = Image.new("L", (size, size), 0); ds = ImageDraw.Draw(sl)
+    for dc in (-0.33, 0.33, -0.95, 1.0, -2.35, 2.3, -3.2, 3.15):
+        for _ in range(1 if abs(dc) > 3 else 2):
+            if r.random() < 0.35:
+                continue
+            x = (0.5 + (dc + r.normal(0, 0.06)) / ATLAS_M) * size; y = r.uniform(0, size)
+            pts = _walk(r, x, y, math.pi / 2 + r.normal(0, 0.04), int(r.uniform(25, 80)), px * 0.08, 0.08)
+            _lines_wrapped(ds, pts, size, size, int(r.uniform(170, 235)), int(round(px * r.uniform(0.035, 0.06))))
+    for _ in range(3):
+        y = r.uniform(0, size); x = (0.5 + r.uniform(-3, 3) / ATLAS_M) * size
+        pts = _walk(r, x, y, r.choice([0, math.pi]) + r.normal(0, 0.08), int(r.uniform(12, 30)), px * 0.08, 0.12)
+        _lines_wrapped(ds, pts, size, size, int(r.uniform(150, 220)), int(round(px * 0.04)))
+    seal = np.asarray(sl.filter(ImageFilter.GaussianBlur(1.2)), float)[..., None] / 255
+    seal = seal * np.clip(0.85 + 0.3 * pnoise((size, size), 30, seed + 9), 0.5, 1.0)[..., None]
+    col = col * (1 - seal) + seal * np.array([34.0, 34.0, 36.0])
+    crack = np.maximum(crack, 0.6 * seal)
     # aggregate speckle (fine light/dark stones)
     sp = r.standard_normal((size, size))
     col += (np.where(sp > 2.6, 14, 0) - np.where(sp < -2.8, 12, 0))[..., None]
@@ -591,7 +611,9 @@ class _Decals:
                       rot=bool(r.random() < 0.5), flip=(bool(r.random() < 0.5), bool(r.random() < 0.5)))
 
     # -- driver
-    def run(self):
+    def run(self, legacy=False):
+        """dev6: geometry = surveyed patches only (note text). legacy=True restores the dev5 random background patches,
+        crazing and crack-seal ribbons (now baked into the asphalt atlas)."""
         r = self.rng
         seen = []
         for nt in sorted(self.notes, key=lambda x: x["s0"]):     # 1) patches: surveyed (note text) + sparse background
@@ -601,6 +623,8 @@ class _Decals:
             if is_p and (nt["s1"] - nt["s0"]) <= 140 and not any(abs(nt["s0"] - a) < 12 and abs(nt["s1"] - b) < 12 for a, b in seen):
                 seen.append((nt["s0"], nt["s1"]))
                 self.patch_from_text(nt["s0"], nt["s1"], nt["text"])
+        if not legacy:
+            return
         self.background_patches()
         for nt in self.notes:                                     # 2) alligator crazing
             if re.search(r"alligator|fatigue|pothole", nt["text"]) and (nt["s1"] - nt["s0"]) <= 140:
