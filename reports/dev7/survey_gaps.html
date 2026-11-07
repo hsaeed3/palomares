@@ -1,0 +1,10 @@
+<h2>Coverage gaps and uncertain items</h2>
+<ul>
+<li><b>No Mapillary imagery:</b> 2nd St, 3rd St, G/H/I/J St, L St, Vallejo St, the Commons/Terraces, Mission Blvd_4, Paloma Rd, and Niles Blvd east of s=520. Rows there are OSM street furniture plus OSM footprints with LiDAR heights (<code>building.town_generic</code>, facade "unverified"). NAIP was not used in this pass.</li>
+<li><b>Sunol Main St:</b> only 3 usable frames near s=238-292. The depot, crossings and shops are placed from OSM, and the 2023 frame confirms the depot and picket fence.</li>
+<li><b>Niles depot area:</b> the Niles Depot Museum, the SP freight station and the NCR Niles platform are 70-80 m from Niles Blvd and appear on no frame. They are placed from OSM, with the style taken from a standard SP depot (conf med).</li>
+<li><b>Flasher text panel</b> at NCR s=1824 R: the text is unreadable at 1024 px. The WB flasher at s=2318 is placed on the WB right side (L) by eye, but Mapillary triangulated it on R.</li>
+<li><b>Guardrails:</b> 24 LiDAR guardrail candidates have no matching by-eye run and are left as <code>status=todo</code>. Many look like vegetation. A dense frame check is needed before building them.</li>
+<li><b>2018-only map features</b> on Niles Canyon Rd (re-imaged in 2023) are conf low and may no longer exist.</li>
+<li><b>Map-feature signs</b> carry no facing direction. <code>dir</code> is inferred from the side (R=nb, L=sb), and positions are within about 5-10 m.</li>
+</ul>
