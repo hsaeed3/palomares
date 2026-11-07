@@ -20,12 +20,12 @@
  "poses": [
   {
    "frame": 1,
-   "s": 33.5,
-   "lateral": -0.67,
-   "height": 1.53,
-   "yaw": -3.75,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 21.9,
+   "lateral": -0.56,
+   "height": 1.82,
+   "yaw": -7.0,
+   "pitch": 5.93,
+   "roll": -4.08,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -44,16 +44,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 4.4,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 44.26,
+   "edge_res_px": {
+    "y": [
+     38.6,
+     11.8
+    ],
+    "wl": [
+     33.6,
+     39.7
+    ],
+    "e": [
+     34.8,
+     41.4
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 2,
-   "s": 38.7,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 2.36,
-   "pitch": 5.73,
-   "roll": 0.75,
+   "s": 57.5,
+   "lateral": -1.06,
+   "height": 2.4,
+   "yaw": 3.46,
+   "pitch": 5.89,
+   "roll": 4.68,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -72,16 +88,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.7,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 38.75,
+   "edge_res_px": {
+    "y": [
+     44.2,
+     13.4
+    ],
+    "wl": [
+     31.1,
+     29.3
+    ],
+    "e": [
+     29.8,
+     23.1
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 3,
-   "s": 105.8,
-   "lateral": -0.78,
-   "height": 1.7,
-   "yaw": -5.4,
-   "pitch": 5.73,
-   "roll": -3.07,
+   "s": 103.2,
+   "lateral": -0.83,
+   "height": 2.13,
+   "yaw": 0.94,
+   "pitch": 5.23,
+   "roll": -1.16,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -100,14 +132,30 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.5,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 29.51,
+   "edge_res_px": {
+    "y": [
+     40.9,
+     6.9
+    ],
+    "wl": [
+     10.5,
+     28.1
+    ],
+    "e": [
+     14.5,
+     30.7
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 4,
-   "s": 210.6,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -0.82,
+   "s": 185.5,
+   "lateral": -0.95,
+   "height": 1.73,
+   "yaw": 3.4,
    "pitch": 5.73,
    "roll": -1.81,
    "fov_v": 53.44,
@@ -128,16 +176,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.5,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 30.41,
+   "edge_res_px": {
+    "y": [
+     8.1,
+     4.7
+    ],
+    "wl": [
+     19.2,
+     38.3
+    ],
+    "e": [
+     36.7,
+     36.6
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 5,
-   "s": 273.6,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 5.11,
-   "pitch": 5.73,
-   "roll": -2.47,
+   "s": 279.5,
+   "lateral": -1.1,
+   "height": 2.2,
+   "yaw": 4.5,
+   "pitch": 3.46,
+   "roll": -2.01,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -156,16 +220,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.8,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 24.25,
+   "edge_res_px": {
+    "y": [
+     15.5,
+     5.5
+    ],
+    "wl": [
+     10.3,
+     20.6
+    ],
+    "e": [
+     21.6,
+     42.9
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 281.1,
+   "forced_monotone": true
   },
   {
    "frame": 6,
-   "s": 274.0,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 3.17,
-   "pitch": 5.73,
-   "roll": 0.35,
+   "s": 279.5,
+   "lateral": -1.12,
+   "height": 2.12,
+   "yaw": 2.76,
+   "pitch": 2.53,
+   "roll": 3.31,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -184,16 +266,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.7,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 25.01,
+   "edge_res_px": {
+    "y": [
+     21.7,
+     6.3
+    ],
+    "wl": [
+     10.1,
+     28.3
+    ],
+    "e": [
+     14.9,
+     33.2
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 277.3,
+   "forced_monotone": true
   },
   {
    "frame": 7,
-   "s": 354.1,
-   "lateral": 0.09,
-   "height": 1.63,
-   "yaw": 1.86,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 327.7,
+   "lateral": -0.8,
+   "height": 2.4,
+   "yaw": 1.82,
+   "pitch": 2.54,
+   "roll": 3.55,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -212,16 +312,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 22.92,
+   "edge_res_px": {
+    "y": [
+     15.8,
+     9.4
+    ],
+    "wl": [
+     11.4,
+     19.7
+    ],
+    "e": [
+     17.6,
+     32.9
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 8,
-   "s": 458.7,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -5.87,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 469.2,
+   "lateral": -1.83,
+   "height": 2.4,
+   "yaw": -6.17,
+   "pitch": 5.29,
+   "roll": -4.35,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -240,16 +356,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.1,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 29.53,
+   "edge_res_px": {
+    "y": [
+     18.7,
+     12.6
+    ],
+    "wl": [
+     20.2,
+     22.7
+    ],
+    "e": [
+     25.9,
+     37.0
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 9,
-   "s": 555.4,
-   "lateral": -0.27,
-   "height": 1.7,
-   "yaw": 13.46,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 538.7,
+   "lateral": -0.26,
+   "height": 1.6,
+   "yaw": 8.85,
+   "pitch": 4.82,
+   "roll": -4.35,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -268,16 +400,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 8.3,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 32.06,
+   "edge_res_px": {
+    "y": [
+     15.6,
+     8.5
+    ],
+    "wl": [
+     15.4,
+     45.1
+    ],
+    "e": [
+     23.2,
+     39.2
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 540.5,
+   "forced_monotone": true
   },
   {
    "frame": 10,
-   "s": 557.0,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 6.71,
-   "pitch": 5.2,
-   "roll": 3.28,
+   "s": 538.7,
+   "lateral": -0.71,
+   "height": 1.93,
+   "yaw": 2.52,
+   "pitch": 3.02,
+   "roll": 6.62,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -296,16 +446,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.7,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 26.33,
+   "edge_res_px": {
+    "y": [
+     10.8,
+     6.5
+    ],
+    "wl": [
+     12.2,
+     37.5
+    ],
+    "e": [
+     16.9,
+     37.8
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 537.0,
+   "forced_monotone": true
   },
   {
    "frame": 11,
-   "s": 658.5,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -11.52,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 629.9,
+   "lateral": -1.03,
+   "height": 1.96,
+   "yaw": -6.45,
+   "pitch": 3.87,
+   "roll": 5.4,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -324,16 +492,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 21.46,
+   "edge_res_px": {
+    "y": [
+     10.7,
+     7.6
+    ],
+    "wl": [
+     8.8,
+     29.5
+    ],
+    "e": [
+     13.2,
+     28.6
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 12,
-   "s": 696.1,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 8.48,
-   "pitch": 4.72,
-   "roll": 3.69,
+   "s": 666.2,
+   "lateral": -0.67,
+   "height": 1.94,
+   "yaw": 8.09,
+   "pitch": 3.58,
+   "roll": 2.91,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -352,16 +536,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 5.9,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 28.87,
+   "edge_res_px": {
+    "y": [
+     34.0,
+     7.8
+    ],
+    "wl": [
+     13.8,
+     21.2
+    ],
+    "e": [
+     21.8,
+     33.4
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 13,
-   "s": 760.7,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 0.78,
-   "pitch": 4.24,
-   "roll": 3.75,
+   "s": 751.8,
+   "lateral": -0.99,
+   "height": 1.81,
+   "yaw": -1.74,
+   "pitch": 2.1,
+   "roll": 3.81,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -380,16 +580,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.3,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 32.66,
+   "edge_res_px": {
+    "y": [
+     31.5,
+     5.7
+    ],
+    "wl": [
+     15.6,
+     27.4
+    ],
+    "e": [
+     29.1,
+     42.9
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 14,
-   "s": 769.4,
-   "lateral": -0.71,
-   "height": 1.7,
-   "yaw": -5.68,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 752.5,
+   "lateral": -0.96,
+   "height": 1.82,
+   "yaw": -5.52,
+   "pitch": 4.37,
+   "roll": 1.36,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -408,16 +624,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 33.57,
+   "edge_res_px": {
+    "y": [
+     35.1,
+     6.4
+    ],
+    "wl": [
+     19.3,
+     26.0
+    ],
+    "e": [
+     28.5,
+     39.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 15,
-   "s": 890.4,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -5.69,
-   "pitch": 3.86,
-   "roll": 1.86,
+   "s": 912.4,
+   "lateral": -0.75,
+   "height": 1.85,
+   "yaw": -0.66,
+   "pitch": 4.31,
+   "roll": 2.07,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -436,16 +668,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.4,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 36.66,
+   "edge_res_px": {
+    "y": [
+     28.7,
+     8.1
+    ],
+    "wl": [
+     20.5,
+     43.4
+    ],
+    "e": [
+     23.8,
+     41.9
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 16,
-   "s": 927.3,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -9.08,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 936.6,
+   "lateral": -1.42,
+   "height": 2.14,
+   "yaw": -8.41,
+   "pitch": 3.75,
+   "roll": -4.46,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -464,16 +712,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 32.97,
+   "edge_res_px": {
+    "y": [
+     30.2,
+     7.6
+    ],
+    "wl": [
+     22.5,
+     25.5
+    ],
+    "e": [
+     27.4,
+     38.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 17,
-   "s": 1025.0,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -8.2,
-   "pitch": 5.73,
-   "roll": 2.01,
+   "s": 1014.6,
+   "lateral": -1.92,
+   "height": 1.6,
+   "yaw": -10.1,
+   "pitch": 6.52,
+   "roll": 3.26,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -492,16 +756,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 33.53,
+   "edge_res_px": {
+    "y": [
+     44.9,
+     9.7
+    ],
+    "wl": [
+     12.8,
+     26.7
+    ],
+    "e": [
+     25.2,
+     32.1
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 18,
-   "s": 1026.1,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 7.67,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 1025.5,
+   "lateral": -0.77,
+   "height": 2.4,
+   "yaw": 7.5,
+   "pitch": 3.49,
+   "roll": 4.62,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -520,16 +800,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 24.26,
+   "edge_res_px": {
+    "y": [
+     32.3,
+     6.3
+    ],
+    "wl": [
+     14.5,
+     19.5
+    ],
+    "e": [
+     14.2,
+     20.7
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 19,
-   "s": 1180.0,
-   "lateral": 1.41,
-   "height": 1.7,
-   "yaw": 1.55,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 1176.0,
+   "lateral": 0.89,
+   "height": 2.4,
+   "yaw": 6.3,
+   "pitch": 5.79,
+   "roll": -0.14,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -548,16 +844,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 32.83,
+   "edge_res_px": {
+    "y": [
+     18.2,
+     34.5
+    ],
+    "wl": [
+     21.1,
+     27.1
+    ],
+    "e": [
+     17.9,
+     25.6
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 20,
-   "s": 1179.7,
-   "lateral": -0.8,
-   "height": 1.56,
-   "yaw": 8.49,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 1182.6,
+   "lateral": -0.77,
+   "height": 1.69,
+   "yaw": 12.54,
+   "pitch": 5.52,
+   "roll": 6.88,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -576,7 +888,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 27.38,
+   "edge_res_px": {
+    "y": [
+     19.7,
+     7.2
+    ],
+    "wl": [
+     22.5,
+     21.9
+    ],
+    "e": [
+     21.4,
+     33.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 21,
@@ -624,12 +952,12 @@
   },
   {
    "frame": 22,
-   "s": 1391.5,
-   "lateral": -0.22,
-   "height": 1.7,
-   "yaw": 6.64,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 1400.3,
+   "lateral": -0.34,
+   "height": 2.27,
+   "yaw": 3.83,
+   "pitch": 5.87,
+   "roll": 3.94,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -648,16 +976,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.8,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 33.97,
+   "edge_res_px": {
+    "y": [
+     41.0,
+     6.8
+    ],
+    "wl": [
+     25.7,
+     21.0
+    ],
+    "e": [
+     29.3,
+     30.0
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 23,
-   "s": 1595.0,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 4.75,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 1595.6,
+   "lateral": -1.35,
+   "height": 2.4,
+   "yaw": -0.83,
+   "pitch": 6.81,
+   "roll": -6.88,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -676,16 +1020,32 @@
    "seg": "seg",
    "pinned": true,
    "t_s": 3.7,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 31.25,
+   "edge_res_px": {
+    "y": [
+     37.9,
+     5.8
+    ],
+    "wl": [
+     23.5,
+     27.4
+    ],
+    "e": [
+     16.0,
+     27.4
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 24,
-   "s": 1699.8,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 2.98,
+   "s": 1673.2,
+   "lateral": -0.78,
+   "height": 1.81,
+   "yaw": 3.94,
    "pitch": 5.73,
-   "roll": -1.05,
+   "roll": -0.57,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -704,16 +1064,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 31.53,
+   "edge_res_px": {
+    "y": [
+     31.6,
+     7.6
+    ],
+    "wl": [
+     22.9,
+     34.1
+    ],
+    "e": [
+     15.4,
+     27.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 25,
-   "s": 1768.3,
-   "lateral": -0.8,
-   "height": 1.69,
-   "yaw": 15.26,
-   "pitch": 5.73,
-   "roll": 1.77,
+   "s": 1763.7,
+   "lateral": -1.0,
+   "height": 1.84,
+   "yaw": 15.25,
+   "pitch": 5.37,
+   "roll": 1.56,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -732,16 +1108,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.0,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 30.81,
+   "edge_res_px": {
+    "y": [
+     31.6,
+     5.6
+    ],
+    "wl": [
+     17.8,
+     31.2
+    ],
+    "e": [
+     22.7,
+     30.2
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 26,
-   "s": 1830.0,
-   "lateral": 1.13,
-   "height": 1.7,
-   "yaw": 1.87,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 1833.5,
+   "lateral": 1.05,
+   "height": 1.78,
+   "yaw": 5.39,
+   "pitch": 6.52,
+   "roll": -6.88,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -760,16 +1152,32 @@
    "seg": "seg",
    "pinned": true,
    "t_s": 2.5,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 54.55,
+   "edge_res_px": {
+    "y": [
+     49.1,
+     13.7
+    ],
+    "wl": [
+     48.0,
+     45.8
+    ],
+    "e": [
+     47.8,
+     40.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 27,
-   "s": 1866.4,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -10.22,
-   "pitch": 5.73,
-   "roll": -4.01,
+   "s": 1849.5,
+   "lateral": -1.9,
+   "height": 2.35,
+   "yaw": -7.91,
+   "pitch": 7.36,
+   "roll": -5.05,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -788,16 +1196,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.1,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 27.7,
+   "edge_res_px": {
+    "y": [
+     18.8,
+     7.2
+    ],
+    "wl": [
+     15.5,
+     29.0
+    ],
+    "e": [
+     29.5,
+     27.9
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 28,
-   "s": 1926.8,
-   "lateral": -0.8,
-   "height": 1.64,
-   "yaw": 1.43,
-   "pitch": 5.73,
-   "roll": 1.2,
+   "s": 1916.8,
+   "lateral": -0.72,
+   "height": 1.6,
+   "yaw": 2.97,
+   "pitch": 4.18,
+   "roll": 3.78,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -816,16 +1240,32 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.1,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 38.66,
+   "edge_res_px": {
+    "y": [
+     47.7,
+     14.1
+    ],
+    "wl": [
+     23.7,
+     32.0
+    ],
+    "e": [
+     21.4,
+     31.6
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 29,
-   "s": 2084.5,
-   "lateral": -0.39,
-   "height": 1.7,
-   "yaw": 5.06,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 2072.6,
+   "lateral": -0.5,
+   "height": 2.4,
+   "yaw": 2.02,
+   "pitch": 6.92,
+   "roll": 5.95,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -844,16 +1284,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.6,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 26.13,
+   "edge_res_px": {
+    "y": [
+     23.1,
+     4.5
+    ],
+    "wl": [
+     27.2,
+     19.1
+    ],
+    "e": [
+     24.0,
+     19.7
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 2097.7,
+   "forced_monotone": true
   },
   {
    "frame": 30,
-   "s": 2084.7,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 6.35,
-   "pitch": 5.73,
-   "roll": 4.01,
+   "s": 2072.6,
+   "lateral": -0.93,
+   "height": 1.6,
+   "yaw": 10.56,
+   "pitch": 11.12,
+   "roll": 2.34,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -872,16 +1330,34 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 36.13,
+   "edge_res_px": {
+    "y": [
+     22.2,
+     3.0
+    ],
+    "wl": [
+     37.9,
+     38.8
+    ],
+    "e": [
+     27.4,
+     33.5
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 2079.6,
+   "forced_monotone": true
   },
   {
    "frame": 31,
-   "s": 2088.9,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -1.31,
-   "pitch": 4.69,
-   "roll": 4.01,
+   "s": 2072.6,
+   "lateral": -1.64,
+   "height": 2.14,
+   "yaw": -3.02,
+   "pitch": 3.63,
+   "roll": 6.88,
    "fov_v": 53.44,
    "lens": {
     "model": "pinhole_k1",
@@ -900,7 +1376,25 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.1,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 33.56,
+   "edge_res_px": {
+    "y": [
+     26.0,
+     3.8
+    ],
+    "wl": [
+     31.3,
+     40.8
+    ],
+    "e": [
+     19.1,
+     27.1
+    ]
+   },
+   "reg": "calib_edge",
+   "s_fit": 2059.7,
+   "forced_monotone": true
   },
   {
    "frame": 32,
