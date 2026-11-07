@@ -1,0 +1,33 @@
+{
+ "version": "0.3.0-dev7",
+ "palomares_src": "build_quick/palomares_road",
+ "dev7_src": "/home/user/palomares/build_dev7/palomares_road",
+ "fails": [],
+ "layouts": {
+  "palomares": [
+   "road_full",
+   "road_full_rev",
+   "road_north",
+   "road_north_rev",
+   "road_summit",
+   "road_summit_rev",
+   "track_full",
+   "track_full_rev",
+   "track_north",
+   "track_north_rev",
+   "track_summit",
+   "track_summit_rev"
+  ],
+  "dev7": [
+   "canyon_rev_road",
+   "canyon_rev_track",
+   "canyon_road",
+   "canyon_track"
+  ]
+ },
+ "ext_config_blocks": 1,
+ "layout_count": 16,
+ "zip": "dist/palomares_road_dev7_v0.3.0-dev7.zip",
+ "zip_mb": 577.9,
+ "secs": 18.1
+}

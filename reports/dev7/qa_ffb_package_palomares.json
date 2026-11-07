@@ -1,0 +1,347 @@
+{
+ "ok": false,
+ "fails": [
+  "palomares_dressing.kn5:1WALL_dressing_R_17 road-face crease 32 deg within 8.0 m of the edge",
+  "palomares_dressing.kn5:1WALL_dressing_bld_00 wall thinner than 0.5 m (0.30) at s=14452",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m00 crease 105 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m01 crease 120 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m02 crease 114 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m03 crease 98 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m04 crease 79 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m05 crease 95 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m06 crease 132 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m07 crease 64 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_37 crease 55 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m11 crease 62 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m12 crease 103 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m13 crease 99 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_nb.kn5:1KERB_NB_m14 crease 48 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m00 crease 111 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m01 crease 116 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m02 crease 114 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m03 crease 76 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m04 crease 79 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_21 crease 101 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m06 crease 65 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m07 crease 58 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_37 crease 103 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m11 crease 62 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m12 crease 103 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m13 crease 82 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m14 crease 44 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1KERB_SB_m15 crease 25 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_kerbs_sb.kn5:1RUNOFF_SB_24 crease 30 deg > 25.0 (fold amplitude > 1 cm)",
+  "palomares_roadside.kn5:1WALL_R_19 road-face crease 37 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_R_28 road-face crease 32 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_R_38 road-face crease 33 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_L_02 road-face crease 34 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_L_04 road-face crease 35 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_L_27 road-face crease 31 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_L_28 road-face crease 31 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_L_32 road-face crease 32 deg within 8.0 m of the edge",
+  "palomares_roadside.kn5:1WALL_bld_00 wall thinner than 0.5 m (0.30) at s=5999",
+  "palomares_terrain.kn5: texture ter_macro_a0.dds mip chain goes black (distant surfaces render black)",
+  "palomares_terrain.kn5: texture ter_macro_a1.dds mip chain goes black (distant surfaces render black)",
+  "palomares_terrain.kn5: texture ter_macro_a2.dds mip chain goes black (distant surfaces render black)",
+  "palomares_terrain.kn5: texture ter_macro_a3.dds mip chain goes black (distant surfaces render black)",
+  "palomares_terrain.kn5: texture ter_rock_d.dds mip chain goes black (distant surfaces render black)",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_06 / palomares_dressing.kn5:1WALL_dressing_R_07 at s=1750",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_14 / palomares_roadside.kn5:1WALL_R_14 at s=3554",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_14 / palomares_dressing.kn5:1WALL_dressing_R_14 at s=3558",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_14 / palomares_dressing.kn5:1WALL_dressing_R_14 at s=3574",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_14 / palomares_roadside.kn5:1WALL_bld_00 at s=3680",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_15 / palomares_dressing.kn5:1WALL_dressing_R_15 at s=3930",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_16 / palomares_roadside.kn5:1WALL_R_16 at s=4008",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_19 / palomares_dressing.kn5:1WALL_dressing_bld_00 at s=4964",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_20 / palomares_dressing.kn5:1WALL_dressing_R_20 at s=5064",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_21 / palomares_roadside.kn5:1WALL_R_21 at s=5460",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_21 / palomares_roadside.kn5:1WALL_R_21 at s=5480",
+  "overlapping colliders palomares_roadside.kn5:1WALL_R_45 / palomares_dressing.kn5:1WALL_dressing_R_45 at s=11358",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_bld_00 / palomares_roadside.kn5:1WALL_bld_00 at s=13840",
+  "overlapping colliders palomares_roadside.kn5:1WALL_bld_00 / palomares_roadside.kn5:1WALL_R_62 at s=15560",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_R_62 / palomares_roadside.kn5:1WALL_R_62 at s=15570",
+  "overlapping colliders palomares_roadside.kn5:1WALL_bld_00 / palomares_roadside.kn5:1WALL_R_62 at s=15552",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_L_00 / palomares_roadside.kn5:1WALL_L_00 at s=2",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_L_00 / palomares_roadside.kn5:1WALL_L_00 at s=50",
+  "overlapping colliders palomares_dressing.kn5:1WALL_dressing_L_02 / palomares_roadside.kn5:1WALL_L_02 at s=696",
+  "overlapping colliders palomares_roadside.kn5:1WALL_L_03 / palomares_dressing.kn5:1WALL_dressing_L_03 at s=858",
+  "... 42 overlapping collider pairs in total"
+ ],
+ "warnings": [],
+ "n_warnings": 0,
+ "stats": {
+  "wall_face_crease_max_deg": {
+   "1WALL_R_19": 37.4,
+   "1WALL_L_04": 34.8,
+   "1WALL_L_02": 34.4,
+   "1WALL_R_38": 33.4,
+   "1WALL_R_28": 32.4,
+   "1WALL_dressing_R_17": 32.2,
+   "1WALL_L_32": 32.2,
+   "1WALL_L_27": 31.4,
+   "1WALL_L_28": 30.6,
+   "1WALL_L_38": 28.7
+  },
+  "kerb_crease_raw_max_deg": {
+   "1KERB_NB_m06": 132.1,
+   "1KERB_NB_m01": 120.0,
+   "1KERB_SB_m01": 116.3,
+   "1KERB_NB_m02": 114.4,
+   "1KERB_SB_m02": 114.4,
+   "1KERB_SB_m00": 111.3,
+   "1KERB_NB_m00": 104.8,
+   "1KERB_SB_37": 103.2,
+   "1KERB_NB_m12": 102.7,
+   "1KERB_SB_m12": 102.7
+  },
+  "kerb_crease_max_deg": {
+   "1KERB_NB_m06": 132.1,
+   "1KERB_NB_m01": 120.0,
+   "1KERB_SB_m01": 116.3,
+   "1KERB_NB_m02": 114.4,
+   "1KERB_SB_m02": 114.4,
+   "1KERB_SB_m00": 111.3,
+   "1KERB_NB_m00": 104.8,
+   "1KERB_SB_37": 103.2,
+   "1KERB_NB_m12": 102.7,
+   "1KERB_SB_m12": 102.7
+  },
+  "runoff_crease_raw_max_deg": {
+   "1RUNOFF_SB_24": 29.8,
+   "1RUNOFF_SB_55": 15.9,
+   "1RUNOFF_NB_27": 12.3
+  },
+  "runoff_crease_max_deg": {
+   "1RUNOFF_SB_24": 29.8,
+   "1RUNOFF_SB_55": 15.9,
+   "1RUNOFF_NB_27": 12.3
+  },
+  "road_banktoe_crease_max_deg": {
+   "1ROAD_APR01": 35.5,
+   "1ROAD_APR43": 26.3,
+   "1ROAD_APR13": 11.1,
+   "1ROAD_00": 0.0,
+   "1ROAD_01": 0.0,
+   "1ROAD_02": 0.0,
+   "1ROAD_03": 0.0,
+   "1ROAD_04": 0.0,
+   "1ROAD_05": 0.0,
+   "1ROAD_06": 0.0
+  },
+  "road_crease_raw_max_deg": {
+   "1ROAD_APR01": 35.5,
+   "1ROAD_APR43": 26.3,
+   "1ROAD_APR15": 20.7,
+   "1ROAD_APR14": 11.7,
+   "1ROAD_APR13": 11.1,
+   "1ROAD_APL54": 10.2,
+   "1ROAD_APR16": 9.2,
+   "1ROAD_09": 6.0,
+   "1ROAD_12": 5.7,
+   "1ROAD_14": 5.7
+  },
+  "road_crease_max_deg": {
+   "1ROAD_APR15": 20.7,
+   "1ROAD_APR14": 11.7,
+   "1ROAD_APL54": 10.2,
+   "1ROAD_APR16": 9.2,
+   "1ROAD_APR13": 7.5,
+   "1ROAD_09": 6.0,
+   "1ROAD_APR43": 6.0,
+   "1ROAD_12": 5.7,
+   "1ROAD_14": 5.7,
+   "1ROAD_24": 5.7
+  },
+  "grass_banktoe_crease_max_deg": {
+   "1GRASS_tr46": 100.0,
+   "1GRASS_tr01": 99.9,
+   "1GRASS_tr14": 99.9,
+   "1GRASS_tr28": 99.9,
+   "1GRASS_tr31": 99.9,
+   "1GRASS_tr40": 99.9,
+   "1GRASS_tr53": 99.9,
+   "1GRASS_tr15": 99.8,
+   "1GRASS_tr35": 99.8,
+   "1GRASS_tr44": 99.8
+  },
+  "grass_crease_raw_max_deg": {
+   "1GRASS_tr07": 176.8,
+   "1GRASS_tr12": 174.8,
+   "1GRASS_tr27": 168.4,
+   "1GRASS_tr53": 165.3,
+   "1GRASS_tr28": 157.5,
+   "1GRASS_tr31": 157.0,
+   "1GRASS_tr34": 152.5,
+   "1GRASS_tr32": 151.9,
+   "1GRASS_tr36": 146.5,
+   "1GRASS_tr35": 142.8
+  },
+  "grass_crease_max_deg": {
+   "1GRASS_tb01": 41.4,
+   "1GRASS_tb03": 38.7,
+   "1GRASS_tb09": 38.4,
+   "1GRASS_tb30": 38.4,
+   "1GRASS_tb51": 37.6,
+   "1GRASS_tl01": 37.0,
+   "1GRASS_tl09": 36.9,
+   "1GRASS_tl12": 36.9,
+   "1GRASS_tl18": 36.7,
+   "1GRASS_tb19": 36.7
+  },
+  "layouts": {
+   "road_full": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "road_full_rev": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "road_north": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "road_north_rev": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "road_summit": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "road_summit_rev": {
+    "materials": 32,
+    "shader_texture_combos": 32,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap"
+    ],
+    "textures": 32,
+    "texture_mb": 147.9,
+    "csp_shader_replacements": 0
+   },
+   "track_full": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   },
+   "track_full_rev": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   },
+   "track_north": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   },
+   "track_north_rev": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   },
+   "track_summit": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   },
+   "track_summit_rev": {
+    "materials": 36,
+    "shader_texture_combos": 36,
+    "shaders": [
+     "ksPerPixel",
+     "ksPerPixelAT",
+     "ksPerPixelMultiMap",
+     "ksPerPixelNM"
+    ],
+    "textures": 37,
+    "texture_mb": 160.6,
+    "csp_shader_replacements": 0
+   }
+  },
+  "wall_tris_total": 66064,
+  "wall_tris_per_km": 4239,
+  "wall_components": 792
+ }
+}

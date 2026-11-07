@@ -267,7 +267,7 @@ def view_net(spec, length=200.0, bdir=None):
     import csv as _csv
     from kn5 import read_kn5
     from dds import to_png
-    road, s0 = spec.split(":"); s0 = float(s0)
+    road, s0, *gl = spec.split(":"); s0 = float(s0)      # <road>:<s0>[:<kn5 glob>], default: every dev7 kn5
     tag = {"niles_canyon_road": "ncr"}.get(road, road)
     trk = pathlib.Path(bdir or ROOT / "build_dev7") / "palomares_road"
     rows = list(_csv.DictReader(open(ROOT / f"data/derived/dev7/centerline_{road}.csv")))
@@ -277,7 +277,7 @@ def view_net(spec, length=200.0, bdir=None):
     sel = (cl[:, 0] >= s0 - 40) & (cl[:, 0] <= s0 + length + 260)
     box_lo, box_hi = cl[sel, 1:3].min(0) - 120, cl[sel, 1:3].max(0) + 120
     Ps, Ts, Cs, n = [], [], [], 0
-    for f in sorted(trk.glob(f"palomares_niles_{tag}*.kn5")):
+    for f in sorted(trk.glob(gl[0] if gl else "palomares_niles_*.kn5")):
         k = read_kn5(str(f)); mats = dict(enumerate(k["materials"])); texc = {}   # mesh material = index
         for m in k["meshes"]:
             if not m["renderable"] or not m["visible"]:
