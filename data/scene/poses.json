@@ -580,12 +580,12 @@
   },
   {
    "frame": 21,
-   "s": 1300.7,
-   "lateral": -0.59,
+   "s": 1300.8,
+   "lateral": -0.6,
    "height": 2.25,
-   "yaw": 6.64,
-   "pitch": 4.68,
-   "roll": -2.57,
+   "yaw": 6.59,
+   "pitch": 4.91,
+   "roll": -2.56,
    "fov_v": 75.0,
    "lens": {
     "model": "pinhole_k1",
@@ -605,19 +605,19 @@
    "pinned": false,
    "t_s": 6.6,
    "flag_moved_30m": false,
-   "edge_cost": 30.91,
+   "edge_cost": 30.73,
    "edge_res_px": {
     "y": [
-     32.0,
-     10.2
+     29.2,
+     9.8
     ],
     "wl": [
-     10.1,
-     28.4
+     11.4,
+     28.3
     ],
     "e": [
-     24.2,
-     37.0
+     26.3,
+     36.9
     ]
    },
    "reg": "calib_edge"
@@ -1828,12 +1828,12 @@
   },
   {
    "frame": 65,
-   "s": 3710.4,
-   "lateral": -1.51,
-   "height": 1.95,
-   "yaw": 12.9,
-   "pitch": 4.28,
-   "roll": 5.36,
+   "s": 3709.6,
+   "lateral": -1.53,
+   "height": 2.17,
+   "yaw": 13.02,
+   "pitch": 3.44,
+   "roll": 5.47,
    "fov_v": 75.0,
    "lens": {
     "model": "pinhole_k1",
@@ -1853,19 +1853,19 @@
    "pinned": true,
    "t_s": 2.8,
    "flag_moved_30m": true,
-   "edge_cost": 39.14,
+   "edge_cost": 38.37,
    "edge_res_px": {
     "y": [
-     43.4,
-     7.3
+     42.9,
+     6.3
     ],
     "wl": [
-     24.9,
-     41.6
+     24.6,
+     40.9
     ],
     "e": [
-     18.8,
-     37.6
+     19.0,
+     36.4
     ]
    },
    "reg": "calib_edge"
@@ -2208,12 +2208,12 @@
   },
   {
    "frame": 78,
-   "s": 3960.9,
-   "lateral": -0.81,
-   "height": 1.98,
-   "yaw": 13.86,
+   "s": 3960.4,
+   "lateral": -0.84,
+   "height": 1.97,
+   "yaw": 13.87,
    "pitch": 5.78,
-   "roll": 4.02,
+   "roll": 4.03,
    "fov_v": 75.0,
    "lens": {
     "model": "pinhole_k1",
@@ -2233,19 +2233,19 @@
    "pinned": false,
    "t_s": 7.2,
    "flag_moved_30m": false,
-   "edge_cost": 38.52,
+   "edge_cost": 38.49,
    "edge_res_px": {
     "y": [
-     47.1,
-     6.0
+     47.0,
+     5.8
     ],
     "wl": [
-     15.4,
-     34.1
+     16.0,
+     34.3
     ],
     "e": [
-     31.7,
-     41.7
+     31.2,
+     41.5
     ]
    },
    "reg": "calib_edge"
@@ -3428,12 +3428,12 @@
   },
   {
    "frame": 121,
-   "s": 7642.4,
-   "lateral": -1.41,
+   "s": 7643.1,
+   "lateral": -1.45,
    "height": 2.25,
-   "yaw": 6.02,
-   "pitch": -7.15,
-   "roll": 0.22,
+   "yaw": 5.79,
+   "pitch": -7.11,
+   "roll": 0.37,
    "fov_v": 75.0,
    "lens": {
     "model": "pinhole_k1",
@@ -3453,19 +3453,19 @@
    "pinned": false,
    "t_s": 8.2,
    "flag_moved_30m": false,
-   "edge_cost": 25.4,
+   "edge_cost": 25.07,
    "edge_res_px": {
     "y": [
-     19.4,
-     17.6
+     18.1,
+     15.4
     ],
     "wl": [
-     11.6,
-     19.2
+     12.6,
+     20.2
     ],
     "e": [
-     18.1,
-     30.2
+     18.9,
+     29.7
     ]
    },
    "reg": "calib_edge"
@@ -3780,15 +3780,15 @@
    "edge_cost": 31.65,
    "edge_res_px": {
     "y": [
-     7.7,
+     7.8,
      7.2
     ],
     "wl": [
      29.7,
-     27.3
+     27.2
     ],
     "e": [
-     37.2,
+     37.1,
      41.1
     ]
    },
@@ -4498,7 +4498,7 @@
   {
    "frame": 158,
    "s": 10469.8,
-   "lateral": -0.88,
+   "lateral": -0.87,
    "height": 2.22,
    "yaw": 2.79,
    "pitch": 0.65,
@@ -4522,18 +4522,18 @@
    "pinned": false,
    "t_s": 6.2,
    "flag_moved_30m": false,
-   "edge_cost": 29.64,
+   "edge_cost": 29.61,
    "edge_res_px": {
     "y": [
      31.5,
-     5.8
+     5.9
     ],
     "wl": [
-     14.2,
-     19.9
+     14.1,
+     19.8
     ],
     "e": [
-     27.2,
+     27.3,
      40.1
     ]
    },
@@ -5382,10 +5382,10 @@
   {
    "frame": 189,
    "s": 13182.4,
-   "lateral": 0.38,
-   "height": 1.95,
-   "yaw": 13.86,
-   "pitch": 3.95,
+   "lateral": 0.39,
+   "height": 2.05,
+   "yaw": 13.88,
+   "pitch": 3.52,
    "roll": -4.01,
    "fov_v": 75.0,
    "lens": {
@@ -5406,19 +5406,19 @@
    "pinned": false,
    "t_s": 6.3,
    "flag_moved_30m": false,
-   "edge_cost": 31.64,
+   "edge_cost": 31.03,
    "edge_res_px": {
     "y": [
-     32.1,
-     12.1
+     33.2,
+     9.7
     ],
     "wl": [
      17.5,
-     27.0
+     27.8
     ],
     "e": [
-     21.5,
-     32.7
+     19.5,
+     31.9
     ]
    },
    "reg": "calib_edge"
@@ -5735,10 +5735,10 @@
   {
    "frame": 201,
    "s": 13936.7,
-   "lateral": -0.79,
+   "lateral": -0.78,
    "height": 2.14,
    "yaw": 9.17,
-   "pitch": 1.06,
+   "pitch": 1.09,
    "roll": 6.88,
    "fov_v": 75.0,
    "lens": {
@@ -5759,19 +5759,19 @@
    "pinned": false,
    "t_s": 6.5,
    "flag_moved_30m": false,
-   "edge_cost": 30.62,
+   "edge_cost": 30.61,
    "edge_res_px": {
     "y": [
-     34.7,
-     6.4
+     34.4,
+     6.9
     ],
     "wl": [
-     9.1,
-     29.2
+     9.2,
+     29.0
     ],
     "e": [
-     23.1,
-     38.3
+     23.2,
+     38.2
     ]
    },
    "reg": "calib_edge"
