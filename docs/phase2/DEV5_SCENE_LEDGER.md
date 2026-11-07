@@ -94,3 +94,17 @@ Only `make package` (21 → 22 → QA → 25) consumes the ledger for the real t
   `python3 scripts/p5/register.py --set 104=5560` (stored in `data/scene/pose_pins.json`; only the rest of the
   pose is refit within ±15 m). Low `conf` (< 0.3) or `flag_moved_30m` frames are the ones to check by eye first.
 - CPU: everything runs at `nice 5` with at most 3 processes.
+
+## dev7 rows: the `road` field (package M, 2026-11-07)
+
+dev7 rows (Niles town, Niles Canyon Rd, Sunol) add a **`road`** field: a centerline id from `data/derived/dev7/centerline_<road>.csv`, such as `niles_canyon_road` (s=0 at Mission Blvd, 10729 at the Sunol stop) or `niles_blvd` (s=0 at the Sullivan Underpass end).
+
+- `s` / `s1` are stations on **that** road. `side` is L/R relative to increasing s on that road. `off` is measured beyond that road's pavement edge (`edge_left_m` / `edge_right_m`). `dir` nb/sb means with / against increasing s.
+- Rows without `road` are Palomares rows, exactly as before.
+- `scripts/p5/ledger_merge.py` writes rows with `road` to `data/scene/ledger_dev7.jsonl` and everything else to `ledger.jsonl`, so the Palomares build never sees them.
+- Lint dev7 rows with `ledger_lint.py --ledger data/scene/ledger_dev7.jsonl`. It checks s against the road's length.
+- Extra fields:
+  - `mly`: the Mapillary image ids the row was judged from (attribution in `reports/dev7/mapillary_attribution.csv`).
+  - `params.mly_feature`: Mapillary map-feature ids.
+- `src` may also be `mapillary`, `osm` or `naip`.
+- dev7 asset types carry `dev7: true` in `config/asset_catalog.yaml` and have no generator yet. `assets.py --yaml` keeps them.
