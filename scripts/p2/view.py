@@ -260,9 +260,66 @@ def view_chunk(s0, length=200.0, bdir=None):
     return strip(tiles, OUT / f"chunk_{int(s0):05d}.jpg", f"chunk s {s0:.0f}-{s0 + length:.0f} from {bdir}  ({len(T)} tris)")
 
 
+# ------------------------------------------------------------------ dev7 network road view (kn5 based)
+def view_net(spec, length=200.0, bdir=None):
+    """view.py net <road>:<s0> [--dir build_dev7]: renders the built palomares_niles_<tag>*.kn5 of a dev7 road
+    (scripts/p7g/21n_road.py) from the driver's eye + overview, beside the nearest local Mapillary image."""
+    import csv as _csv
+    from kn5 import read_kn5
+    from dds import to_png
+    road, s0 = spec.split(":"); s0 = float(s0)
+    tag = {"niles_canyon_road": "ncr"}.get(road, road)
+    trk = pathlib.Path(bdir or ROOT / "build_dev7") / "palomares_road"
+    rows = list(_csv.DictReader(open(ROOT / f"data/derived/dev7/centerline_{road}.csv")))
+    cl = np.array([[float(r[k]) for k in ("s_m", "x_local", "y_local", "z_navd88")] for r in rows])
+    sys.path.insert(0, str(ROOT / "scripts/p7g")); import network as _NW
+    cl[:, 3] = _NW.load_road(road).z            # built profile (deck / grade fixes), not the raw CSV z
+    sel = (cl[:, 0] >= s0 - 40) & (cl[:, 0] <= s0 + length + 260)
+    box_lo, box_hi = cl[sel, 1:3].min(0) - 120, cl[sel, 1:3].max(0) + 120
+    Ps, Ts, Cs, n = [], [], [], 0
+    for f in sorted(trk.glob(f"palomares_niles_{tag}*.kn5")):
+        k = read_kn5(str(f)); mats = dict(enumerate(k["materials"])); texc = {}   # mesh material = index
+        for m in k["meshes"]:
+            if not m["renderable"] or not m["visible"]:
+                continue
+            P = np.c_[m["pos"][:, 0], -m["pos"][:, 2], m["pos"][:, 1]].astype(float); T = m["idx"].reshape(-1, 3)
+            c = P[T].mean(1)[:, :2]; kk = ((c >= box_lo) & (c <= box_hi)).all(1)
+            if not kk.any():
+                continue
+            mt = mats[m["material"]]; tn = mt["textures"].get("txDiffuse")
+            if tn not in texc:
+                texc[tn] = Image.open(io.BytesIO(to_png(k["textures"][tn]))) if tn in k["textures"] else Image.new("RGBA", (4, 4), (128, 128, 128, 255))
+            uv = m["uv"].astype(float).copy(); uv[:, 1] = -uv[:, 1]        # kn5.py writes -v
+            col, keep = tri_colors(uv, T[kk], texc[tn], bool(mt["alpha_tested"]))
+            Ps.append(P); Ts.append(T[kk][keep] + n); Cs.append(col[keep]); n += len(P)
+    P, T, C = np.concatenate(Ps), np.concatenate(Ts), np.concatenate(Cs)
+
+    def at(s):
+        j = int(np.argmin(np.abs(cl[:, 0] - s))); j2 = min(j + 5, len(cl) - 1)
+        t = cl[j2, 1:3] - cl[j, 1:3]; t /= np.linalg.norm(t) + 1e-9
+        return cl[j, 1:4], t
+    tiles = []
+    for ds in (0.0, length / 2):
+        p, t = at(s0 + ds)
+        eye = p + np.array([0, 0, 1.3]); eye[:2] += np.array([t[1], -t[0]]) * 1.8
+        tiles.append((f"{road} driver's eye s {s0 + ds:.0f}", render(P, T, C, eye, eye + np.array([t[0], t[1], 0.0]) * 40, fov=75, far=700)))
+    p, t = at(s0 + length / 2)
+    tiles.append((f"overview s {s0:.0f}-{s0 + length:.0f}", render(P, T, C, p + np.array([-t[1] * 90 - t[0] * 60, t[0] * 90 - t[1] * 60, 70]), p, fov=60)))
+    try:
+        mi = [r for r in _csv.DictReader(open(ROOT / "data/derived/dev7/mapillary_index.csv")) if r["road"] == road and r["dir"] == "fwd"]
+        mi = sorted(mi, key=lambda r: abs(float(r["s_m"]) - s0))
+        for r in mi[:400]:
+            q = ROOT / f"data/raw/dev7/mapillary/img/{r['id']}.jpg"
+            if q.exists() and abs(float(r["s_m"]) - s0) < 300:
+                tiles.append((f"Mapillary {r['id']} s {float(r['s_m']):.0f} (CC-BY-SA, {r['creator']})", Image.open(q))); break
+    except FileNotFoundError:
+        pass
+    return strip(tiles, OUT / f"net_{tag}_{int(s0):05d}.jpg", f"{road} s {s0:.0f}-{s0 + length:.0f} from {trk} ({len(T)} tris)")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("what", choices=["asset", "chunk"])
+    ap.add_argument("what", choices=["asset", "chunk", "net"])
     ap.add_argument("name")
     ap.add_argument("--frame", type=int)
     ap.add_argument("--len", type=float, default=200.0)
@@ -270,7 +327,8 @@ def main():
     a = ap.parse_args()
     t0 = time.time()
     sys.path.insert(0, str(HERE))
-    out = view_asset(a.name, a.frame) if a.what == "asset" else view_chunk(float(a.name), a.len, a.dir)
+    out = (view_asset(a.name, a.frame) if a.what == "asset" else view_net(a.name, a.len, a.dir) if a.what == "net"
+           else view_chunk(float(a.name), a.len, a.dir))
     print(f"-> {out}  ({time.time() - t0:.1f}s)")
 
 

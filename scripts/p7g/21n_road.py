@@ -59,7 +59,7 @@ D = np.where(u[None] >= 0, u[None] * road.el[I, None], u[None] * road.er[I, None
 ZR = road.surface_z(I[:, None], D)
 XR, YR = road.xy(I[:, None], D)
 SH = 0.6
-_w = np.clip(gaussian_filter1d(on_bridge.astype(float), 5.0) * 2, 0, 1); wbr = (_w * _w * (3 - 2 * _w))[I]
+_w = np.clip(gaussian_filter1d(on_bridge.astype(float), 5.0) * 2, 0, 1); wbr = np.maximum(_w * _w * (3 - 2 * _w), on_bridge)[I]   # deck rows exactly flush
 sh_cols = []
 for side in (-1, 1):                     # shoulder: edge, mid, outer
     e = np.where(side > 0, road.el[I], road.er[I]); ze = road.surface_z(I, side * e)
@@ -144,8 +144,8 @@ pz = dtm(pts[:, 0], pts[:, 1])
 # near the edge: terrain within 6 m of the shoulder is slope-limited (<= 40 deg) from the shoulder outer z, so the
 # CDT never folds right at the drivable edge (qa_ffb_safety TERR_CREASE); on bridge spans the deck edge drops freely
 de = np.abs(off) - hw
-zo = road.surface_z(jj, np.sign(off) * hw, noise=False)
-lim = np.maximum(de, 0.05) * 0.84
+zo = np.where(off > 0, sh_cols[1][1][2][jj - i0], sh_cols[0][1][2][jj - i0])   # actual shoulder outer z
+lim = 0.35 * np.clip(de, 0.05, 3.0) + 0.84 * np.maximum(de - 3.0, 0)   # ~19 deg in the first 3 m, then 40 deg
 near = (de < 6.0) & ~on_bridge[jj]
 pz = np.where(near, zo + np.clip(pz - zo, -lim, lim), pz)
 # under / beside bridge decks: no terrain within 4 m of the deck edge (the abutment skirt starts beyond)
@@ -163,6 +163,29 @@ e = np.stack([np.linalg.norm(P3[TT[:, a], :2] - P3[TT[:, b], :2], axis=1) for a,
 TT = TT[e < 9.0]
 cr = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]])[:, 2]
 TT[cr < 0] = TT[cr < 0][:, [0, 2, 1]]
+# crease relaxation near the drivable edge (qa_ffb_safety: 1GRASS creases <= 45 deg within 3 m): vertices of
+# folded pairs (both faces < 40 deg, crease > 40 deg) move toward their neighbours' mean; outline vertices fixed
+dedge, _ = cKDTree(bound).query(P3[:, :2], workers=2)
+nbr = np.r_[TT[:, [0, 1]], TT[:, [1, 2]], TT[:, [2, 0]]]
+nrelax = 0
+for _it in range(12):
+    fn_ = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]]); fn_ /= np.linalg.norm(fn_, axis=1, keepdims=True)
+    te = np.r_[np.sort(TT[:, [0, 1]], 1), np.sort(TT[:, [1, 2]], 1), np.sort(TT[:, [2, 0]], 1)]; tid = np.tile(np.arange(len(TT)), 3)
+    o = np.lexsort((te[:, 1], te[:, 0])); te, tid = te[o], tid[o]
+    same = (te[1:] == te[:-1]).all(1); ta, tb = tid[:-1][same], tid[1:][same]
+    ang = np.degrees(np.arccos(np.clip((fn_[ta] * fn_[tb]).sum(1), -1, 1)))
+    c40 = np.cos(np.radians(40))
+    near_t = dedge[TT].min(1) < 4.0
+    bad = (ang > 40) & (fn_[ta, 2] > c40) & (fn_[tb, 2] > c40) & near_t[ta] & near_t[tb]
+    if not bad.any():
+        break
+    vb = np.unique(TT[np.r_[ta[bad], tb[bad]]]); vb = vb[vb >= nb]
+    sm = np.zeros(len(P3)); ct = np.zeros(len(P3))
+    np.add.at(sm, nbr[:, 0], P3[nbr[:, 1], 2]); np.add.at(ct, nbr[:, 0], 1)
+    np.add.at(sm, nbr[:, 1], P3[nbr[:, 0], 2]); np.add.at(ct, nbr[:, 1], 1)
+    P3[vb, 2] = 0.5 * P3[vb, 2] + 0.5 * sm[vb] / np.maximum(ct[vb], 1)
+    nrelax += len(vb)
+LOG["terrain_relaxed_vertices"] = int(nrelax)
 tick("terrain_cdt")
 # material by slope (ground / bank / rock), chunk by nearest station (250 m)
 fn = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]]); fn /= np.linalg.norm(fn, axis=1, keepdims=True)
@@ -200,7 +223,14 @@ for bi, (a, b) in enumerate(bridges):
 tick("bridges")
 
 # ------------------------------------------------------------------ kn5 (materials + DDS from the Palomares road kn5)
-src = read_kn5(str(ROOT / "build/palomares_road/palomares_road.kn5"))
+# material source: a snapshot of a built Palomares road kn5 (build/ is rewritten during full builds)
+SRC = BUILD / "dev7" / "material_src_palomares_road.kn5"
+if not SRC.exists():
+    import shutil
+    for cand in (ROOT / "build/palomares_road/palomares_road.kn5", ROOT / "build_quick/palomares_road/palomares_road.kn5"):
+        if cand.exists():
+            SRC.parent.mkdir(parents=True, exist_ok=True); shutil.copy(cand, SRC); break
+src = read_kn5(str(SRC))
 SM = {m["name"]: m for m in src["materials"]}
 mats, texs = [], {}
 for nm in ("road_asphalt", "shoulder_dirt", "ground", "bank"):

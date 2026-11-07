@@ -85,7 +85,7 @@ st = np.arange(i0, i1, 0.5)
 ii = np.round(st).astype(int)
 SH = 0.6
 res = dict(road=A.road, files=[f.name for f in files], s=[float(st[0]), float(st[-1])])
-holes, steps, overl, kinks = [], [], [], []
+holes, steps, overl, kinks, breaks = [], [], [], [], []
 ztop_cl = np.full(len(st), np.nan); zl2 = np.full(len(st), np.nan); zr2 = np.full(len(st), np.nan)
 BLK = 400
 for b0 in range(0, len(st), BLK):
@@ -121,12 +121,22 @@ for b0 in range(0, len(st), BLK):
         a_ = np.abs(dz)
         nb = np.full_like(a_, np.nan)
         if axis == 0:
-            nb[1:-1] = np.fmax(a_[:-2], a_[2:])
+            nb[1:-1] = np.maximum(a_[:-2], a_[2:])      # both neighbours required (band ends are not steps)
         else:
-            nb[:, 1:-1] = np.fmax(a_[:, :-2], a_[:, 2:])
+            nb[:, 1:-1] = np.maximum(a_[:, :-2], a_[:, 2:])
         jump = a_ - nb
         for r, c in zip(*np.nonzero(np.isfinite(jump) & (jump > 0.02))):
-            steps.append((float(st[sl][r]), float(D[r, c]), float(jump[r, c]), axis))
+            # candidate: re-sample the cell at 24 sub-steps (1-2 cm); a real step shows as > 2 cm between two
+            # sub-samples, a slope break (asphalt crossfall -> shoulder rise) does not
+            r2, c2 = (r + 1, c) if axis == 0 else (r, c + 1)
+            t = np.linspace(0, 1, 25)[:, None]
+            q = (1 - t) * np.array([X[r, c], Y[r, c]]) + t * np.array([X[r2, c2], Y[r2, c2]])
+            zz = np.array([max((z for z, _ in h), default=np.nan) for h in cast(q)])
+            jmp = np.nanmax(np.abs(np.diff(zz))) if np.isfinite(zz).sum() > 1 else 0.0
+            if jmp > 0.02:
+                steps.append((float(st[sl][r]), float(D[r, c]), float(jmp), axis))
+            else:
+                breaks.append(float(jump[r, c]))
     # kinks (info only): second difference along s > 2 cm on the ASPHALT
     d2 = np.abs(Z[2:] - 2 * Z[1:-1] + Z[:-2])
     asp = np.abs(D[1:-1]) < np.where(D[1:-1] >= 0, road.el[I_[1:-1], None], road.er[I_[1:-1], None]) - 0.1
@@ -146,6 +156,7 @@ cam = (zl2 - zr2) / 4.0; dcam = np.abs(np.diff(cam[::2]))
 res.update(holes=len(holes), holes_list=holes[:50], steps=len(steps),
            steps_list=sorted(steps, key=lambda t: -t[2])[:50],
            step_max_m=max([t[2] for t in steps], default=0.0),
+           slope_breaks_checked=len(breaks),
            asphalt_kinks=len(kinks), asphalt_kinks_list=sorted(kinks, key=lambda t: -t[2])[:30],
            overlaps=len(overl), overlaps_list=overl[:50],
            grade_max_pct_25m=float(np.nanmax(np.abs(g25)) * 100), grade_max_pct_5m=float(np.nanmax(np.abs(g5[10:-10])) * 100),
@@ -161,6 +172,10 @@ kd = cKDTree(np.c_[road.x, road.y]); dmid, j = kd.query(mid[:, :2])
 off = (mid[:, 0] - road.x[j]) * road.nx[j] + (mid[:, 1] - road.y[j]) * road.ny[j]
 hw = np.where(off > 0, road.el[j], road.er[j]) + SH
 inb = (np.abs(off) < hw - 0.05) & (j >= i0) & (j <= i1) & (dmid < hw + 1)
+from geom import load_centerline, CFG
+_pal = load_centerline(CFG["build_end_m"] + 150); _dp, _ = cKDTree(np.c_[_pal["x_local"], _pal["y_local"]]).query(mid[:, :2])
+pj = inb & (_dp < 152)        # inside the Palomares terrain footprint: stitched by the junction step, reported apart
+res["open_edges_palomares_junction"] = int(pj.sum()); inb = inb & ~pj
 res["open_edges_in_band"] = int(inb.sum()); res["open_edges_in_band_s"] = sorted(set(int(road.s[x]) for x in j[inb]))[:50]
 out = ROOT / "reports" / "dev7" / f"qa_net_{A.road}.json"; out.parent.mkdir(parents=True, exist_ok=True)
 json.dump(res, open(out, "w"), indent=1)

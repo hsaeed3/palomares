@@ -66,4 +66,18 @@ def load_road(name, log=None):
     z = _grade_limit(c["s_m"], z, ROLE_MAX_GRADE.get(role, 0.12))
     if log is not None:
         log[name] = dict(bridge_fixes=fx, dz_grade_limit_max=float(np.abs(z - c["z_navd88"]).max()))
-    return Road(None, name=name, z_override=z)
+    r = Road(None, name=name, z_override=z)
+    # bridge decks: no ground returns on/under the deck, the cross-section crossfall there is the creek bank
+    # (NCR decks read as a 10 % crown).  Use a 2 % crown on decks, blended over ~5 m at each end.
+    from scipy.ndimage import gaussian_filter1d
+    deck = (c.get("struct", np.array([""] * len(z))) != "") & np.char.startswith(c.get("struct", np.array([""] * len(z))).astype(str), "bridge")
+    for f in json.load(open(DEV7 / "features.geojson"))["features"]:
+        p = f["properties"]
+        if p["kind"] == "bridge_osm" and p.get("road") == name:
+            deck[int(p["s_start_m"]):int(p["s_end_m"]) + 1] = True
+    if deck.any():
+        w = np.clip(gaussian_filter1d(deck.astype(float), 8.0) * 2, 0, 1); w = np.maximum(w * w * (3 - 2 * w), deck)
+        r.cl = (1 - w) * r.cl + w * -0.02; r.cr = (1 - w) * r.cr + w * 0.02
+        if log is not None:
+            log[name]["deck_crown_stations"] = int(deck.sum())
+    return r
