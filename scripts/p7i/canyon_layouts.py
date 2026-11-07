@@ -29,6 +29,7 @@ RL.CACHE = ROOT / "data/scene/cache/racing_line_niles_canyon_road.pkl"; RLD = RL
 S_A, S_B = 70.0, float(road.s[-1]) - 90.0            # clear of the Mission Blvd junction / the Sunol stop
 # G (ae99896): dev7 layouts use the junction-cut Palomares copies, never the shipped palomares_terrain/road/lines_road.kn5
 BASEF = ["palomares_road_dev7.kn5", "palomares_terrain_dev7.kn5", "palomares_lines_road_dev7.kn5",
+         "palomares_niles_town.kn5", "palomares_niles_town_terrain.kn5",
          "palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomares_niles_assets.kn5"]
 LAYOUTS = {
     "canyon_road": dict(s_from=S_A, s_to=S_B, dir="nb", style="Road"),
@@ -107,6 +108,9 @@ def ext_config():
 def main():
     surf = (ROOT / "build_dev7/palomares_road/freeroam/data/surfaces.ini")
     SURF = surf.read_text() if surf.exists() else (ROOT / "build/palomares_road/track_full/data/surfaces.ini").read_text()
+    extra = (ROOT / "config/dev7/surfaces_dev7.ini").read_text()          # G: SIDEWALK (+ RAIL) after SURFACE_0..4
+    if "KEY=SIDEWALK" not in SURF:
+        SURF = SURF.rstrip() + "\n\n" + extra.strip() + "\n"
     W, H, pts, MAPINI = mapimg(); rep = {}
     missing = [f for f in BASEF if not (TRACK / f).exists()]
     assert not missing, f"missing kn5: {missing}"
