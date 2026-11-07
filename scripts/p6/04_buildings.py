@@ -53,7 +53,7 @@ def planar_cells(x, y, z):
     r = dz - (b[inv] * (dx - (sx / cnt)[inv]) + c[inv] * (dy - (sy / cnt)[inv]))
     rms = np.sqrt(np.bincount(inv, r * r, minlength=len(u)) / cnt)
     slope = np.hypot(b, c)
-    okc = (cnt >= 4) & (rms < 0.12) & (slope < 1.3) & (det > 0.05 * cnt ** 2 * 0.01)
+    okc = (cnt >= 4) & (rms < 0.15) & (slope < 1.3) & (det > 0.05 * cnt ** 2 * 0.01)
     return okc[inv], cnt[inv]
 
 
@@ -107,13 +107,18 @@ def fit_roof(u, v, z, Lu, Lv):
 def main():
     x, y, z, h = load_pts(); print(f"{len(x):,} single-return HAG>=1.8 candidate points")
     ok, cnt = planar_cells(x, y, z)
+    XA, YA = x.copy(), y.copy()                     # all candidates: planar share per footprint separates roofs from canopy
     x, y, z, h = x[ok], y[ok], z[ok], h[ok]; print(f"{len(x):,} in planar 1 m cells")
     x0, y0 = math.floor(x.min()) - 5, math.ceil(y.max()) + 5
     W, H = int((x.max() + 5 - x0) / RES) + 1, int((y0 - y.min() + 5) / RES) + 1
     c = ((x - x0) / RES).astype(int); r = ((y0 - y) / RES).astype(int)
     M = np.zeros((H, W), bool); M[r, c] = True
+
     M = ndi.binary_closing(M, np.ones((3, 3)), iterations=2); M = ndi.binary_fill_holes(M); M = ndi.binary_opening(M, np.ones((3, 3)))
-    lab, n = ndi.label(M); print(n, "components")
+    lab, n = ndi.label(M); print(n, "components"); del M
+    ca = ((XA - x0) / RES).astype(np.int32); ra = ((y0 - YA) / RES).astype(np.int32); ka = (ca >= 0) & (ca < W) & (ra >= 0) & (ra < H)
+    NA = np.bincount(lab[ra[ka], ca[ka]], minlength=n + 1); del XA, YA, ca, ra, ka
+    NP = np.bincount(lab[r, c], minlength=n + 1)
     sizes = np.bincount(lab.ravel()); keep = np.nonzero(sizes * RES * RES >= 9.0)[0]; keep = keep[keep > 0]
     tr = from_origin(x0, y0, RES, RES)
     naip = rasterio.open(DER / "naip2022_r060.tif"); dtm = rasterio.open(DER / "dtm_r100_b150.tif"); D1 = dtm.read(1)
@@ -132,6 +137,8 @@ def main():
         if P.geom_type != "Polygon" or P.area < 9: rej["small"] += 1; continue
         idx = order[starts[li]:starts[li + 1]]; px, py, pz, ph = x[idx], y[idx], z[idx], h[idx]
         if len(px) < 15: rej["small"] += 1; continue
+        pshare = NP[li] / max(NA[li], 1)
+        if pshare < 0.55: rej["canopy"] = rej.get("canopy", 0) + 1; continue
         dist, j = KD.query([P.centroid.x, P.centroid.y])
         if dist > 155: rej["far"] += 1; continue
         if np.percentile(ph, 90) < 2.3: rej["low"] += 1; continue
@@ -172,7 +179,7 @@ def main():
             rms_all.append(f["rms"])
             wx = cx0 + uc * cth - vc * sth; wy = cy0 + uc * sth + vc * cth
             parts.append(dict(cx=round(wx - X0, 3), cy=round(wy - Y0, 3), yaw=round(th, 5), Lu=round(Lu, 2), Lv=round(Lv, 2), **{k: (round(v, 3) if isinstance(v, float) else v) for k, v in f.items()}))
-        if np.median(rms_all) > 0.45: rej["rough"] += 1; continue
+        if np.median(rms_all) > 0.8: rej["rough"] += 1; continue
         # ground under the footprint
         gw = rasterio.windows.from_bounds(*P.buffer(1.0).bounds, dtm.transform).round_offsets().round_lengths()
         G = dtm.read(1, window=gw, boundless=True, fill_value=np.nan)
@@ -196,7 +203,7 @@ def main():
             area_m2=round(P.area, 1), n_pts=int(len(px)), ground_z=round(gz, 2), ground_z_hi=round(gzmax, 2),
             eave_z=round(eave, 2), ridge_z=round(ridge, 2), eave_h=round(eave - gz, 2), ridge_h=round(ridge - gz, 2),
             form=form, n_parts=len(parts), parts=parts, roof_rgb=[int(v) for v in rgb], ndvi=round(ndvi, 3),
-            rms_m=round(float(np.median(rms_all)), 3), circ=round(circ, 2), osm_iou=round(iou, 2),
+            planar_share=round(float(pshare), 2), rms_m=round(float(np.median(rms_all)), 3), circ=round(circ, 2), osm_iou=round(iou, 2),
             poly_local=[[round(a - X0, 2), round(b - Y0, 2)] for a, b in P.exterior.coords], src="lidar2021+naip2022")))
     # OSM buildings with no LiDAR match -> listed (not modelled)
     unmatched = [q for q in osm if not any(shape(f["geometry"]).intersects(q) for f in feats)]
