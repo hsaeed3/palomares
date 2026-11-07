@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """dev7 D-03: rasters from the streamed EPT nodes (data/cache/p7/nodes), same method as Phase-1 scripts/04_dtm.py
-(Delaunay-TIN linear interpolation of class 2 ground + class 17 bridge deck), but tiled on a fixed grid instead of
+(Delaunay-TIN linear interpolation via matplotlib's trapezoid-map tri finder of class 2 ground + class 17 bridge deck), but tiled on a fixed grid instead of
 along one road, so the whole town/canyon network is covered. All GeoTIFF EPSG:26910, NAVD88 m:
   dtm_r050_b40.tif    0.5 m bare earth inside the 40 m detail area (roads, parking, town rail)
   dtm_r100_b150.tif   1 m bare earth inside the 150 m terrain area (+ the 0.65 km^2 town polygon)
@@ -17,7 +17,7 @@ from rasterio.features import rasterize
 from rasterio.transform import from_origin
 from shapely import wkt
 from scipy.spatial import cKDTree, Delaunay
-from scipy.interpolate import LinearNDInterpolator
+import matplotlib.tri as mtri
 from common7 import *
 
 g = json.load(open(CACHE7 / "grid.json")); GX0, GY1, GW, GH = g["x0_local"], g["y1_local"], g["w"], g["h"]
@@ -83,7 +83,9 @@ for R in range(NTR):
         ids = ids[(gx[ids] > x0) & (gx[ids] < x1) & (gy[ids] > y0) & (gy[ids] < y1)]
         if len(ids) < 10: continue
         P = np.c_[gx[ids], gy[ids]].astype(np.float64)
-        tin = LinearNDInterpolator(Delaunay(P), gz[ids].astype(np.float64))
+        TRI = mtri.Triangulation(P[:, 0], P[:, 1], Delaunay(P).simplices)
+        _I = mtri.LinearTriInterpolator(TRI, gz[ids].astype(np.float64))
+        tin = lambda q: np.ma.filled(_I(q[:, 0], q[:, 1]).astype(np.float64), np.nan)
         rr, cc2 = np.nonzero(sub1)
         dtm1[r0 + rr, c0 + cc2] = tin(np.c_[GX0 + c0 + cc2 + .5, GY1 - (r0 + rr) - .5])
         sub05 = m05[2 * r0:2 * r1_, 2 * c0:2 * c1_]

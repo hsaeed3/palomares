@@ -207,7 +207,7 @@ print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill}
 # position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
 # 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
 # surface and every vertex within KERB_KEEP m of a 1KERB (kerbs are draped there) are pinned, i.e. vertices within KERB_KEEP m of a kerb.  Heights only.
-RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 25.0, 6.0, 4.5, 0.9
+RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 25.0, 6.0, 4.5, 0.0
 
 
 def runoff_clamp():
@@ -285,6 +285,21 @@ def runoff_clamp():
                     P3 = np.c_[xy[Tg[t_]], z[Tg[t_]]]; e_ = np.linalg.norm(np.roll(P3, 1, 0) - P3, axis=1)
                     print("   ", round(ang[q]), "tri", t_, "apron" if apron[t_] else "", "edges", e_.round(3), "dz", np.ptp(P3[:, 2]).round(3), "pins", pin[Tg[t_]].astype(int), "dr", dr[Tg[t_]].round(2), "xy", P3[0].round(1))
         r["left_by_dist"] = np.histogram(dd, [0, 0.9, 1.5, 2.5, 3.5, 4.5, 99])[0].tolist(); r["left_pins"] = np.bincount(pp, minlength=7).tolist()
+    # kerbs are draped over the shoulder: where the clamp raised the shoulder, lift the kerb vertices above it
+    from scipy.interpolate import LinearNDInterpolator
+    nk = 0
+    for g in ("kerbs_nb", "kerbs_sb"):
+        for m in G.get(g, []):
+            if not len(m["P"]):
+                continue
+            idx_ = np.nonzero(cKDTree(m["P"][:, :2]).query(ky, distance_upper_bound=1.5, workers=4)[0] < 1.5)[0]
+            if len(idx_) < 3:
+                continue
+            f_ = LinearNDInterpolator(ky[idx_], z[idx_])
+            zs = f_(m["P"][:, :2]); up = np.isfinite(zs) & (m["P"][:, 2] < zs + 0.002)
+            if up.any():
+                m["P"] = m["P"].copy(); m["P"][up, 2] = zs[up] + 0.002; nk += int(up.sum())
+    r["kerb_vertices_lifted"] = nk
     print(f"run-off crease clamp: {r}")
     return r
 
