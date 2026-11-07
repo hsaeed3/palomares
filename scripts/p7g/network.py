@@ -120,8 +120,15 @@ def cluster_polygon(name):
         _CLU_CACHE["niles"] = shapely.union_all(parts).buffer(0)
         return _CLU_CACHE["niles"]
     if name == "sunol":
+        # the all-way stop (60 m) plus 30 m around the two stubs that leave it (Paloma Rd, Pleasanton-Sunol Rd); kept
+        # clear of the NCR Arroyo de la Laguna bridge (10569-10664 m), which 21n builds with its parapets
+        import shapely
         c = load_centerline(None, DEV7 / "centerline_niles_canyon_road.csv")
-        return sg.Point(c["x_local"][-1], c["y_local"][-1]).buffer(140.0, 32)
+        parts = [sg.Point(c["x_local"][-1], c["y_local"][-1]).buffer(60.0, 32)]
+        for n in ("paloma_road", "pleasanton_sunol_road"):
+            m = load_centerline(None, DEV7 / f"centerline_{n}.csv")
+            parts.append(sg.LineString(np.c_[m["x_local"], m["y_local"]]).buffer(30.0))
+        return shapely.union_all(parts).buffer(0)
     raise KeyError(name)
 
 
