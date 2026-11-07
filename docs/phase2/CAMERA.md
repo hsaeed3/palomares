@@ -82,3 +82,20 @@ The 40-frame calibration set had a "before" mean cost of 41.7; at hfov 95 with f
 - **021:** the near-left edge is about 40 px off, the far curve shape differs, and h sits at the 2.25 m bound.
 - **Road width or camera height ambiguity.** At h 1.5–1.6 m the model road projects about 25 % too wide. The road's real width, or the edge-line offsets in the build, should be checked against the LiDAR before trusting h = 2.1.
 - `build/geometry.pkl` changed during this work (another agent). The cache and the litmus were rebuilt from the 05:23 geometry; the 40-frame scan used the older cache.
+
+## Update: asphalt-edge fix and switch to a 70° view
+
+- **Edge-feature fix.** calib.py's edge feature used `Road.outer` (asphalt plus dirt shoulder, median 8.86 m across). It now uses the asphalt half-widths `Road.el`/`Road.er` through `scene.asphalt_edges()` (median 6.99 m, which matches `width_m` and the DTM flat strip of 6.62 m). The scorer was already correct: class 2 stops at the asphalt edge and the shoulder is class 5.
+- **Height after the fix.** With height free (1.2–2.3 m), frame 021 → 2.30 m and frame 065 → 2.07 m (`data/scene/calib_h2.json`). The model's paint is normal: the yellow is at ±0.09 m and the white lines are 0.3–0.45 m inside the asphalt edge, about 5.7 m apart.
+- **12-frame focal scan** (height free 1.2–2.6, frames 10 22 32 55 73 101 128 137 150 169 191 214):
+
+| hfov | mean cost | median height |
+|---|---|---|
+| 60° | 30.15 | 2.01 m |
+| 70° | 32.06 | 1.88 m |
+| 94° | 33.01 | 2.05 m |
+
+- **Current `config/camera.json`:** 70° was the only view that lowered both cost and height, so it is now in use: f = 1458.14 px, render vfov 53.44°, height 1.88 m (bounds 1.6–2.2).
+- **Litmus at 70°** (`data/scene/calib_litmus.json`): mean cost 28.57 (31.95 at 94°). Heights: 021 2.20, 065 1.82, 078 1.91, 121 2.20, 132 2.06, 158 2.20, 189 2.20, 201 2.16. Five of the eight sit at the 2.2 m bound.
+- **By eye:** 121, 132, 189 and 201 align. 021, 065, 078 and 158 still show left-edge and far-curve offsets. The result is not clearly better than at 94°.
+- **Still open:** focal length and height are only weakly separable with line features. The batches have not been run.

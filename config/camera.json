@@ -1,6 +1,18 @@
-{"model": "pinhole_k1",
- "f_px": 956.6, "dcx": 0.0, "dcy": 0.0, "k1": 0.0,
- "height_m": 2.10, "height_bounds_m": [1.95, 2.25],
- "ref_size": [2042, 1468],
- "render_vfov_deg": 75.0,
- "note": "Frames are rectilinear screenshots of a 360-panorama web viewer (UI buttons top-right, compass bottom-right), hand-cropped (1986..2066 x 1400..1496 px). x = w/2+dcx + f*u*(1+k1*r^2), y = h/2+dcy - f*v*(1+k1*r^2), u,v = camera-plane tangents, f in screenshot px shared by all frames. f = 734/tan(37.5 deg) (viewer vfov 75 deg at h=1468; hfov 93.7 deg at w=2042). See docs/phase2/CAMERA.md and scripts/p5/calib.py."}
+{
+ "model": "pinhole_k1",
+ "f_px": 1458.14,
+ "dcx": 0.0,
+ "dcy": 0.0,
+ "k1": 0.0,
+ "height_m": 1.88,
+ "height_bounds_m": [
+  1.6,
+  2.2
+ ],
+ "ref_size": [
+  2042,
+  1468
+ ],
+ "render_vfov_deg": 53.44,
+ "note": "Frames are rectilinear screenshots of a 360-panorama web viewer (UI buttons top-right, compass bottom-right), hand-cropped (1986..2066 x 1400..1496 px). x = w/2+dcx + f*u*(1+k1*r^2), y = h/2+dcy - f*v*(1+k1*r^2), u,v = camera-plane tangents, f in screenshot px shared by all frames. f = 1021/tan(35 deg): hfov 70 deg at w=2042 (12-frame scan with asphalt-edge feature: hfov 60/70/94 cost 30.15/32.06/33.01, median h 2.01/1.88/2.05; 70 is the only one lowering both). See docs/phase2/CAMERA.md and scripts/p5/calib.py."
+}
