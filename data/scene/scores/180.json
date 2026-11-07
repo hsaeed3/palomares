@@ -12,10 +12,10 @@
    "px_seg": 30344
   },
   "road": {
-   "iou": 0.695,
-   "precision": 0.7979,
+   "iou": 0.6948,
+   "precision": 0.7977,
    "recall": 0.8435,
-   "px_render": 35683,
+   "px_render": 35692,
    "px_seg": 33751
   },
   "marking_yellow": {
@@ -27,16 +27,16 @@
   },
   "marking_white": {
    "iou": 0.0529,
-   "precision": 0.1496,
+   "precision": 0.1495,
    "recall": 0.0757,
-   "px_render": 1511,
+   "px_render": 1512,
    "px_seg": 2984
   },
   "shoulder_dirt": {
    "iou": 0.2654,
-   "precision": 0.7116,
+   "precision": 0.7117,
    "recall": 0.2974,
-   "px_render": 5419,
+   "px_render": 5418,
    "px_seg": 12965
   },
   "terrain_grass": {
@@ -50,7 +50,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 5059,
+   "px_render": 5042,
    "px_seg": 0
   },
   "rock_cut": {
@@ -92,7 +92,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 43,
+   "px_render": 51,
    "px_seg": 5296
   },
   "fence": {
@@ -112,10 +112,10 @@
    "px_seg": 30344
   },
   "road": {
-   "iou": 0.695,
-   "precision": 0.7979,
+   "iou": 0.6948,
+   "precision": 0.7977,
    "recall": 0.8435,
-   "px_render": 35683,
+   "px_render": 35692,
    "px_seg": 33751
   },
   "marking_yellow": {
@@ -127,23 +127,23 @@
   },
   "marking_white": {
    "iou": 0.0529,
-   "precision": 0.1496,
+   "precision": 0.1495,
    "recall": 0.0757,
-   "px_render": 1511,
+   "px_render": 1512,
    "px_seg": 2984
   },
   "shoulder": {
    "iou": 0.2654,
-   "precision": 0.7116,
+   "precision": 0.7117,
    "recall": 0.2974,
-   "px_render": 5419,
+   "px_render": 5418,
    "px_seg": 12965
   },
   "terrain": {
-   "iou": 0.1483,
-   "precision": 0.4289,
+   "iou": 0.1485,
+   "precision": 0.4301,
    "recall": 0.1848,
-   "px_render": 6088,
+   "px_render": 6071,
    "px_seg": 14125
   },
   "tree": {
@@ -182,10 +182,10 @@
    "px_seg": 2406
   },
   "barrier": {
-   "iou": 0.0029,
+   "iou": 0.0034,
    "precision": 1.0,
-   "recall": 0.0029,
-   "px_render": 43,
+   "recall": 0.0034,
+   "px_render": 51,
    "px_seg": 14801
   }
  },
@@ -201,13 +201,13 @@
   {
    "id": "guardrail_s0025",
    "cls": "guardrail",
-   "px": 43,
+   "px": 51,
    "match": 1.0,
    "found": true,
    "occluded": false
   }
  ],
  "score": 0.4538,
- "t_render_s": 0.235,
- "t_total_s": 0.266
+ "t_render_s": 0.22,
+ "t_total_s": 0.251
 }

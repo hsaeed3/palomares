@@ -8,7 +8,7 @@
    "iou": 0.1615,
    "precision": 0.1615,
    "recall": 1.0,
-   "px_render": 67647,
+   "px_render": 67665,
    "px_seg": 10925
   },
   "road": {
@@ -40,17 +40,17 @@
    "px_seg": 11551
   },
   "terrain_grass": {
-   "iou": 0.1732,
-   "precision": 0.2605,
-   "recall": 0.3406,
-   "px_render": 12925,
+   "iou": 0.1775,
+   "precision": 0.2648,
+   "recall": 0.35,
+   "px_render": 13068,
    "px_seg": 9886
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 3010,
+   "px_render": 1892,
    "px_seg": 0
   },
   "rock_cut": {
@@ -61,45 +61,45 @@
    "px_seg": 79
   },
   "vegetation_tree": {
-   "iou": 0.3158,
-   "precision": 0.9808,
-   "recall": 0.3177,
-   "px_render": 29590,
+   "iou": 0.3441,
+   "precision": 0.876,
+   "recall": 0.3617,
+   "px_render": 37716,
    "px_seg": 91341
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10857,
+   "px_render": 8464,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 118,
+   "px_render": 371,
    "px_seg": 62
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 335,
+   "px_render": 304,
    "px_seg": 1056
   },
   "guardrail": {
-   "iou": 0.1129,
-   "precision": 0.1885,
-   "recall": 0.2198,
-   "px_render": 9767,
+   "iou": 0.1887,
+   "precision": 0.2936,
+   "recall": 0.3456,
+   "px_render": 9858,
    "px_seg": 8375
   },
   "fence": {
-   "iou": 0.225,
-   "precision": 0.327,
-   "recall": 0.419,
-   "px_render": 11986,
+   "iou": 0.0258,
+   "precision": 0.0593,
+   "recall": 0.0437,
+   "px_render": 6897,
    "px_seg": 9354
   },
   "wall": {
@@ -122,7 +122,7 @@
    "iou": 0.1615,
    "precision": 0.1615,
    "recall": 1.0,
-   "px_render": 67647,
+   "px_render": 67665,
    "px_seg": 10925
   },
   "road": {
@@ -154,52 +154,52 @@
    "px_seg": 11551
   },
   "terrain": {
-   "iou": 0.1495,
-   "precision": 0.2114,
-   "recall": 0.338,
-   "px_render": 15935,
+   "iou": 0.1658,
+   "precision": 0.2369,
+   "recall": 0.3556,
+   "px_render": 14960,
    "px_seg": 9965
   },
   "tree": {
-   "iou": 0.3158,
-   "precision": 0.9808,
-   "recall": 0.3177,
-   "px_render": 29590,
+   "iou": 0.3441,
+   "precision": 0.876,
+   "recall": 0.3617,
+   "px_render": 37716,
    "px_seg": 91341
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 10857,
+   "px_render": 8464,
    "px_seg": 0
   },
   "trunk": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 118,
+   "px_render": 371,
    "px_seg": 62
   },
   "vegetation": {
-   "iou": 0.2893,
-   "precision": 0.7299,
-   "recall": 0.3239,
-   "px_render": 40565,
+   "iou": 0.325,
+   "precision": 0.7269,
+   "recall": 0.3702,
+   "px_render": 46551,
    "px_seg": 91403
   },
   "pole": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 335,
+   "px_render": 304,
    "px_seg": 1056
   },
   "barrier": {
-   "iou": 0.2938,
-   "precision": 0.4138,
-   "recall": 0.5032,
-   "px_render": 21753,
+   "iou": 0.3697,
+   "precision": 0.5582,
+   "recall": 0.5227,
+   "px_render": 16755,
    "px_seg": 17891
   },
   "building": {
@@ -214,24 +214,24 @@
   {
    "id": "guardrail_s0035",
    "cls": "guardrail",
-   "px": 9767,
-   "match": 0.51,
+   "px": 9858,
+   "match": 0.543,
    "found": true,
    "occluded": false
   },
   {
    "id": "fence_s0082",
    "cls": "fence",
-   "px": 10841,
-   "match": 0.369,
-   "found": false,
+   "px": 5363,
+   "match": 0.737,
+   "found": true,
    "occluded": false
   },
   {
    "id": "fence_s0083",
    "cls": "fence",
-   "px": 1145,
-   "match": 0.019,
+   "px": 1534,
+   "match": 0.033,
    "found": false,
    "occluded": false
   },
@@ -246,7 +246,7 @@
   {
    "id": "pole_s0075",
    "cls": "pole",
-   "px": 133,
+   "px": 112,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -254,7 +254,7 @@
   {
    "id": "pole_s0074",
    "cls": "pole",
-   "px": 186,
+   "px": 178,
    "match": 0.0,
    "found": false,
    "occluded": false
@@ -262,13 +262,13 @@
   {
    "id": "pole_s0076",
    "cls": "pole",
-   "px": 3,
+   "px": 1,
    "match": 0.0,
    "found": false,
    "occluded": true
   }
  ],
- "score": 0.2941,
- "t_render_s": 0.193,
- "t_total_s": 0.225
+ "score": 0.3071,
+ "t_render_s": 0.173,
+ "t_total_s": 0.204
 }

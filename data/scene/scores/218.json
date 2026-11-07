@@ -43,7 +43,7 @@
    "iou": 0.0006,
    "precision": 0.0028,
    "recall": 0.0007,
-   "px_render": 720,
+   "px_render": 724,
    "px_seg": 2864
   },
   "terrain_bare": {
@@ -61,10 +61,10 @@
    "px_seg": 22
   },
   "vegetation_tree": {
-   "iou": 0.5632,
-   "precision": 0.8944,
+   "iou": 0.5631,
+   "precision": 0.8941,
    "recall": 0.6033,
-   "px_render": 68982,
+   "px_render": 69001,
    "px_seg": 102268
   },
   "shrub": {
@@ -99,7 +99,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 28,
+   "px_render": 6,
    "px_seg": 793
   },
   "guardrail": {
@@ -110,10 +110,10 @@
    "px_seg": 180
   },
   "fence": {
-   "iou": 0.0998,
+   "iou": 0.0999,
    "precision": 0.2197,
    "recall": 0.1547,
-   "px_render": 6665,
+   "px_render": 6664,
    "px_seg": 9461
   },
   "wall": {
@@ -178,14 +178,14 @@
    "iou": 0.0598,
    "precision": 0.0749,
    "recall": 0.2283,
-   "px_render": 8794,
+   "px_render": 8798,
    "px_seg": 2886
   },
   "tree": {
-   "iou": 0.5632,
-   "precision": 0.8944,
+   "iou": 0.5631,
+   "precision": 0.8941,
    "recall": 0.6033,
-   "px_render": 68982,
+   "px_render": 69001,
    "px_seg": 102268
   },
   "shrub": {
@@ -203,10 +203,10 @@
    "px_seg": 26
   },
   "vegetation": {
-   "iou": 0.6905,
-   "precision": 0.8737,
+   "iou": 0.6904,
+   "precision": 0.8735,
    "recall": 0.7671,
-   "px_render": 89813,
+   "px_render": 89832,
    "px_seg": 102294
   },
   "sign": {
@@ -220,14 +220,14 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 28,
+   "px_render": 6,
    "px_seg": 793
   },
   "barrier": {
    "iou": 0.4817,
    "precision": 0.5205,
    "recall": 0.8659,
-   "px_render": 16039,
+   "px_render": 16038,
    "px_seg": 9641
   },
   "building": {
@@ -271,23 +271,15 @@
    "occluded": false
   },
   {
-   "id": "fence_s0098",
-   "cls": "fence",
-   "px": 1,
-   "match": 0.0,
-   "found": false,
-   "occluded": true
-  },
-  {
    "id": "pole_s0083",
    "cls": "pole",
-   "px": 28,
+   "px": 6,
    "match": 0.0,
    "found": false,
    "occluded": false
   }
  ],
  "score": 0.3808,
- "t_render_s": 0.109,
- "t_total_s": 0.142
+ "t_render_s": 0.104,
+ "t_total_s": 0.135
 }
