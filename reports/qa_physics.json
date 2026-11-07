@@ -56,14 +56,14 @@
  },
  "runoff_clamp": {
   "max_crease_before": 72.2,
-  "n_over_before": 6361,
+  "n_over_before": 6368,
   "max_crease_after_unpinned": 58.6,
-  "n_over_after": 1383,
+  "n_over_after": 1387,
   "iters": 599,
   "max_dz": 0.4,
   "mean_dz_moved": 0.094,
   "left_by_dist": [
-   46,
+   50,
    199,
    157,
    220,
@@ -71,12 +71,12 @@
    224
   ],
   "left_pins": [
-   561,
+   563,
    9,
-   60,
-   113,
-   144,
-   496,
+   59,
+   112,
+   143,
+   501,
    0
   ],
   "kerb_vertices_lifted": 0
