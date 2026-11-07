@@ -116,7 +116,7 @@ for e in of:
             win = (np.abs(a["s_m"] - ss) < 15)
             extra = dict(road_z=round(float(zc), 2), dsm_over_road_m=round(float(ds_ - zc), 2), note="DSM = top of rail structure; clearance ~ DSM - deck thickness")
         kk = {"level_crossing_or_unknown": "rail_road_crossing", "rail_level_crossing": "level_crossing", "rail_crossing": "rail_ped_crossing"}.get(k, k)
-        F.append(P(x, y, kind=kk, road=rr, s_m=round(ss, 1), dist_m=round(dd, 1), **{q: v for q, v in p.items() if q not in ("kind",)}, **extra))
+        F.append(P(x, y, kind=kk, road=rr, s_m=round(ss, 1), dist_m=round(dd, 1), **{("osm_" + q if q in ("road", "s_m", "dist_m") else q): v for q, v in p.items() if q not in ("kind",)}, **extra))
     elif k == "rail_station" or k == "rail_halt":
         pass
 for e in of:

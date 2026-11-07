@@ -45,7 +45,7 @@ if not GA.exists():
     np.savez(GA, **A); gx, gy, gz, gi, gc = A["x"], A["y"], A["z"], A["i"], A["c"]
 # Class 17 (bridge deck) is only drivable ground where a *road* bridge is (OSM highway bridge, 6 m buffer). Every other
 # class-17 return is an overhead structure (UP / Niles Canyon Railway decks over SR-84, Niles Blvd, Sullivan Underpass,
-# rail bridges over the creek) -> dropped so the TIN runs underneath. Rail-bridge buffers (9 m) win over road ones.
+# rail bridges over the creek) -> dropped so the TIN runs underneath. Rail-bridge buffers (15 m) win over road ones.
 import shapely
 _hb, _rb = [], []
 for e in json.load(open(DER7 / "osm_features.geojson"))["features"]:
@@ -53,7 +53,7 @@ for e in json.load(open(DER7 / "osm_features.geojson"))["features"]:
     if "bridge" in q["kind"] and e["geometry"]["type"] == "LineString" and (q["kind"].startswith("rail_") or q["kind"].startswith("highway_")):
         c = np.array(e["geometry"]["coordinates"]); x_, y_ = ll2loc(c[:, 0], c[:, 1])
         L_ = shapely.LineString(np.c_[x_, y_])
-        if q["kind"].startswith("rail_"): _rb.append(L_.buffer(9.0))
+        if q["kind"].startswith("rail_"): _rb.append(L_.buffer(15.0))
         elif q.get("highway") not in ("footway", "path", "cycleway", "steps"): _hb.append(L_.buffer(6.0))
 ROADB = shapely.union_all(_hb) if _hb else shapely.Polygon()
 if _rb: ROADB = ROADB.difference(shapely.union_all(_rb))

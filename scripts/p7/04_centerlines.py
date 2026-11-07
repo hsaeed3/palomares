@@ -222,6 +222,13 @@ def cross_sections(road, xy, s, snap):
     struct = np.array([""] * NS, dtype=object)
     for a_, b_ in ranges_on(xy, road, "under_rail", 2.0):
         struct[(s >= a_) & (s <= b_)] = "under_rail"
+        # safety: remove any residual hump from overhead-structure returns (road surface = lower envelope)
+        m = (s >= a_ - 15) & (s <= b_ + 15); idx = np.flatnonzero(m)
+        if len(idx) > 6:
+            zl = np.interp(s[idx], [s[idx[0]], s[idx[-1]]], [zc[idx[0]], zc[idx[-1]]])
+            bad = zc[idx] > zl + 0.3
+            if bad.any() and (~bad).sum() >= 2:
+                zc[idx[bad]] = np.interp(s[idx[bad]], s[idx[~bad]], zc[idx[~bad]]); struct[idx[bad]] = "under_rail_zfix"
     deck = []
     for a_, b_ in ranges_on(xy, road, "bridge", 0.0):
         ia, ib = int(np.searchsorted(s, a_)), min(int(np.searchsorted(s, b_)), NS - 1)

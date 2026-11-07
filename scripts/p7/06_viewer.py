@@ -12,7 +12,7 @@ from common7 import *
 b64 = lambda a: base64.b64encode(np.ascontiguousarray(a).tobytes()).decode()
 R = rasterio.open(DER7 / "dtm_r100_b150.tif"); dtm = R.read(1); tf = R.transform
 chm = rasterio.open(DER7 / "chm_r100_b150.tif").read(1)
-ST = 4
+ST = 5
 dz = dtm[::ST, ::ST]; cz = np.nan_to_num(chm[::ST, ::ST], nan=0)
 H, W = dz.shape
 x0 = tf.c - X0 + ST / 2; y0 = tf.f - Y0 - ST / 2
