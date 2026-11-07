@@ -86,7 +86,7 @@ def side_bands(r, side, d0, d1, mask):
 
 # ------------------------------------------------------------------ fixed neighbours (NCR kn5 from 21n): kept as is
 fixed = []
-for f in sorted((BUILD / "palomares_road").glob("palomares_niles_*.kn5")):
+for f in sorted((BUILD / "palomares_road").glob("palomares_niles_ncr*.kn5")):   # fixed road kn5s only (not assets/kerbs/timing)
     if f.name.startswith(f"palomares_niles_{TAG}"):
         continue
     for m in read_kn5(str(f))["meshes"]:
