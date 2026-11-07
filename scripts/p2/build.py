@@ -21,11 +21,13 @@ PACKAGE = [
     ("21e_ledger_assets.py", "Scene ledger assets (data/scene/ledger.jsonl) + terrain/tree edits"),
     ("21f_far_vegetation.py", "Far-zone vegetation (CHM + NAIP scatter, 60-150 m)"),
     ("21d_physics.py", "Physics post-process (terrain smoothing, tree + wall colliders)"),
+    ("21g_road_clear.py", "Road clearance (nothing may stand on the asphalt)"),
     ("22_build_kn5.py", "Writing kn5 files + AC track folder"),
+    ("qa_on_road.py", "Gate: no geometry on the asphalt (fails the build)"),
     ("qa_ffb_safety.py", "FFB-safety gate (collision / normals / textures; fails the build)"),
     ("25_package.py", "Packaging zip"),
 ]
-FULL = PACKAGE[:10] + [
+FULL = PACKAGE[:12] + [
     ("racing_line_plot.py", "Racing-line plots (reports/racing_line)"),
     ("qa_drive.py", "Drive simulation + safety QA (reports/safety_qa.md)"),
     ("qa_collisions.py", "Collision QA (every barrier has 1WALL)"),
@@ -34,7 +36,7 @@ FULL = PACKAGE[:10] + [
     (["node", "24_visual_render.js", "road_summit"], "Rendering road_summit"),
     (["node", "24_visual_render.js", "track_summit"], "Rendering track_summit"),
     ("26_contact_sheet.py", "Contact sheet"),
-    PACKAGE[10],
+    PACKAGE[12],
 ]
 
 TTY = sys.stdout.isatty() and os.environ.get("NO_COLOR") is None
@@ -54,11 +56,16 @@ def main():
     ap.add_argument("--s", default=None, help="quick: station range a-b (m) to report / check; default: chunks whose ledger rows changed")
     ap.add_argument("--dir", default=str(ROOT / "build_quick"), help="quick: build dir (never build/ while others use it)")
     ap.add_argument("--no-21e", action="store_true", help="quick: kn5 only (geometry.pkl already updated)")
+    ap.add_argument("--from", dest="from_step", default=None,
+                    help="package/full: resume at the first step whose script name contains this (e.g. 21b, 22, qa_on_road)")
     a = ap.parse_args()
     if a.target in ("quick", "quick-seed"):
         import quick
         sys.exit(quick.main(a))
     steps = PACKAGE if a.target == "package" else FULL
+    if a.from_step:
+        k0 = next(i for i, (cmd, _) in enumerate(steps) if a.from_step in (cmd if isinstance(cmd, str) else " ".join(cmd)))
+        steps = steps[k0:]
     env = dict(os.environ, PYTHONUNBUFFERED="1")
     if TTY:
         env.setdefault("PALOMARES_TTY", "1")  # child steps keep colours/progress bars when we pipe through

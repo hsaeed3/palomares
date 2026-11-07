@@ -33,7 +33,7 @@ def encode(png_bytes):
     if s > 1:
         w, h = max(4, int(w / s)), max(4, int(h / s))
     if (w, h) != im.size:
-        im = im.resize((w, h), Image.LANCZOS)
+        im = Image.merge("RGBA", [ch.resize((w, h), Image.LANCZOS) for ch in im.split()])
     fourcc = b"DXT5" if alpha else b"DXT1"
     levels, cur = [], im
     while True:
@@ -41,7 +41,10 @@ def encode(png_bytes):
         levels.append(etcpak.compress_bc3(raw, cur.width, cur.height) if alpha else etcpak.compress_bc1(raw, cur.width, cur.height))
         if cur.width <= 4 or cur.height <= 4:
             break
-        cur = cur.resize((cur.width // 2, cur.height // 2), Image.BOX)
+        # resize colour and alpha separately: PIL premultiplies RGBA when resizing, so texels with alpha 0
+        # (terrain macro atlases keep a mask in alpha) came out black in every mip -> black terrain at distance
+        r_, g_, b_, a_ = cur.split(); sz = (cur.width // 2, cur.height // 2)
+        cur = Image.merge("RGBA", [ch.resize(sz, Image.BOX) for ch in (r_, g_, b_, a_)])
     return header(w, h, len(levels), fourcc, len(levels[0])) + b"".join(levels)
 
 

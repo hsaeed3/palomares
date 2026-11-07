@@ -1,0 +1,902 @@
+{
+ "hits": [
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "rs_00",
+   "verts": 36,
+   "stations": [
+    0
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "rs_14",
+   "verts": 36,
+   "stations": [
+    3625
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "rs_15",
+   "verts": 144,
+   "stations": [
+    3900,
+    3925
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "rs_17",
+   "verts": 420,
+   "stations": [
+    4425,
+    4450
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_00",
+   "verts": 82,
+   "stations": [
+    100,
+    125,
+    150,
+    175,
+    200
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_01",
+   "verts": 94,
+   "stations": [
+    200,
+    225,
+    275,
+    300
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_02",
+   "verts": 18,
+   "stations": [
+    450,
+    525,
+    575
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_03",
+   "verts": 34,
+   "stations": [
+    650,
+    675,
+    700,
+    775
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_04",
+   "verts": 14,
+   "stations": [
+    800,
+    900,
+    975
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_05",
+   "verts": 84,
+   "stations": [
+    1000,
+    1025,
+    1050,
+    1075,
+    1150,
+    1175
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_06",
+   "verts": 86,
+   "stations": [
+    1325,
+    1350,
+    1375
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_07",
+   "verts": 28,
+   "stations": [
+    1400,
+    1525,
+    1575
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_08",
+   "verts": 56,
+   "stations": [
+    1650,
+    1675,
+    1700,
+    1725,
+    1750
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_09",
+   "verts": 38,
+   "stations": [
+    1850,
+    1925,
+    1950,
+    1975
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_10",
+   "verts": 14,
+   "stations": [
+    2075,
+    2150,
+    2175,
+    2200
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_11",
+   "verts": 61,
+   "stations": [
+    2200,
+    2225,
+    2275,
+    2300
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_12",
+   "verts": 30,
+   "stations": [
+    2425,
+    2450,
+    2525,
+    2575
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_13",
+   "verts": 58,
+   "stations": [
+    2600,
+    2750,
+    2775
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_14",
+   "verts": 64,
+   "stations": [
+    2800,
+    2825,
+    2850,
+    2875,
+    2900,
+    2925,
+    2950
+   ],
+   "n_stations": 7
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_15",
+   "verts": 4,
+   "stations": [
+    3075
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_16",
+   "verts": 60,
+   "stations": [
+    3225,
+    3275,
+    3300,
+    3325,
+    3350
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_17",
+   "verts": 109,
+   "stations": [
+    3450,
+    3475,
+    3500,
+    3525,
+    3550,
+    3575
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_18",
+   "verts": 88,
+   "stations": [
+    3650,
+    3675,
+    3700,
+    3725,
+    3750
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_19",
+   "verts": 153,
+   "stations": [
+    3800,
+    3825,
+    3875,
+    3925,
+    3950
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_20",
+   "verts": 13,
+   "stations": [
+    4100,
+    4125,
+    4150,
+    4175
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_21",
+   "verts": 158,
+   "stations": [
+    4200,
+    4225,
+    4300,
+    4325,
+    4350,
+    4375
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_22",
+   "verts": 93,
+   "stations": [
+    4400,
+    4425,
+    4475,
+    4500,
+    4550
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_23",
+   "verts": 22,
+   "stations": [
+    4650,
+    4725,
+    4750
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_24",
+   "verts": 30,
+   "stations": [
+    4850,
+    4875,
+    4900,
+    4975
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_25",
+   "verts": 96,
+   "stations": [
+    5000,
+    5025,
+    5075,
+    5100,
+    5125,
+    5150,
+    5175
+   ],
+   "n_stations": 7
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_26",
+   "verts": 6,
+   "stations": [
+    5225
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_27",
+   "verts": 69,
+   "stations": [
+    5425,
+    5450,
+    5475,
+    5575
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_28",
+   "verts": 24,
+   "stations": [
+    5600,
+    5625
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_29",
+   "verts": 2,
+   "stations": [
+    5950
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_30",
+   "verts": 12,
+   "stations": [
+    6025,
+    6050,
+    6125
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_31",
+   "verts": 34,
+   "stations": [
+    6225,
+    6300,
+    6350,
+    6375
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_32",
+   "verts": 12,
+   "stations": [
+    6375,
+    6400
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_33",
+   "verts": 56,
+   "stations": [
+    6625,
+    6650,
+    6675,
+    6700
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_35",
+   "verts": 73,
+   "stations": [
+    7075,
+    7100,
+    7125,
+    7150
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_36",
+   "verts": 4,
+   "stations": [
+    7300
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_39",
+   "verts": 12,
+   "stations": [
+    7800,
+    7925,
+    7950,
+    7975
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_40",
+   "verts": 20,
+   "stations": [
+    8025,
+    8050,
+    8125,
+    8175
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_41",
+   "verts": 28,
+   "stations": [
+    8175,
+    8200,
+    8225,
+    8250,
+    8275
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_43",
+   "verts": 84,
+   "stations": [
+    8625,
+    8650,
+    8750,
+    8775
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_44",
+   "verts": 4,
+   "stations": [
+    8825
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_45",
+   "verts": 30,
+   "stations": [
+    9075,
+    9100,
+    9175
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_46",
+   "verts": 10,
+   "stations": [
+    9200,
+    9300
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_47",
+   "verts": 44,
+   "stations": [
+    9550,
+    9575
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_48",
+   "verts": 8,
+   "stations": [
+    9600,
+    9650,
+    9675
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_49",
+   "verts": 30,
+   "stations": [
+    9925,
+    9950
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_50",
+   "verts": 6,
+   "stations": [
+    10175
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_51",
+   "verts": 126,
+   "stations": [
+    10175,
+    10200,
+    10225,
+    10250
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_52",
+   "verts": 44,
+   "stations": [
+    10450,
+    10475,
+    10525,
+    10550,
+    10575
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_53",
+   "verts": 102,
+   "stations": [
+    10575,
+    10600,
+    10625,
+    10650,
+    10675,
+    10700,
+    10725,
+    10775,
+    10800
+   ],
+   "n_stations": 9
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_54",
+   "verts": 21,
+   "stations": [
+    10800,
+    10950
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_55",
+   "verts": 18,
+   "stations": [
+    11025,
+    11050
+   ],
+   "n_stations": 2
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_56",
+   "verts": 68,
+   "stations": [
+    11275,
+    11325,
+    11350
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_57",
+   "verts": 8,
+   "stations": [
+    11400,
+    11425,
+    11450
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_58",
+   "verts": 164,
+   "stations": [
+    11625
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_59",
+   "verts": 22,
+   "stations": [
+    11875,
+    11950,
+    11975
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_60",
+   "verts": 4,
+   "stations": [
+    12125
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_62",
+   "verts": 10,
+   "stations": [
+    12425,
+    12500,
+    12575
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_63",
+   "verts": 34,
+   "stations": [
+    12650,
+    12700,
+    12725,
+    12750,
+    12775
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_64",
+   "verts": 35,
+   "stations": [
+    12800,
+    12825,
+    12850,
+    12875,
+    12900,
+    12950
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_65",
+   "verts": 74,
+   "stations": [
+    13025,
+    13075,
+    13100,
+    13125,
+    13175
+   ],
+   "n_stations": 5
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_66",
+   "verts": 26,
+   "stations": [
+    13225,
+    13250,
+    13275,
+    13300,
+    13325,
+    13350
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_67",
+   "verts": 22,
+   "stations": [
+    13450,
+    13475,
+    13525,
+    13575
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_68",
+   "verts": 44,
+   "stations": [
+    13575,
+    13600,
+    13650,
+    13675,
+    13700,
+    13725
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_69",
+   "verts": 10,
+   "stations": [
+    13800,
+    13825,
+    13925
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_70",
+   "verts": 22,
+   "stations": [
+    14050,
+    14075,
+    14125
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_71",
+   "verts": 49,
+   "stations": [
+    14225,
+    14250,
+    14275,
+    14300,
+    14350,
+    14375
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_72",
+   "verts": 28,
+   "stations": [
+    14400,
+    14450,
+    14475,
+    14525,
+    14550,
+    14575
+   ],
+   "n_stations": 6
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_73",
+   "verts": 30,
+   "stations": [
+    14600,
+    14625,
+    14650
+   ],
+   "n_stations": 3
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_74",
+   "verts": 18,
+   "stations": [
+    14925
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_75",
+   "verts": 44,
+   "stations": [
+    15050,
+    15075,
+    15100,
+    15125
+   ],
+   "n_stations": 4
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "lg_77",
+   "verts": 2,
+   "stations": [
+    15425
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "1WALL_R_46",
+   "verts": 20,
+   "stations": [
+    11625
+   ],
+   "n_stations": 1
+  },
+  {
+   "kn5": "palomares_roadside.kn5",
+   "mesh": "1WALL_L_40",
+   "verts": 17,
+   "stations": [
+    10225
+   ],
+   "n_stations": 1
+  }
+ ],
+ "n": 78
+}

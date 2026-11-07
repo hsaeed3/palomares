@@ -188,6 +188,53 @@ def point_axes(r, f):
     return xa, np.array([-xa[1], xa[0]])
 
 
+# ------------------------------------------------------------------ hard road clearance (dev7)
+ROAD_CLEAR = 0.30      # m beyond the asphalt edge; nothing above the road surface may stand inside the asphalt
+CLEAR_LOG = collections.Counter()
+
+
+def _on_asphalt(P, clear=ROAD_CLEAR):
+    d, j = KD.query(P[:, :2]); j = np.clip(j, 0, N - 1)
+    off = (P[:, 0] - road.x[j]) * road.nx[j] + (P[:, 1] - road.y[j]) * road.ny[j]
+    half = np.where(off > 0, road.el[j], road.er[j])
+    zr = road.surface_z(j, off, noise=False)
+    bad = (np.abs(off) < half + clear) & (P[:, 2] > zr + 0.02) & (P[:, 2] < zr + 4.5) & (d < half + 2) & (j > 2) & (j < N - 3)
+    return bad, j, off, half
+
+
+def clear_road(P, T):
+    """Every placed object passes here (Acc.add). Small objects (< 12 m) standing on the asphalt are moved straight
+    out along the road normal until they clear the edge by ROAD_CLEAR; on long objects (fences, rows) the triangles
+    touching the asphalt are dropped. Data errors (wrong side, negative offset, mis-registered station) can no
+    longer put geometry on the road. Returns (P, T)."""
+    P = np.asarray(P, float)
+    bad, j, off, half = _on_asphalt(P)
+    if not bad.any():
+        return P, T
+    ext = float(np.ptp(P[:, :2], 0).max())
+    k = j[bad][0]; CLEAR_LOG[int(road.s[k] // 100 * 100)] += 1
+    if ext < 12:
+        side = np.sign(np.median(off)) or 1.0
+        need = float(np.max(half[bad] + ROAD_CLEAR - side * off[bad])) + 0.01
+        P = P.copy(); P[:, 0] += side * need * road.nx[k]; P[:, 1] += side * need * road.ny[k]
+        if not _on_asphalt(P)[0].any():
+            return P, T
+    keep = ~bad[T].any(1)
+    return P, T[keep]
+
+
+def clear_mesh(m):
+    """collision / any final mesh dict: drop triangles on the asphalt"""
+    P = np.asarray(m["P"], float); T = np.asarray(m["T"])
+    if not len(T):
+        return m
+    bad = _on_asphalt(P, 0.0)[0]
+    keep = ~bad[T].any(1)
+    if keep.all():
+        return m
+    CLEAR_LOG["col_tris_dropped"] += int((~keep).sum()); m = dict(m); m["T"] = T[keep]; return m
+
+
 # ------------------------------------------------------------------ accumulators
 class Acc:
     def __init__(self, c):
@@ -195,6 +242,7 @@ class Acc:
 
     def add(self, P, T, UV, N_):
         if len(P):
+            P, T = clear_road(P, T)
             self.P.append(P); self.T.append(T + self.n); self.UV.append(UV); self.N.append(N_); self.n += len(P)
 
 
@@ -471,7 +519,7 @@ for c in sorted(ACC):
             out.append(dict(name=f"lg_{c:02d}" + (f"_{k}" if k else ""), material="ledger", P=P[used], T=inv.reshape(-1, 3), UV=UV[used], N=Nn[used],
                             cast_shadows=False, lod_out=LOD_OUT))
             nv += len(used); nt += len(tt); nvis += 1; start += per; k += 1
-    out += a.col.meshes()
+    out += [clear_mesh(m_) for m_ in a.col.meshes()]
 CO.fix_wall_flags(G)
 (BUILD / "ledger_atlas.png").write_bytes(AS.atlas().png())       # after generation: signs paint into the atlas lazily
 
@@ -486,4 +534,5 @@ pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 print(f"21e: {nvis} ledger visual meshes ({nv} verts, {nt} tris; 1 draw call each), {sum(1 for m in out if m['name'].startswith('1WALL_lg'))} "
       f"collision meshes, {len(SOLID)} solid items, {len(SIGNCHK)} sign faces")
 print(f"  placed by cls: {dict(CNT)}  skipped/errors: {nbad}  far (no collision): {dict(SKIP)}")
+print(f"  road clearance: {dict(CLEAR_LOG)}")
 print(f"  terrain vertices edited: {n_ter}; tree tris removed: {n_rm}; shrub tris thinned: {n_thin}; veg pieces added: {n_add}")

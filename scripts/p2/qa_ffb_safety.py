@@ -24,6 +24,20 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from geom import ROOT, BUILD
 from kn5 import read_kn5
 import dds
+
+
+def _mip_black(b, fc, w, h, mips):
+    """True when mip 0 has colour but a lower mip is (almost) all-black colour endpoints"""
+    import numpy as _np
+    bs = 8 if fc == "DXT1" else 16; co = 0 if fc == "DXT1" else 8; off = 128; ww, hh = w, h; ref = None
+    for L in range(min(mips, 5)):
+        n = max(1, ww // 4) * max(1, hh // 4) * bs
+        a = _np.frombuffer(b[off:off + n], _np.uint8).reshape(-1, bs)[:, co:co + 4]
+        lit = a[::max(1, len(a) // 4096)].any(1).mean()
+        if ref is None: ref = lit
+        elif ref > 0.2 and lit < 0.25 * ref: return True
+        off += n; ww, hh = max(4, ww // 2), max(4, hh // 2)
+    return False
 import collision_conv as CC
 
 TRACK = BUILD / "palomares_road"
@@ -96,6 +110,8 @@ for fn_, k in K.items():
         fc, w, h, mips = i
         if fc not in ("DXT1", "DXT5") or w & (w - 1) or h & (h - 1) or max(w, h) > 4096 or mips < 2:
             fail(f"{fn_}: texture {name} {fc} {w}x{h} mips={mips}")
+        elif _mip_black(b, fc, w, h, mips):
+            fail(f"{fn_}: texture {name} mip chain goes black (distant surfaces render black)")
     for m in k["meshes"]:
         nm = m["name"]; P = enu(m["pos"].astype(float)); T = m["idx"].reshape(-1, 3); N = m["nrm"]
         if not (np.isfinite(P).all() and np.isfinite(N).all() and np.isfinite(m["tan"]).all()):
