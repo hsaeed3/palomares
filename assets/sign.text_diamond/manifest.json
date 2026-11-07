@@ -2,7 +2,7 @@
  "type": "sign.text_diamond",
  "cls": "sign",
  "desc": "text diamond sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "a5d7fda6598428b5ae84e231143969d746419360",
+ "source_hash": "9a684f036a335f7d609e56984850fc7f3034ad6e",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:53",
+ "built": "2026-11-07 14:46:25",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "1576294342574504",

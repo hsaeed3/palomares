@@ -2,7 +2,7 @@
  "type": "sign.turn_left",
  "cls": "sign",
  "desc": "turn left sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "23ac50c0c761184ed4b3135dca8f8f36c6dbcc51",
+ "source_hash": "7e5a75b14af213dcbe122fe733d486b9b323a149",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:32:56",
+ "built": "2026-11-07 14:46:31",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "228778246787566",
