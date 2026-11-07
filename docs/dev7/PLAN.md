@@ -28,7 +28,7 @@ Same conventions as Palomares:
 
 - **Data:** LiDAR (USGS 2021 Alameda EPT, the same 3 sets) is the geometry source. OSM supplies the network topology. NAIP and Mapillary supply types and positions. GoPro frames exist only for Palomares.
 - **CRS and origin:** UTM10N. The existing local origin (config/origin.json) is kept fixed so the Palomares layouts don't move. If the new extents exceed about 8–10 km from the origin, record the precision decision in docs/dev7/DECISIONS.md.
-- **Trademarks:** no real logos or brand trademarks. "Devout Coffee" appears as a generic coffee-shop storefront with neutral signage (the shop is present, the logo isn't). The railroad uses generic period rolling stock, not branded liveries.
+- **Names and branding:** no real logos, brand artwork, fonts or liveries. Businesses may show their plain name as simple text signage in a generic font, e.g. the storefront sign reads "DEVOUT". This is the user's decision. The railroad uses generic period rolling stock, not branded liveries.
 - **Props, trees and collision:** use whatever dev6 finalises, namely CSP and Content-Manager-native or CC0 assets, the collision conventions in docs/AC_CONVENTIONS.md, and the material/texture budget (the NVIDIA cache issue). Nothing is hand-made from scratch where a proven asset or CSP feature exists.
 - **FFB safety:** the dev6 qa_ffb_safety gate applies to everything.
 
