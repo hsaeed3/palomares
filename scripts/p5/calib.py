@@ -163,9 +163,6 @@ def main():
           f"{np.median([v['p'][2] for v in out.values()]):.2f}  {time.time()-t0:.0f}s", flush=True)
 
 
-if __name__ == "__main__":
-    main()
-
 
 def commit(src):
     """write the edge-registered poses (json from `calib.py register --out`) into data/scene/poses.json (backup kept)"""
@@ -216,3 +213,7 @@ def overlay(f, p, K, path, extra=None):
         for x, y in q[:: max(len(q) // 3000, 1)]:
             d.ellipse((x - 1.5, y - 1.5, x + 1.5, y + 1.5), fill=col)
     im.save(path, quality=88)
+
+
+if __name__ == "__main__":
+    main()

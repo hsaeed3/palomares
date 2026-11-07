@@ -40,3 +40,23 @@ Same conventions as Palomares:
 4. **A: assets** (after M and the dev6 prop decision). Town buildings, the train/rail set, the flashing signs, the underpass and the bridges.
 5. **I: AC integration** (after G and A). The 5 new layouts, free-roam spawns, AI lines and packaging.
 6. **QA** (separate agent). Everything in CLAUDE.md §4, plus qa_ffb_safety.
+
+## User additions (pipeline + track assets)
+
+### P: fast pipeline (applies to dev6 work going forward)
+- **Asset library, prepared once.** Every tree/shrub/prop/building type is a prepared asset in `assets/<type>/` (kn5-ready mesh, DDS textures, LODs, collision proxy, preview png). It is built once and rebuilt only when its own source changes.
+- **Incremental build.** Each output kn5 chunk records a hash of its inputs. A change rebuilds only the chunks it touches (target: one prop or tree edit to updated kn5 in under 2 minutes). Full end-to-end builds are for releases only.
+- **Asset viewer.** One command renders a single asset, or one 200 m chunk, from a few angles beside the nearest GoPro/Mapillary photo, in seconds, so the asset can be judged visually before any build.
+- **Vegetation, two zones.**
+  - **Near road** (inside about 40 m, or visible from the road): exact LiDAR position, height and crown form, as now.
+  - **Far / valley:** procedural scatter driven by the LiDAR canopy-height model and NAIP greenness, with automatic species, scale, rotation and colour variance.
+  - Both use CM/CSP-native setups (shared tree materials, `ksTree` via ext_config, instancing-friendly chunks).
+
+### K: real track assets
+- **Palomares GP** (`track_*` layouts on Palomares): kerbs in red/yellow/green blocks in the style of Spa-Francorchamps, plus generic race furniture: "Palomares GP" banners, marshal posts, distance boards, a start gantry. Use our own text and designs only; no real circuit or sponsor logos.
+- **Niles Canyon** (`canyon_track`, `canyon_rev_track`): red/white kerbs with green-painted run-off in the style of the Red Bull Ring. The kerb and run-off structure is placed from the AI racing line (apex and exit by curvature, run-off on the outside of exits where the terrain allows).
+- **Free-roam track variant** `freeroam_track`: the whole map is free to drive with all track assets in place. The kerb direction comes from the main layouts: Niles Canyon from the Mission Blvd start, Palomares from the Niles Canyon start.
+
+### B: Blender round-trip for final tweaks
+- Import the current build (our kn5 reader, or the cached geometry plus the ledger) into Blender with each placed asset as a linked instance tagged with its ledger id.
+- Move, add or delete in Blender. A script writes the changes back to the ledger, then the incremental build re-exports only the affected kn5 chunks.

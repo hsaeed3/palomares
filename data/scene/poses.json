@@ -1,10 +1,13 @@
 {
- "note": "local coords; pose relative to centerline tangent at s (lateral>0 = right of centreline, as 27_litmus_fit.cam_basis); yaw/pitch/roll deg; fov_v = pinhole render fov; lens r=tan(lam*theta)/lam, f=f_rel*height. conf 0..1; score = mean IoU sky/road/vegetation/terrain of the 256x186 render vs seg.",
+ "note": "local coords; pose relative to centerline tangent at s (lateral>0 = right, as scene.cam_basis); yaw/pitch/roll deg; intrinsics config/camera.json (docs/phase2/CAMERA.md); reg=calib_edge: 6-DoF by edge chamfer (scripts/p5/calib.py); edge_res_px = [model->photo, photo->model] mean px per feature.",
  "lens": {
-  "f_rel": 0.8,
-  "lam": 1.0
+  "model": "pinhole_k1",
+  "f_px": 956.6,
+  "dcx": 0.0,
+  "dcy": 0.0,
+  "k1": 0.0
  },
- "fov_v": 64.0,
+ "fov_v": 75.0,
  "monotone_violations": [
   38,
   63,
@@ -23,10 +26,13 @@
    "yaw": -3.75,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4496,
@@ -48,10 +54,13 @@
    "yaw": 2.36,
    "pitch": 5.73,
    "roll": 0.75,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.768,
    "score": 0.5356,
@@ -73,10 +82,13 @@
    "yaw": -5.4,
    "pitch": 5.73,
    "roll": -3.07,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.993,
    "score": 0.426,
@@ -98,10 +110,13 @@
    "yaw": -0.82,
    "pitch": 5.73,
    "roll": -1.81,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5628,
@@ -123,10 +138,13 @@
    "yaw": 5.11,
    "pitch": 5.73,
    "roll": -2.47,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.766,
    "score": 0.6023,
@@ -148,10 +166,13 @@
    "yaw": 3.17,
    "pitch": 5.73,
    "roll": 0.35,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.569,
    "score": 0.4728,
@@ -173,10 +194,13 @@
    "yaw": 1.86,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.585,
    "score": 0.537,
@@ -198,10 +222,13 @@
    "yaw": -5.87,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.895,
    "score": 0.4629,
@@ -223,10 +250,13 @@
    "yaw": 13.46,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.96,
    "score": 0.605,
@@ -248,10 +278,13 @@
    "yaw": 6.71,
    "pitch": 5.2,
    "roll": 3.28,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6249,
@@ -273,10 +306,13 @@
    "yaw": -11.52,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.587,
    "score": 0.5991,
@@ -298,10 +334,13 @@
    "yaw": 8.48,
    "pitch": 4.72,
    "roll": 3.69,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.499,
    "score": 0.4716,
@@ -323,10 +362,13 @@
    "yaw": 0.78,
    "pitch": 4.24,
    "roll": 3.75,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.972,
    "score": 0.5544,
@@ -348,10 +390,13 @@
    "yaw": -5.68,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4998,
@@ -373,10 +418,13 @@
    "yaw": -5.69,
    "pitch": 3.86,
    "roll": 1.86,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5306,
@@ -398,10 +446,13 @@
    "yaw": -9.08,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.52,
    "score": 0.4364,
@@ -423,10 +474,13 @@
    "yaw": -8.2,
    "pitch": 5.73,
    "roll": 2.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5676,
@@ -448,10 +502,13 @@
    "yaw": 7.67,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5191,
@@ -473,10 +530,13 @@
    "yaw": 1.55,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.488,
    "score": 0.4902,
@@ -498,10 +558,13 @@
    "yaw": 8.49,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.752,
    "score": 0.5327,
@@ -517,16 +580,19 @@
   },
   {
    "frame": 21,
-   "s": 1312.0,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 2.02,
-   "pitch": 5.73,
-   "roll": 1.13,
-   "fov_v": 64.0,
+   "s": 1300.7,
+   "lateral": -0.59,
+   "height": 2.25,
+   "yaw": 6.64,
+   "pitch": 4.68,
+   "roll": -2.57,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.822,
    "score": 0.46,
@@ -538,7 +604,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 30.91,
+   "edge_res_px": {
+    "y": [
+     32.0,
+     10.2
+    ],
+    "wl": [
+     10.1,
+     28.4
+    ],
+    "e": [
+     24.2,
+     37.0
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 22,
@@ -548,10 +630,13 @@
    "yaw": 6.64,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5488,
@@ -573,10 +658,13 @@
    "yaw": 4.75,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.652,
    "score": 0.6677,
@@ -598,10 +686,13 @@
    "yaw": 2.98,
    "pitch": 5.73,
    "roll": -1.05,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4904,
@@ -623,10 +714,13 @@
    "yaw": 15.26,
    "pitch": 5.73,
    "roll": 1.77,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.726,
    "score": 0.4086,
@@ -648,10 +742,13 @@
    "yaw": 1.87,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.266,
    "score": 0.3973,
@@ -673,10 +770,13 @@
    "yaw": -10.22,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.86,
    "score": 0.4242,
@@ -698,10 +798,13 @@
    "yaw": 1.43,
    "pitch": 5.73,
    "roll": 1.2,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.924,
    "score": 0.5002,
@@ -723,10 +826,13 @@
    "yaw": 5.06,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.251,
    "score": 0.4602,
@@ -748,10 +854,13 @@
    "yaw": 6.35,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.8,
    "score": 0.5457,
@@ -773,10 +882,13 @@
    "yaw": -1.31,
    "pitch": 4.69,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5871,
@@ -798,10 +910,13 @@
    "yaw": -9.5,
    "pitch": 3.17,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.998,
    "score": 0.5404,
@@ -823,10 +938,13 @@
    "yaw": 4.81,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5032,
@@ -848,10 +966,13 @@
    "yaw": 0.41,
    "pitch": 5.73,
    "roll": -1.37,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5514,
@@ -873,10 +994,13 @@
    "yaw": 2.13,
    "pitch": 5.73,
    "roll": -3.75,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.58,
    "score": 0.4502,
@@ -898,10 +1022,13 @@
    "yaw": -0.12,
    "pitch": 3.06,
    "roll": -0.25,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.951,
    "score": 0.5231,
@@ -923,10 +1050,13 @@
    "yaw": -8.62,
    "pitch": 5.73,
    "roll": -2.4,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4773,
@@ -948,10 +1078,13 @@
    "yaw": -5.07,
    "pitch": 5.73,
    "roll": -0.49,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.93,
    "score": 0.4555,
@@ -973,10 +1106,13 @@
    "yaw": -4.56,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.787,
    "score": 0.6067,
@@ -998,10 +1134,13 @@
    "yaw": -7.65,
    "pitch": 5.73,
    "roll": -1.85,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.573,
    "score": 0.4975,
@@ -1023,10 +1162,13 @@
    "yaw": -9.96,
    "pitch": 5.73,
    "roll": 0.11,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.706,
    "score": 0.5432,
@@ -1048,10 +1190,13 @@
    "yaw": 17.19,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.384,
    "score": 0.4429,
@@ -1073,10 +1218,13 @@
    "yaw": 3.61,
    "pitch": 1.17,
    "roll": -0.45,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5139,
@@ -1088,8 +1236,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.3,
-   "s_fit": 2861.7,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -1100,10 +1246,13 @@
    "yaw": 9.35,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5064,
@@ -1115,8 +1264,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.9,
-   "s_fit": 2837.2,
-   "forced_monotone": true,
    "flag_moved_30m": true
   },
   {
@@ -1127,10 +1274,13 @@
    "yaw": 9.06,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5178,
@@ -1142,8 +1292,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.3,
-   "s_fit": 3005.0,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -1154,10 +1302,13 @@
    "yaw": 6.59,
    "pitch": 5.56,
    "roll": -0.6,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5592,
@@ -1169,8 +1320,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.1,
-   "s_fit": 3001.1,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -1181,10 +1330,13 @@
    "yaw": -5.32,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.527,
@@ -1206,10 +1358,13 @@
    "yaw": 6.1,
    "pitch": 1.55,
    "roll": 3.99,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.707,
    "score": 0.5397,
@@ -1231,10 +1386,13 @@
    "yaw": -1.82,
    "pitch": 2.62,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.7109,
@@ -1256,10 +1414,13 @@
    "yaw": -1.64,
    "pitch": 2.58,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.7058,
@@ -1281,10 +1442,13 @@
    "yaw": -3.16,
    "pitch": 1.02,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6821,
@@ -1306,10 +1470,13 @@
    "yaw": 14.26,
    "pitch": 5.14,
    "roll": -2.66,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.614,
    "score": 0.4722,
@@ -1331,10 +1498,13 @@
    "yaw": -6.67,
    "pitch": 3.45,
    "roll": -0.75,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.821,
    "score": 0.5299,
@@ -1356,10 +1526,13 @@
    "yaw": -0.24,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.666,
    "score": 0.5145,
@@ -1381,10 +1554,13 @@
    "yaw": -4.36,
    "pitch": 3.27,
    "roll": -0.97,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.619,
    "score": 0.5793,
@@ -1406,10 +1582,13 @@
    "yaw": -3.79,
    "pitch": 2.75,
    "roll": -3.44,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.665,
    "score": 0.4827,
@@ -1431,10 +1610,13 @@
    "yaw": -5.6,
    "pitch": 4.42,
    "roll": -3.05,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.534,
@@ -1456,10 +1638,13 @@
    "yaw": -5.95,
    "pitch": 3.83,
    "roll": -0.28,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.749,
    "score": 0.5339,
@@ -1481,10 +1666,13 @@
    "yaw": -8.48,
    "pitch": 5.73,
    "roll": -2.61,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.565,
    "score": 0.4879,
@@ -1506,10 +1694,13 @@
    "yaw": -3.62,
    "pitch": 1.24,
    "roll": 0.46,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5232,
@@ -1531,10 +1722,13 @@
    "yaw": 4.36,
    "pitch": 5.73,
    "roll": 3.22,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5103,
@@ -1556,10 +1750,13 @@
    "yaw": -0.6,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.568,
@@ -1581,10 +1778,13 @@
    "yaw": 4.61,
    "pitch": 3.05,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.3793,
@@ -1606,10 +1806,13 @@
    "yaw": -3.62,
    "pitch": 4.0,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.993,
    "score": 0.3905,
@@ -1625,16 +1828,19 @@
   },
   {
    "frame": 65,
-   "s": 3715.0,
-   "lateral": -0.8,
-   "height": 1.43,
-   "yaw": 9.89,
-   "pitch": 5.73,
-   "roll": -1.49,
-   "fov_v": 64.0,
+   "s": 3710.4,
+   "lateral": -1.51,
+   "height": 1.95,
+   "yaw": 12.9,
+   "pitch": 4.28,
+   "roll": 5.36,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.838,
    "score": 0.562,
@@ -1646,7 +1852,23 @@
    "seg": "seg",
    "pinned": true,
    "t_s": 2.8,
-   "flag_moved_30m": true
+   "flag_moved_30m": true,
+   "edge_cost": 39.14,
+   "edge_res_px": {
+    "y": [
+     43.4,
+     7.3
+    ],
+    "wl": [
+     24.9,
+     41.6
+    ],
+    "e": [
+     18.8,
+     37.6
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 66,
@@ -1656,10 +1878,13 @@
    "yaw": 0.03,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.9,
    "score": 0.3186,
@@ -1681,10 +1906,13 @@
    "yaw": -4.04,
    "pitch": 2.46,
    "roll": 0.47,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.712,
    "score": 0.4251,
@@ -1706,10 +1934,13 @@
    "yaw": -8.51,
    "pitch": 3.26,
    "roll": -3.78,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4851,
@@ -1731,10 +1962,13 @@
    "yaw": 1.62,
    "pitch": 5.73,
    "roll": -2.85,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.502,
@@ -1756,10 +1990,13 @@
    "yaw": 4.83,
    "pitch": 3.4,
    "roll": -3.28,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.784,
    "score": 0.5385,
@@ -1781,10 +2018,13 @@
    "yaw": -1.29,
    "pitch": 4.4,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.799,
    "score": 0.5304,
@@ -1806,10 +2046,13 @@
    "yaw": 2.48,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.554,
    "score": 0.5049,
@@ -1831,10 +2074,13 @@
    "yaw": 1.33,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5489,
@@ -1856,10 +2102,13 @@
    "yaw": 1.6,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.482,
    "score": 0.4932,
@@ -1881,10 +2130,13 @@
    "yaw": 9.5,
    "pitch": 4.74,
    "roll": 0.03,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.626,
@@ -1906,10 +2158,13 @@
    "yaw": 17.19,
    "pitch": 5.17,
    "roll": -0.26,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5482,
@@ -1921,8 +2176,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.5,
-   "s_fit": 3911.5,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -1933,10 +2186,13 @@
    "yaw": 15.57,
    "pitch": 5.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.51,
    "score": 0.4775,
@@ -1952,16 +2208,19 @@
   },
   {
    "frame": 78,
-   "s": 3975.1,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 9.37,
-   "pitch": 5.73,
-   "roll": 3.92,
-   "fov_v": 64.0,
+   "s": 3960.9,
+   "lateral": -0.81,
+   "height": 1.98,
+   "yaw": 13.86,
+   "pitch": 5.78,
+   "roll": 4.02,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.6,
    "score": 0.5434,
@@ -1973,7 +2232,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 38.52,
+   "edge_res_px": {
+    "y": [
+     47.1,
+     6.0
+    ],
+    "wl": [
+     15.4,
+     34.1
+    ],
+    "e": [
+     31.7,
+     41.7
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 79,
@@ -1983,10 +2258,13 @@
    "yaw": 4.32,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6238,
@@ -2008,10 +2286,13 @@
    "yaw": 3.93,
    "pitch": 5.26,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4886,
@@ -2023,8 +2304,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.0,
-   "s_fit": 4021.5,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -2035,10 +2314,13 @@
    "yaw": 14.07,
    "pitch": 5.73,
    "roll": 0.76,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5899,
@@ -2060,10 +2342,13 @@
    "yaw": 11.02,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.479,
    "score": 0.4795,
@@ -2085,10 +2370,13 @@
    "yaw": -1.21,
    "pitch": 3.83,
    "roll": -1.77,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.542,
    "score": 0.4846,
@@ -2110,10 +2398,13 @@
    "yaw": 1.71,
    "pitch": 0.66,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5139,
@@ -2135,10 +2426,13 @@
    "yaw": -2.16,
    "pitch": 5.56,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.558,
    "score": 0.465,
@@ -2160,10 +2454,13 @@
    "yaw": 4.1,
    "pitch": 0.85,
    "roll": 0.05,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.6474,
@@ -2175,9 +2472,7 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.9,
-   "flag_moved_30m": false,
-   "s_fit": 4156.4,
-   "forced_monotone": true
+   "flag_moved_30m": false
   },
   {
    "frame": 87,
@@ -2187,10 +2482,13 @@
    "yaw": -11.83,
    "pitch": 3.08,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.751,
    "score": 0.5824,
@@ -2212,10 +2510,13 @@
    "yaw": 2.28,
    "pitch": 3.3,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.847,
    "score": 0.5737,
@@ -2237,10 +2538,13 @@
    "yaw": 3.1,
    "pitch": 5.52,
    "roll": 1.79,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4057,
@@ -2252,9 +2556,7 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.0,
-   "flag_moved_30m": false,
-   "s_fit": 4217.1,
-   "forced_monotone": true
+   "flag_moved_30m": false
   },
   {
    "frame": 90,
@@ -2264,10 +2566,13 @@
    "yaw": 5.39,
    "pitch": 4.62,
    "roll": -1.43,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5326,
@@ -2289,10 +2594,13 @@
    "yaw": 3.13,
    "pitch": 5.73,
    "roll": 2.53,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.963,
    "score": 0.3884,
@@ -2314,10 +2622,13 @@
    "yaw": 2.67,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.987,
    "score": 0.5704,
@@ -2339,10 +2650,13 @@
    "yaw": 4.51,
    "pitch": 5.73,
    "roll": -0.34,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6254,
@@ -2364,10 +2678,13 @@
    "yaw": 3.43,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.595,
    "score": 0.5497,
@@ -2389,10 +2706,13 @@
    "yaw": 4.18,
    "pitch": 5.73,
    "roll": 3.99,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.843,
    "score": 0.5161,
@@ -2414,10 +2734,13 @@
    "yaw": 0.21,
    "pitch": 3.43,
    "roll": 3.98,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.595,
    "score": 0.4738,
@@ -2439,10 +2762,13 @@
    "yaw": 8.95,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.572,
    "score": 0.4442,
@@ -2464,10 +2790,13 @@
    "yaw": 1.44,
    "pitch": 5.72,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.812,
    "score": 0.3537,
@@ -2489,10 +2818,13 @@
    "yaw": 7.16,
    "pitch": 2.18,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.647,
    "score": 0.5743,
@@ -2514,10 +2846,13 @@
    "yaw": 8.44,
    "pitch": 4.27,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.723,
    "score": 0.6167,
@@ -2539,10 +2874,13 @@
    "yaw": 8.11,
    "pitch": 3.64,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.853,
    "score": 0.5016,
@@ -2564,10 +2902,13 @@
    "yaw": 9.16,
    "pitch": 5.23,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.66,
    "score": 0.5219,
@@ -2589,10 +2930,13 @@
    "yaw": 4.48,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.501,
    "score": 0.3958,
@@ -2614,10 +2958,13 @@
    "yaw": 5.36,
    "pitch": 5.07,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.691,
    "score": 0.4778,
@@ -2639,10 +2986,13 @@
    "yaw": 4.68,
    "pitch": 3.72,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.798,
    "score": 0.376,
@@ -2664,10 +3014,13 @@
    "yaw": 8.7,
    "pitch": 5.0,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.393,
    "score": 0.3993,
@@ -2689,10 +3042,13 @@
    "yaw": -3.94,
    "pitch": 5.73,
    "roll": -0.35,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6341,
@@ -2714,10 +3070,13 @@
    "yaw": 10.23,
    "pitch": 2.41,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.751,
    "score": 0.4949,
@@ -2739,10 +3098,13 @@
    "yaw": 4.71,
    "pitch": 1.84,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.581,
    "score": 0.5157,
@@ -2764,10 +3126,13 @@
    "yaw": 7.6,
    "pitch": 5.73,
    "roll": -3.7,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.454,
    "score": 0.4483,
@@ -2789,10 +3154,13 @@
    "yaw": 17.19,
    "pitch": 5.7,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4668,
@@ -2804,8 +3172,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 7.5,
-   "s_fit": 7121.3,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -2816,10 +3182,13 @@
    "yaw": 4.66,
    "pitch": 5.73,
    "roll": 0.73,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4402,
@@ -2831,8 +3200,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.9,
-   "s_fit": 7103.0,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -2843,10 +3210,13 @@
    "yaw": -2.83,
    "pitch": 5.73,
    "roll": 0.79,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.575,
    "score": 0.4436,
@@ -2868,10 +3238,13 @@
    "yaw": 8.23,
    "pitch": 5.73,
    "roll": 3.72,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.55,
    "score": 0.4155,
@@ -2893,10 +3266,13 @@
    "yaw": 6.04,
    "pitch": 5.73,
    "roll": 1.18,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.841,
    "score": 0.5791,
@@ -2918,10 +3294,13 @@
    "yaw": 5.67,
    "pitch": 4.76,
    "roll": 0.49,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.859,
    "score": 0.4829,
@@ -2943,10 +3322,13 @@
    "yaw": 6.49,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.459,
    "score": 0.4182,
@@ -2968,10 +3350,13 @@
    "yaw": 7.18,
    "pitch": -1.9,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5263,
@@ -2993,10 +3378,13 @@
    "yaw": 8.36,
    "pitch": -3.39,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.587,
    "score": 0.5642,
@@ -3018,10 +3406,13 @@
    "yaw": 7.44,
    "pitch": -3.02,
    "roll": -3.88,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.748,
    "score": 0.5357,
@@ -3037,16 +3428,19 @@
   },
   {
    "frame": 121,
-   "s": 7639.7,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 6.79,
-   "pitch": -4.66,
-   "roll": -4.01,
-   "fov_v": 64.0,
+   "s": 7642.4,
+   "lateral": -1.41,
+   "height": 2.25,
+   "yaw": 6.02,
+   "pitch": -7.15,
+   "roll": 0.22,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5047,
@@ -3058,7 +3452,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 8.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 25.4,
+   "edge_res_px": {
+    "y": [
+     19.4,
+     17.6
+    ],
+    "wl": [
+     11.6,
+     19.2
+    ],
+    "e": [
+     18.1,
+     30.2
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 122,
@@ -3068,10 +3478,13 @@
    "yaw": -0.8,
    "pitch": -5.61,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4893,
@@ -3093,10 +3506,13 @@
    "yaw": 6.16,
    "pitch": -0.68,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.752,
    "score": 0.5801,
@@ -3118,10 +3534,13 @@
    "yaw": 2.48,
    "pitch": -3.77,
    "roll": -0.64,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5985,
@@ -3143,10 +3562,13 @@
    "yaw": 3.62,
    "pitch": -3.55,
    "roll": -0.5,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.896,
    "score": 0.6597,
@@ -3168,10 +3590,13 @@
    "yaw": 3.28,
    "pitch": -4.3,
    "roll": -0.41,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.915,
    "score": 0.5483,
@@ -3193,10 +3618,13 @@
    "yaw": 0.48,
    "pitch": -0.41,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.599,
    "score": 0.6286,
@@ -3218,10 +3646,13 @@
    "yaw": 8.2,
    "pitch": -1.89,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.774,
    "score": 0.4338,
@@ -3243,10 +3674,13 @@
    "yaw": 3.79,
    "pitch": -1.81,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.671,
    "score": 0.3774,
@@ -3268,10 +3702,13 @@
    "yaw": 7.37,
    "pitch": -2.45,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.63,
    "score": 0.5218,
@@ -3293,10 +3730,13 @@
    "yaw": 8.68,
    "pitch": 0.27,
    "roll": -0.67,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.888,
    "score": 0.6052,
@@ -3312,16 +3752,19 @@
   },
   {
    "frame": 132,
-   "s": 8625.2,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": -2.02,
-   "pitch": -2.64,
-   "roll": -0.43,
-   "fov_v": 64.0,
+   "s": 8629.1,
+   "lateral": -1.12,
+   "height": 2.1,
+   "yaw": -3.3,
+   "pitch": -1.62,
+   "roll": -2.46,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6489,
@@ -3333,7 +3776,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.6,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 31.65,
+   "edge_res_px": {
+    "y": [
+     7.7,
+     7.2
+    ],
+    "wl": [
+     29.7,
+     27.3
+    ],
+    "e": [
+     37.2,
+     41.1
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 133,
@@ -3343,10 +3802,13 @@
    "yaw": 4.82,
    "pitch": -1.97,
    "roll": -1.62,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.901,
    "score": 0.634,
@@ -3368,10 +3830,13 @@
    "yaw": 3.54,
    "pitch": 0.04,
    "roll": -1.98,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.676,
    "score": 0.5691,
@@ -3393,10 +3858,13 @@
    "yaw": 5.22,
    "pitch": 3.16,
    "roll": -1.6,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.543,
    "score": 0.5222,
@@ -3418,10 +3886,13 @@
    "yaw": 3.05,
    "pitch": -1.75,
    "roll": 2.04,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.943,
    "score": 0.5618,
@@ -3443,10 +3914,13 @@
    "yaw": 6.54,
    "pitch": 0.93,
    "roll": 0.68,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.662,
    "score": 0.6022,
@@ -3468,10 +3942,13 @@
    "yaw": 7.6,
    "pitch": 1.1,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.504,
    "score": 0.5496,
@@ -3494,10 +3971,13 @@
    "yaw": 7.4,
    "pitch": 3.32,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.75,
    "score": 0.6011,
@@ -3519,10 +3999,13 @@
    "yaw": -0.47,
    "pitch": 3.66,
    "roll": -3.48,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6049,
@@ -3544,10 +4027,13 @@
    "yaw": 13.67,
    "pitch": -1.26,
    "roll": -0.26,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.277,
    "score": 0.4556,
@@ -3569,10 +4055,13 @@
    "yaw": -0.84,
    "pitch": -0.21,
    "roll": -0.35,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.776,
    "score": 0.5586,
@@ -3594,10 +4083,13 @@
    "yaw": 7.88,
    "pitch": 1.29,
    "roll": 0.29,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.472,
    "score": 0.4967,
@@ -3619,10 +4111,13 @@
    "yaw": 4.79,
    "pitch": 0.8,
    "roll": -0.58,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.831,
    "score": 0.5925,
@@ -3644,10 +4139,13 @@
    "yaw": 5.53,
    "pitch": 1.73,
    "roll": -0.87,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.85,
    "score": 0.5384,
@@ -3669,10 +4167,13 @@
    "yaw": 2.77,
    "pitch": 4.14,
    "roll": -3.89,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5037,
@@ -3684,8 +4185,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.8,
-   "s_fit": 9846.9,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -3696,10 +4195,13 @@
    "yaw": 1.17,
    "pitch": 3.45,
    "roll": -3.95,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.896,
    "score": 0.6133,
@@ -3721,10 +4223,13 @@
    "yaw": 7.64,
    "pitch": 2.53,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.525,
    "score": 0.5042,
@@ -3746,10 +4251,13 @@
    "yaw": 3.76,
    "pitch": 1.63,
    "roll": -2.41,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.665,
    "score": 0.5679,
@@ -3771,10 +4279,13 @@
    "yaw": 3.31,
    "pitch": 1.46,
    "roll": 1.12,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.771,
    "score": 0.4103,
@@ -3796,10 +4307,13 @@
    "yaw": 9.11,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.617,
    "score": 0.5804,
@@ -3821,10 +4335,13 @@
    "yaw": 1.75,
    "pitch": 3.99,
    "roll": -0.72,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.817,
    "score": 0.6059,
@@ -3846,10 +4363,13 @@
    "yaw": 2.79,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.776,
    "score": 0.4591,
@@ -3871,10 +4391,13 @@
    "yaw": 1.22,
    "pitch": 4.2,
    "roll": 2.22,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.823,
    "score": 0.3532,
@@ -3896,10 +4419,13 @@
    "yaw": 6.7,
    "pitch": 4.47,
    "roll": -0.77,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.898,
    "score": 0.4,
@@ -3921,10 +4447,13 @@
    "yaw": 1.02,
    "pitch": 3.56,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.722,
    "score": 0.4256,
@@ -3946,10 +4475,13 @@
    "yaw": -2.65,
    "pitch": 4.52,
    "roll": 2.76,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.845,
    "score": 0.4314,
@@ -3965,16 +4497,19 @@
   },
   {
    "frame": 158,
-   "s": 10466.0,
-   "lateral": -0.78,
-   "height": 1.7,
-   "yaw": 1.97,
-   "pitch": 3.87,
-   "roll": 2.64,
-   "fov_v": 64.0,
+   "s": 10469.8,
+   "lateral": -0.88,
+   "height": 2.22,
+   "yaw": 2.79,
+   "pitch": 0.65,
+   "roll": 5.62,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.777,
    "score": 0.4403,
@@ -3986,7 +4521,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.2,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 29.64,
+   "edge_res_px": {
+    "y": [
+     31.5,
+     5.8
+    ],
+    "wl": [
+     14.2,
+     19.9
+    ],
+    "e": [
+     27.2,
+     40.1
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 159,
@@ -3996,10 +4547,13 @@
    "yaw": 3.58,
    "pitch": 0.89,
    "roll": -0.11,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.3871,
@@ -4011,8 +4565,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 5.9,
-   "s_fit": 10541.9,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -4023,10 +4575,13 @@
    "yaw": -15.01,
    "pitch": 0.26,
    "roll": -2.67,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4322,
@@ -4038,8 +4593,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.9,
-   "s_fit": 10527.5,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -4050,10 +4603,13 @@
    "yaw": 6.27,
    "pitch": 0.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.671,
    "score": 0.5163,
@@ -4075,10 +4631,13 @@
    "yaw": -4.15,
    "pitch": 1.62,
    "roll": 2.77,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.925,
    "score": 0.6254,
@@ -4100,10 +4659,13 @@
    "yaw": 2.05,
    "pitch": 3.21,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.779,
    "score": 0.5348,
@@ -4125,10 +4687,13 @@
    "yaw": 11.49,
    "pitch": 2.75,
    "roll": 3.53,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.451,
    "score": 0.4686,
@@ -4150,10 +4715,13 @@
    "yaw": 0.66,
    "pitch": -0.42,
    "roll": 1.82,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.877,
    "score": 0.4815,
@@ -4175,10 +4743,13 @@
    "yaw": 0.31,
    "pitch": -2.32,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.359,
@@ -4200,10 +4771,13 @@
    "yaw": 1.49,
    "pitch": 2.51,
    "roll": 3.9,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4353,
@@ -4225,10 +4799,13 @@
    "yaw": 1.99,
    "pitch": -2.69,
    "roll": 2.81,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4967,
@@ -4250,10 +4827,13 @@
    "yaw": 3.08,
    "pitch": -3.14,
    "roll": 2.39,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5313,
@@ -4275,10 +4855,13 @@
    "yaw": 4.09,
    "pitch": -0.15,
    "roll": 2.11,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.946,
    "score": 0.5932,
@@ -4300,10 +4883,13 @@
    "yaw": 12.04,
    "pitch": -0.68,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.691,
    "score": 0.5617,
@@ -4325,10 +4911,13 @@
    "yaw": -8.71,
    "pitch": 2.63,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.478,
    "score": 0.4214,
@@ -4350,10 +4939,13 @@
    "yaw": 1.82,
    "pitch": 1.59,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.714,
    "score": 0.3448,
@@ -4375,10 +4967,13 @@
    "yaw": 9.05,
    "pitch": 1.08,
    "roll": -1.6,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.76,
    "score": 0.4564,
@@ -4400,10 +4995,13 @@
    "yaw": 7.22,
    "pitch": 1.13,
    "roll": -0.44,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.512,
    "score": 0.4399,
@@ -4425,10 +5023,13 @@
    "yaw": 2.29,
    "pitch": 3.19,
    "roll": -0.38,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.708,
    "score": 0.5714,
@@ -4450,10 +5051,13 @@
    "yaw": 5.0,
    "pitch": 4.12,
    "roll": 0.33,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.932,
    "score": 0.6201,
@@ -4475,10 +5079,13 @@
    "yaw": -11.9,
    "pitch": 2.94,
    "roll": -0.74,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.476,
    "score": 0.472,
@@ -4500,10 +5107,13 @@
    "yaw": 4.0,
    "pitch": 1.82,
    "roll": -2.77,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5081,
@@ -4525,10 +5135,13 @@
    "yaw": -3.59,
    "pitch": 5.73,
    "roll": 2.6,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.961,
    "score": 0.4449,
@@ -4550,10 +5163,13 @@
    "yaw": 4.87,
    "pitch": 1.35,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.6431,
@@ -4565,8 +5181,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.1,
-   "s_fit": 12679.2,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -4577,10 +5191,13 @@
    "yaw": 3.02,
    "pitch": 3.4,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.584,
    "score": 0.4397,
@@ -4602,10 +5219,13 @@
    "yaw": 6.33,
    "pitch": 2.2,
    "roll": 3.63,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6348,
@@ -4627,10 +5247,13 @@
    "yaw": -5.38,
    "pitch": 2.0,
    "roll": -3.31,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5792,
@@ -4652,10 +5275,13 @@
    "yaw": 8.35,
    "pitch": 0.4,
    "roll": -0.55,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.558,
    "score": 0.4273,
@@ -4677,10 +5303,13 @@
    "yaw": 0.1,
    "pitch": 1.53,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5154,
@@ -4702,10 +5331,13 @@
    "yaw": 0.11,
    "pitch": -1.92,
    "roll": -2.07,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5191,
@@ -4727,10 +5359,13 @@
    "yaw": 7.41,
    "pitch": 2.52,
    "roll": -3.43,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.898,
    "score": 0.5479,
@@ -4746,16 +5381,19 @@
   },
   {
    "frame": 189,
-   "s": 13187.8,
-   "lateral": 0.34,
-   "height": 1.7,
-   "yaw": 9.19,
-   "pitch": 4.81,
+   "s": 13182.4,
+   "lateral": 0.38,
+   "height": 1.95,
+   "yaw": 13.86,
+   "pitch": 3.95,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.654,
    "score": 0.4622,
@@ -4767,7 +5405,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.3,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 31.64,
+   "edge_res_px": {
+    "y": [
+     32.1,
+     12.1
+    ],
+    "wl": [
+     17.5,
+     27.0
+    ],
+    "e": [
+     21.5,
+     32.7
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 190,
@@ -4777,10 +5431,13 @@
    "yaw": 2.17,
    "pitch": 1.73,
    "roll": 4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.817,
    "score": 0.5906,
@@ -4802,10 +5459,13 @@
    "yaw": 5.84,
    "pitch": 1.04,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.649,
    "score": 0.4782,
@@ -4827,10 +5487,13 @@
    "yaw": -2.0,
    "pitch": 4.02,
    "roll": -3.79,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.546,
    "score": 0.6026,
@@ -4852,10 +5515,13 @@
    "yaw": 3.41,
    "pitch": 1.11,
    "roll": 3.54,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.676,
    "score": 0.4665,
@@ -4877,10 +5543,13 @@
    "yaw": 1.29,
    "pitch": 4.72,
    "roll": 0.66,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.731,
    "score": 0.5905,
@@ -4902,10 +5571,13 @@
    "yaw": 15.12,
    "pitch": 1.77,
    "roll": 0.5,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5164,
@@ -4927,10 +5599,13 @@
    "yaw": 3.42,
    "pitch": 1.43,
    "roll": -2.97,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.511,
    "score": 0.4695,
@@ -4952,10 +5627,13 @@
    "yaw": 3.48,
    "pitch": 1.16,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5151,
@@ -4977,10 +5655,13 @@
    "yaw": 17.19,
    "pitch": 4.87,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.651,
    "score": 0.4259,
@@ -5003,10 +5684,13 @@
    "yaw": 2.1,
    "pitch": 3.57,
    "roll": -3.95,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.614,
    "score": 0.4963,
@@ -5028,10 +5712,13 @@
    "yaw": 0.68,
    "pitch": 3.37,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.984,
    "score": 0.4723,
@@ -5047,16 +5734,19 @@
   },
   {
    "frame": 201,
-   "s": 13938.4,
-   "lateral": -0.8,
-   "height": 1.7,
-   "yaw": 8.79,
-   "pitch": 4.85,
-   "roll": 4.01,
-   "fov_v": 64.0,
+   "s": 13936.7,
+   "lateral": -0.79,
+   "height": 2.14,
+   "yaw": 9.17,
+   "pitch": 1.06,
+   "roll": 6.88,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.699,
    "score": 0.5133,
@@ -5068,7 +5758,23 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.5,
-   "flag_moved_30m": false
+   "flag_moved_30m": false,
+   "edge_cost": 30.62,
+   "edge_res_px": {
+    "y": [
+     34.7,
+     6.4
+    ],
+    "wl": [
+     9.1,
+     29.2
+    ],
+    "e": [
+     23.1,
+     38.3
+    ]
+   },
+   "reg": "calib_edge"
   },
   {
    "frame": 202,
@@ -5078,10 +5784,13 @@
    "yaw": 5.16,
    "pitch": 3.47,
    "roll": -0.56,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.468,
    "score": 0.4238,
@@ -5103,10 +5812,13 @@
    "yaw": 2.4,
    "pitch": 1.14,
    "roll": -4.0,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.646,
    "score": 0.5704,
@@ -5128,10 +5840,13 @@
    "yaw": 5.54,
    "pitch": 4.83,
    "roll": -1.26,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.5846,
@@ -5143,8 +5858,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 6.5,
-   "s_fit": 14313.9,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -5155,10 +5868,13 @@
    "yaw": 6.86,
    "pitch": 4.19,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5133,
@@ -5180,10 +5896,13 @@
    "yaw": 10.22,
    "pitch": 3.98,
    "roll": -0.15,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.46,
    "score": 0.44,
@@ -5205,10 +5924,13 @@
    "yaw": 4.47,
    "pitch": 5.73,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.881,
    "score": 0.6716,
@@ -5230,10 +5952,13 @@
    "yaw": 12.2,
    "pitch": 0.45,
    "roll": 2.4,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.751,
    "score": 0.5411,
@@ -5255,10 +5980,13 @@
    "yaw": 12.2,
    "pitch": 3.48,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.732,
    "score": 0.3664,
@@ -5280,10 +6008,13 @@
    "yaw": 12.58,
    "pitch": 3.89,
    "roll": -3.97,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.502,
    "score": 0.471,
@@ -5305,10 +6036,13 @@
    "yaw": 4.64,
    "pitch": 5.73,
    "roll": -0.9,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5375,
@@ -5330,10 +6064,13 @@
    "yaw": 5.32,
    "pitch": 5.73,
    "roll": -1.74,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.671,
    "score": 0.5775,
@@ -5355,10 +6092,13 @@
    "yaw": 4.63,
    "pitch": 5.73,
    "roll": -0.19,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.558,
    "score": 0.573,
@@ -5380,10 +6120,13 @@
    "yaw": 13.58,
    "pitch": 3.38,
    "roll": 0.31,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5977,
@@ -5405,10 +6148,13 @@
    "yaw": 1.85,
    "pitch": 0.22,
    "roll": -4.01,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.634,
    "score": 0.5015,
@@ -5430,10 +6176,13 @@
    "yaw": 6.92,
    "pitch": 1.59,
    "roll": -2.75,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.6624,
@@ -5455,10 +6204,13 @@
    "yaw": 5.33,
    "pitch": 2.77,
    "roll": -2.35,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 0.15,
    "score": 0.4217,
@@ -5470,8 +6222,6 @@
    "seg": "seg",
    "pinned": false,
    "t_s": 5.6,
-   "s_fit": 15435.7,
-   "forced_monotone": true,
    "flag_moved_30m": false
   },
   {
@@ -5482,10 +6232,13 @@
    "yaw": 6.73,
    "pitch": 2.29,
    "roll": -2.16,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.4062,
@@ -5507,10 +6260,13 @@
    "yaw": 5.66,
    "pitch": 5.31,
    "roll": -1.2,
-   "fov_v": 64.0,
+   "fov_v": 75.0,
    "lens": {
-    "f_rel": 0.8,
-    "lam": 1.0
+    "model": "pinhole_k1",
+    "f_px": 956.6,
+    "dcx": 0.0,
+    "dcy": 0.0,
+    "k1": 0.0
    },
    "conf": 1.0,
    "score": 0.5607,
