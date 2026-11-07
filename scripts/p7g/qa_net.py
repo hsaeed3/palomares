@@ -149,7 +149,7 @@ for b0 in range(0, len(st), BLK):
 # grade / camber of the built surface
 ok = np.isfinite(ztop_cl)
 g5 = np.gradient(np.convolve(ztop_cl, np.ones(10) / 10, "same"), 0.5)
-w25 = 50
+w25 = min(50, max(len(st) // 4, 1))
 zc = np.convolve(np.where(ok, ztop_cl, np.nanmean(ztop_cl)), np.ones(w25) / w25, "same")
 g25 = np.gradient(zc, 0.5)[w25:-w25]
 cam = (zl2 - zr2) / 4.0; dcam = np.abs(np.diff(cam[::2]))
@@ -159,7 +159,7 @@ res.update(holes=len(holes), holes_list=holes[:50], steps=len(steps),
            slope_breaks_checked=len(breaks),
            asphalt_kinks=len(kinks), asphalt_kinks_list=sorted(kinks, key=lambda t: -t[2])[:30],
            overlaps=len(overl), overlaps_list=overl[:50],
-           grade_max_pct_25m=float(np.nanmax(np.abs(g25)) * 100), grade_max_pct_5m=float(np.nanmax(np.abs(g5[10:-10])) * 100),
+           grade_max_pct_25m=float(np.nanmax(np.abs(g25)) * 100), grade_max_pct_5m=float(np.nanmax(np.abs(g5[10:-10] if len(g5) > 30 else g5)) * 100),
            grade_max_s=float(st[w25:-w25][np.nanargmax(np.abs(g25))]),
            camber_change_max_pct_per_m=float(np.nanmax(dcam) * 100) if len(dcam) else 0.0)
 # open edges of the physics mesh union inside the band (welded at 1 mm)

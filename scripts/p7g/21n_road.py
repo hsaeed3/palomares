@@ -59,6 +59,50 @@ D = np.where(u[None] >= 0, u[None] * road.el[I, None], u[None] * road.er[I, None
 ZR = road.surface_z(I[:, None], D)
 XR, YR = road.xy(I[:, None], D)
 SH = 0.6
+pal = load_centerline(CFG["build_end_m"] + 150)
+pkd = cKDTree(np.c_[pal["x_local"], pal["y_local"]])
+rkd = cKDTree(np.c_[road.x[I], road.y[I]])
+# ---- stitch to the shipped Palomares road/terrain (scripts/p7g/stitch.py): cut copies for the dev7 layouts
+CUT = 4.0
+dpal_road, _ = pkd.query(np.c_[road.x[I], road.y[I]])
+STITCH = bool((dpal_road < 160).any())
+SEGV = np.zeros((0, 3)); SEGE = np.zeros((0, 2), int); KEPT = ROADCUT = None
+
+
+def in_cut(xy):
+    dd, j_ = rkd.query(xy, workers=2); jj_ = I[j_]
+    of = (xy[:, 0] - road.x[jj_]) * road.nx[jj_] + (xy[:, 1] - road.y[jj_]) * road.ny[jj_]
+    h_ = np.where(of > 0, road.el[jj_], road.er[jj_]) + SH
+    return (np.abs(of) < h_ + CUT) & (dd < h_ + CUT + 2) & (j_ > 0) & (j_ < len(I) - 1)
+
+
+if STITCH:
+    import stitch as STI
+    snap = BUILD / "dev7" / "src"
+    kept_all, cut_road = [], []
+    for nm in ("palomares_terrain", "palomares_road", "palomares_lines_road"):
+        src_ = STI.snapshot(ROOT / f"build/palomares_road/{nm}.kn5", snap)
+        if not src_.exists():      # full build in progress: develop against the quick copy, re-run before release
+            src_ = STI.snapshot(ROOT / f"build_quick/palomares_road/{nm}.kn5", snap / "quick")
+        LOG.setdefault("stitch", {}).setdefault("sources", []).append(str(src_))
+        (kp, kt), (rp, rt) = STI.cut_copy(src_, BUILD / "palomares_road" / f"{nm}_dev7.kn5", in_cut, LOG.setdefault("stitch", {}))
+        if nm != "palomares_lines_road":
+            kept_all.append((kp, kt))
+        if len(rt):
+            cut_road.append((rp, rt))
+    off_ = np.cumsum([0] + [len(p_) for p_, _ in kept_all])[:-1]
+    KP = np.concatenate([p_ for p_, _ in kept_all]); KT = np.concatenate([t_ + o for (_, t_), o in zip(kept_all, off_)])
+    # only the kept geometry near this road matters (speed): triangles within 170 m
+    dk, _ = rkd.query(KP[KT].mean(1)[:, :2], workers=2); KT = KT[dk < 170]
+    KEPT = STI.TriGrid(KP, KT)
+    if cut_road:
+        off_ = np.cumsum([0] + [len(p_) for p_, _ in cut_road])[:-1]
+        ROADCUT = STI.TriGrid(np.concatenate([p_ for p_, _ in cut_road]), np.concatenate([t_ + o for (_, t_), o in zip(cut_road, off_)]))
+    SEGV, SEGE = STI.open_boundary(KP, KT)
+    # keep boundary edges near this road's terrain area (the far outer loop of the Palomares terrain stays open there)
+    de_, _ = rkd.query(SEGV[:, :2], workers=2); okv = de_ < 146
+    oke = okv[SEGE].all(1); used_, inv_ = np.unique(SEGE[oke], return_inverse=True)
+    SEGV, SEGE = SEGV[used_], inv_.reshape(-1, 2)
 _w = np.clip(gaussian_filter1d(on_bridge.astype(float), 5.0) * 2, 0, 1); wbr = np.maximum(_w * _w * (3 - 2 * _w), on_bridge)[I]   # deck rows exactly flush
 sh_cols = []
 for side in (-1, 1):                     # shoulder: edge, mid, outer
@@ -70,6 +114,9 @@ for side in (-1, 1):                     # shoulder: edge, mid, outer
         lim = f * SH * 0.30
         # along-s smoothing of the shoulder rise (DTM speckle gave 10-20 cm row-to-row steps on the shoulder)
         rise = gaussian_filter1d(np.clip(zt - ze, -lim, lim), 6.0, mode="nearest")
+        if ROADCUT is not None:                         # junction mouth: the shoulder is asphalt, no rise
+            _, tin = ROADCUT.locate(np.c_[x, y]); mo = gaussian_filter1d((tin >= 0).astype(float), 2.0) * 2
+            rise = rise * (1 - np.clip(mo, 0, 1))
         z = ze + (1 - wbr) * rise                       # deck: flush with the asphalt, blended over ~6 m
         cols.append((x, y, z))
     sh_cols.append(cols)
@@ -114,9 +161,6 @@ tick("road_mesh")
 Lx, Ly, Lz = sh_cols[1][1]; Rx, Ry, Rz = sh_cols[0][1]
 bound = np.concatenate([np.c_[Rx, Ry], np.c_[Lx[::-1], Ly[::-1]]]); bz = np.concatenate([Rz, Lz[::-1]])
 # Palomares footprint (its terrain kn5 covers it): skip
-pal = load_centerline(CFG["build_end_m"] + 150)
-pkd = cKDTree(np.c_[pal["x_local"], pal["y_local"]])
-rkd = cKDTree(np.c_[road.x[I], road.y[I]])
 xmin, ymin = bound.min(0) - 150; xmax, ymax = bound.max(0) + 150
 pts = []
 for step, dmin, dmax in ((1.0, -1.0, 16), (2.0, 16, 50), (4.0, 50, 146)):
@@ -132,47 +176,7 @@ for step, dmin, dmax in ((1.0, -1.0, 16), (2.0, 16, 50), (4.0, 50, 146)):
         m = (de >= dmin) & (de < dmax) & (dist < hw + dmax) & (j > 0) & (j < len(I) - 1)
         pts.append(np.c_[X[m], Y[m]])
 pts = np.concatenate(pts)
-# ---- stitch to the shipped Palomares road/terrain (scripts/p7g/stitch.py): cut copies for the dev7 layouts
-CUT = 4.0
-dpal_road, _ = pkd.query(np.c_[road.x[I], road.y[I]])
-STITCH = bool((dpal_road < 160).any())
-SEGV = np.zeros((0, 3)); SEGE = np.zeros((0, 2), int); KEPT = ROADCUT = None
-
-
-def in_cut(xy):
-    dd, j_ = rkd.query(xy, workers=2); jj_ = I[j_]
-    of = (xy[:, 0] - road.x[jj_]) * road.nx[jj_] + (xy[:, 1] - road.y[jj_]) * road.ny[jj_]
-    h_ = np.where(of > 0, road.el[jj_], road.er[jj_]) + SH
-    return (np.abs(of) < h_ + CUT) & (dd < h_ + CUT + 2) & (j_ > 0) & (j_ < len(I) - 1)
-
-
 if STITCH:
-    import stitch as STI
-    snap = BUILD / "dev7" / "src"
-    kept_all, cut_road = [], []
-    for nm in ("palomares_terrain", "palomares_road", "palomares_lines_road"):
-        src_ = STI.snapshot(ROOT / f"build/palomares_road/{nm}.kn5", snap)
-        if not src_.exists():      # full build in progress: develop against the quick copy, re-run before release
-            src_ = STI.snapshot(ROOT / f"build_quick/palomares_road/{nm}.kn5", snap / "quick")
-        LOG.setdefault("stitch", {}).setdefault("sources", []).append(str(src_))
-        (kp, kt), (rp, rt) = STI.cut_copy(src_, BUILD / "palomares_road" / f"{nm}_dev7.kn5", in_cut, LOG.setdefault("stitch", {}))
-        if nm != "palomares_lines_road":
-            kept_all.append((kp, kt))
-        if len(rt):
-            cut_road.append((rp, rt))
-    off_ = np.cumsum([0] + [len(p_) for p_, _ in kept_all])[:-1]
-    KP = np.concatenate([p_ for p_, _ in kept_all]); KT = np.concatenate([t_ + o for (_, t_), o in zip(kept_all, off_)])
-    # only the kept geometry near this road matters (speed): triangles within 170 m
-    dk, _ = rkd.query(KP[KT].mean(1)[:, :2], workers=2); KT = KT[dk < 170]
-    KEPT = STI.TriGrid(KP, KT)
-    if cut_road:
-        off_ = np.cumsum([0] + [len(p_) for p_, _ in cut_road])[:-1]
-        ROADCUT = STI.TriGrid(np.concatenate([p_ for p_, _ in cut_road]), np.concatenate([t_ + o for (_, t_), o in zip(cut_road, off_)]))
-    SEGV, SEGE = STI.open_boundary(KP, KT)
-    # keep boundary edges near this road's terrain area (the far outer loop of the Palomares terrain stays open there)
-    de_, _ = rkd.query(SEGV[:, :2], workers=2); okv = de_ < 146
-    oke = okv[SEGE].all(1); used_, inv_ = np.unique(SEGE[oke], return_inverse=True)
-    SEGV, SEGE = SEGV[used_], inv_.reshape(-1, 2)
     _, kt_ = KEPT.locate(pts); pts = pts[kt_ < 0]
     if len(SEGV):
         dsv, _ = cKDTree(SEGV[:, :2]).query(pts, workers=2); pts = pts[dsv > 0.35]
@@ -234,7 +238,7 @@ if KEPT is not None:
         zr_, tr_ = ROADCUT.locate(P3[:, :2]); onr = mv & (tr_ >= 0)
         bkd = cKDTree(bound); dbd, jb = bkd.query(P3[onr, :2])
         zrb, trb = ROADCUT.locate(bound[jb]); corr = np.where(trb >= 0, bz[jb] - zrb, 0.0)
-        w_ = np.clip(1 - dbd / 4.0, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
+        w_ = np.clip(1 - dbd / 9.0, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
         P3[onr, 2] = zr_[onr] + w_ * corr
         LOG["stitch"]["mouth_on_palomares_asphalt"] = int(onr.sum())
     LOG["stitch"]["membrane_vertices"] = int(mv.sum()); LOG["stitch"]["mouth_tris"] = int(MOUTH.sum())
