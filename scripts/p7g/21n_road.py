@@ -191,7 +191,7 @@ tick("terrain_cdt")
 fn = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]]); fn /= np.linalg.norm(fn, axis=1, keepdims=True)
 slope = np.degrees(np.arccos(np.clip(fn[:, 2], -1, 1)))
 cls = np.where(slope > 49, "rock", np.where(slope > 25, "bank", "ground"))
-_, jt = rkd.query(P3[TT].mean(1)[:, :2], workers=2); cht = (road.s[I[jt]] // 500).astype(int)
+_, jt = rkd.query(P3[TT].mean(1)[:, :2], workers=2); cht = (road.s[I[jt]] // 1000).astype(int)
 for c in np.unique(cht):
     for k in ("ground", "bank", "rock"):
         sel = (cht == c) & (cls == k)
@@ -241,6 +241,33 @@ for nm in ("road_asphalt", "shoulder_dirt", "ground", "bank"):
 mats.append(Material("rock", "ksPerPixel", None, {"txDiffuse": "bank_d.dds"}))
 mats.append(Material("invisible", "ksPerPixel", None, {"txDiffuse": "dirt_d.dds"}))
 OUT = BUILD / "palomares_road"; OUT.mkdir(parents=True, exist_ok=True)
+MERGE_M = 1000.0     # draw calls: one mesh per (physics key, material, renderable) per 1 km (kn5.split_mesh keeps <= 65k verts)
+
+
+def merge(lst):
+    """chunk merging: concatenate meshes sharing (physics prefix, material, flags, 1 km bin); walls stay separate
+    (invisible colliders cost no draw call and qa_ffb_safety checks each slab as its own component)."""
+    out, bins = [], {}
+    for m in lst:
+        nm = m["name"]
+        if nm.startswith("1WALL"):
+            out.append(m); continue
+        key = re.match(r"^(\d?[A-Z]*)", nm).group(1) or "vis"
+        km = int(np.median(np.asarray(rkd.query(m["P"][::max(len(m["P"]) // 50, 1), :2])[1])) + i0) if len(m["P"]) else 0
+        km = int(road.s[min(km, N - 1)] // MERGE_M)
+        fl = (m.get("visible", True), m.get("renderable", True), m.get("cast_shadows", True))
+        bins.setdefault((key, m["mat"], fl, km), []).append(m)
+    for (key, mat, fl, km), ms in sorted(bins.items(), key=lambda kv: str(kv[0])):
+        off = np.cumsum([0] + [len(m["P"]) for m in ms])[:-1]
+        nm = f"{key}_{TAG}_{mat}_{km:02d}" if key != "vis" else f"{TAG}_{mat}_{km:02d}"
+        out.append(dict(name=nm, mat=mat, P=np.concatenate([m["P"] for m in ms]), T=np.concatenate([m["T"] + o for m, o in zip(ms, off)]),
+                        UV=np.concatenate([m["UV"] for m in ms]), N=np.concatenate([m["N"] for m in ms]),
+                        visible=fl[0], renderable=fl[1], cast_shadows=fl[2]))
+    return out
+
+
+for g in groups:
+    groups[g] = merge(groups[g])
 files = {}
 for g, fname in (("road", f"palomares_niles_{TAG}.kn5"), ("walls", f"palomares_niles_{TAG}.kn5"), ("terrain", f"palomares_niles_{TAG}_terrain.kn5")):
     files.setdefault(fname, []).extend(groups[g])
