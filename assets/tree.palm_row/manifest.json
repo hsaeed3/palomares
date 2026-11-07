@@ -2,7 +2,7 @@
  "type": "tree.palm_row",
  "cls": "tree_add",
  "desc": "row of date palm cards (params.count)",
- "source_hash": "8417ef97631708e0a6ce284d6c830e7cfbb5d110",
+ "source_hash": "8fd049c40b8266b244e01620768da33f82ca0523",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 216,
  "tris": 108,
  "frames": [],
- "built": "2026-11-07 14:33:01",
+ "built": "2026-11-07 14:48:45",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "1106379296516809",

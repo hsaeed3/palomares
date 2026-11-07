@@ -2,7 +2,7 @@
  "type": "sign.yield",
  "cls": "sign",
  "desc": "yield sign (MUTCD layout redrawn) on a galvanised post",
- "source_hash": "72964a6864916c1b6bd00bbbf5edc2c4d26c0ba0",
+ "source_hash": "351bba7a7a070b6d0d2d2f61e4d50a56b299aded",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 28,
  "tris": 14,
  "frames": [],
- "built": "2026-11-07 14:33:00",
+ "built": "2026-11-07 14:47:21",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "272053081304588"

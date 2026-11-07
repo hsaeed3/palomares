@@ -2,7 +2,7 @@
  "type": "wall.retaining_block",
  "cls": "wall",
  "desc": "tan split-face block wall (params.fence_on_top)",
- "source_hash": "1a01916c84ae1215b1f9b67a478487e158d3d6d9",
+ "source_hash": "054c439812c64409979c4020e0536da121ef3484",
  "sources": [
   "ambientCG Concrete018",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 244,
  "tris": 122,
  "frames": [],
- "built": "2026-11-07 14:33:06",
+ "built": "2026-11-07 14:47:37",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "167379091953153",

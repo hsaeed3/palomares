@@ -3,19 +3,19 @@
   "cls": "bridge",
   "verts": 24,
   "tris": 12,
-  "source_hash": "d3ec2990566e178cbb3e547dae82a96132c76be6"
+  "source_hash": "2379871206726a08dc314751f14fce6be88a4632"
  },
  "bridge.abutment_stone": {
   "cls": "bridge",
   "verts": 20,
   "tris": 10,
-  "source_hash": "31de774abafd8047816964afd42df58bfdee353f"
+  "source_hash": "1fbc0a48b5c65656773654303337173be59e2877"
  },
  "bridge.parapet_balustrade": {
   "cls": "bridge",
   "verts": 184,
   "tris": 92,
-  "source_hash": "c6e8dafd51cc8c9293f41e82e8ee9bf01ac38dee"
+  "source_hash": "8219be2e03cca1be5cd1d24b598abc620c525f02"
  },
  "bridge.parapet_concrete": {
   "cls": "bridge",
@@ -39,19 +39,19 @@
   "cls": "bridge",
   "verts": 660,
   "tris": 330,
-  "source_hash": "e23e7392926c3588c7eccf3164f800d7dc28996c"
+  "source_hash": "2c2a19bef8f3cfcb0d00c677797edb80aad4071d"
  },
  "bridge.rail_deck_girder": {
   "cls": "bridge",
   "verts": 1660,
   "tris": 830,
-  "source_hash": "85a8728d1cc4fe995c6cd2ef2409045637984174"
+  "source_hash": "eaca3ac6866d1e3fa4d9bc4f90da8635fc36ad4c"
  },
  "bridge.rail_truss_through": {
   "cls": "bridge",
   "verts": 692,
   "tris": 346,
-  "source_hash": "784fa995521e29690470f15d38cf497678bde326"
+  "source_hash": "f795ff7391bbc65825f58a89cd05907d41db6d52"
  },
  "bridge.steel_girder": {
   "cls": "bridge",
@@ -81,7 +81,7 @@
   "cls": "building",
   "verts": 170,
   "tris": 84,
-  "source_hash": "00d121100935d5ec5c666bf72b885e6e578ca7f7"
+  "source_hash": "e0a2484595686cbc7e26da33d3af00a202c0713e"
  },
  "building.garage": {
   "cls": "building",
@@ -123,19 +123,19 @@
   "cls": "building",
   "verts": 168,
   "tris": 84,
-  "source_hash": "ae8f207f6d98d39c83a2a73ff8f8e8a2c66cdaa4"
+  "source_hash": "b6460f9524600a4fd7d1036a5b8c6bbc1b54d3ca"
  },
  "building.storefront_row": {
   "cls": "building",
   "verts": 248,
   "tris": 124,
-  "source_hash": "c67cc557e4e93df4d3499d2fa8b785f30897f142"
+  "source_hash": "77113cb17cbf18297eb740444f0772dbd71cfdc6"
  },
  "building.town_generic": {
   "cls": "building",
   "verts": 134,
   "tris": 66,
-  "source_hash": "95e3f5ef46ffb552bc024b53f52475500562df07"
+  "source_hash": "f91856e08a7e63f5f7f40f9ba994104cc8c331b2"
  },
  "building.trailer": {
   "cls": "building",
@@ -231,7 +231,7 @@
   "cls": "driveway",
   "verts": 63,
   "tris": 21,
-  "source_hash": "277e88e7a975e2fddfe1f6eec4bf0abacce2ede5"
+  "source_hash": "23cff63e46a11257dfe687be96a9799ec78e5686"
  },
  "fence.board_3rail": {
   "cls": "fence",
@@ -249,7 +249,7 @@
   "cls": "fence",
   "verts": 180,
   "tris": 90,
-  "source_hash": "3a1844ba434ba9f94c80252f18d89c3ae504f6f0"
+  "source_hash": "0d57ab11a66a2f174d0f5663b6ebbd70fb69ae23"
  },
  "fence.iron_picket": {
   "cls": "fence",
@@ -267,7 +267,7 @@
   "cls": "fence",
   "verts": 180,
   "tris": 90,
-  "source_hash": "945516e9172dc7fedc203a00d900f10c7656414c"
+  "source_hash": "9e4823303182f4cc8bc51749444247b51e4a899d"
  },
  "fence.pipe_rail": {
   "cls": "fence",
@@ -291,7 +291,7 @@
   "cls": "fence",
   "verts": 208,
   "tris": 104,
-  "source_hash": "3fbde25ab09581f7972e4fd761a045eb6fffbd5a"
+  "source_hash": "cb0edbcb158b7c98c535970890fe73852367f920"
  },
  "fence.split_rail": {
   "cls": "fence",
@@ -417,7 +417,7 @@
   "cls": "marking",
   "verts": 16,
   "tris": 8,
-  "source_hash": "dcfdceb2fecd46befbabd378718a1361a0a3512c"
+  "source_hash": "b8dc10d642b634021ccff626ddda804015e59ce6"
  },
  "marking.hump": {
   "cls": "marking",
@@ -429,7 +429,7 @@
   "cls": "marking",
   "verts": 4,
   "tris": 2,
-  "source_hash": "fd8c3cc71d6ef63ea1cde743463b44c057ca1357"
+  "source_hash": "eed6b17130de1911f6f4baf27520546efd895615"
  },
  "marking.stop_bar": {
   "cls": "marking",
@@ -441,7 +441,7 @@
   "cls": "pole",
   "verts": 326,
   "tris": 150,
-  "source_hash": "5d309436a712a2dd0e796c71703b8bd6c5c3cf56"
+  "source_hash": "3b45ed138b3b1ef6d527c91aafe425532ade9d93"
  },
  "pole.streetlight": {
   "cls": "pole",
@@ -453,7 +453,7 @@
   "cls": "pole",
   "verts": 296,
   "tris": 114,
-  "source_hash": "43b631027b9e5b7e6ca6cfc6d43250d2886d4f9f"
+  "source_hash": "f25ea0ef753c7054ad7088d9d0839de9bbd10367"
  },
  "pole.utility_transformer": {
   "cls": "pole",
@@ -499,15 +499,15 @@
  },
  "prop.bench": {
   "cls": "prop",
-  "verts": 677,
-  "tris": 630,
-  "source_hash": "e71982fd674ec43e6d1d8ed636c4126ff196dafd"
+  "verts": 3887,
+  "tris": 4206,
+  "source_hash": "dfd9505f9192de4bec9cd0e688f44246fb9177fb"
  },
  "prop.crash_cushion": {
   "cls": "prop",
   "verts": 104,
   "tris": 52,
-  "source_hash": "d7dcdd085ac3fed0c25adcd6e173c1227cf26af3"
+  "source_hash": "05e7a68210dbc8fc69d26b7e05a211b9d92fdf45"
  },
  "prop.flag_pole": {
   "cls": "prop",
@@ -525,31 +525,31 @@
   "cls": "prop",
   "verts": 140,
   "tris": 64,
-  "source_hash": "122e88be879b14e79e79adbee79894e7ec179dff"
+  "source_hash": "20f790a5e86bd7129309ddfc263482ca8cc5c93a"
  },
  "prop.rail_car_generic": {
   "cls": "prop",
   "verts": 420,
   "tris": 210,
-  "source_hash": "26a44d5a5b37e754865a50e8a8cfa4c5ea47ad7f"
+  "source_hash": "154ef5fb5754c28bffbee1becb4b3b0880d98ba8"
  },
  "prop.rail_crossbuck": {
   "cls": "prop",
   "verts": 272,
   "tris": 128,
-  "source_hash": "8cde25f11cae439dcf12c2e655bbb26fb94ddb12"
+  "source_hash": "cf339e0aab4f8594f0a1541889f13ba59ce10209"
  },
  "prop.rail_crossing_signal": {
   "cls": "prop",
   "verts": 372,
   "tris": 168,
-  "source_hash": "943698b624ea18ab8108433e8127f943d8cff2e1"
+  "source_hash": "68802e5e28c7c908fade763ed9eb29db7f68eb2b"
  },
  "prop.rail_platform": {
   "cls": "prop",
   "verts": 40,
   "tris": 20,
-  "source_hash": "0db072d0e1a8931f8d407a6c22de6a96592e7e54"
+  "source_hash": "4ced98fd56fffb7e3f118378c70e7af5df359038"
  },
  "prop.trash_bins": {
   "cls": "prop",
@@ -561,7 +561,7 @@
   "cls": "prop",
   "verts": 2452,
   "tris": 3370,
-  "source_hash": "72a4da53a4a1ae7389389d01232b38a783ea60ea"
+  "source_hash": "8a4cd312ee675ecefca2658c929eba87a5ab5513"
  },
  "prop.utility_box": {
   "cls": "prop",
@@ -573,13 +573,13 @@
   "cls": "prop",
   "verts": 120,
   "tris": 60,
-  "source_hash": "b66db1dd00a4335ac85a5348e7f707ae46ced22e"
+  "source_hash": "873048bfdaed7203b14863caa245f1abaa1077da"
  },
  "rail.track": {
   "cls": "rail",
   "verts": 408,
   "tris": 204,
-  "source_hash": "ca52ac03bbf53b1ee56a6eafe036709a9d02470b"
+  "source_hash": "7e53898910b46d00470185850939390c1335dcdd"
  },
  "rock.boulder_l": {
   "cls": "rock",
@@ -699,7 +699,7 @@
   "cls": "sign",
   "verts": 36,
   "tris": 18,
-  "source_hash": "896a81d899fcd0620077521f24d219607f9d1466"
+  "source_hash": "a317d80e8388ea220e6d837554ba935c53bd912a"
  },
  "sign.blank_white": {
   "cls": "sign",
@@ -723,13 +723,13 @@
   "cls": "sign",
   "verts": 48,
   "tris": 24,
-  "source_hash": "cc2607a0fe952c37f458922bfba97f6e3675699a"
+  "source_hash": "b0c0f93778e8679feac5243df4bb2e8d947897fb"
  },
  "sign.clearance": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "2de7001da7a3b3cc97c4c8f5af8acccf5964857a"
+  "source_hash": "5ba80afd9f8c819d184ce9d2a0bcc184e167a108"
  },
  "sign.curve_left": {
   "cls": "sign",
@@ -747,31 +747,31 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "0bed1e3b5a00f6ed421f4eda12ea412d9e01a46f"
+  "source_hash": "97aaef99d441c024f48b58b26e5742d016be532b"
  },
  "sign.do_not_enter": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "f058a14527ea781fcec6de2db31bf2a2e56d059a"
+  "source_hash": "56147becbea0f589ad5338bb05d3d35184ebe127"
  },
  "sign.falling_rocks": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "8cd9c35ff3515b4dbf24a0966db189bb4508155a"
+  "source_hash": "9ed6d6fe463b03e586fbd608aec17573ff060d4c"
  },
  "sign.flasher_mast": {
   "cls": "sign",
   "verts": 320,
   "tris": 146,
-  "source_hash": "05069987286b672894f9035dd426609644730a70"
+  "source_hash": "58d7aad179f14ce7b4ebc343b113f8464c6683c5"
  },
  "sign.guide_green": {
   "cls": "sign",
   "verts": 48,
   "tris": 24,
-  "source_hash": "a006413c0d088124b5902aa9ba2192451edb338c"
+  "source_hash": "e97bc32cbb92db65a8b74f564925a89fe81520c9"
  },
  "sign.hump": {
   "cls": "sign",
@@ -801,7 +801,7 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "9b7ef8ba84a271594e117c7444d7fb20bbe03797"
+  "source_hash": "7dff99e283f591e53bf77565c96ffcfc5de227c0"
  },
  "sign.object_marker": {
   "cls": "sign",
@@ -813,19 +813,19 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "9c8ab9243a2bd179386570d2b840f2b0809cb63e"
+  "source_hash": "2fa3da0281ecdf0ec9991425cdbae601c043c1d5"
  },
  "sign.ped_crossing": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "7af344d0a19d09cd822c8e7463125465d59dd9a6"
+  "source_hash": "e93b2359ef73ed2ec3cbd597a7c8b120765e914e"
  },
  "sign.reverse_turn": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "ef66d1ceda3c70172d7f72b50bdfb316fd588a00"
+  "source_hash": "dffd7c61e85613b409a28dbe97e06f06257a9514"
  },
  "sign.round_prohibition": {
   "cls": "sign",
@@ -837,37 +837,37 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "a092bad4fd66fee60c640b16e4cf737b2a103bf5"
+  "source_hash": "f7ffab82ee127755402e2b714d4b7e26ffcdc893"
  },
  "sign.rr_advance": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "3eed5d9bcb20a5d05cb15a5116ac200fe0a412ad"
+  "source_hash": "61d104d424446db4047b8c233b6d559c85efe812"
  },
  "sign.side_road_left": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "84cfbc2309208073de90da5ddb230305a8264ad9"
+  "source_hash": "462a50eb2a500ce7fe86f461e8eba573699851fe"
  },
  "sign.side_road_right": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "ee1174221f135dfa3234bae2e2d8d3f33596d58f"
+  "source_hash": "73f327ed368cd18425a6c2d6becd2e1c58ec2f5e"
  },
  "sign.signal_ahead": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "1fe96a2a3c1ac06df165b2492913993e7d79300d"
+  "source_hash": "88a662c4fff1b28a3f46efe862ee6b02040dc24a"
  },
  "sign.slippery": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "6bba122f21a3c0011c7d26684dadb46b7c703c6d"
+  "source_hash": "2705542b691468f87f6ee2fc2a15495962709b7d"
  },
  "sign.slow": {
   "cls": "sign",
@@ -891,13 +891,13 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "7647305433a791290b9d8c2aba9bfa10f563f776"
+  "source_hash": "e8295e44858304fe86c472cc0f259d419b453e4b"
  },
  "sign.store_text": {
   "cls": "sign",
   "verts": 24,
   "tris": 12,
-  "source_hash": "6a72fb958293a0ce1703a8039bb70644546bbc9a"
+  "source_hash": "ff634d6963b2b48ea323fedf23369752702d8b4e"
  },
  "sign.street_name": {
   "cls": "sign",
@@ -909,7 +909,7 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "a5d7fda6598428b5ae84e231143969d746419360"
+  "source_hash": "9a684f036a335f7d609e56984850fc7f3034ad6e"
  },
  "sign.text_private": {
   "cls": "sign",
@@ -921,19 +921,19 @@
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "dfcedaaeb24b07f5112366ebe338e44edea88a7a"
+  "source_hash": "36132bbba46330e5d5d9c1481c5949622adf0980"
  },
  "sign.turn_left": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "23ac50c0c761184ed4b3135dca8f8f36c6dbcc51"
+  "source_hash": "7e5a75b14af213dcbe122fe733d486b9b323a149"
  },
  "sign.turn_right": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "97c2409a2e854bf978aca47d5ed69e14e4db53e0"
+  "source_hash": "5dd829ad57dc2a39fad8dbd7dfbc86c0f9457807"
  },
  "sign.warning_blank": {
   "cls": "sign",
@@ -945,13 +945,13 @@
   "cls": "sign",
   "verts": 48,
   "tris": 24,
-  "source_hash": "44e4918cbf9e5a70bfb186fc496ba491dda8204d"
+  "source_hash": "b673817d9f5d7b9f8ff839f06ed37f4a063d5dc6"
  },
  "sign.yield": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
-  "source_hash": "72964a6864916c1b6bd00bbbf5edc2c4d26c0ba0"
+  "source_hash": "351bba7a7a070b6d0d2d2f61e4d50a56b299aded"
  },
  "tree.conifer": {
   "cls": "tree_add",
@@ -969,13 +969,13 @@
   "cls": "tree_add",
   "verts": 216,
   "tris": 108,
-  "source_hash": "8417ef97631708e0a6ce284d6c830e7cfbb5d110"
+  "source_hash": "8fd049c40b8266b244e01620768da33f82ca0523"
  },
  "tree.plane_row": {
   "cls": "tree_add",
   "verts": 96,
   "tris": 48,
-  "source_hash": "c49814da0859798d239021b06ce86488f89cac37"
+  "source_hash": "01839100d959ec5c95776b9330d8cbe5447bf4c9"
  },
  "tree.winter_poplar": {
   "cls": "tree_add",
@@ -1035,19 +1035,19 @@
   "cls": "wall",
   "verts": 252,
   "tris": 126,
-  "source_hash": "69f368104cc9e84a64b4cbb3e4f00caebdebd11d"
+  "source_hash": "3e2240c96c275c59984b1f5e5a133fdf7ef83ef0"
  },
  "wall.masonry_parapet": {
   "cls": "wall",
   "verts": 92,
   "tris": 46,
-  "source_hash": "69e50ee265fc3f7cf2fe11cd9b46347c7a3c790f"
+  "source_hash": "80c40bac8d946f3ee4a3ee8c537129d9f9096a0c"
  },
  "wall.retaining_block": {
   "cls": "wall",
   "verts": 244,
   "tris": 122,
-  "source_hash": "1a01916c84ae1215b1f9b67a478487e158d3d6d9"
+  "source_hash": "054c439812c64409979c4020e0536da121ef3484"
  },
  "wall.retaining_concrete": {
   "cls": "wall",
@@ -1065,7 +1065,7 @@
   "cls": "wall",
   "verts": 144,
   "tris": 72,
-  "source_hash": "5b21fc6cacaf22a735e392a15a334b2d20b81fcb"
+  "source_hash": "af73414fb59bde3e41957100a0d34b1baead893b"
  },
  "wall.rockfall_mesh": {
   "cls": "wall",

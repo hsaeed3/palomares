@@ -2,7 +2,7 @@
  "type": "wall.jersey_barrier",
  "cls": "wall",
  "desc": "K-rail F-shape profile, 1.5 m segments (Poly Haven model too heavy, see docs)",
- "source_hash": "69f368104cc9e84a64b4cbb3e4f00caebdebd11d",
+ "source_hash": "3e2240c96c275c59984b1f5e5a133fdf7ef83ef0",
  "sources": [
   "ambientCG Concrete018",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 252,
  "tris": 126,
  "frames": [],
- "built": "2026-11-07 14:33:03",
+ "built": "2026-11-07 14:47:26",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "671229761060639",

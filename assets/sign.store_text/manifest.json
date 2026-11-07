@@ -2,7 +2,7 @@
  "type": "sign.store_text",
  "cls": "sign",
  "desc": "plain business-name board (params.text, DejaVu Sans Bold, no logo)",
- "source_hash": "6a72fb958293a0ce1703a8039bb70644546bbc9a",
+ "source_hash": "ff634d6963b2b48ea323fedf23369752702d8b4e",
  "sources": [
   "DejaVu Sans Bold (free font)",
   "licence: own text, free font"
@@ -36,7 +36,7 @@
  "verts": 24,
  "tris": 12,
  "frames": [],
- "built": "2026-11-07 14:32:52",
+ "built": "2026-11-07 14:47:10",
  "licence": "own text, free font",
  "mly": [],
  "ledger_row": null,

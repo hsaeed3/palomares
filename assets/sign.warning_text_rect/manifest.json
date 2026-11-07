@@ -2,7 +2,7 @@
  "type": "sign.warning_text_rect",
  "cls": "sign",
  "desc": "warning text rect sign (MUTCD layout redrawn) on 2 posts",
- "source_hash": "44e4918cbf9e5a70bfb186fc496ba491dda8204d",
+ "source_hash": "b673817d9f5d7b9f8ff839f06ed37f4a063d5dc6",
  "sources": [
   "MUTCD sign layout (US federal, public domain), redrawn",
   "ambientCG Metal032",
@@ -37,7 +37,7 @@
  "verts": 48,
  "tris": 24,
  "frames": [],
- "built": "2026-11-07 14:32:58",
+ "built": "2026-11-07 14:46:42",
  "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
  "mly": [
   "3450043888602177",

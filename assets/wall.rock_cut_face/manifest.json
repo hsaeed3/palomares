@@ -2,7 +2,7 @@
  "type": "wall.rock_cut_face",
  "cls": "wall",
  "desc": "steep rock cut face (ambientCG Rock030), collision line at the foot",
- "source_hash": "5b21fc6cacaf22a735e392a15a334b2d20b81fcb",
+ "source_hash": "af73414fb59bde3e41957100a0d34b1baead893b",
  "sources": [
   "ambientCG Rock030",
   "licence: ambientCG CC0 1.0 (textures)"
@@ -36,7 +36,7 @@
  "verts": 144,
  "tris": 72,
  "frames": [],
- "built": "2026-11-07 14:33:07",
+ "built": "2026-11-07 14:47:42",
  "licence": "ambientCG CC0 1.0 (textures)",
  "mly": [
   "1479731642567216",

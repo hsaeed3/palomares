@@ -1,0 +1,192 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>dev7 Assets</title>
+<style>:root{--bg:#fff;--fg:#1c1c1c;--card:#f3f3f1}@media (prefers-color-scheme:dark){:root{--bg:#161616;--fg:#e8e8e6;--card:#232323}}
+body{background:var(--bg);color:var(--fg);font:14px system-ui;margin:0 16px}.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:12px}
+.c{background:var(--card);padding:8px;border-radius:6px}.c img{width:100%}h3{margin:4px 0;font-size:15px}table{border-collapse:collapse}td,th{border:1px solid #888;padding:3px 8px}</style>
+<h1>dev7 asset library (60 types)</h1>
+<p>Each card: 4 views from <code>view.py asset</code> (textured renderer) beside the Mapillary images (CC-BY-SA) of the ledger row the asset was sized from.
+Rebuild: <code>python3 scripts/p2/assetlib.py --dev7</code>. Sources: ambientCG and Poly Haven (CC0 1.0), MUTCD layouts (public domain), own text in DejaVu Sans.</p>
+<h2>Row renders</h2><p><img src="asset_row_devout.jpg" style="max-width:100%"><br><img src="asset_row_firehouse.jpg" style="max-width:100%"></p>
+<h2>Niles Canyon kerbs</h2><table><tr><th>layout</th><th>apex</th><th>exit</th><th>run-off</th><th>sausage</th></tr><tr><td>canyon_track</td><td>13</td><td>8</td><td>4</td><td>4</td></tr><tr><td>canyon_rev_track</td><td>12</td><td>5</td><td>1</td><td>1</td></tr><tr><td>freeroam_track</td><td>13</td><td>8</td><td>4</td><td>4</td></tr></table>
+<p>Max crease (deg): {"apex": 15.7, "exit": 5.6, "runoff": 4.5, "sausage": 17.5}, limit 25. On-pavement lint hits: 0.</p>
+<p><img src="kerbs_canyon_track_1434.jpg" style="max-width:100%"></p>
+<h2>Assets</h2><div class=g><div class=c><h3>sign.flasher_mast</h3><a href="../../assets/sign.flasher_mast/preview.png"><img src="../../assets/sign.flasher_mast/preview.png" loading=lazy></a>
+<p>galvanised pole + cantilever arm over the lane, warning panel (params.panel) + advisory plaque, 2 amber beacons blinking via CSP (beacon_a/beacon_b)</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>146 tris LOD0, LODs 2, materials ledger7, beacon_a, beacon_b; collision: yes;
+ledger row d7m_eye_0005, Mapillary 2514402612051254, 807296924210300, 7179339858746157</p></div><div class=c><h3>sign.warning_text_rect</h3><a href="../../assets/sign.warning_text_rect/preview.png"><img src="../../assets/sign.warning_text_rect/preview.png" loading=lazy></a>
+<p>warning text rect sign (MUTCD layout redrawn) on 2 posts</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>24 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0004, Mapillary 3450043888602177, 602858698540019, 803269501448593</p></div><div class=c><h3>sign.reverse_turn</h3><a href="../../assets/sign.reverse_turn/preview.png"><img src="../../assets/sign.reverse_turn/preview.png" loading=lazy></a>
+<p>reverse turn sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0466, Mapillary 301002809158468, 1223276835037927, 246131884939059</p></div><div class=c><h3>sign.turn_left</h3><a href="../../assets/sign.turn_left/preview.png"><img src="../../assets/sign.turn_left/preview.png" loading=lazy></a>
+<p>turn left sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0505, Mapillary 228778246787566, 1431921514312716, 818624696650813</p></div><div class=c><h3>sign.turn_right</h3><a href="../../assets/sign.turn_right/preview.png"><img src="../../assets/sign.turn_right/preview.png" loading=lazy></a>
+<p>turn right sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0490, Mapillary 640713764680979, 1015654286536038, 932942371139677</p></div><div class=c><h3>sign.side_road_left</h3><a href="../../assets/sign.side_road_left/preview.png"><img src="../../assets/sign.side_road_left/preview.png" loading=lazy></a>
+<p>side road left sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0515, Mapillary 756927569520547</p></div><div class=c><h3>sign.side_road_right</h3><a href="../../assets/sign.side_road_right/preview.png"><img src="../../assets/sign.side_road_right/preview.png" loading=lazy></a>
+<p>side road right sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0487, Mapillary 1050655132620108, 6316835351767345, 1317721509140372</p></div><div class=c><h3>sign.text_diamond</h3><a href="../../assets/sign.text_diamond/preview.png"><img src="../../assets/sign.text_diamond/preview.png" loading=lazy></a>
+<p>text diamond sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0067, Mapillary 1576294342574504, 1506367089744362, 949624012779179</p></div><div class=c><h3>sign.clearance</h3><a href="../../assets/sign.clearance/preview.png"><img src="../../assets/sign.clearance/preview.png" loading=lazy></a>
+<p>clearance sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0033, Mapillary 186082583372652, 1089554084900368, 754753458523552</p></div><div class=c><h3>sign.bicycle_warning</h3><a href="../../assets/sign.bicycle_warning/preview.png"><img src="../../assets/sign.bicycle_warning/preview.png" loading=lazy></a>
+<p>bicycle warning sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>18 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0475, Mapillary 280219694613554, 1739512293163014, 247487941423181</p></div><div class=c><h3>sign.deer</h3><a href="../../assets/sign.deer/preview.png"><img src="../../assets/sign.deer/preview.png" loading=lazy></a>
+<p>deer sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0415, Mapillary 6994717610563062, 169154966177758</p></div><div class=c><h3>sign.falling_rocks</h3><a href="../../assets/sign.falling_rocks/preview.png"><img src="../../assets/sign.falling_rocks/preview.png" loading=lazy></a>
+<p>falling rocks sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0458, Mapillary 829811575357013</p></div><div class=c><h3>sign.slippery</h3><a href="../../assets/sign.slippery/preview.png"><img src="../../assets/sign.slippery/preview.png" loading=lazy></a>
+<p>slippery sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0503, Mapillary 1321483802134273</p></div><div class=c><h3>sign.signal_ahead</h3><a href="../../assets/sign.signal_ahead/preview.png"><img src="../../assets/sign.signal_ahead/preview.png" loading=lazy></a>
+<p>signal ahead sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0061, Mapillary 198247818783975, 385201872719428, 237106949248717</p></div><div class=c><h3>sign.stop_ahead</h3><a href="../../assets/sign.stop_ahead/preview.png"><img src="../../assets/sign.stop_ahead/preview.png" loading=lazy></a>
+<p>stop ahead sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0518, Mapillary 245974991574265, 952172345860451, 318995033064468</p></div><div class=c><h3>sign.rr_advance</h3><a href="../../assets/sign.rr_advance/preview.png"><img src="../../assets/sign.rr_advance/preview.png" loading=lazy></a>
+<p>rr advance sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0517, Mapillary -</p></div><div class=c><h3>sign.ped_crossing</h3><a href="../../assets/sign.ped_crossing/preview.png"><img src="../../assets/sign.ped_crossing/preview.png" loading=lazy></a>
+<p>ped crossing sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0003, Mapillary 272053081304588</p></div><div class=c><h3>sign.no_parking</h3><a href="../../assets/sign.no_parking/preview.png"><img src="../../assets/sign.no_parking/preview.png" loading=lazy></a>
+<p>no parking sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0063, Mapillary 1949810342063877, 1322756098339039, 3216449395326170</p></div><div class=c><h3>sign.yield</h3><a href="../../assets/sign.yield/preview.png"><img src="../../assets/sign.yield/preview.png" loading=lazy></a>
+<p>yield sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0004, Mapillary 272053081304588</p></div><div class=c><h3>sign.do_not_enter</h3><a href="../../assets/sign.do_not_enter/preview.png"><img src="../../assets/sign.do_not_enter/preview.png" loading=lazy></a>
+<p>do not enter sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row None, Mapillary -</p></div><div class=c><h3>sign.one_way</h3><a href="../../assets/sign.one_way/preview.png"><img src="../../assets/sign.one_way/preview.png" loading=lazy></a>
+<p>one way sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0044, Mapillary 336083607850050, 1022526181613879, 967957187774629</p></div><div class=c><h3>sign.guide_green</h3><a href="../../assets/sign.guide_green/preview.png"><img src="../../assets/sign.guide_green/preview.png" loading=lazy></a>
+<p>guide green sign (MUTCD layout redrawn) on 2 posts</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>24 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0005, Mapillary 510600293452962</p></div><div class=c><h3>sign.city_limit</h3><a href="../../assets/sign.city_limit/preview.png"><img src="../../assets/sign.city_limit/preview.png" loading=lazy></a>
+<p>city limit sign (MUTCD layout redrawn) on 2 posts</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>24 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0012, Mapillary 175835645393089, 190676066244777, 246131884939059</p></div><div class=c><h3>sign.route_shield</h3><a href="../../assets/sign.route_shield/preview.png"><img src="../../assets/sign.route_shield/preview.png" loading=lazy></a>
+<p>route shield sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0066, Mapillary 1506367089744362, 1014994743009587, 1576294342574504</p></div><div class=c><h3>sign.text_white_rect</h3><a href="../../assets/sign.text_white_rect/preview.png"><img src="../../assets/sign.text_white_rect/preview.png" loading=lazy></a>
+<p>text white rect sign (MUTCD layout redrawn) on a galvanised post</p><p><b>Sources:</b> MUTCD sign layout (US federal, public domain), redrawn; ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures) + public-domain MUTCD design</p>
+<p>14 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_mf_0370, Mapillary 6713163245390204, 1283134932316531, 279593391423602</p></div><div class=c><h3>sign.store_text</h3><a href="../../assets/sign.store_text/preview.png"><img src="../../assets/sign.store_text/preview.png" loading=lazy></a>
+<p>plain business-name board (params.text, DejaVu Sans Bold, no logo)</p><p><b>Sources:</b> DejaVu Sans Bold (free font)<br><b>Licence:</b> own text, free font</p>
+<p>12 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row None, Mapillary -</p></div><div class=c><h3>pole.traffic_signal</h3><a href="../../assets/pole.traffic_signal/preview.png"><img src="../../assets/pole.traffic_signal/preview.png" loading=lazy></a>
+<p>signal pole + mast arm + 3-section heads (sig_r/sig_y/sig_g emissive parts)</p><p><b>Sources:</b> ambientCG Metal032; ambientCG PaintedMetal004<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>114 tris LOD0, LODs 2, materials ledger7, sig_r, sig_y, sig_g; collision: yes;
+ledger row None, Mapillary -</p></div><div class=c><h3>pole.lamp_ornamental</h3><a href="../../assets/pole.lamp_ornamental/preview.png"><img src="../../assets/pole.lamp_ornamental/preview.png" loading=lazy></a>
+<p>black acorn lamp post with banner brackets; globe = lamp_glow (CSP NIGHT_SMOOTH emissive)</p><p><b>Sources:</b> ambientCG PaintedMetal004<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>150 tris LOD0, LODs 2, materials ledger7, lamp_glow; collision: none (small prop);
+ledger row d7m_mf_0065, Mapillary 465704321202357, 292913682301189</p></div><div class=c><h3>prop.bench</h3><a href="../../assets/prop.bench/preview.png"><img src="../../assets/prop.bench/preview.png" loading=lazy></a>
+<p>Poly Haven modular_street_seating (CC0), assembled bench</p><p><b>Sources:</b> Poly Haven modular_street_seating<br><b>Licence:</b> Poly Haven CC0 1.0</p>
+<p>4206 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_osm_0036, Mapillary -</p></div><div class=c><h3>prop.trash_can</h3><a href="../../assets/prop.trash_can/preview.png"><img src="../../assets/prop.trash_can/preview.png" loading=lazy></a>
+<p>Poly Haven metal_trash_can (CC0), decimated</p><p><b>Sources:</b> Poly Haven metal_trash_can<br><b>Licence:</b> Poly Haven CC0 1.0</p>
+<p>3370 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_mf_0027, Mapillary 1624385567971079, 125680400586999, 623781146215468</p></div><div class=c><h3>prop.planter</h3><a href="../../assets/prop.planter/preview.png"><img src="../../assets/prop.planter/preview.png" loading=lazy></a>
+<p>round concrete planter (ambientCG concrete) with shrub card</p><p><b>Sources:</b> ambientCG Concrete034<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>64 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row None, Mapillary -</p></div><div class=c><h3>prop.water_barrier</h3><a href="../../assets/prop.water_barrier/preview.png"><img src="../../assets/prop.water_barrier/preview.png" loading=lazy></a>
+<p>orange water-filled barrier (params.count)</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>60 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0026, Mapillary 1229674597705531, 1465177660959104, 981176139859042</p></div><div class=c><h3>prop.crash_cushion</h3><a href="../../assets/prop.crash_cushion/preview.png"><img src="../../assets/prop.crash_cushion/preview.png" loading=lazy></a>
+<p>yellow crash cushion, striped nose</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>52 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0033, Mapillary 1317721509140372, 6316835351767345, 1050655132620108</p></div><div class=c><h3>prop.rail_crossing_signal</h3><a href="../../assets/prop.rail_crossing_signal/preview.png"><img src="../../assets/prop.rail_crossing_signal/preview.png" loading=lazy></a>
+<p>crossbuck + 2 red flashers (xing_a/xing_b alternate via CSP) + bell, gate arm raised (params.gates)</p><p><b>Sources:</b> ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>168 tris LOD0, LODs 2, materials ledger7, xing_a, xing_b; collision: none (small prop);
+ledger row d7m_eye_0118, Mapillary 1624385567971079, 125680400586999, 623781146215468</p></div><div class=c><h3>prop.rail_crossbuck</h3><a href="../../assets/prop.rail_crossbuck/preview.png"><img src="../../assets/prop.rail_crossbuck/preview.png" loading=lazy></a>
+<p>passive crossbuck on a post</p><p><b>Sources:</b> ambientCG Metal032<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>128 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0083, Mapillary -</p></div><div class=c><h3>prop.rail_platform</h3><a href="../../assets/prop.rail_platform/preview.png"><img src="../../assets/prop.rail_platform/preview.png" loading=lazy></a>
+<p>low station platform (params.length_m), yellow edge strip</p><p><b>Sources:</b> ambientCG Concrete018/034<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>20 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0116, Mapillary 1351599299124704, 1624385567971079, 125680400586999</p></div><div class=c><h3>prop.rail_car_generic</h3><a href="../../assets/prop.rail_car_generic/preview.png"><img src="../../assets/prop.rail_car_generic/preview.png" loading=lazy></a>
+<p>generic heavyweight coach / boxcar (params.type), plain livery, no lettering</p><p><b>Sources:</b> ambientCG PaintedMetal004; ambientCG Rust004<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>210 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0110, Mapillary 1470796603262901, 823559038260299, 1454639028206231</p></div><div class=c><h3>rail.track</h3><a href="../../assets/rail.track/preview.png"><img src="../../assets/rail.track/preview.png" loading=lazy></a>
+<p>standard-gauge track: ballast (ambientCG Rock030), ties, rails</p><p><b>Sources:</b> ambientCG Rock030; ambientCG Rust004<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>204 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row None, Mapillary -</p></div><div class=c><h3>wall.jersey_barrier</h3><a href="../../assets/wall.jersey_barrier/preview.png"><img src="../../assets/wall.jersey_barrier/preview.png" loading=lazy></a>
+<p>K-rail F-shape profile, 1.5 m segments (Poly Haven model too heavy, see docs)</p><p><b>Sources:</b> ambientCG Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>126 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0016, Mapillary 671229761060639, 823995009361318</p></div><div class=c><h3>wall.masonry_parapet</h3><a href="../../assets/wall.masonry_parapet/preview.png"><img src="../../assets/wall.masonry_parapet/preview.png" loading=lazy></a>
+<p>low parapet (params.material stone|concrete)</p><p><b>Sources:</b> ambientCG PavingStones070 / Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>46 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0032, Mapillary 1050655132620108, 1317721509140372, 263356989778643</p></div><div class=c><h3>wall.rock_cut_face</h3><a href="../../assets/wall.rock_cut_face/preview.png"><img src="../../assets/wall.rock_cut_face/preview.png" loading=lazy></a>
+<p>steep rock cut face (ambientCG Rock030), collision line at the foot</p><p><b>Sources:</b> ambientCG Rock030<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>72 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0015, Mapillary 1479731642567216, 1653278018485949, 222572000278147</p></div><div class=c><h3>wall.retaining_block</h3><a href="../../assets/wall.retaining_block/preview.png"><img src="../../assets/wall.retaining_block/preview.png" loading=lazy></a>
+<p>tan split-face block wall (params.fence_on_top)</p><p><b>Sources:</b> ambientCG Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>122 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0086, Mapillary 167379091953153, 170387758304032, 178935870746319</p></div><div class=c><h3>fence.screen_curved</h3><a href="../../assets/fence.screen_curved/preview.png"><img src="../../assets/fence.screen_curved/preview.png" loading=lazy></a>
+<p>curved chain-link screen on a bridge</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>104 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0053, Mapillary 284653800910911, 641806107920547, 828077295353244</p></div><div class=c><h3>fence.construction_mesh</h3><a href="../../assets/fence.construction_mesh/preview.png"><img src="../../assets/fence.construction_mesh/preview.png" loading=lazy></a>
+<p>orange construction mesh on T-posts</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>90 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0043, Mapillary 195764839883271, 297799385985554, 5918523658253331</p></div><div class=c><h3>fence.picket</h3><a href="../../assets/fence.picket/preview.png"><img src="../../assets/fence.picket/preview.png" loading=lazy></a>
+<p>white picket fence</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>90 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0117, Mapillary 125680400586999, 623781146215468, 656483176129170</p></div><div class=c><h3>bridge.parapet_balustrade</h3><a href="../../assets/bridge.parapet_balustrade/preview.png"><img src="../../assets/bridge.parapet_balustrade/preview.png" loading=lazy></a>
+<p>panelled concrete parapet on a raised sidewalk</p><p><b>Sources:</b> ambientCG Concrete034<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>92 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0077, Mapillary 179096894106286, 2820213341578118, 2860294870858335</p></div><div class=c><h3>bridge.rail_truss_through</h3><a href="../../assets/bridge.rail_truss_through/preview.png"><img src="../../assets/bridge.rail_truss_through/preview.png" loading=lazy></a>
+<p>steel through-truss railway span (params.span_m, clearance_m) across the road (span along y) on concrete piers</p><p><b>Sources:</b> ambientCG PaintedMetal004; ambientCG Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>346 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0008, Mapillary 256078143846347, 618976260337888</p></div><div class=c><h3>bridge.rail_deck_girder</h3><a href="../../assets/bridge.rail_deck_girder/preview.png"><img src="../../assets/bridge.rail_deck_girder/preview.png" loading=lazy></a>
+<p>steel plate-girder railway span(s) (params.span_m, count) on concrete piers</p><p><b>Sources:</b> ambientCG PaintedMetal004; ambientCG Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>830 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0088, Mapillary 272300397921637, 574318973547614, 817775992484789</p></div><div class=c><h3>bridge.rail_concrete_girder</h3><a href="../../assets/bridge.rail_concrete_girder/preview.png"><img src="../../assets/bridge.rail_concrete_girder/preview.png" loading=lazy></a>
+<p>UP concrete girder underpass, abutments, wing walls, pipe railing</p><p><b>Sources:</b> ambientCG Concrete034<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>330 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0070, Mapillary 245974991574265, 318995033064468, 1028420667694578</p></div><div class=c><h3>bridge.abutment_concrete</h3><a href="../../assets/bridge.abutment_concrete/preview.png"><img src="../../assets/bridge.abutment_concrete/preview.png" loading=lazy></a>
+<p>concrete abutment / pier (params.arch_opening)</p><p><b>Sources:</b> ambientCG Concrete018<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>12 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0009, Mapillary 256078143846347</p></div><div class=c><h3>bridge.abutment_stone</h3><a href="../../assets/bridge.abutment_stone/preview.png"><img src="../../assets/bridge.abutment_stone/preview.png" loading=lazy></a>
+<p>cut-stone ashlar abutment</p><p><b>Sources:</b> ambientCG PavingStones070<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>10 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0029, Mapillary 847155870082512, 1322927951931809, 684533553498618</p></div><div class=c><h3>building.storefront</h3><a href="../../assets/building.storefront/preview.png"><img src="../../assets/building.storefront/preview.png" loading=lazy></a>
+<p>storefront box: CC0 facade (brick / stucco / siding by params.facade, colour), shop-window bays, sign_text board (DEVOUT etc.)</p><p><b>Sources:</b> ambientCG Bricks066 / PaintedPlaster017 / WoodSiding008/011<br><b>Licence:</b> ambientCG CC0 1.0 (textures); own text</p>
+<p>84 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0090, Mapillary 233555958567005, 292913682301189, 350941129786691</p></div><div class=c><h3>building.storefront_row</h3><a href="../../assets/building.storefront_row/preview.png"><img src="../../assets/building.storefront_row/preview.png" loading=lazy></a>
+<p>row of attached storefronts (params.shops, plain names)</p><p><b>Sources:</b> ambientCG PaintedPlaster017 / WoodSiding008/011<br><b>Licence:</b> ambientCG CC0 1.0 (textures); own text</p>
+<p>124 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0122, Mapillary 656483176129170, 623781146215468, 125680400586999</p></div><div class=c><h3>building.depot</h3><a href="../../assets/building.depot/preview.png"><img src="../../assets/building.depot/preview.png" loading=lazy></a>
+<p>board-and-batten railway depot, wide-eave gable roof, name board</p><p><b>Sources:</b> ambientCG WoodSiding011<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>84 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_eye_0115, Mapillary 1351599299124704, 1624385567971079, 125680400586999</p></div><div class=c><h3>building.town_generic</h3><a href="../../assets/building.town_generic/preview.png"><img src="../../assets/building.town_generic/preview.png" loading=lazy></a>
+<p>OSM footprint extruded to the LiDAR p90 height (params.footprint, height_m), CC0 walls, window bays</p><p><b>Sources:</b> ambientCG PaintedPlaster017 / WoodSiding008 / Bricks066; OSM footprint (ODbL); USGS LiDAR height<br><b>Licence:</b> ambientCG CC0 1.0 (textures)</p>
+<p>66 tris LOD0, LODs 2, materials ledger7; collision: yes;
+ledger row d7m_bld_0169, Mapillary -</p></div><div class=c><h3>driveway.parking_lot</h3><a href="../../assets/driveway.parking_lot/preview.png"><img src="../../assets/driveway.parking_lot/preview.png" loading=lazy></a>
+<p>parking lot decal from the OSM polygon (G builds the drivable surface)</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>21 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_osm_0001, Mapillary -</p></div><div class=c><h3>marking.keep_clear</h3><a href="../../assets/marking.keep_clear/preview.png"><img src="../../assets/marking.keep_clear/preview.png" loading=lazy></a>
+<p>KEEP CLEAR stencil</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>2 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0091, Mapillary 233555958567005, 292913682301189, 350941129786691</p></div><div class=c><h3>marking.angle_parking</h3><a href="../../assets/marking.angle_parking/preview.png"><img src="../../assets/marking.angle_parking/preview.png" loading=lazy></a>
+<p>angled stall lines (params.angle_deg)</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>8 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0102, Mapillary 218672919727740, 291562296037099, 2967670926855587</p></div><div class=c><h3>tree.palm_row</h3><a href="../../assets/tree.palm_row/preview.png"><img src="../../assets/tree.palm_row/preview.png" loading=lazy></a>
+<p>row of date palm cards (params.count)</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>108 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0101, Mapillary 1106379296516809, 218672919727740, 291562296037099</p></div><div class=c><h3>tree.plane_row</h3><a href="../../assets/tree.plane_row/preview.png"><img src="../../assets/tree.plane_row/preview.png" loading=lazy></a>
+<p>row of plane street-tree cards (params.spacing_m)</p><p><b>Sources:</b> procedural<br><b>Licence:</b> n/a (procedural, own work)</p>
+<p>48 tris LOD0, LODs 2, materials ledger7; collision: none (small prop);
+ledger row d7m_eye_0111, Mapillary 1454639028206231, 1470796603262901, 2568805400093914</p></div></div>

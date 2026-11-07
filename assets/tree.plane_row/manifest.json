@@ -2,7 +2,7 @@
  "type": "tree.plane_row",
  "cls": "tree_add",
  "desc": "row of plane street-tree cards (params.spacing_m)",
- "source_hash": "c49814da0859798d239021b06ce86488f89cac37",
+ "source_hash": "01839100d959ec5c95776b9330d8cbe5447bf4c9",
  "sources": [
   "procedural",
   "licence: n/a (procedural, own work)"
@@ -36,7 +36,7 @@
  "verts": 96,
  "tris": 48,
  "frames": [],
- "built": "2026-11-07 14:33:02",
+ "built": "2026-11-07 14:48:51",
  "licence": "n/a (procedural, own work)",
  "mly": [
   "1454639028206231",

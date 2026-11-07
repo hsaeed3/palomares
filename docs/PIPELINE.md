@@ -134,3 +134,29 @@ prepared, hashed and previewed form used for judging and editing assets.
     lod_out 1,400 m, no collision.
 - **Result on the dev6 build:** 12,226 far trees (bay 6,424, oak 4,078, con 1,140, euc 584), for **+80 draw calls**.
   The worst layout goes from 1,153 to about **1,233, under the 1,300 budget**. 21f runs in about 10 s.
+
+## dev7 assets (A) and Niles Canyon kerbs (K)
+
+- `scripts/p5/assets_dev7.py` registers the 59 dev7 catalog types (+ `rail.track`) into `assets.CATALOG` with
+  material **ledger7** (own 4096² atlas, `assets/_textures/ledger7.dds`) and small emissive parts
+  (`beacon_a/b`, `xing_a/b`, `sig_r/y/g`, `lamp_glow`). `generate_parts(aid, L, params)` returns `{material: MB}`;
+  `prefill_atlas(rows)` must run on all `ledger_dev7.jsonl` rows before the atlas is written (sign faces and shop
+  names are painted lazily). `csp_snippet()` gives the ext_config lines that make the beacons / crossing lights
+  wig-wag (CSP `CONDITION` with `FLASHING_FREQUENCY`, as in acc-extension-config `tracks/shibuya.ini`) and the
+  lamp globes glow at night. Without CSP the lenses are plain coloured.
+- Sources: `scripts/p5/tex_dev7.py --fetch` (ambientCG + Poly Haven CC0, into `data/raw/dev7/`). Every manifest
+  records `sources` and `licence`.
+- `python3 scripts/p2/assetlib.py --dev7 [types]` builds them (about 5 s per type incl. the textured preview;
+  run in batches of about 10 to stay under 2 minutes). `view.py asset <type>` uses a textured renderer for dev7
+  types and shows the ledger row's Mapillary images. `python3 scripts/p7k/assets_sheet.py` writes
+  `reports/dev7/assets.html`.
+- Frames: bridges over the road span along local y centred on the anchor (yaw to the railway bearing);
+  `building.town_generic` geometry is relative to the footprint centroid (place there with yaw 0);
+  storefronts face -y (road side) with frontage `s1 - s`.
+- Kerbs: `python3 scripts/p7k/canyon_kerbs.py` (about 6 s) places Niles Canyon apex/exit kerbs, green run-off
+  and yellow sausage kerbs from the racing line (cache `data/scene/cache/racing_line_niles_canyon_road.pkl`),
+  writes `data/scene/kerbs_dev7/{placements.json,<layout>.npz}` and exits 1 if any vertex lies inside any dev7
+  road's `outer` (the on-pavement lint) or a crease exceeds 25 deg. Rules in `config/kerbs.yaml: niles_canyon`.
+  `scripts/p7k/view_kerbs.py <layout>` renders one run-off.
+- Palomares kerb paint: `config/kerbs.yaml: style.palomares` (red / yellow / green blocks); `race_tex.kerb_atlas`
+  and `kerbs.py` take the block count from there. Geometry unchanged.
