@@ -40,7 +40,14 @@ def _mip_black(b, fc, w, h, mips):
     return False
 import collision_conv as CC
 
+import os
 TRACK = BUILD / "palomares_road"
+# dev7 network roads (scripts/p7g): gate their own kn5 set; Palomares defaults unchanged
+#   QA_FFB_KN5=<glob>  QA_FFB_ROAD_KN5=<file>  QA_FFB_ROAD=<dev7 road name>  QA_FFB_OUT=<json name>
+_KN5_GLOB = os.environ.get("QA_FFB_KN5", "*.kn5")
+_ROAD_KN5 = os.environ.get("QA_FFB_ROAD_KN5", "palomares_road.kn5")
+_NET_ROAD = os.environ.get("QA_FFB_ROAD")
+_OUT = os.environ.get("QA_FFB_OUT", "qa_ffb_safety.json")
 MIN_THICK, MIN_H, NEAR = 0.5, 1.2, 8.0
 WALL_CREASE, ROAD_CREASE, KERB_CREASE, TERR_CREASE, TERR_R = 30.0, 8.0, 25.0, 45.0, 3.0
 MAX_WALL_TRIS_PER_KM = 6000
@@ -91,12 +98,12 @@ def boxes_apart(A, B, gap=0.05):
     return False
 
 
-K = {f.name: read_kn5(f) for f in sorted(TRACK.glob("*.kn5"))}
+K = {f.name: read_kn5(f) for f in sorted(TRACK.glob(_KN5_GLOB))}
 # drivable edge = 1ROAD + shoulder vertices
-road = np.concatenate([enu(m["pos"])[:, :2] for m in K["palomares_road.kn5"]["meshes"] if m["name"][:1].isdigit()])
+road = np.concatenate([enu(m["pos"])[:, :2] for m in K[_ROAD_KN5]["meshes"] if m["name"][:1].isdigit()])
 road_kd = cKDTree(road[::3])
 from geom import load_centerline
-F = CC.Frame(load_centerline())
+F = CC.Frame(load_centerline() if not _NET_ROAD else load_centerline(None, ROOT / f"data/derived/dev7/centerline_{_NET_ROAD}.csv"))
 
 wall_boxes = []
 wall_pts = []
@@ -124,7 +131,7 @@ for fn_, k in K.items():
         if not phys:
             if nm.startswith(("1", "2")):
                 pass
-            if fn_ == "palomares_terrain.kn5" and not m["cast_shadows"]:
+            if fn_.endswith("terrain.kn5") and not m["cast_shadows"]:
                 fail(f"{fn_}:{nm} terrain/backdrop does not cast shadows (light leaks through hills)")
             continue
         key = re.match(r"^\d+([A-Z]+)", nm)
@@ -132,7 +139,7 @@ for fn_, k in K.items():
             fail(f"{fn_}:{nm} physical name with unknown KEY"); continue
         key = key.group(1)
         fnr, area, L, Lmin = tri_geo(P, T)
-        if fn_ == "palomares_terrain.kn5" and not m["cast_shadows"]:
+        if fn_.endswith("terrain.kn5") and not m["cast_shadows"]:
             fail(f"{fn_}:{nm} terrain does not cast shadows")
         if (area < 1e-4).any():
             fail(f"{fn_}:{nm} {(area < 1e-4).sum()} degenerate triangles")
@@ -287,9 +294,9 @@ if n_wall_tris / km > MAX_WALL_TRIS_PER_KM:
 out = dict(ok=not fails, fails=fails, warnings=warns[:200], n_warnings=len(warns),
            stats={k: (dict(sorted(v.items(), key=lambda kv: -kv[1])[:10]) if isinstance(v, dict) and k != "layouts" else v) for k, v in stats.items()})
 (ROOT / "reports").mkdir(exist_ok=True)
-json.dump(out, open(ROOT / "reports" / "qa_ffb_safety.json", "w"), indent=1)
+json.dump(out, open(ROOT / "reports" / _OUT, "w"), indent=1)
 for s in fails[:60]:
     print("FAIL", s)
 print(f"qa_ffb_safety: {len(fails)} fails, {len(warns)} warnings; wall tris {n_wall_tris} ({n_wall_tris / km:.0f}/km), "
-      f"{len(wall_boxes)} wall components -> reports/qa_ffb_safety.json")
+      f"{len(wall_boxes)} wall components -> reports/{_OUT}")
 sys.exit(1 if fails else 0)

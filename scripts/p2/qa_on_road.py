@@ -13,14 +13,21 @@ from scipy.spatial import cKDTree
 from geom import ROOT, BUILD, CFG, Road
 from kn5 import read_kn5
 
-ap = argparse.ArgumentParser(); ap.add_argument("--track", default=str(BUILD / "palomares_road")); a = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument("--track", default=str(BUILD / "palomares_road"))
+ap.add_argument("--road", default=None, help="dev7 network road (scripts/p7g/network.py); default Palomares")
+ap.add_argument("--kn5", default="*.kn5", help="kn5 glob inside --track"); a = ap.parse_args()
 import pathlib
 TRK = pathlib.Path(a.track)
-road = Road(CFG["build_end_m"]); NS = len(road.s)
+if a.road:
+    sys.path.insert(0, str(ROOT / "scripts/p7g")); import network as _NW
+    road = _NW.load_road(a.road)
+else:
+    road = Road(CFG["build_end_m"])
+NS = len(road.s)
 ckd = cKDTree(np.c_[road.x, road.y])
 SKIP = ("_road.kn5", "lines", "timing")
 hits = []
-for f in sorted(p.name for p in TRK.glob("*.kn5")):
+for f in sorted(p.name for p in TRK.glob(a.kn5)):
     if any(k in f for k in SKIP):
         continue
     for m in read_kn5(str(TRK / f))["meshes"]:
@@ -40,7 +47,7 @@ for f in sorted(p.name for p in TRK.glob("*.kn5")):
         if bad.any():
             ss = sorted({int(road.s[x] // 25 * 25) for x in j[bad]})
             hits.append({"kn5": f, "mesh": m["name"], "verts": int(bad.sum()), "stations": ss[:20], "n_stations": len(ss)})
-out = ROOT / "reports" / "qa_on_road.json"
+out = ROOT / "reports" / ("qa_on_road.json" if not a.road else f"dev7/qa_on_road_{a.road}.json")
 json.dump({"hits": hits, "n": len(hits)}, open(out, "w"), indent=1)
 for h in hits[:60]:
     print(f"ON ROAD {h['kn5']}:{h['mesh']} {h['verts']} verts at s={h['stations'][:6]}{'...' if h['n_stations'] > 6 else ''}")

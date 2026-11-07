@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+"""dev7 G, step 21n: one network road -> its own kn5 files (palomares_niles_<tag>_*.kn5), Palomares kn5 untouched.
+
+    PALOMARES_BUILD_DIR=build_dev7 nice python3 scripts/p7g/21n_road.py niles_canyon_road [--s 0-2000]
+
+Same construction as scripts/p2/21_build_geometry.py, reused pieces: geom.Road (+ network.load_road profile fixes),
+geom.Raster, grid_tris, vertex_normals, collision_conv.slab, kn5.write_kn5, and the Palomares road/terrain
+materials + DDS textures (read back from the built palomares_road.kn5, so the look matches).
+  road     : 1ROAD ribbon (1 m rows, ~0.8 m columns), crown at the centreline, 250 m chunks
+  shoulder : 1GRASS strips edge -> edge + 0.6 m, slope-limited toward the DTM (bridge decks: 1ROAD deck strip)
+  terrain  : 1GRASS constrained Delaunay of the dev7 DTM, hole = road+shoulder outline (shared boundary vertices =>
+             no crack, no step). Points inside the Palomares terrain footprint are left to palomares_terrain.kn5.
+  bridges  : OSM bridge spans -> 1WALL parapet slabs (collision_conv.slab, 1.3 m, 0.6 m deep), visual parapets
+Outputs: $BUILD/palomares_road/palomares_niles_<tag>.kn5 (road+shoulders+walls) and _terrain.kn5,
+$BUILD/dev7/<tag>_build.json (timings, counts, profile fixes).  Runtime NCR full length: see the json.
+"""
+import argparse, json, math, sys, time, pathlib, re
+import numpy as np, triangle
+from scipy.spatial import cKDTree
+from scipy.ndimage import gaussian_filter1d
+HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parents[0] / "p2"))
+import network as NW
+from geom import ROOT, BUILD, CFG, DEV7, Raster, Road, grid_tris, vertex_normals, load_centerline, build_lock
+import collision_conv as CC
+from kn5 import Mesh, Material, write_kn5, read_kn5, ac_from_local
+
+ap = argparse.ArgumentParser()
+ap.add_argument("road"); ap.add_argument("--s", default=None, help="station range a-b (small tests)")
+ap.add_argument("--tag", default=None)
+A = ap.parse_args()
+assert BUILD.resolve() != (ROOT / "build").resolve(), "dev7 G writes to its own build dir (PALOMARES_BUILD_DIR=build_dev7)"
+build_lock("dev7_g")
+T0 = time.time(); TIM = {}
+tick = lambda k: TIM.__setitem__(k, round(time.time() - T0 - sum(TIM.values()), 1))
+TAG = A.tag or {"niles_canyon_road": "ncr"}.get(A.road, A.road)
+LOG = {}
+road = NW.load_road(A.road, LOG)
+N = len(road.s)
+i0, i1 = 0, N - 1
+if A.s:
+    a, b = (float(v) for v in A.s.split("-")); i0, i1 = int(max(a, 0)), int(min(b, road.s[-1]))
+I = np.arange(i0, i1 + 1)
+DTM = Raster(DEV7 / "dtm_r100_b150.tif"); DTM5 = Raster(DEV7 / "dtm_r050_b40.tif")
+dtm = lambda x, y: np.where(np.isfinite(DTM5.sample(x, y)), DTM5.sample(x, y), DTM.sample(x, y))
+feat = json.load(open(DEV7 / "features.geojson"))["features"]
+bridges = [(f["properties"]["s_start_m"], f["properties"]["s_end_m"]) for f in feat
+           if f["properties"]["kind"] == "bridge_osm" and f["properties"].get("road") == A.road]
+on_bridge = np.zeros(N, bool)
+for a, b in bridges:
+    on_bridge[int(a):int(b) + 1] = True
+tick("load")
+
+# ------------------------------------------------------------------ road ribbon (asphalt) + shoulders
+NC = 15                                   # columns across the asphalt (odd: centre column = crown)
+u = np.linspace(-1, 1, NC)
+D = np.where(u[None] >= 0, u[None] * road.el[I, None], u[None] * road.er[I, None])   # (n, NC), d<0 right
+# columns run right -> left (d increasing = left): grid_tris convention
+ZR = road.surface_z(I[:, None], D)
+XR, YR = road.xy(I[:, None], D)
+SH = 0.6
+_w = np.clip(gaussian_filter1d(on_bridge.astype(float), 5.0) * 2, 0, 1); wbr = (_w * _w * (3 - 2 * _w))[I]
+sh_cols = []
+for side in (-1, 1):                     # shoulder: edge, mid, outer
+    e = np.where(side > 0, road.el[I], road.er[I]); ze = road.surface_z(I, side * e)
+    cols = []
+    for f in (0.5, 1.0):
+        d = side * (e + f * SH); x, y = road.xy(I, d)
+        zt = dtm(x, y); zt = np.where(np.isfinite(zt), zt, ze)
+        lim = f * SH * 0.30
+        # along-s smoothing of the shoulder rise (DTM speckle gave 10-20 cm row-to-row steps on the shoulder)
+        rise = gaussian_filter1d(np.clip(zt - ze, -lim, lim), 6.0, mode="nearest")
+        z = ze + (1 - wbr) * rise                       # deck: flush with the asphalt, blended over ~6 m
+        cols.append((x, y, z))
+    sh_cols.append(cols)
+tick("ribbon")
+
+groups = {"road": [], "terrain": [], "walls": []}
+
+
+def add(g, name, mat, P, T, UV, **fl):
+    groups[g].append(dict(name=name, mat=mat, P=P, T=T, UV=UV, N=vertex_normals(P, T), **fl))
+
+
+CH = 250
+for c0 in range(0, len(I) - 1, CH):
+    sl = slice(c0, min(c0 + CH + 1, len(I)))
+    n = sl.stop - sl.start
+    P = np.c_[XR[sl].ravel(), YR[sl].ravel(), ZR[sl].ravel()]
+    UV = np.c_[0.5 + D[sl].ravel() / 12, (road.s[I][sl][:, None].repeat(NC, 1)).ravel() / 12]
+    cid = int(road.s[I][sl.start] // CH)
+    add("road", f"1ROAD_{TAG}_{cid:02d}", "road_asphalt", P, grid_tris(n, NC), UV)
+    for k, side in enumerate((-1, 1)):
+        e = np.where(side > 0, road.el[I][sl], road.er[I][sl])
+        x0, y0 = XR[sl][:, -1 if side > 0 else 0], YR[sl][:, -1 if side > 0 else 0]
+        z0 = ZR[sl][:, -1 if side > 0 else 0]
+        cols = [(x0, y0, z0)] + [(c[0][sl], c[1][sl], c[2][sl]) for c in sh_cols[k]]
+        if side < 0:
+            cols = cols[::-1]                # right side: outer -> edge (columns right -> left)
+        Ps = np.stack([np.c_[c[0], c[1], c[2]] for c in cols], 1).reshape(-1, 3)
+        UVs = np.c_[np.tile(np.arange(3) / 2.0, n), road.s[I][sl].repeat(3) / 4]
+        Ts = grid_tris(n, 3)
+        br = on_bridge[I][sl]
+        rows = (Ts.min(1) // 3)
+        deck = br[rows] & br[np.minimum(rows + 1, n - 1)]
+        sname = "L" if side > 0 else "R"
+        if (~deck).any():
+            add("road", f"1GRASS_{TAG}_sh{sname}{cid:02d}", "shoulder_dirt", Ps, Ts[~deck], UVs)
+        if deck.any():
+            add("road", f"1ROAD_{TAG}_deck{sname}{cid:02d}", "road_asphalt", Ps, Ts[deck], UVs * [1 / 6, 3])
+tick("road_mesh")
+
+# ------------------------------------------------------------------ terrain (constrained Delaunay, like 21)
+Lx, Ly, Lz = sh_cols[1][1]; Rx, Ry, Rz = sh_cols[0][1]
+bound = np.concatenate([np.c_[Rx, Ry], np.c_[Lx[::-1], Ly[::-1]]]); bz = np.concatenate([Rz, Lz[::-1]])
+# Palomares footprint (its terrain kn5 covers it): skip
+pal = load_centerline(CFG["build_end_m"] + 150)
+pkd = cKDTree(np.c_[pal["x_local"], pal["y_local"]])
+rkd = cKDTree(np.c_[road.x[I], road.y[I]])
+xmin, ymin = bound.min(0) - 150; xmax, ymax = bound.max(0) + 150
+pts = []
+for step, dmin, dmax in ((1.0, -1.0, 16), (2.0, 16, 50), (4.0, 50, 146)):
+    gx = np.arange(math.floor(xmin), xmax, step); gy = np.arange(math.floor(ymin), ymax, step)
+    for y0 in range(0, len(gy), 300):
+        X, Y = np.meshgrid(gx, gy[y0:y0 + 300]); X = X.ravel(); Y = Y.ravel()
+        dist, j = rkd.query(np.c_[X, Y], workers=2, distance_upper_bound=dmax + 20)
+        ok = np.isfinite(dist); X, Y, dist, j = X[ok], Y[ok], dist[ok], j[ok]
+        jj = I[np.clip(j, 0, len(I) - 1)]
+        off = (X - road.x[jj]) * road.nx[jj] + (Y - road.y[jj]) * road.ny[jj]
+        hw = np.where(off > 0, road.el[jj], road.er[jj]) + SH
+        de = np.abs(off) - hw
+        m = (de >= dmin) & (de < dmax) & (dist < hw + dmax) & (j > 0) & (j < len(I) - 1)
+        pts.append(np.c_[X[m], Y[m]])
+pts = np.concatenate(pts)
+dpal, _ = pkd.query(pts, workers=2); pts = pts[dpal > 152]
+# off the ribbon: > 0.35 m from the outline and outside the road+shoulder band
+db, _ = cKDTree(bound).query(pts, workers=2)
+_, j = rkd.query(pts, workers=2); jj = I[j]
+off = (pts[:, 0] - road.x[jj]) * road.nx[jj] + (pts[:, 1] - road.y[jj]) * road.ny[jj]
+hw = np.where(off > 0, road.el[jj], road.er[jj]) + SH
+keep = (db > 0.35) & (np.abs(off) > hw + 0.3)
+pts, off, hw, jj = pts[keep], off[keep], hw[keep], jj[keep]
+pz = dtm(pts[:, 0], pts[:, 1])
+# near the edge: terrain within 6 m of the shoulder is slope-limited (<= 40 deg) from the shoulder outer z, so the
+# CDT never folds right at the drivable edge (qa_ffb_safety TERR_CREASE); on bridge spans the deck edge drops freely
+de = np.abs(off) - hw
+zo = road.surface_z(jj, np.sign(off) * hw, noise=False)
+lim = np.maximum(de, 0.05) * 0.84
+near = (de < 6.0) & ~on_bridge[jj]
+pz = np.where(near, zo + np.clip(pz - zo, -lim, lim), pz)
+# under / beside bridge decks: no terrain within 4 m of the deck edge (the abutment skirt starts beyond)
+okb = ~(on_bridge[jj] & (de < 4.0))
+pts, pz = pts[okb], pz[okb]
+pts, pz = pts[np.isfinite(pz)], pz[np.isfinite(pz)]
+nb = len(bound); segs = np.c_[np.arange(nb), (np.arange(nb) + 1) % nb]
+V = np.concatenate([bound, pts]); VZ = np.concatenate([bz, pz])
+mid = len(I) // 2
+tri = triangle.triangulate(dict(vertices=V, segments=segs, holes=[[road.x[I[mid]], road.y[I[mid]]]]), "pc")
+TV, TT = tri["vertices"], tri["triangles"]
+assert len(TV) == len(V), "triangle inserted Steiner points"
+P3 = np.c_[TV, VZ]
+e = np.stack([np.linalg.norm(P3[TT[:, a], :2] - P3[TT[:, b], :2], axis=1) for a, b in ((0, 1), (1, 2), (2, 0))], 1).max(1)
+TT = TT[e < 9.0]
+cr = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]])[:, 2]
+TT[cr < 0] = TT[cr < 0][:, [0, 2, 1]]
+tick("terrain_cdt")
+# material by slope (ground / bank / rock), chunk by nearest station (250 m)
+fn = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]]); fn /= np.linalg.norm(fn, axis=1, keepdims=True)
+slope = np.degrees(np.arccos(np.clip(fn[:, 2], -1, 1)))
+cls = np.where(slope > 49, "rock", np.where(slope > 25, "bank", "ground"))
+_, jt = rkd.query(P3[TT].mean(1)[:, :2], workers=2); cht = (road.s[I[jt]] // 500).astype(int)
+for c in np.unique(cht):
+    for k in ("ground", "bank", "rock"):
+        sel = (cht == c) & (cls == k)
+        if not sel.any():
+            continue
+        Tk = TT[sel]; used, inv = np.unique(Tk, return_inverse=True)
+        Pk = P3[used]
+        add("terrain", f"1GRASS_{TAG}_t{k[0]}{c:02d}", k, Pk, inv.reshape(-1, 3), Pk[:, :2] / 8.0)
+tick("terrain_mesh")
+
+# ------------------------------------------------------------------ bridge parapets (1WALL slabs + visual)
+cl = {"s_m": road.s, "x_local": road.x, "y_local": road.y, "z_navd88": road.z,
+      "edge_left_m": road.el, "edge_right_m": road.er}
+F = CC.Frame(cl)
+for bi, (a, b) in enumerate(bridges):
+    a, b = max(a, road.s[i0]), min(b, road.s[i1])
+    if b - a < 4:
+        continue
+    s = np.arange(a, b + 0.01, 2.0)
+    ii = np.clip(np.round(s).astype(int), 0, N - 1)
+    for side, nm in ((1, "L"), (-1, "R")):
+        d = np.where(side > 0, road.el[ii], road.er[ii]) + SH + 0.05
+        zb = road.surface_z(ii, side * d, noise=False) - 0.3; zt = zb + 1.3 + 0.3
+        P, T, Nn = CC.slab(F, s, d, zb, zt, side, depth=np.full(len(s), 0.6))
+        groups["walls"].append(dict(name=f"1WALL_{TAG}_br{bi}{nm}", mat="invisible", P=P, T=T, N=Nn,
+                                    UV=np.zeros((len(P), 2)), visible=True, renderable=False, cast_shadows=False))
+        Pv, Tv, Nv = CC.slab(F, s, d, zb + 0.3, zb + 0.3 + 0.95, side, depth=np.full(len(s), 0.35))
+        groups["walls"].append(dict(name=f"{TAG}_parapet{bi}{nm}", mat="bank", P=Pv, T=Tv, N=Nv, UV=Pv[:, [0, 2]] / 3))
+tick("bridges")
+
+# ------------------------------------------------------------------ kn5 (materials + DDS from the Palomares road kn5)
+src = read_kn5(str(ROOT / "build/palomares_road/palomares_road.kn5"))
+SM = {m["name"]: m for m in src["materials"]}
+mats, texs = [], {}
+for nm in ("road_asphalt", "shoulder_dirt", "ground", "bank"):
+    m = SM[nm]; props = {p: ((v[3], v[4], v[5]) if p == "ksEmissive" else v[0]) for p, v in m["props"].items()}
+    mats.append(Material(nm, m["shader"], props, dict(m["textures"]), blend=m.get("blend", 0), alpha_tested=m.get("alpha_tested", False)))
+    for t in m["textures"].values():
+        texs[t] = src["textures"][t]
+mats.append(Material("rock", "ksPerPixel", None, {"txDiffuse": "bank_d.dds"}))
+mats.append(Material("invisible", "ksPerPixel", None, {"txDiffuse": "dirt_d.dds"}))
+OUT = BUILD / "palomares_road"; OUT.mkdir(parents=True, exist_ok=True)
+files = {}
+for g, fname in (("road", f"palomares_niles_{TAG}.kn5"), ("walls", f"palomares_niles_{TAG}.kn5"), ("terrain", f"palomares_niles_{TAG}_terrain.kn5")):
+    files.setdefault(fname, []).extend(groups[g])
+summary = {}
+for fname, lst in files.items():
+    nodes = []
+    for m in lst:
+        Pa = ac_from_local(m["P"]); Na = ac_from_local(m["N"])
+        nodes.append(Mesh(m["name"], Pa, Na, m["UV"], m["T"].reshape(-1), m["mat"],
+                          cast_shadows=m.get("cast_shadows", True), visible=m.get("visible", True),
+                          renderable=m.get("renderable", True)))
+    used = {n.material for n in nodes}
+    ms = [m for m in mats if m.name in used]
+    tx = {t: texs[t] for m in ms for t in m.textures.values() if t in texs}
+    write_kn5(str(OUT / fname), ms, tx, nodes)
+    k = read_kn5(str(OUT / fname))                              # round trip
+    vmax = max(len(m["pos"]) for m in k["meshes"])
+    assert vmax <= 65535 and all(t in k["textures"] for mm in k["materials"] for t in mm["textures"].values())
+    summary[fname] = dict(meshes=len(k["meshes"]), vmax=vmax, tris=int(sum(len(m["idx"]) // 3 for m in k["meshes"])),
+                          draw_calls=sum(1 for m in k["meshes"] if m["renderable"] and m["visible"]))
+tick("kn5")
+xy = np.concatenate([m["P"][:, :2] for g in groups.values() for m in g])
+rep = dict(road=A.road, tag=TAG, s=[float(road.s[i0]), float(road.s[i1])], timings_s=TIM, total_s=round(time.time() - T0, 1),
+           files=summary, profile=LOG, bridges=bridges, max_abs_xy_m=float(np.abs(xy).max()),
+           max_grade_pct=float(np.abs(np.gradient(road.z[I]) / np.gradient(road.s[I])).max() * 100))
+(BUILD / "dev7").mkdir(exist_ok=True)
+json.dump(rep, open(BUILD / "dev7" / f"{TAG}_build.json", "w"), indent=1)
+print(json.dumps(rep, indent=1))

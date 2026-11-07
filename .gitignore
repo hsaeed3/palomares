@@ -16,3 +16,4 @@ build_quick/
 assets/_textures/
 assets/*/lod*.npz
 reports/view/
+build_dev7/

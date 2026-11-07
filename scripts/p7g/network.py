@@ -1,0 +1,69 @@
+"""dev7 G: the road network as a set of geom.Road objects (one per data/derived/dev7 centerline).
+
+Profile fixes applied here (before geom.Road smoothing), so every consumer sees the same z:
+  * interpolated bridge decks (struct == bridge_interp): re-fitted as a cubic Hermite between validated abutment
+    anchors (ground return, settled grade) with the outside slopes; fixes the 2.4 m jump at NCR s~4390-4404
+  * grade limit (MAX_GRADE) on town streets: Limelight / Sierra Terrace end ramps are LiDAR ramps onto
+    embankments/driveways, not road grade
+"""
+import sys, pathlib, json
+import numpy as np
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "p2"))
+from geom import Road, load_centerline, DEV7
+
+ROLE_MAX_GRADE = {"town": 0.12, "canyon": 0.12, "canyon_side": 0.12, "sunol_stub": 0.12, "palomares_connector": 0.16}
+
+
+def roles():
+    return {k: v for k, v in json.load(open(DEV7 / "centerlines_summary.json")).items()}
+
+
+def _bridge_fix(s, z, struct, look=30):
+    z = z.copy(); fixes = []
+    b = struct == "bridge_interp"
+    if not b.any():
+        return z, fixes
+    edges = np.flatnonzero(np.diff(np.r_[0, b.astype(int), 0]))
+    for a, e in zip(edges[::2], edges[1::2]):          # deck stations [a, e)
+        ia = max(a - 4, 1)
+        # east/upper anchor: first station after the deck where the next 8 m are settled (|grade| < 3 %)
+        ie = None
+        for k in range(e, min(e + look, len(z) - 9)):
+            if np.abs(np.diff(z[k:k + 9])).max() < 0.03:
+                ie = k; break
+        ie = ie if ie is not None else min(e + 4, len(z) - 2)
+        gj = np.abs(np.diff(z[max(a - 3, 0):ie + 2])).max()
+        if gj < 0.04:                                    # deck joins its approaches smoothly: keep it
+            continue
+        g0 = (z[ia] - z[max(ia - 15, 0)]) / max(ia - max(ia - 15, 0), 1)
+        g1 = (z[min(ie + 15, len(z) - 1)] - z[ie]) / max(min(ie + 15, len(z) - 1) - ie, 1)
+        g0, g1 = np.clip(g0, -0.03, 0.03), np.clip(g1, -0.03, 0.03)
+        L = s[ie] - s[ia]; t = (s[ia:ie + 1] - s[ia]) / L
+        h00, h10, h01, h11 = 2*t**3 - 3*t**2 + 1, t**3 - 2*t**2 + t, -2*t**3 + 3*t**2, t**3 - t**2
+        new = h00 * z[ia] + h10 * L * g0 + h01 * z[ie] + h11 * L * g1
+        fixes.append(dict(s0=float(s[ia]), s1=float(s[ie]), dz_max=float(np.abs(new - z[ia:ie + 1]).max())))
+        z[ia:ie + 1] = new
+    return z, fixes
+
+
+def _grade_limit(s, z, gmax, it=200):
+    z = z.copy()
+    for _ in range(it):
+        g = np.diff(z) / np.diff(s)
+        bad = np.flatnonzero(np.abs(g) > gmax)
+        if not len(bad):
+            break
+        for i in bad:                       # pull both ends toward each other (local, keeps the mean)
+            ex = (abs(z[i + 1] - z[i]) - gmax * (s[i + 1] - s[i])) / 2 * np.sign(z[i + 1] - z[i])
+            z[i] += ex; z[i + 1] -= ex
+    return z
+
+
+def load_road(name, log=None):
+    c = load_centerline(None, DEV7 / f"centerline_{name}.csv")
+    role = roles()[name].get("role", "town") if "role" in roles()[name] else ("canyon" if name == "niles_canyon_road" else "town")
+    z, fx = _bridge_fix(c["s_m"], c["z_navd88"], c.get("struct", np.array([""] * len(c["s_m"]))))
+    z = _grade_limit(c["s_m"], z, ROLE_MAX_GRADE.get(role, 0.12))
+    if log is not None:
+        log[name] = dict(bridge_fixes=fx, dz_grade_limit_max=float(np.abs(z - c["z_navd88"]).max()))
+    return Road(None, name=name, z_override=z)
