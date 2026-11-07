@@ -64,6 +64,46 @@ def render(P, T, col, eye, target, fov=55.0, w=W, h=H, sky=SKY, far=1e9):
     return img
 
 
+def render_tex(P, T, UV, tex, eye, target, fov=55.0, w=W, h=H, sky=SKY, alpha_test=True):
+    """textured painter's renderer (dev7): per-triangle affine texture warp, Lambert shade. Slower than render()
+    (about 1 ms per triangle), used for single assets so facades / sign faces can be judged by eye."""
+    eye = np.asarray(eye, float); f = np.asarray(target, float) - eye; f /= np.linalg.norm(f)
+    r = np.cross(f, [0, 0, 1.0]); r /= np.linalg.norm(r) + 1e-12; u = np.cross(r, f)
+    q = P - eye; xc, yc, zc = q @ r, q @ u, q @ f
+    fp = 0.5 * h / math.tan(math.radians(fov) / 2)
+    ok = (zc[T] > 0.3).all(1); T2 = T[ok]
+    img = Image.new("RGBA", (w, h), sky + (255,))
+    if not len(T2):
+        return img.convert("RGB")
+    sx = w / 2 + fp * xc / zc; sy = h / 2 - fp * yc / zc
+    e1 = P[T2[:, 1]] - P[T2[:, 0]]; e2 = P[T2[:, 2]] - P[T2[:, 0]]
+    n = np.cross(e1, e2); n /= np.linalg.norm(n, axis=1, keepdims=True) + 1e-12
+    shade = 0.55 + 0.45 * np.abs(n @ SUN)
+    ta = np.asarray(tex.convert("RGBA")); th, tw = ta.shape[:2]
+    for k in np.argsort(-zc[T2].mean(1)):
+        t = T2[k]; X = np.c_[sx[t], sy[t]]
+        x0, y0 = np.floor(X.min(0)).astype(int); x1, y1 = np.ceil(X.max(0)).astype(int) + 1
+        x0, y0 = max(x0, 0), max(y0, 0); x1, y1 = min(x1, w), min(y1, h)
+        if x1 <= x0 or y1 <= y0 or (x1 - x0) * (y1 - y0) > w * h:
+            continue
+        uv = UV[t]; tx = np.mod(uv[:, 0], 1.0) * tw; ty = np.mod(-uv[:, 1], 1.0) * th
+        A = np.c_[X - [x0, y0], np.ones(3)]
+        try:
+            cx = np.linalg.solve(A, tx); cy = np.linalg.solve(A, ty)
+        except np.linalg.LinAlgError:
+            continue
+        gx, gy = np.meshgrid(np.arange(x1 - x0) + 0.5, np.arange(y1 - y0) + 0.5)
+        U = np.clip((cx[0] * gx + cx[1] * gy + cx[2]).astype(int), 0, tw - 1); V = np.clip((cy[0] * gx + cy[1] * gy + cy[2]).astype(int), 0, th - 1)
+        patch = ta[V, U].astype(np.float32); patch[..., :3] *= shade[k]
+        m = Image.new("L", (x1 - x0, y1 - y0), 0); ImageDraw.Draw(m).polygon([tuple(v) for v in (X - [x0, y0])], fill=255)
+        ma = np.asarray(m) > 0
+        if alpha_test:
+            ma &= patch[..., 3] >= 128
+        reg = np.asarray(img.crop((x0, y0, x1, y1))).copy(); reg[ma] = patch[ma].astype(np.uint8); reg[..., 3] = 255
+        img.paste(Image.fromarray(reg), (x0, y0))
+    return img.convert("RGB")
+
+
 def label(img, text):
     d = ImageDraw.Draw(img); d.rectangle([0, 0, img.width, 18], fill=(0, 0, 0)); d.text((4, 3), text, fill=(255, 255, 255))
     return img
@@ -123,14 +163,34 @@ def view_asset(aid, frame=None):
         tex = Image.open(io.BytesIO(to_png((ROOT / "assets" / part["texture"]).read_bytes())))
         c, keep = tri_colors(z["UV"], z["T"], tex, part.get("alpha_tested", True))
         part["_m"] = (z["P"], z["T"][keep], c[keep])
+    textured = man.get("mly") is not None
     P = np.concatenate([p["_m"][0] for p in man["parts"]])
     off = np.cumsum([0] + [len(p["_m"][0]) for p in man["parts"]])[:-1]
     T = np.concatenate([p["_m"][1] + o for p, o in zip(man["parts"], off)]); C = np.concatenate([p["_m"][2] for p in man["parts"]])
     lo, hi = P.min(0), P.max(0); ctr = (lo + hi) / 2; R = max(np.linalg.norm(hi - lo), 0.5)
-    for name, az, el in (("front", -90, 8), ("3/4", -40, 18), ("side", 0, 8), ("top", -60, 60)):
+    views = (("front", -90, 8), ("3/4", -40, 18), ("side", 0, 8), ("top", -60, 60))
+    if man.get("mly") is not None:            # dev7 types: signs face -x, so add the approaching driver's view
+        views = (("driver (-x)", 180, 6), ("3/4 road", -135, 15), ("side (-y)", -90, 8), ("top", -60, 60))
+    for name, az, el in views:
         a, e = math.radians(az), math.radians(el)
         eye = ctr + 1.5 * R * np.array([math.cos(e) * math.cos(a), math.cos(e) * math.sin(a), math.sin(e)])
-        tiles.append((f"{aid} {name}", render(P, T, C, eye, ctr, fov=40)))
+        if textured:                                   # dev7: per-pixel textures, one pass per part
+            im = None
+            for part in man["parts"]:
+                z = np.load(d / part["mesh"]); tex = Image.open(io.BytesIO(to_png((ROOT / "assets" / part["texture"]).read_bytes())))
+                if im is None:
+                    im = render_tex(z["P"], z["T"], z["UV"], tex, eye, ctr, fov=40, alpha_test=part.get("alpha_tested", True))
+                else:   # small emissive parts: flat colour on top
+                    c, keep = tri_colors(z["UV"], z["T"], tex, False)
+                    over = render(z["P"], z["T"], c, eye, ctr, fov=40, sky=(1, 2, 3))
+                    oa = np.asarray(over); msk = (oa != (1, 2, 3)).any(2); ia = np.asarray(im).copy(); ia[msk] = oa[msk]; im = Image.fromarray(ia)
+            tiles.append((f"{aid} {name}", im))
+        else:
+            tiles.append((f"{aid} {name}", render(P, T, C, eye, ctr, fov=40)))
+    for mid in man.get("mly", [])[:2]:                       # dev7: Mapillary images from the ledger row (CC-BY-SA)
+        q = ROOT / f"data/raw/dev7/mapillary/img/{mid}.jpg"
+        if q.exists():
+            tiles.append((f"Mapillary {mid} (CC-BY-SA)", Image.open(q)))
     frames = [frame] if frame else man.get("frames", [])[:1]
     for f in frames:
         im = gopro(f)

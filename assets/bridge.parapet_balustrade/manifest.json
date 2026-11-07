@@ -1,0 +1,56 @@
+{
+ "type": "bridge.parapet_balustrade",
+ "cls": "bridge",
+ "desc": "panelled concrete parapet on a raised sidewalk",
+ "source_hash": "c6e8dafd51cc8c9293f41e82e8ee9bf01ac38dee",
+ "sources": [
+  "ambientCG Concrete034",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 184,
+ "tris": 92,
+ "frames": [],
+ "built": "2026-11-07 14:31:56",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "179096894106286",
+  "2820213341578118",
+  "2860294870858335"
+ ],
+ "ledger_row": "d7m_eye_0077",
+ "params_used": {
+  "material": "concrete",
+  "sidewalk": true,
+  "bridge": "Arroyo de la Laguna",
+  "frontage_m": 96.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

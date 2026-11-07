@@ -1,0 +1,58 @@
+{
+ "type": "bridge.rail_concrete_girder",
+ "cls": "bridge",
+ "desc": "UP concrete girder underpass, abutments, wing walls, pipe railing",
+ "source_hash": "e23e7392926c3588c7eccf3164f800d7dc28996c",
+ "sources": [
+  "ambientCG Concrete034",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 660,
+ "tris": 330,
+ "frames": [],
+ "built": "2026-11-07 14:31:57",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "245974991574265",
+  "318995033064468",
+  "1028420667694578"
+ ],
+ "ledger_row": "d7m_eye_0070",
+ "params_used": {
+  "span_m": 18,
+  "over": "road",
+  "railway": "UP Oakland Subdivision",
+  "material": "concrete girder, concrete abutments and wing walls, pipe railing",
+  "clearance_m": 4.3,
+  "frontage_m": 20.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

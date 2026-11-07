@@ -1,0 +1,57 @@
+{
+ "type": "sign.one_way",
+ "cls": "sign",
+ "desc": "one way sign (MUTCD layout redrawn) on a galvanised post",
+ "source_hash": "9c8ab9243a2bd179386570d2b840f2b0809cb63e",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [],
+ "built": "2026-11-07 14:32:40",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "336083607850050",
+  "1022526181613879",
+  "967957187774629"
+ ],
+ "ledger_row": "d7m_mf_0044",
+ "params_used": {
+  "dir": "sb",
+  "mly_feature": [
+   "495645255214293"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

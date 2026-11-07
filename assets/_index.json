@@ -1,4 +1,22 @@
 {
+ "bridge.abutment_concrete": {
+  "cls": "bridge",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "d3ec2990566e178cbb3e547dae82a96132c76be6"
+ },
+ "bridge.abutment_stone": {
+  "cls": "bridge",
+  "verts": 20,
+  "tris": 10,
+  "source_hash": "31de774abafd8047816964afd42df58bfdee353f"
+ },
+ "bridge.parapet_balustrade": {
+  "cls": "bridge",
+  "verts": 184,
+  "tris": 92,
+  "source_hash": "c6e8dafd51cc8c9293f41e82e8ee9bf01ac38dee"
+ },
  "bridge.parapet_concrete": {
   "cls": "bridge",
   "verts": 208,
@@ -16,6 +34,24 @@
   "verts": 208,
   "tris": 104,
   "source_hash": "a409b047561657cbef13589ce0d1873a7b9e5e3b"
+ },
+ "bridge.rail_concrete_girder": {
+  "cls": "bridge",
+  "verts": 660,
+  "tris": 330,
+  "source_hash": "e23e7392926c3588c7eccf3164f800d7dc28996c"
+ },
+ "bridge.rail_deck_girder": {
+  "cls": "bridge",
+  "verts": 1660,
+  "tris": 830,
+  "source_hash": "85a8728d1cc4fe995c6cd2ef2409045637984174"
+ },
+ "bridge.rail_truss_through": {
+  "cls": "bridge",
+  "verts": 692,
+  "tris": 346,
+  "source_hash": "784fa995521e29690470f15d38cf497678bde326"
  },
  "bridge.steel_girder": {
   "cls": "bridge",
@@ -40,6 +76,12 @@
   "verts": 88,
   "tris": 44,
   "source_hash": "4465153f2d4c923619be7384aace9d43b6ae11ae"
+ },
+ "building.depot": {
+  "cls": "building",
+  "verts": 170,
+  "tris": 84,
+  "source_hash": "00d121100935d5ec5c666bf72b885e6e578ca7f7"
  },
  "building.garage": {
   "cls": "building",
@@ -76,6 +118,24 @@
   "verts": 70,
   "tris": 34,
   "source_hash": "988313cbbf6f0b6b47ad91de91123197e58afc52"
+ },
+ "building.storefront": {
+  "cls": "building",
+  "verts": 168,
+  "tris": 84,
+  "source_hash": "ae8f207f6d98d39c83a2a73ff8f8e8a2c66cdaa4"
+ },
+ "building.storefront_row": {
+  "cls": "building",
+  "verts": 248,
+  "tris": 124,
+  "source_hash": "c67cc557e4e93df4d3499d2fa8b785f30897f142"
+ },
+ "building.town_generic": {
+  "cls": "building",
+  "verts": 134,
+  "tris": 66,
+  "source_hash": "95e3f5ef46ffb552bc024b53f52475500562df07"
  },
  "building.trailer": {
   "cls": "building",
@@ -167,6 +227,12 @@
   "tris": 48,
   "source_hash": "293f1f25aad62f3c3f11406408094dc75dfc7a7e"
  },
+ "driveway.parking_lot": {
+  "cls": "driveway",
+  "verts": 63,
+  "tris": 21,
+  "source_hash": "277e88e7a975e2fddfe1f6eec4bf0abacce2ede5"
+ },
  "fence.board_3rail": {
   "cls": "fence",
   "verts": 164,
@@ -179,6 +245,12 @@
   "tris": 112,
   "source_hash": "0d2eb9e76d1cfa7682990c1b08995e2f05cb3661"
  },
+ "fence.construction_mesh": {
+  "cls": "fence",
+  "verts": 180,
+  "tris": 90,
+  "source_hash": "3a1844ba434ba9f94c80252f18d89c3ae504f6f0"
+ },
  "fence.iron_picket": {
   "cls": "fence",
   "verts": 216,
@@ -190,6 +262,12 @@
   "verts": 204,
   "tris": 102,
   "source_hash": "b03f3e928d8cde7d80af598bd3f2ee46a313e804"
+ },
+ "fence.picket": {
+  "cls": "fence",
+  "verts": 180,
+  "tris": 90,
+  "source_hash": "945516e9172dc7fedc203a00d900f10c7656414c"
  },
  "fence.pipe_rail": {
   "cls": "fence",
@@ -208,6 +286,12 @@
   "verts": 116,
   "tris": 58,
   "source_hash": "d7de70d104afc1cf87a8eccfa0af40cc9f446bd6"
+ },
+ "fence.screen_curved": {
+  "cls": "fence",
+  "verts": 208,
+  "tris": 104,
+  "source_hash": "3fbde25ab09581f7972e4fd761a045eb6fffbd5a"
  },
  "fence.split_rail": {
   "cls": "fence",
@@ -329,11 +413,23 @@
   "tris": 30,
   "source_hash": "5b76489e000c50b8cdebc66c1ba360771b44a46b"
  },
+ "marking.angle_parking": {
+  "cls": "marking",
+  "verts": 16,
+  "tris": 8,
+  "source_hash": "dcfdceb2fecd46befbabd378718a1361a0a3512c"
+ },
  "marking.hump": {
   "cls": "marking",
   "verts": 120,
   "tris": 60,
   "source_hash": "039fb473e868aa27b631087a999b915cffa13266"
+ },
+ "marking.keep_clear": {
+  "cls": "marking",
+  "verts": 4,
+  "tris": 2,
+  "source_hash": "fd8c3cc71d6ef63ea1cde743463b44c057ca1357"
  },
  "marking.stop_bar": {
   "cls": "marking",
@@ -341,11 +437,23 @@
   "tris": 6,
   "source_hash": "796210af509fc1a9bc16be4342af1f489cba2344"
  },
+ "pole.lamp_ornamental": {
+  "cls": "pole",
+  "verts": 326,
+  "tris": 150,
+  "source_hash": "5d309436a712a2dd0e796c71703b8bd6c5c3cf56"
+ },
  "pole.streetlight": {
   "cls": "pole",
   "verts": 64,
   "tris": 32,
   "source_hash": "540b1c43181dfdde597fcc027f635e6795121bd0"
+ },
+ "pole.traffic_signal": {
+  "cls": "pole",
+  "verts": 296,
+  "tris": 114,
+  "source_hash": "43b631027b9e5b7e6ca6cfc6d43250d2886d4f9f"
  },
  "pole.utility_transformer": {
   "cls": "pole",
@@ -389,6 +497,18 @@
   "tris": 10,
   "source_hash": "0d22310343d7bd2caf6cf2be4ced625bb96c5344"
  },
+ "prop.bench": {
+  "cls": "prop",
+  "verts": 677,
+  "tris": 630,
+  "source_hash": "e71982fd674ec43e6d1d8ed636c4126ff196dafd"
+ },
+ "prop.crash_cushion": {
+  "cls": "prop",
+  "verts": 104,
+  "tris": 52,
+  "source_hash": "d7dcdd085ac3fed0c25adcd6e173c1227cf26af3"
+ },
  "prop.flag_pole": {
   "cls": "prop",
   "verts": 142,
@@ -401,17 +521,65 @@
   "tris": 34,
   "source_hash": "03ead31054a96ea80f3e81aa3fdcbdc22df3fd80"
  },
+ "prop.planter": {
+  "cls": "prop",
+  "verts": 140,
+  "tris": 64,
+  "source_hash": "122e88be879b14e79e79adbee79894e7ec179dff"
+ },
+ "prop.rail_car_generic": {
+  "cls": "prop",
+  "verts": 420,
+  "tris": 210,
+  "source_hash": "26a44d5a5b37e754865a50e8a8cfa4c5ea47ad7f"
+ },
+ "prop.rail_crossbuck": {
+  "cls": "prop",
+  "verts": 272,
+  "tris": 128,
+  "source_hash": "8cde25f11cae439dcf12c2e655bbb26fb94ddb12"
+ },
+ "prop.rail_crossing_signal": {
+  "cls": "prop",
+  "verts": 372,
+  "tris": 168,
+  "source_hash": "943698b624ea18ab8108433e8127f943d8cff2e1"
+ },
+ "prop.rail_platform": {
+  "cls": "prop",
+  "verts": 40,
+  "tris": 20,
+  "source_hash": "0db072d0e1a8931f8d407a6c22de6a96592e7e54"
+ },
  "prop.trash_bins": {
   "cls": "prop",
   "verts": 40,
   "tris": 20,
   "source_hash": "3ac575cd445b4816833ccae601c72dc60e5ebc3f"
  },
+ "prop.trash_can": {
+  "cls": "prop",
+  "verts": 2452,
+  "tris": 3370,
+  "source_hash": "72a4da53a4a1ae7389389d01232b38a783ea60ea"
+ },
  "prop.utility_box": {
   "cls": "prop",
   "verts": 20,
   "tris": 10,
   "source_hash": "569bbbf5c364a423523a75d20c74fe600bf44a7a"
+ },
+ "prop.water_barrier": {
+  "cls": "prop",
+  "verts": 120,
+  "tris": 60,
+  "source_hash": "b66db1dd00a4335ac85a5348e7f707ae46ced22e"
+ },
+ "rail.track": {
+  "cls": "rail",
+  "verts": 408,
+  "tris": 204,
+  "source_hash": "ca52ac03bbf53b1ee56a6eafe036709a9d02470b"
  },
  "rock.boulder_l": {
   "cls": "rock",
@@ -527,6 +695,12 @@
   "tris": 14,
   "source_hash": "dbc5b5f412e55e9e80f63320458ae44ab9b62812"
  },
+ "sign.bicycle_warning": {
+  "cls": "sign",
+  "verts": 36,
+  "tris": 18,
+  "source_hash": "896a81d899fcd0620077521f24d219607f9d1466"
+ },
  "sign.blank_white": {
   "cls": "sign",
   "verts": 28,
@@ -545,6 +719,18 @@
   "tris": 14,
   "source_hash": "edcfaf1fdabbd427bfca578dad6d22ec66526cb1"
  },
+ "sign.city_limit": {
+  "cls": "sign",
+  "verts": 48,
+  "tris": 24,
+  "source_hash": "cc2607a0fe952c37f458922bfba97f6e3675699a"
+ },
+ "sign.clearance": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "2de7001da7a3b3cc97c4c8f5af8acccf5964857a"
+ },
  "sign.curve_left": {
   "cls": "sign",
   "verts": 28,
@@ -556,6 +742,36 @@
   "verts": 28,
   "tris": 14,
   "source_hash": "99652a035e47af9505c20c3f3439ac88c9928124"
+ },
+ "sign.deer": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "0bed1e3b5a00f6ed421f4eda12ea412d9e01a46f"
+ },
+ "sign.do_not_enter": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "f058a14527ea781fcec6de2db31bf2a2e56d059a"
+ },
+ "sign.falling_rocks": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "8cd9c35ff3515b4dbf24a0966db189bb4508155a"
+ },
+ "sign.flasher_mast": {
+  "cls": "sign",
+  "verts": 320,
+  "tris": 146,
+  "source_hash": "05069987286b672894f9035dd426609644730a70"
+ },
+ "sign.guide_green": {
+  "cls": "sign",
+  "verts": 48,
+  "tris": 24,
+  "source_hash": "a006413c0d088124b5902aa9ba2192451edb338c"
  },
  "sign.hump": {
   "cls": "sign",
@@ -581,17 +797,77 @@
   "tris": 14,
   "source_hash": "63011e2ba812dc313f07d6c23b8a1e12f7fcceca"
  },
+ "sign.no_parking": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "9b7ef8ba84a271594e117c7444d7fb20bbe03797"
+ },
  "sign.object_marker": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
   "source_hash": "72ceb314b32fdae070bf6853aaa78849f7305ef9"
  },
+ "sign.one_way": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "9c8ab9243a2bd179386570d2b840f2b0809cb63e"
+ },
+ "sign.ped_crossing": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "7af344d0a19d09cd822c8e7463125465d59dd9a6"
+ },
+ "sign.reverse_turn": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "ef66d1ceda3c70172d7f72b50bdfb316fd588a00"
+ },
  "sign.round_prohibition": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
   "source_hash": "3e741148d520926800dfb63fe76e6014acb7d2df"
+ },
+ "sign.route_shield": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "a092bad4fd66fee60c640b16e4cf737b2a103bf5"
+ },
+ "sign.rr_advance": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "3eed5d9bcb20a5d05cb15a5116ac200fe0a412ad"
+ },
+ "sign.side_road_left": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "84cfbc2309208073de90da5ddb230305a8264ad9"
+ },
+ "sign.side_road_right": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "ee1174221f135dfa3234bae2e2d8d3f33596d58f"
+ },
+ "sign.signal_ahead": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "1fe96a2a3c1ac06df165b2492913993e7d79300d"
+ },
+ "sign.slippery": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "6bba122f21a3c0011c7d26684dadb46b7c703c6d"
  },
  "sign.slow": {
   "cls": "sign",
@@ -611,11 +887,29 @@
   "tris": 14,
   "source_hash": "a41ef8cddc234654445dc63f9e476c51913d9665"
  },
+ "sign.stop_ahead": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "7647305433a791290b9d8c2aba9bfa10f563f776"
+ },
+ "sign.store_text": {
+  "cls": "sign",
+  "verts": 24,
+  "tris": 12,
+  "source_hash": "6a72fb958293a0ce1703a8039bb70644546bbc9a"
+ },
  "sign.street_name": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
   "source_hash": "5f638320b379a47fe723e65cadd0372ccfbcc526"
+ },
+ "sign.text_diamond": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "a5d7fda6598428b5ae84e231143969d746419360"
  },
  "sign.text_private": {
   "cls": "sign",
@@ -623,11 +917,41 @@
   "tris": 14,
   "source_hash": "182a76d475526ae8b082169efff6de42357d4605"
  },
+ "sign.text_white_rect": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "dfcedaaeb24b07f5112366ebe338e44edea88a7a"
+ },
+ "sign.turn_left": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "23ac50c0c761184ed4b3135dca8f8f36c6dbcc51"
+ },
+ "sign.turn_right": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "97c2409a2e854bf978aca47d5ed69e14e4db53e0"
+ },
  "sign.warning_blank": {
   "cls": "sign",
   "verts": 28,
   "tris": 14,
   "source_hash": "23bd2c1be9dc8e40c0c96385e5bbdeca6c600e13"
+ },
+ "sign.warning_text_rect": {
+  "cls": "sign",
+  "verts": 48,
+  "tris": 24,
+  "source_hash": "44e4918cbf9e5a70bfb186fc496ba491dda8204d"
+ },
+ "sign.yield": {
+  "cls": "sign",
+  "verts": 28,
+  "tris": 14,
+  "source_hash": "72964a6864916c1b6bd00bbbf5edc2c4d26c0ba0"
  },
  "tree.conifer": {
   "cls": "tree_add",
@@ -640,6 +964,18 @@
   "verts": 32,
   "tris": 16,
   "source_hash": "2cbae49218537a4cc04255cbe9c95c620764f874"
+ },
+ "tree.palm_row": {
+  "cls": "tree_add",
+  "verts": 216,
+  "tris": 108,
+  "source_hash": "8417ef97631708e0a6ce284d6c830e7cfbb5d110"
+ },
+ "tree.plane_row": {
+  "cls": "tree_add",
+  "verts": 96,
+  "tris": 48,
+  "source_hash": "c49814da0859798d239021b06ce86488f89cac37"
  },
  "tree.winter_poplar": {
   "cls": "tree_add",
@@ -695,6 +1031,24 @@
   "tris": 46,
   "source_hash": "74033b56c42d6c34ff05356317213f63d2c4c85e"
  },
+ "wall.jersey_barrier": {
+  "cls": "wall",
+  "verts": 252,
+  "tris": 126,
+  "source_hash": "69f368104cc9e84a64b4cbb3e4f00caebdebd11d"
+ },
+ "wall.masonry_parapet": {
+  "cls": "wall",
+  "verts": 92,
+  "tris": 46,
+  "source_hash": "69e50ee265fc3f7cf2fe11cd9b46347c7a3c790f"
+ },
+ "wall.retaining_block": {
+  "cls": "wall",
+  "verts": 244,
+  "tris": 122,
+  "source_hash": "1a01916c84ae1215b1f9b67a478487e158d3d6d9"
+ },
  "wall.retaining_concrete": {
   "cls": "wall",
   "verts": 92,
@@ -706,6 +1060,12 @@
   "verts": 92,
   "tris": 46,
   "source_hash": "f9b5af09267ad11a7d24180e224ad754e75506d4"
+ },
+ "wall.rock_cut_face": {
+  "cls": "wall",
+  "verts": 144,
+  "tris": 72,
+  "source_hash": "5b21fc6cacaf22a735e392a15a334b2d20b81fcb"
  },
  "wall.rockfall_mesh": {
   "cls": "wall",

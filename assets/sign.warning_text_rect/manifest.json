@@ -1,0 +1,56 @@
+{
+ "type": "sign.warning_text_rect",
+ "cls": "sign",
+ "desc": "warning text rect sign (MUTCD layout redrawn) on 2 posts",
+ "source_hash": "44e4918cbf9e5a70bfb186fc496ba491dda8204d",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 48,
+ "tris": 24,
+ "frames": [],
+ "built": "2026-11-07 14:32:58",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "3450043888602177",
+  "602858698540019",
+  "803269501448593"
+ ],
+ "ledger_row": "d7m_eye_0004",
+ "params_used": {
+  "dir": "nb",
+  "text": "WHEN FLASHING",
+  "color": "yellow"
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

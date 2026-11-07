@@ -1,0 +1,52 @@
+{
+ "type": "bridge.abutment_concrete",
+ "cls": "bridge",
+ "desc": "concrete abutment / pier (params.arch_opening)",
+ "source_hash": "d3ec2990566e178cbb3e547dae82a96132c76be6",
+ "sources": [
+  "ambientCG Concrete018",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 24,
+ "tris": 12,
+ "frames": [],
+ "built": "2026-11-07 14:31:52",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "256078143846347"
+ ],
+ "ledger_row": "d7m_eye_0009",
+ "params_used": {
+  "arch_opening": true,
+  "graffiti": true
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

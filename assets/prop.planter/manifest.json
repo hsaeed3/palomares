@@ -1,0 +1,47 @@
+{
+ "type": "prop.planter",
+ "cls": "prop",
+ "desc": "round concrete planter (ambientCG concrete) with shrub card",
+ "source_hash": "122e88be879b14e79e79adbee79894e7ec179dff",
+ "sources": [
+  "ambientCG Concrete034",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 140,
+ "tris": 64,
+ "frames": [],
+ "built": "2026-11-07 14:32:19",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [],
+ "ledger_row": null,
+ "params_used": {},
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

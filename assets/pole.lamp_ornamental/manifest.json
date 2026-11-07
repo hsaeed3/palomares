@@ -1,0 +1,64 @@
+{
+ "type": "pole.lamp_ornamental",
+ "cls": "pole",
+ "desc": "black acorn lamp post with banner brackets; globe = lamp_glow (CSP NIGHT_SMOOTH emissive)",
+ "source_hash": "5d309436a712a2dd0e796c71703b8bd6c5c3cf56",
+ "sources": [
+  "ambientCG PaintedMetal004",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  },
+  {
+   "name": "lamp_glow",
+   "mesh": "lod0_lamp_glow.npz",
+   "texture": "_textures/lamp_glow.dds",
+   "material": "lamp_glow",
+   "alpha_tested": false
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz",
+    "lod0_lamp_glow.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz",
+    "lod1_lamp_glow.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 326,
+ "tris": 150,
+ "frames": [],
+ "built": "2026-11-07 14:32:15",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "465704321202357",
+  "292913682301189"
+ ],
+ "ledger_row": "d7m_mf_0065",
+ "params_used": {
+  "mly_feature": [
+   "527101841803376"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested",
+  "lamp_glow": "emissive, CSP-animated (assets_dev7.csp_snippet)"
+ }
+}

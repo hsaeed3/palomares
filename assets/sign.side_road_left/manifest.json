@@ -1,0 +1,55 @@
+{
+ "type": "sign.side_road_left",
+ "cls": "sign",
+ "desc": "side road left sign (MUTCD layout redrawn) on a galvanised post",
+ "source_hash": "84cfbc2309208073de90da5ddb230305a8264ad9",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [],
+ "built": "2026-11-07 14:32:46",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "756927569520547"
+ ],
+ "ledger_row": "d7m_mf_0515",
+ "params_used": {
+  "dir": "nb",
+  "mly_feature": [
+   "259527043493898"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

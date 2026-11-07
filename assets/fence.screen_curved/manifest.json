@@ -1,0 +1,54 @@
+{
+ "type": "fence.screen_curved",
+ "cls": "fence",
+ "desc": "curved chain-link screen on a bridge",
+ "source_hash": "3fbde25ab09581f7972e4fd761a045eb6fffbd5a",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 208,
+ "tris": 104,
+ "frames": [],
+ "built": "2026-11-07 14:32:10",
+ "licence": "n/a (procedural, own work)",
+ "mly": [
+  "284653800910911",
+  "641806107920547",
+  "828077295353244"
+ ],
+ "ledger_row": "d7m_eye_0053",
+ "params_used": {
+  "height_m": 3.0,
+  "frontage_m": 50.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "sign.falling_rocks",
+ "cls": "sign",
+ "desc": "falling rocks sign (MUTCD layout redrawn) on a galvanised post",
+ "source_hash": "8cd9c35ff3515b4dbf24a0966db189bb4508155a",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [],
+ "built": "2026-11-07 14:32:36",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "829811575357013"
+ ],
+ "ledger_row": "d7m_mf_0458",
+ "params_used": {
+  "dir": "nb",
+  "mly_feature": [
+   "2117980898396917"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

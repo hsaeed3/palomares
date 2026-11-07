@@ -1,0 +1,55 @@
+{
+ "type": "prop.trash_can",
+ "cls": "prop",
+ "desc": "Poly Haven metal_trash_can (CC0), decimated",
+ "source_hash": "72a4da53a4a1ae7389389d01232b38a783ea60ea",
+ "sources": [
+  "Poly Haven metal_trash_can",
+  "licence: Poly Haven CC0 1.0"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 2452,
+ "tris": 3370,
+ "frames": [],
+ "built": "2026-11-07 14:32:26",
+ "licence": "Poly Haven CC0 1.0",
+ "mly": [
+  "1624385567971079",
+  "125680400586999",
+  "623781146215468"
+ ],
+ "ledger_row": "d7m_mf_0027",
+ "params_used": {
+  "mly_feature": [
+   "585086720367565"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

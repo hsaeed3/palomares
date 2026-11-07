@@ -1,0 +1,58 @@
+{
+ "type": "building.storefront",
+ "cls": "building",
+ "desc": "storefront box: CC0 facade (brick / stucco / siding by params.facade, colour), shop-window bays, sign_text board (DEVOUT etc.)",
+ "source_hash": "ae8f207f6d98d39c83a2a73ff8f8e8a2c66cdaa4",
+ "sources": [
+  "ambientCG Bricks066 / PaintedPlaster017 / WoodSiding008/011",
+  "licence: ambientCG CC0 1.0 (textures); own text"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 168,
+ "tris": 84,
+ "frames": [],
+ "built": "2026-11-07 14:34:16",
+ "licence": "ambientCG CC0 1.0 (textures); own text",
+ "mly": [
+  "233555958567005",
+  "292913682301189",
+  "350941129786691"
+ ],
+ "ledger_row": "d7m_eye_0090",
+ "params_used": {
+  "name": "Fire Station 2 (old)",
+  "storeys": 2,
+  "height_m": 9.8,
+  "facade": "brick_firehouse",
+  "sign_text": "FIRE STATION 2",
+  "frontage_m": 25.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "prop.rail_car_generic",
+ "cls": "prop",
+ "desc": "generic heavyweight coach / boxcar (params.type), plain livery, no lettering",
+ "source_hash": "26a44d5a5b37e754865a50e8a8cfa4c5ea47ad7f",
+ "sources": [
+  "ambientCG PaintedMetal004",
+  "ambientCG Rust004",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 420,
+ "tris": 210,
+ "frames": [],
+ "built": "2026-11-07 14:32:20",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "1470796603262901",
+  "823559038260299",
+  "1454639028206231"
+ ],
+ "ledger_row": "d7m_eye_0110",
+ "params_used": {
+  "type": "heavyweight_coach",
+  "colour": "green",
+  "livery": "plain",
+  "count": 1,
+  "frontage_m": 40.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

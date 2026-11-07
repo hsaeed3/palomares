@@ -1,0 +1,150 @@
+{
+ "type": "driveway.parking_lot",
+ "cls": "driveway",
+ "desc": "parking lot decal from the OSM polygon (G builds the drivable surface)",
+ "source_hash": "277e88e7a975e2fddfe1f6eec4bf0abacce2ede5",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 63,
+ "tris": 21,
+ "frames": [],
+ "built": "2026-11-07 14:32:06",
+ "licence": "n/a (procedural, own work)",
+ "mly": [],
+ "ledger_row": "d7m_osm_0001",
+ "params_used": {
+  "osm_way": 93173248,
+  "name": null,
+  "polygon": [
+   [
+    -414.64,
+    -7890.08
+   ],
+   [
+    -427.43,
+    -7936.94
+   ],
+   [
+    -413.53,
+    -7940.85
+   ],
+   [
+    -415.86,
+    -7949.84
+   ],
+   [
+    -393.73,
+    -7955.98
+   ],
+   [
+    -391.76,
+    -7948.7
+   ],
+   [
+    -385.8,
+    -7950.39
+   ],
+   [
+    -386.37,
+    -7952.88
+   ],
+   [
+    -389.32,
+    -7954.1
+   ],
+   [
+    -397.88,
+    -7986.45
+   ],
+   [
+    -368.72,
+    -7993.9
+   ],
+   [
+    -363.51,
+    -7974.81
+   ],
+   [
+    -357.46,
+    -7962.11
+   ],
+   [
+    -358.47,
+    -7959.47
+   ],
+   [
+    -361.3,
+    -7960.44
+   ],
+   [
+    -362.42,
+    -7956.98
+   ],
+   [
+    -351.96,
+    -7914.6
+   ],
+   [
+    -369.08,
+    -7909.59
+   ],
+   [
+    -379.1,
+    -7946.01
+   ],
+   [
+    -405.0,
+    -7938.75
+   ],
+   [
+    -395.66,
+    -7904.92
+   ],
+   [
+    -400.65,
+    -7903.67
+   ],
+   [
+    -398.49,
+    -7895.04
+   ],
+   [
+    -414.64,
+    -7890.08
+   ]
+  ],
+  "surface": null,
+  "frontage_m": 75.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

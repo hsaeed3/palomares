@@ -1,0 +1,49 @@
+{
+ "type": "prop.bench",
+ "cls": "prop",
+ "desc": "Poly Haven painted_wooden_bench (CC0)",
+ "source_hash": "e71982fd674ec43e6d1d8ed636c4126ff196dafd",
+ "sources": [
+  "Poly Haven painted_wooden_bench",
+  "licence: Poly Haven CC0 1.0"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 677,
+ "tris": 630,
+ "frames": [],
+ "built": "2026-11-07 14:32:17",
+ "licence": "Poly Haven CC0 1.0",
+ "mly": [],
+ "ledger_row": "d7m_osm_0036",
+ "params_used": {
+  "osm_node": 11285638615
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

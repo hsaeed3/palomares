@@ -1,0 +1,42 @@
+{
+ "collide": true,
+ "prims": [
+  {
+   "shape": "prism",
+   "footprint": [
+    [
+     2.25,
+     -4.21
+    ],
+    [
+     4.12,
+     2.44
+    ],
+    [
+     -2.25,
+     4.21
+    ],
+    [
+     -4.12,
+     -2.43
+    ]
+   ],
+   "z0": -0.5,
+   "z1": 13.24,
+   "note": "building wall prism (1WALL)"
+  },
+  {
+   "prim": [
+    "box",
+    -1.1368683772161603e-13,
+    -0.002500000000509317,
+    8.240000000000009,
+    8.420000000000073,
+    -0.5,
+    13.24,
+    0.0
+   ]
+  }
+ ],
+ "note": "buildings / walls / bridges collide (21d slab convention); small props have none"
+}

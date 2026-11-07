@@ -1,0 +1,57 @@
+{
+ "type": "sign.stop_ahead",
+ "cls": "sign",
+ "desc": "stop ahead sign (MUTCD layout redrawn) on a galvanised post",
+ "source_hash": "7647305433a791290b9d8c2aba9bfa10f563f776",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [],
+ "built": "2026-11-07 14:32:51",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "245974991574265",
+  "952172345860451",
+  "318995033064468"
+ ],
+ "ledger_row": "d7m_mf_0518",
+ "params_used": {
+  "dir": "sb",
+  "mly_feature": [
+   "1336038113664692"
+  ]
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

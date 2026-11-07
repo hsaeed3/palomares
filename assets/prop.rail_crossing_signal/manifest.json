@@ -1,0 +1,76 @@
+{
+ "type": "prop.rail_crossing_signal",
+ "cls": "prop",
+ "desc": "crossbuck + 2 red flashers (xing_a/xing_b alternate via CSP) + bell, gate arm raised (params.gates)",
+ "source_hash": "943698b624ea18ab8108433e8127f943d8cff2e1",
+ "sources": [
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  },
+  {
+   "name": "xing_a",
+   "mesh": "lod0_xing_a.npz",
+   "texture": "_textures/xing_a.dds",
+   "material": "xing_a",
+   "alpha_tested": false
+  },
+  {
+   "name": "xing_b",
+   "mesh": "lod0_xing_b.npz",
+   "texture": "_textures/xing_b.dds",
+   "material": "xing_b",
+   "alpha_tested": false
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz",
+    "lod0_xing_a.npz",
+    "lod0_xing_b.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz",
+    "lod1_xing_a.npz",
+    "lod1_xing_b.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 372,
+ "tris": 168,
+ "frames": [],
+ "built": "2026-11-07 14:32:23",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "1624385567971079",
+  "125680400586999",
+  "623781146215468"
+ ],
+ "ledger_row": "d7m_eye_0118",
+ "params_used": {
+  "gates": true,
+  "crossbuck": true,
+  "lights": 2,
+  "railway": "Niles Canyon Railway"
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested",
+  "xing_a": "emissive, CSP-animated (assets_dev7.csp_snippet)",
+  "xing_b": "emissive, CSP-animated (assets_dev7.csp_snippet)"
+ }
+}

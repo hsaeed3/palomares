@@ -1,0 +1,54 @@
+{
+ "type": "marking.angle_parking",
+ "cls": "marking",
+ "desc": "angled stall lines (params.angle_deg)",
+ "source_hash": "dcfdceb2fecd46befbabd378718a1361a0a3512c",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 16,
+ "tris": 8,
+ "frames": [],
+ "built": "2026-11-07 14:32:12",
+ "licence": "n/a (procedural, own work)",
+ "mly": [
+  "218672919727740",
+  "291562296037099",
+  "2967670926855587"
+ ],
+ "ledger_row": "d7m_eye_0102",
+ "params_used": {
+  "angle_deg": 45,
+  "frontage_m": 60.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

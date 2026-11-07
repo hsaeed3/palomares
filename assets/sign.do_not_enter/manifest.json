@@ -1,0 +1,48 @@
+{
+ "type": "sign.do_not_enter",
+ "cls": "sign",
+ "desc": "do not enter sign (MUTCD layout redrawn) on a galvanised post",
+ "source_hash": "f058a14527ea781fcec6de2db31bf2a2e56d059a",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 28,
+ "tris": 14,
+ "frames": [],
+ "built": "2026-11-07 14:32:35",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [],
+ "ledger_row": null,
+ "params_used": {},
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

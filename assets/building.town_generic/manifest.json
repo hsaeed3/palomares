@@ -1,0 +1,81 @@
+{
+ "type": "building.town_generic",
+ "cls": "building",
+ "desc": "OSM footprint extruded to the LiDAR p90 height (params.footprint, height_m), CC0 walls, window bays",
+ "source_hash": "95e3f5ef46ffb552bc024b53f52475500562df07",
+ "sources": [
+  "ambientCG PaintedPlaster017 / WoodSiding008 / Bricks066",
+  "OSM footprint (ODbL)",
+  "USGS LiDAR height",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 134,
+ "tris": 66,
+ "frames": [],
+ "built": "2026-11-07 14:34:27",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [],
+ "ledger_row": "d7m_bld_0169",
+ "params_used": {
+  "osm_way": 871444538,
+  "osm_building": "yes",
+  "name": null,
+  "levels": null,
+  "height_m": 13.24,
+  "ground_z": 19.98,
+  "area_m2": 45.7,
+  "footprint": [
+   [
+    -1208.67,
+    -7600.26
+   ],
+   [
+    -1206.8,
+    -7593.62
+   ],
+   [
+    -1200.43,
+    -7595.39
+   ],
+   [
+    -1202.3,
+    -7602.04
+   ],
+   [
+    -1208.67,
+    -7600.26
+   ]
+  ],
+  "facade": "unverified",
+  "by_eye_row": false
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

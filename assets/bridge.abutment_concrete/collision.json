@@ -1,0 +1,18 @@
+{
+ "collide": true,
+ "prims": [
+  {
+   "prim": [
+    "box",
+    3.0,
+    1.5,
+    6.0,
+    3.0,
+    -1.0,
+    6.0,
+    0.0
+   ]
+  }
+ ],
+ "note": "buildings / walls / bridges collide (21d slab convention); small props have none"
+}

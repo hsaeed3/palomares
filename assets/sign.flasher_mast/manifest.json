@@ -1,0 +1,78 @@
+{
+ "type": "sign.flasher_mast",
+ "cls": "sign",
+ "desc": "galvanised pole + cantilever arm over the lane, warning panel (params.panel) + advisory plaque, 2 amber beacons blinking via CSP (beacon_a/beacon_b)",
+ "source_hash": "05069987286b672894f9035dd426609644730a70",
+ "sources": [
+  "MUTCD sign layout (US federal, public domain), redrawn",
+  "ambientCG Metal032",
+  "licence: ambientCG CC0 1.0 (textures) + public-domain MUTCD design"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  },
+  {
+   "name": "beacon_a",
+   "mesh": "lod0_beacon_a.npz",
+   "texture": "_textures/beacon_a.dds",
+   "material": "beacon_a",
+   "alpha_tested": false
+  },
+  {
+   "name": "beacon_b",
+   "mesh": "lod0_beacon_b.npz",
+   "texture": "_textures/beacon_b.dds",
+   "material": "beacon_b",
+   "alpha_tested": false
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz",
+    "lod0_beacon_a.npz",
+    "lod0_beacon_b.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz",
+    "lod1_beacon_a.npz",
+    "lod1_beacon_b.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 320,
+ "tris": 146,
+ "frames": [],
+ "built": "2026-11-07 14:31:02",
+ "licence": "ambientCG CC0 1.0 (textures) + public-domain MUTCD design",
+ "mly": [
+  "2514402612051254",
+  "807296924210300",
+  "7179339858746157"
+ ],
+ "ledger_row": "d7m_eye_0005",
+ "params_used": {
+  "dir": "nb",
+  "panel": "sign.reverse_turn",
+  "advisory": 25,
+  "beacons": 2,
+  "arm_m": 3.5
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested",
+  "beacon_a": "emissive, CSP-animated (assets_dev7.csp_snippet)",
+  "beacon_b": "emissive, CSP-animated (assets_dev7.csp_snippet)"
+ }
+}

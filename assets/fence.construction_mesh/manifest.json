@@ -1,0 +1,54 @@
+{
+ "type": "fence.construction_mesh",
+ "cls": "fence",
+ "desc": "orange construction mesh on T-posts",
+ "source_hash": "3a1844ba434ba9f94c80252f18d89c3ae504f6f0",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 180,
+ "tris": 90,
+ "frames": [],
+ "built": "2026-11-07 14:32:08",
+ "licence": "n/a (procedural, own work)",
+ "mly": [
+  "195764839883271",
+  "297799385985554",
+  "5918523658253331"
+ ],
+ "ledger_row": "d7m_eye_0043",
+ "params_used": {
+  "temporary": true,
+  "frontage_m": 40.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

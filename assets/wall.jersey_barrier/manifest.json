@@ -1,0 +1,53 @@
+{
+ "type": "wall.jersey_barrier",
+ "cls": "wall",
+ "desc": "K-rail F-shape profile, 1.5 m segments (Poly Haven model too heavy, see docs)",
+ "source_hash": "69f368104cc9e84a64b4cbb3e4f00caebdebd11d",
+ "sources": [
+  "ambientCG Concrete018",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 252,
+ "tris": 126,
+ "frames": [],
+ "built": "2026-11-07 14:33:03",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "671229761060639",
+  "823995009361318"
+ ],
+ "ledger_row": "d7m_eye_0016",
+ "params_used": {
+  "low": true,
+  "frontage_m": 60.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

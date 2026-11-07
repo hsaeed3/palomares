@@ -1,0 +1,54 @@
+{
+ "type": "prop.water_barrier",
+ "cls": "prop",
+ "desc": "orange water-filled barrier (params.count)",
+ "source_hash": "b66db1dd00a4335ac85a5348e7f707ae46ced22e",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 120,
+ "tris": 60,
+ "frames": [],
+ "built": "2026-11-07 14:32:27",
+ "licence": "n/a (procedural, own work)",
+ "mly": [
+  "1229674597705531",
+  "1465177660959104",
+  "981176139859042"
+ ],
+ "ledger_row": "d7m_eye_0026",
+ "params_used": {
+  "count": 3,
+  "color": "orange"
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

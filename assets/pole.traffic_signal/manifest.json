@@ -1,0 +1,78 @@
+{
+ "type": "pole.traffic_signal",
+ "cls": "pole",
+ "desc": "signal pole + mast arm + 3-section heads (sig_r/sig_y/sig_g emissive parts)",
+ "source_hash": "43b631027b9e5b7e6ca6cfc6d43250d2886d4f9f",
+ "sources": [
+  "ambientCG Metal032",
+  "ambientCG PaintedMetal004",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  },
+  {
+   "name": "sig_r",
+   "mesh": "lod0_sig_r.npz",
+   "texture": "_textures/sig_r.dds",
+   "material": "sig_r",
+   "alpha_tested": false
+  },
+  {
+   "name": "sig_y",
+   "mesh": "lod0_sig_y.npz",
+   "texture": "_textures/sig_y.dds",
+   "material": "sig_y",
+   "alpha_tested": false
+  },
+  {
+   "name": "sig_g",
+   "mesh": "lod0_sig_g.npz",
+   "texture": "_textures/sig_g.dds",
+   "material": "sig_g",
+   "alpha_tested": false
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz",
+    "lod0_sig_r.npz",
+    "lod0_sig_y.npz",
+    "lod0_sig_g.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz",
+    "lod1_sig_r.npz",
+    "lod1_sig_y.npz",
+    "lod1_sig_g.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 296,
+ "tris": 114,
+ "frames": [],
+ "built": "2026-11-07 14:32:16",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [],
+ "ledger_row": null,
+ "params_used": {},
+ "materials": {
+  "ledger7": "atlas, alpha-tested",
+  "sig_r": "emissive, CSP-animated (assets_dev7.csp_snippet)",
+  "sig_y": "emissive, CSP-animated (assets_dev7.csp_snippet)",
+  "sig_g": "emissive, CSP-animated (assets_dev7.csp_snippet)"
+ }
+}

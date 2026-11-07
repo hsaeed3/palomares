@@ -64,7 +64,7 @@ def preview(d, man):
     im = Image.open(p); im.thumbnail((800, 800)); im.convert("RGB").quantize(128).save(d / "preview.png", optimize=True); p.unlink(); p.with_suffix(".html").unlink(missing_ok=True)
 
 
-def write_asset(aid, cls, src_hash, sources, parts, collision, frames, desc, lods_extra=None):
+def write_asset(aid, cls, src_hash, sources, parts, collision, frames, desc, lods_extra=None, extra=None):
     d = LIB / aid; d.mkdir(parents=True, exist_ok=True)
     mparts, nv, nt = [], 0, 0
     for k, (name, arrays, tex, alpha) in enumerate(parts):
@@ -83,7 +83,7 @@ def write_asset(aid, cls, src_hash, sources, parts, collision, frames, desc, lod
         lods.append(dict(level=lv, parts=fs, lod_out=lod_out))
     (d / "collision.json").write_text(json.dumps(collision, indent=1))
     man = dict(type=aid, cls=cls, desc=desc, source_hash=src_hash, sources=sources, parts=mparts, lods=lods,
-               collision="collision.json", verts=nv, tris=nt, frames=list(frames or []), built=time.strftime("%Y-%m-%d %H:%M:%S"))
+               collision="collision.json", verts=nv, tris=nt, frames=list(frames or []), built=time.strftime("%Y-%m-%d %H:%M:%S"), **(extra or {}))
     (d / "manifest.json").write_text(json.dumps(man, indent=1))
     try:
         preview(d, man)
@@ -102,7 +102,7 @@ def ledger_jobs():
     import assets as AS, yaml
     cat = {a["id"]: a for a in yaml.safe_load(open(ROOT / "config/asset_catalog.yaml"))["assets"]}
     src = (ROOT / "scripts/p5/assets.py").read_bytes() + (ROOT / "scripts/p2/roadside_tex.py").read_bytes()
-    for aid, e in AS.CATALOG.items():     # signs paint their faces into the shared atlas lazily: complete it first
+    for aid, e in [kv for kv in AS.CATALOG.items() if not kv[1].get("dev7")]:     # signs paint their faces into the shared atlas lazily: complete it first
         try:
             AS.generate(aid, 10.0 if e["linear"] else None, {"seed": 7})
         except Exception:
@@ -110,6 +110,8 @@ def ledger_jobs():
     _LEDGER_TEX.append(put_texture("ledger.png", AS.atlas().png()))
     jobs = {}
     for aid, e in AS.CATALOG.items():
+        if e.get("dev7"):
+            continue
         ce = cat.get(aid, {})
         jobs[aid] = (sha(src, _LEDGER_TEX[0][1], json.dumps(ce, sort_keys=True, default=str), repr(e["dims"]), repr(e["proxy"])),
                      lambda aid=aid, e=e, ce=ce: build_ledger(AS, aid, e, ce))
@@ -130,6 +132,61 @@ def build_ledger(AS, aid, e, ce):
     return dict(cls=e["cls"], parts=[("ledger", (P, N, UV, T), tex, True)], collision=dict(collide=bool(e["collide"]), prims=col, note="from the generator; 21d replaces per-prop boxes by its slab convention"),
                 frames=ce.get("frames", []), desc=e.get("desc", ""), sources=["scripts/p5/assets.py", "config/asset_catalog.yaml"], tex_hash=th,
                 lods=[(1, [("ledger", (P, N, UV, T))], 450.0)])   # low-poly props: LOD1 = LOD0, cut at 21e LOD_OUT
+
+
+# ------------------------------------------------------------------ dev7 types (scripts/p5/assets_dev7.py, atlas "ledger7")
+def dev7_rows():
+    f = ROOT / "data/scene/ledger_dev7.jsonl"
+    return [json.loads(l) for l in open(f)] if f.exists() else []
+
+
+def dev7_jobs():
+    import assets_dev7 as D7, yaml
+    rows = dev7_rows()
+    D7.prefill_atlas(rows)                      # every sign face / shop name the ledger needs
+    rep = {}
+    for r in rows:                              # representative row per type: the one with a Mapillary image and most params
+        if r["asset"] in D7.REG and (r["asset"] not in rep or (len(r.get("mly") or []) > 0 and len(r["params"]) > len(rep[r["asset"]]["params"]))):
+            rep[r["asset"]] = r
+    built = {}
+    for aid in D7.REG:
+        r = rep.get(aid); prm = D7.ledger_params(r) if r else {}
+        prm.setdefault("seed", 7)
+        e = D7.AS.CATALOG[aid]; L = 10.0 if e["linear"] else None
+        built[aid] = (D7.generate_parts(aid, L, prm), D7.generate_parts(aid, L, {**prm, "lod": 1}), r)
+    tex = {D7.MAT: put_texture("ledger7.png", D7.atlas().png())}
+    for mt in D7.EMISSIVE:
+        b = io.BytesIO(); D7.emissive_tex(mt).save(b, "PNG"); tex[mt] = put_texture(mt + ".png", b.getvalue())
+    src = b"".join((ROOT / f).read_bytes() for f in ("scripts/p5/assets_dev7.py", "scripts/p5/tex_dev7.py", "scripts/p5/assets.py"))
+    th = sha(*[tex[k][1] for k in sorted(tex)])
+    jobs = {}
+    for aid, (p0, p1, r) in built.items():
+        jobs[aid] = (sha(src, th, aid, json.dumps(r, sort_keys=True, default=str)), lambda aid=aid, p0=p0, p1=p1, r=r: build_dev7(D7, aid, p0, p1, r, tex))
+    return jobs
+
+
+def build_dev7(D7, aid, p0, p1, r, tex):
+    e = D7.AS.CATALOG[aid]
+    parts, lod1 = [], []
+    for mat, mb in p0.items():
+        P, T, UV, N = mb.arrays()
+        if len(P):
+            parts.append((mat, (P, N, UV, T), tex[mat][0], mat == D7.MAT))
+    for mat, mb in p1.items():
+        P, T, UV, N = mb.arrays()
+        if len(P):
+            lod1.append((mat, (P, N, UV, T)))
+    if not parts:
+        return None
+    P = np.concatenate([q[1][0] for q in parts])
+    m = p0[D7.MAT]
+    col = [c if isinstance(c, dict) else {"prim": [v if isinstance(v, (int, float, str)) else float(v) for v in c]} for c in m.col] or bbox_proxy(P)
+    return dict(cls=e["cls"], parts=parts, collision=dict(collide=bool(e["collide"]), prims=col if e["collide"] else [],
+                note="buildings / walls / bridges collide (21d slab convention); small props have none"),
+                frames=[], desc=e.get("desc", ""), sources=e.get("sources", []) + [f"licence: {e.get('licence')}"],
+                lods=[(1, lod1, 600.0 if e["cls"] in ("building", "bridge") else 250.0)],
+                extra=dict(licence=e.get("licence"), mly=(r or {}).get("mly", [])[:3], ledger_row=(r or {}).get("id"), params_used=D7.ledger_params(r) if r else {},
+                           materials={k: ("emissive, CSP-animated (assets_dev7.csp_snippet)" if k != D7.MAT else "atlas, alpha-tested") for k in p0}))
 
 
 # ------------------------------------------------------------------ tree species
@@ -164,8 +221,10 @@ def main():
     ap.add_argument("only", nargs="*")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--dev7", action="store_true", help="only the dev7 types (scripts/p5/assets_dev7.py)")
     a = ap.parse_args()
-    jobs = {**tree_jobs(), **ledger_jobs()}
+    ap_dev7 = a.dev7 or any(o.startswith(tuple(__import__("assets_dev7").REG)) for o in a.only)
+    jobs = dev7_jobs() if a.dev7 else {**tree_jobs(), **ledger_jobs(), **(dev7_jobs() if ap_dev7 else {})}
     if a.only:
         jobs = {k: v for k, v in jobs.items() if k in a.only or any(k.startswith(o.rstrip("*")) for o in a.only if o.endswith("*"))}
     t0 = time.time(); nb = ns = 0
@@ -176,7 +235,7 @@ def main():
         r = fn()
         if r is None:
             print(f"  {aid}: generator returned no geometry (edit-type entry), skipped"); continue
-        man = write_asset(aid, r["cls"], h, r["sources"], r["parts"], r["collision"], r["frames"], r["desc"], r["lods"])
+        man = write_asset(aid, r["cls"], h, r["sources"], r["parts"], r["collision"], r["frames"], r["desc"], r["lods"], r.get("extra"))
         nb += 1
         print(f"  built {aid:32s} {man['verts']:6d} verts {man['tris']:6d} tris")
     idx = {p.parent.name: {k: json.loads(p.read_text())[k] for k in ("cls", "verts", "tris", "source_hash")} for p in sorted(LIB.glob("*/manifest.json"))}

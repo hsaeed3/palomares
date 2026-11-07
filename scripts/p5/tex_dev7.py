@@ -18,7 +18,7 @@ ROOT = HERE.parents[1]
 CC0 = ROOT / "data/raw/dev7/cc0"
 PH = ROOT / "data/raw/dev7/polyhaven"
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-FONT_C = "/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf"
+FONT_C = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 # ambientCG ids (CC0) -> what they are used for
 AMBIENTCG = {
@@ -163,7 +163,7 @@ def bay_doors(wall, frame=(150, 40, 32), size=(192, 192), arch=True):
     return im
 
 
-def text_board(text, bg=(236, 230, 214), fg=(34, 34, 34), w=512, h=96, border=True):
+def text_board(text, bg=(236, 230, 214), fg=(34, 34, 34), w=384, h=72, border=True):
     """plain business-name board (generic font, no logo)"""
     im = Image.new("RGBA", (w, h), bg + (255,)); d = ImageDraw.Draw(im)
     if border:

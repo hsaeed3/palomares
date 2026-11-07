@@ -1,0 +1,59 @@
+{
+ "type": "bridge.rail_truss_through",
+ "cls": "bridge",
+ "desc": "steel through-truss railway span (params.span_m, clearance_m) across the road (span along y) on concrete piers",
+ "source_hash": "784fa995521e29690470f15d38cf497678bde326",
+ "sources": [
+  "ambientCG PaintedMetal004",
+  "ambientCG Concrete018",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 600.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 692,
+ "tris": 346,
+ "frames": [],
+ "built": "2026-11-07 14:31:59",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "256078143846347",
+  "618976260337888"
+ ],
+ "ledger_row": "d7m_eye_0008",
+ "params_used": {
+  "span_m": 46,
+  "over": "road",
+  "railway": "Niles Canyon Railway",
+  "material": "steel",
+  "piers": "concrete",
+  "clearance_m": 4.6,
+  "frontage_m": 24.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

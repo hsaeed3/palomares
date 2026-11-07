@@ -1,0 +1,51 @@
+{
+ "type": "prop.crash_cushion",
+ "cls": "prop",
+ "desc": "yellow crash cushion, striped nose",
+ "source_hash": "d7dcdd085ac3fed0c25adcd6e173c1227cf26af3",
+ "sources": [
+  "procedural",
+  "licence: n/a (procedural, own work)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 104,
+ "tris": 52,
+ "frames": [],
+ "built": "2026-11-07 14:32:18",
+ "licence": "n/a (procedural, own work)",
+ "mly": [
+  "1317721509140372",
+  "6316835351767345",
+  "1050655132620108"
+ ],
+ "ledger_row": "d7m_eye_0033",
+ "params_used": {},
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}

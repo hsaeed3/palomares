@@ -1,0 +1,56 @@
+{
+ "type": "wall.masonry_parapet",
+ "cls": "wall",
+ "desc": "low parapet (params.material stone|concrete)",
+ "source_hash": "69e50ee265fc3f7cf2fe11cd9b46347c7a3c790f",
+ "sources": [
+  "ambientCG PavingStones070 / Concrete018",
+  "licence: ambientCG CC0 1.0 (textures)"
+ ],
+ "parts": [
+  {
+   "name": "ledger7",
+   "mesh": "lod0_ledger7.npz",
+   "texture": "_textures/ledger7.dds",
+   "material": "ledger7",
+   "alpha_tested": true
+  }
+ ],
+ "lods": [
+  {
+   "level": 0,
+   "parts": [
+    "lod0_ledger7.npz"
+   ],
+   "lod_out": null
+  },
+  {
+   "level": 1,
+   "parts": [
+    "lod1_ledger7.npz"
+   ],
+   "lod_out": 250.0
+  }
+ ],
+ "collision": "collision.json",
+ "verts": 92,
+ "tris": 46,
+ "frames": [],
+ "built": "2026-11-07 14:33:04",
+ "licence": "ambientCG CC0 1.0 (textures)",
+ "mly": [
+  "1050655132620108",
+  "1317721509140372",
+  "263356989778643"
+ ],
+ "ledger_row": "d7m_eye_0032",
+ "params_used": {
+  "height_m": 1.0,
+  "material": "dark concrete",
+  "fence_on_top": "chainlink",
+  "frontage_m": 100.0
+ },
+ "materials": {
+  "ledger7": "atlas, alpha-tested"
+ }
+}
