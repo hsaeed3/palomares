@@ -1,92 +1,85 @@
 {
  "frame": 98,
- "s": 4889.2,
+ "s": 4888.5,
  "pose_src": "poses.json",
  "seg": "seg",
  "classes": {
   "sky": {
-   "iou": 0.0292,
-   "precision": 0.035,
-   "recall": 0.1504,
-   "px_render": 37820,
+   "iou": 0.0617,
+   "precision": 0.0712,
+   "recall": 0.3156,
+   "px_render": 38986,
    "px_seg": 8795
   },
   "road": {
-   "iou": 0.7134,
-   "precision": 0.8509,
-   "recall": 0.8153,
-   "px_render": 44013,
-   "px_seg": 45933
+   "iou": 0.6755,
+   "precision": 0.7509,
+   "recall": 0.8707,
+   "px_render": 43800,
+   "px_seg": 37775
   },
   "marking_yellow": {
-   "iou": 0.166,
-   "precision": 0.179,
-   "recall": 0.6958,
-   "px_render": 3118,
+   "iou": 0.2052,
+   "precision": 0.2118,
+   "recall": 0.8678,
+   "px_render": 3286,
    "px_seg": 802
   },
   "marking_white": {
-   "iou": 0.0105,
-   "precision": 0.0497,
-   "recall": 0.0132,
-   "px_render": 946,
+   "iou": 0.0157,
+   "precision": 0.0684,
+   "recall": 0.0199,
+   "px_render": 1038,
    "px_seg": 3569
   },
   "shoulder_dirt": {
-   "iou": 0.1363,
-   "precision": 0.617,
-   "recall": 0.1489,
-   "px_render": 2700,
-   "px_seg": 11188
+   "iou": 0.1228,
+   "precision": 0.82,
+   "recall": 0.1262,
+   "px_render": 2789,
+   "px_seg": 18127
   },
   "terrain_grass": {
-   "iou": 0.0013,
-   "precision": 0.0077,
-   "recall": 0.0016,
-   "px_render": 646,
-   "px_seg": 3166
+   "iou": 0.0014,
+   "precision": 0.0052,
+   "recall": 0.0018,
+   "px_render": 1541,
+   "px_seg": 4387
   },
   "terrain_bare": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 27380,
+   "px_render": 26013,
    "px_seg": 0
   },
   "vegetation_tree": {
-   "iou": 0.3488,
-   "precision": 0.6683,
-   "recall": 0.4218,
-   "px_render": 56570,
-   "px_seg": 89625
+   "iou": 0.3605,
+   "precision": 0.6989,
+   "recall": 0.4268,
+   "px_render": 55492,
+   "px_seg": 90869
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 7576,
+   "px_render": 8340,
    "px_seg": 0
   },
   "trunk": {
-   "iou": 0.0028,
-   "precision": 0.0055,
-   "recall": 0.0056,
-   "px_render": 1645,
-   "px_seg": 1595
-  },
-  "sign_face": {
    "iou": 0.0,
-   "precision": null,
+   "precision": 0.0,
    "recall": 0.0,
-   "px_render": 0,
-   "px_seg": 166
+   "px_render": 1480,
+   "px_seg": 106
   },
   "pole": {
    "iou": 0.0,
    "precision": null,
    "recall": 0.0,
    "px_render": 0,
-   "px_seg": 1967
+   "px_seg": 1764
   },
   "guardrail": {
    "iou": 0.0,
@@ -96,11 +89,11 @@
    "px_seg": 41
   },
   "fence": {
-   "iou": 0.1485,
-   "precision": 0.991,
-   "recall": 0.1487,
-   "px_render": 2880,
-   "px_seg": 19195
+   "iou": 0.1114,
+   "precision": 1.0,
+   "recall": 0.1114,
+   "px_render": 2139,
+   "px_seg": 19199
   },
   "building": {
    "iou": 0.0,
@@ -113,7 +106,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 1377,
+   "px_render": 1159,
    "px_seg": 0
   },
   "other_prop": {
@@ -126,95 +119,88 @@
  },
  "groups": {
   "sky": {
-   "iou": 0.0292,
-   "precision": 0.035,
-   "recall": 0.1504,
-   "px_render": 37820,
+   "iou": 0.0617,
+   "precision": 0.0712,
+   "recall": 0.3156,
+   "px_render": 38986,
    "px_seg": 8795
   },
   "road": {
-   "iou": 0.7134,
-   "precision": 0.8509,
-   "recall": 0.8153,
-   "px_render": 44013,
-   "px_seg": 45933
+   "iou": 0.6755,
+   "precision": 0.7509,
+   "recall": 0.8707,
+   "px_render": 43800,
+   "px_seg": 37775
   },
   "marking_yellow": {
-   "iou": 0.166,
-   "precision": 0.179,
-   "recall": 0.6958,
-   "px_render": 3118,
+   "iou": 0.2052,
+   "precision": 0.2118,
+   "recall": 0.8678,
+   "px_render": 3286,
    "px_seg": 802
   },
   "marking_white": {
-   "iou": 0.0105,
-   "precision": 0.0497,
-   "recall": 0.0132,
-   "px_render": 946,
+   "iou": 0.0157,
+   "precision": 0.0684,
+   "recall": 0.0199,
+   "px_render": 1038,
    "px_seg": 3569
   },
   "shoulder": {
-   "iou": 0.1363,
-   "precision": 0.617,
-   "recall": 0.1489,
-   "px_render": 2700,
-   "px_seg": 11188
+   "iou": 0.1228,
+   "precision": 0.82,
+   "recall": 0.1262,
+   "px_render": 2789,
+   "px_seg": 18127
   },
   "terrain": {
-   "iou": 0.0772,
-   "precision": 0.0797,
-   "recall": 0.7059,
-   "px_render": 28026,
-   "px_seg": 3166
+   "iou": 0.0969,
+   "precision": 0.1024,
+   "recall": 0.643,
+   "px_render": 27554,
+   "px_seg": 4387
   },
   "tree": {
-   "iou": 0.3488,
-   "precision": 0.6683,
-   "recall": 0.4218,
-   "px_render": 56570,
-   "px_seg": 89625
+   "iou": 0.3605,
+   "precision": 0.6989,
+   "recall": 0.4268,
+   "px_render": 55492,
+   "px_seg": 90869
   },
   "shrub": {
    "iou": 0.0,
    "precision": 0.0,
    "recall": null,
-   "px_render": 7576,
+   "px_render": 8340,
    "px_seg": 0
   },
   "trunk": {
-   "iou": 0.0028,
-   "precision": 0.0055,
-   "recall": 0.0056,
-   "px_render": 1645,
-   "px_seg": 1595
+   "iou": 0.0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "px_render": 1480,
+   "px_seg": 106
   },
   "vegetation": {
-   "iou": 0.3801,
-   "precision": 0.6572,
-   "recall": 0.474,
-   "px_render": 65791,
-   "px_seg": 91220
-  },
-  "sign": {
-   "iou": 0.0,
-   "precision": null,
-   "recall": 0.0,
-   "px_render": 0,
-   "px_seg": 166
+   "iou": 0.3945,
+   "precision": 0.677,
+   "recall": 0.486,
+   "px_render": 65312,
+   "px_seg": 90975
   },
   "pole": {
    "iou": 0.0,
    "precision": null,
    "recall": 0.0,
    "px_render": 0,
-   "px_seg": 1967
+   "px_seg": 1764
   },
   "barrier": {
-   "iou": 0.1482,
-   "precision": 0.991,
-   "recall": 0.1484,
-   "px_render": 2880,
-   "px_seg": 19236
+   "iou": 0.1112,
+   "precision": 1.0,
+   "recall": 0.1112,
+   "px_render": 2139,
+   "px_seg": 19240
   },
   "building": {
    "iou": 0.0,
@@ -227,7 +213,7 @@
    "iou": 0.0,
    "precision": 0.0,
    "recall": 0.0,
-   "px_render": 1377,
+   "px_render": 1159,
    "px_seg": 627
   }
  },
@@ -235,29 +221,29 @@
   {
    "id": "fence_s0027",
    "cls": "fence",
-   "px": 737,
-   "match": 0.997,
+   "px": 530,
+   "match": 1.0,
    "found": true,
    "occluded": false
   },
   {
    "id": "fence_s0028",
    "cls": "fence",
-   "px": 2143,
-   "match": 0.989,
+   "px": 1609,
+   "match": 1.0,
    "found": true,
    "occluded": false
   },
   {
    "id": "mailbox_s0007",
    "cls": "mailbox",
-   "px": 1377,
+   "px": 1159,
    "match": 0.0,
    "found": false,
    "occluded": false
   }
  ],
- "score": 0.3,
- "t_render_s": 0.528,
- "t_total_s": 0.594
+ "score": 0.3071,
+ "t_render_s": 0.983,
+ "t_total_s": 1.075
 }
