@@ -27,7 +27,9 @@ ROADN = "niles_canyon_road"
 road = NW.load_road(ROADN); N = len(road.s)
 RL.CACHE = ROOT / "data/scene/cache/racing_line_niles_canyon_road.pkl"; RLD = RL.compute(road); C = RL.cfg()
 S_A, S_B = 70.0, float(road.s[-1]) - 90.0            # clear of the Mission Blvd junction / the Sunol stop
-BASEF = ["palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomares_niles_assets.kn5"]
+# G (ae99896): dev7 layouts use the junction-cut Palomares copies, never the shipped palomares_terrain/road/lines_road.kn5
+BASEF = ["palomares_road_dev7.kn5", "palomares_terrain_dev7.kn5", "palomares_lines_road_dev7.kn5",
+         "palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomares_niles_assets.kn5"]
 LAYOUTS = {
     "canyon_road": dict(s_from=S_A, s_to=S_B, dir="nb", style="Road"),
     "canyon_track": dict(s_from=S_A, s_to=S_B, dir="nb", style="Track"),

@@ -3,22 +3,22 @@
  "skipped": {},
  "clear": {
   "pushed": 0,
-  "trimmed_tris": 249
+  "trimmed_tris": 210
  },
  "collision": {
   "shared": {
-   "linear": 70,
-   "building": 11,
-   "prop": 413,
+   "linear": 64,
+   "building": 14,
+   "prop": 416,
    "across": 0,
    "old_meshes": 494,
    "old_tris": 26016,
-   "building_clusters": 16,
+   "building_clusters": 18,
    "stations_cut": 2,
    "slab_meshes": 44,
-   "runs": 66,
+   "runs": 58,
    "forest_stations": 0,
-   "new_tris": 19416,
+   "new_tris": 19244,
    "new_meshes": 45
   },
   "dressing": {
@@ -41,7 +41,7 @@
  "meshes": 77,
  "vmax": 21740,
  "draw_calls": 32,
- "secs": 14.5,
+ "secs": 13.2,
  "kerbs": {
   "palomares_niles_kerbs_nb.kn5": 29,
   "palomares_niles_kerbs_sb.kn5": 19

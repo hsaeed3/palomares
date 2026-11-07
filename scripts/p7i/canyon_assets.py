@@ -144,7 +144,20 @@ def frame(r):
     return s, i, sg, t, n, x, y, z
 
 
+_RX = ROOT / "reports/dev7/rail_crossings_ncr.json"
+RAILX = json.load(open(_RX))["crossings"] if _RX.exists() else []
+
+
+def rail_crossing(s):
+    """G's OSM rail crossing nearest station s (prefers a bridge way), or None"""
+    c = [x for x in RAILX if abs(x["ncr_s"] - s) < 60]
+    return min(c, key=lambda x: (abs(x["ncr_s"] - s), "bridge" not in x["kind"])) if c else None
+
+
 def axes(r, t, n, sg):
+    if r["cls"] == "bridge" and r["asset"].startswith("bridge.rail") and (cx := rail_crossing(float(r["s"]))):
+        th = math.radians(cx["rail_yaw_enu_deg"]); ya = np.array([math.cos(th), math.sin(th)])   # span (local y) along the rail
+        return np.array([ya[1], -ya[0]]), ya
     if r["cls"] == "sign":
         sb = (r.get("params") or {}).get("dir", "nb") == "sb"
         face = (t if sb else -t) * 0.97 - n * sg * 0.2; face /= np.linalg.norm(face); xa = -face
@@ -167,6 +180,8 @@ def place_point(r):
         xa, ya = np.array([1.0, 0]), np.array([0, 1.0])
     else:
         xa, ya = axes(r, t, n, sg)
+        if r["asset"].startswith("bridge.rail") and (cx := rail_crossing(float(r["s"]))):
+            x, y = cx["x_local"], cx["y_local"]                 # centre on the OSM rail / road crossing
     for mat, mb in parts.items():
         P, T, UV, Nn = mb.arrays()
         if not len(P):

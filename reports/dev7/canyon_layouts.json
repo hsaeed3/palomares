@@ -1,6 +1,9 @@
 {
  "canyon_road": {
   "files": [
+   "palomares_road_dev7.kn5",
+   "palomares_terrain_dev7.kn5",
+   "palomares_lines_road_dev7.kn5",
    "palomares_niles_ncr.kn5",
    "palomares_niles_ncr_terrain.kn5",
    "palomares_niles_assets.kn5",
@@ -17,6 +20,9 @@
  },
  "canyon_track": {
   "files": [
+   "palomares_road_dev7.kn5",
+   "palomares_terrain_dev7.kn5",
+   "palomares_lines_road_dev7.kn5",
    "palomares_niles_ncr.kn5",
    "palomares_niles_ncr_terrain.kn5",
    "palomares_niles_assets.kn5",
@@ -34,6 +40,9 @@
  },
  "canyon_rev_road": {
   "files": [
+   "palomares_road_dev7.kn5",
+   "palomares_terrain_dev7.kn5",
+   "palomares_lines_road_dev7.kn5",
    "palomares_niles_ncr.kn5",
    "palomares_niles_ncr_terrain.kn5",
    "palomares_niles_assets.kn5",
@@ -50,6 +59,9 @@
  },
  "canyon_rev_track": {
   "files": [
+   "palomares_road_dev7.kn5",
+   "palomares_terrain_dev7.kn5",
+   "palomares_lines_road_dev7.kn5",
    "palomares_niles_ncr.kn5",
    "palomares_niles_ncr_terrain.kn5",
    "palomares_niles_assets.kn5",
