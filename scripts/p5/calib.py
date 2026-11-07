@@ -172,7 +172,7 @@ def commit(src):
     d = json.load(open(src)); cam = json.load(open(CAMF)); pj = SC.SCENE / "poses.json"
     bak = SC.SCENE / "poses_pre_camera.json"
     if not bak.exists(): shutil.copy(pj, bak)
-    old = {r["frame"]: r for r in json.load(open(bak))["poses"]}
+    old = {r["frame"]: r for r in json.load(open(pj))["poses"]}   # current poses: earlier batches are kept
     pins = json.load(open(SC.SCENE / "pose_pins.json"))
     out = {}
     for f, r in old.items():
