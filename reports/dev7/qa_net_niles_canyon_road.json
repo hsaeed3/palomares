@@ -2,7 +2,9 @@
  "road": "niles_canyon_road",
  "files": [
   "palomares_niles_ncr.kn5",
-  "palomares_niles_ncr_terrain.kn5"
+  "palomares_niles_ncr_terrain.kn5",
+  "palomares_niles_town.kn5",
+  "palomares_niles_town_terrain.kn5"
  ],
  "s": [
   213.0,

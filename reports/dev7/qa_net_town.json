@@ -1,0 +1,1190 @@
+{
+ "sycamore_street": {
+  "road": "sycamore_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   268.5
+  ],
+  "holes": 284,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 400,
+  "asphalt_kinks": 30,
+  "overlaps": 0,
+  "grade_max_pct_25m": 2.9815662972389134,
+  "grade_max_pct_5m": 3.99846431233577,
+  "grade_max_s": 231.0,
+  "camber_change_max_pct_per_m": 0.9764266524397769,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 12,
+  "open_edges_in_band_s": [
+   256,
+   257,
+   260,
+   263,
+   264,
+   265,
+   266,
+   267,
+   268,
+   269
+  ]
+ },
+ "f_street": {
+  "road": "f_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   15.0,
+   232.5
+  ],
+  "holes": 717,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 170,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 0.7467543519254605,
+  "grade_max_pct_5m": 1.5856657984794964,
+  "grade_max_s": 113.0,
+  "camber_change_max_pct_per_m": 0.3607900192195146,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 11,
+  "open_edges_in_band_s": [
+   18,
+   19,
+   20
+  ]
+ },
+ "nichols_avenue": {
+  "road": "nichols_avenue",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   114.0,
+   174.5
+  ],
+  "holes": 1212,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 18,
+  "asphalt_kinks": 9,
+  "overlaps": 0,
+  "grade_max_pct_25m": 2.651245812768721,
+  "grade_max_pct_5m": 3.823433176356872,
+  "grade_max_s": 139.0,
+  "camber_change_max_pct_per_m": 0.653858005944219,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 14,
+  "open_edges_in_band_s": [
+   117,
+   118,
+   119,
+   120,
+   121,
+   122,
+   123,
+   124
+  ]
+ },
+ "l_street": {
+  "road": "l_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   21.0,
+   65.5
+  ],
+  "holes": 942,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 22,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.7426401680161518,
+  "grade_max_pct_5m": 2.0962680458950445,
+  "grade_max_s": 54.5,
+  "camber_change_max_pct_per_m": 0.17400435920240653,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 13,
+  "open_edges_in_band_s": [
+   24,
+   25,
+   26,
+   27,
+   28
+  ]
+ },
+ "vallejo_way": {
+  "road": "vallejo_way",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   615.5
+  ],
+  "holes": 3627,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 110,
+  "asphalt_kinks": 20,
+  "overlaps": 0,
+  "grade_max_pct_25m": 10.596207233864874,
+  "grade_max_pct_5m": 3.97373938649217,
+  "grade_max_s": 584.0,
+  "camber_change_max_pct_per_m": 0.7091419809889921,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 54,
+  "open_edges_in_band_s": [
+   577,
+   578,
+   579,
+   580,
+   581,
+   582,
+   583,
+   584,
+   585,
+   586,
+   587,
+   588,
+   589,
+   590,
+   591,
+   592,
+   593,
+   594,
+   595,
+   596,
+   597,
+   598,
+   599,
+   600,
+   601,
+   602,
+   603,
+   604,
+   605,
+   606,
+   607,
+   608,
+   609,
+   610,
+   611,
+   612,
+   613,
+   614,
+   615,
+   616
+  ]
+ },
+ "nichols_court": {
+  "road": "nichols_court",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   37.5
+  ],
+  "holes": 4844,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 13,
+  "asphalt_kinks": 3,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.3134868838683644,
+  "grade_max_pct_5m": null,
+  "grade_max_s": 11.0,
+  "camber_change_max_pct_per_m": 0.16395527419286182,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 27,
+  "open_edges_in_band_s": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   11,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38
+  ]
+ },
+ "g_street": {
+  "road": "g_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   6.0,
+   234.5
+  ],
+  "holes": 927,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 120,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.1411271296619674,
+  "grade_max_pct_5m": 2.168109386166961,
+  "grade_max_s": 109.0,
+  "camber_change_max_pct_per_m": 0.3221830242687851,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 12,
+  "open_edges_in_band_s": [
+   11
+  ]
+ },
+ "sierra_terrace": {
+  "road": "sierra_terrace",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   43.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 12,
+  "asphalt_kinks": 22,
+  "overlaps": 0,
+  "grade_max_pct_25m": 6.717491931887665,
+  "grade_max_pct_5m": 6.988397619037201,
+  "grade_max_s": 21.5,
+  "camber_change_max_pct_per_m": 0.8041758735196858,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "sullivan_underpass": {
+  "road": "sullivan_underpass",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   179.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 247,
+  "asphalt_kinks": 241,
+  "overlaps": 0,
+  "grade_max_pct_25m": 5.172972043591528,
+  "grade_max_pct_5m": 8.69049999535747,
+  "grade_max_s": 27.0,
+  "camber_change_max_pct_per_m": 0.8776924974720046,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "essanay_avenue": {
+  "road": "essanay_avenue",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   97.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 58,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.000198524299023,
+  "grade_max_pct_5m": 1.4801068399098227,
+  "grade_max_s": 26.5,
+  "camber_change_max_pct_per_m": 0.25752562911369736,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "locomotive_common": {
+  "road": "locomotive_common",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   247.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 126,
+  "asphalt_kinks": 117,
+  "overlaps": 0,
+  "grade_max_pct_25m": 3.3629777327345067,
+  "grade_max_pct_5m": 6.8779639206361765,
+  "grade_max_s": 132.5,
+  "camber_change_max_pct_per_m": 0.8381018097034953,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "essanay_place": {
+  "road": "essanay_place",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   197.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 115,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.5516818426320356,
+  "grade_max_pct_5m": 6.852758620231825,
+  "grade_max_s": 156.0,
+  "camber_change_max_pct_per_m": 0.580738079815557,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "2nd_street": {
+  "road": "2nd_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   16.0,
+   948.5
+  ],
+  "holes": 998,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 170,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.5701524164168035,
+  "grade_max_pct_5m": 2.260422648780036,
+  "grade_max_s": 276.0,
+  "camber_change_max_pct_per_m": 0.4490640492146092,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 15,
+  "open_edges_in_band_s": [
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ]
+ },
+ "vallejo_street": {
+  "road": "vallejo_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   282.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 101,
+  "asphalt_kinks": 3,
+  "overlaps": 0,
+  "grade_max_pct_25m": 3.0797247269930494,
+  "grade_max_pct_5m": 4.7294715981649915,
+  "grade_max_s": 231.0,
+  "camber_change_max_pct_per_m": 0.6744503801975554,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "h_street": {
+  "road": "h_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   7.0,
+   238.5
+  ],
+  "holes": 953,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 0,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.025208449075521,
+  "grade_max_pct_5m": 1.3356060145444104,
+  "grade_max_s": 32.0,
+  "camber_change_max_pct_per_m": 0.2457479798918527,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 14,
+  "open_edges_in_band_s": [
+   12
+  ]
+ },
+ "niles_blvd": {
+  "road": "niles_blvd",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   1079.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 338,
+  "asphalt_kinks": 412,
+  "overlaps": 0,
+  "grade_max_pct_25m": 3.773797792247535,
+  "grade_max_pct_5m": 6.181185892889118,
+  "grade_max_s": 714.5,
+  "camber_change_max_pct_per_m": 0.572830471467789,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "e_street": {
+  "road": "e_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   114.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 13,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 0.5463141792830584,
+  "grade_max_pct_5m": 1.1970389058983955,
+  "grade_max_s": 27.0,
+  "camber_change_max_pct_per_m": 0.2664365376333855,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "limelight_terrace": {
+  "road": "limelight_terrace",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   90.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 110,
+  "asphalt_kinks": 9,
+  "overlaps": 0,
+  "grade_max_pct_25m": 7.207698814474739,
+  "grade_max_pct_5m": 7.449030953145908,
+  "grade_max_s": 48.0,
+  "camber_change_max_pct_per_m": 0.450476659231569,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "3rd_street": {
+  "road": "3rd_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   694.0,
+   960.5
+  ],
+  "holes": 1717,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 116,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.2565551957823828,
+  "grade_max_pct_5m": 1.3706920869815065,
+  "grade_max_s": 882.0,
+  "camber_change_max_pct_per_m": 0.31747034604494573,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 25,
+  "open_edges_in_band_s": [
+   694,
+   695,
+   696,
+   697,
+   698,
+   699,
+   700,
+   701,
+   702,
+   703,
+   704,
+   705,
+   706,
+   708,
+   709,
+   710,
+   711,
+   961
+  ]
+ },
+ "i_street": {
+  "road": "i_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   17.0,
+   249.5
+  ],
+  "holes": 851,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 1,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 0.6248089508385846,
+  "grade_max_pct_5m": 0.852619776099317,
+  "grade_max_s": 219.0,
+  "camber_change_max_pct_per_m": 0.16099400788185392,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 13,
+  "open_edges_in_band_s": [
+   21,
+   22
+  ]
+ },
+ "chase_court": {
+  "road": "chase_court",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   48.0,
+   84.5
+  ],
+  "holes": 2362,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 0,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 0.34454880317653647,
+  "grade_max_pct_5m": 0.405991137021644,
+  "grade_max_s": 75.5,
+  "camber_change_max_pct_per_m": 0.09458329141205368,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 38,
+  "open_edges_in_band_s": [
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74
+  ]
+ },
+ "sennett_terrace": {
+  "road": "sennett_terrace",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   89.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 52,
+  "asphalt_kinks": 44,
+  "overlaps": 0,
+  "grade_max_pct_25m": 4.320741332917777,
+  "grade_max_pct_5m": 8.593007568747524,
+  "grade_max_s": 67.5,
+  "camber_change_max_pct_per_m": 0.6746359376371913,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "cinematic_common": {
+  "road": "cinematic_common",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   169.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 18,
+  "asphalt_kinks": 55,
+  "overlaps": 0,
+  "grade_max_pct_25m": 2.5203409364610962,
+  "grade_max_pct_5m": 3.80823912792998,
+  "grade_max_s": 144.5,
+  "camber_change_max_pct_per_m": 0.7316246007198046,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "j_street": {
+  "road": "j_street",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   18.0,
+   248.5
+  ],
+  "holes": 844,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 12,
+  "asphalt_kinks": 26,
+  "overlaps": 0,
+  "grade_max_pct_25m": 5.133659209982611,
+  "grade_max_pct_5m": 6.496793898819675,
+  "grade_max_s": 43.0,
+  "camber_change_max_pct_per_m": 0.7201848778661812,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 7,
+  "open_edges_in_band_s": [
+   22
+  ]
+ },
+ "dollar_common": {
+  "road": "dollar_common",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   143.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 27,
+  "asphalt_kinks": 148,
+  "overlaps": 0,
+  "grade_max_pct_25m": 3.047395748251347,
+  "grade_max_pct_5m": 5.436468981319109,
+  "grade_max_s": 85.5,
+  "camber_change_max_pct_per_m": 0.7699895412405233,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "old_canyon_road": {
+  "road": "old_canyon_road",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   21.5
+  ],
+  "holes": 433,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 9,
+  "asphalt_kinks": 12,
+  "overlaps": 0,
+  "grade_max_pct_25m": 2.733817763500568,
+  "grade_max_pct_5m": 2.733817763500568,
+  "grade_max_s": 13.5,
+  "camber_change_max_pct_per_m": 0.35390924208833496,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 26,
+  "open_edges_in_band_s": [
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21
+  ]
+ },
+ "quincy_terrace": {
+  "road": "quincy_terrace",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   55.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 1,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.1706755930067203,
+  "grade_max_pct_5m": 1.7500768755404295,
+  "grade_max_s": 38.0,
+  "camber_change_max_pct_per_m": 0.23397748214311065,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ },
+ "mayhews_road": {
+  "road": "mayhews_road",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   2.0,
+   32.5
+  ],
+  "holes": 252,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 3,
+  "asphalt_kinks": 2,
+  "overlaps": 0,
+  "grade_max_pct_25m": 6.747677258944407,
+  "grade_max_pct_5m": 9.163178336016031,
+  "grade_max_s": 9.5,
+  "camber_change_max_pct_per_m": 0.22578336843004365,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 15,
+  "open_edges_in_band_s": [
+   31,
+   32
+  ]
+ },
+ "mission_boulevard_4": {
+  "road": "mission_boulevard_4",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   177.0,
+   731.5
+  ],
+  "holes": 5015,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 76,
+  "asphalt_kinks": 6,
+  "overlaps": 0,
+  "grade_max_pct_25m": 23.360467512604544,
+  "grade_max_pct_5m": 3.0287483577875918,
+  "grade_max_s": 706.5,
+  "camber_change_max_pct_per_m": 0.3256019192776627,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 86,
+  "open_edges_in_band_s": [
+   180,
+   181,
+   182,
+   183,
+   186,
+   188,
+   189,
+   192,
+   193,
+   686,
+   687,
+   688,
+   689,
+   690,
+   691,
+   692,
+   693,
+   694,
+   695,
+   696,
+   697,
+   698,
+   699,
+   700,
+   701,
+   702,
+   703,
+   704,
+   705,
+   706,
+   707,
+   708,
+   709,
+   710,
+   711,
+   712,
+   713,
+   714,
+   715,
+   716,
+   717,
+   718,
+   719,
+   720,
+   721,
+   722,
+   723,
+   724,
+   725,
+   726
+  ]
+ },
+ "mission_boulevard_2": {
+  "road": "mission_boulevard_2",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   125.0,
+   597.5
+  ],
+  "holes": 1509,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 137,
+  "asphalt_kinks": 1,
+  "overlaps": 0,
+  "grade_max_pct_25m": 1.300429272064818,
+  "grade_max_pct_5m": 1.7100801817331757,
+  "grade_max_s": 542.5,
+  "camber_change_max_pct_per_m": 0.34557188487678303,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 20,
+  "open_edges_in_band_s": [
+   128,
+   129,
+   130,
+   131,
+   132,
+   593,
+   595
+  ]
+ },
+ "mission_boulevard_3": {
+  "road": "mission_boulevard_3",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   19.0,
+   668.5
+  ],
+  "holes": 4841,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 1,
+  "asphalt_kinks": 0,
+  "overlaps": 0,
+  "grade_max_pct_25m": 21.65069144550813,
+  "grade_max_pct_5m": 2.8924904698353515,
+  "grade_max_s": 625.5,
+  "camber_change_max_pct_per_m": 0.25228429206718417,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 111,
+  "open_edges_in_band_s": [
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   606,
+   607,
+   608,
+   609,
+   610,
+   611,
+   612,
+   613,
+   614,
+   615,
+   616,
+   617,
+   618,
+   619,
+   620,
+   621,
+   622,
+   623,
+   624,
+   625,
+   626,
+   627,
+   628,
+   629,
+   630,
+   631,
+   632,
+   633,
+   634,
+   635,
+   636,
+   637,
+   638,
+   639,
+   640,
+   641,
+   642,
+   643
+  ]
+ },
+ "mission_boulevard": {
+  "road": "mission_boulevard",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   56.0,
+   648.5
+  ],
+  "holes": 7221,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 334,
+  "asphalt_kinks": 53,
+  "overlaps": 0,
+  "grade_max_pct_25m": 8.210966221124494,
+  "grade_max_pct_5m": 3.5534224040265627,
+  "grade_max_s": 81.0,
+  "camber_change_max_pct_per_m": 0.5323787787030021,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 158,
+  "open_edges_in_band_s": [
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   105
+  ]
+ },
+ "niles_canyon_road": {
+  "road": "niles_canyon_road",
+  "files": [
+   "palomares_niles_ncr.kn5",
+   "palomares_niles_ncr_terrain.kn5",
+   "palomares_niles_town.kn5",
+   "palomares_niles_town_terrain.kn5"
+  ],
+  "s": [
+   213.0,
+   10585.5
+  ],
+  "holes": 0,
+  "steps": 0,
+  "step_max_m": 0.0,
+  "slope_breaks_checked": 258,
+  "asphalt_kinks": 1,
+  "overlaps": 0,
+  "grade_max_pct_25m": 5.719468440648967,
+  "grade_max_pct_5m": 6.5273588000870575,
+  "grade_max_s": 5173.5,
+  "camber_change_max_pct_per_m": 1.4183240975732758,
+  "open_edges_palomares_junction": 0,
+  "open_edges_in_band": 0,
+  "open_edges_in_band_s": []
+ }
+}

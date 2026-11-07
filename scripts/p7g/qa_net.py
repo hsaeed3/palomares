@@ -13,7 +13,7 @@ Physics surfaces (1ROAD / 1GRASS / 1KERB / 1SIDEWALK / 1RAIL ...) are ray-cast f
 Writes reports/dev7/qa_net_<road>.json, exit 1 on holes / steps / overlaps.
 """
 import argparse, json, sys, pathlib, collections
-import numpy as np
+import numpy as np, shapely
 from scipy.spatial import cKDTree
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parents[0] / "p2"))
@@ -80,7 +80,10 @@ def cast(xy):
 
 
 def check(rname, s_arg):
-    global road, N, TAG
+    global road, N, TAG, CLPOLY
+    CLPOLY = None
+    if _cl and rname in _cl:
+        CLPOLY = shapely.union_all([NW.cluster_polygon(c) for c in NW.CLUSTERS]).buffer(-2.0); shapely.prepare(CLPOLY)
     road = NW.load_road(rname); N = len(road.s); TAG = {'niles_canyon_road': 'ncr'}.get(rname, rname)
     A.s = s_arg
     i0, i1 = 2, N - 3
@@ -107,6 +110,8 @@ def check(rname, s_arg):
         fr = st[sl] - I_
         X = road.x[I_, None] + road.tx[I_, None] * fr[:, None] + road.nx[I_, None] * D
         Y = road.y[I_, None] + road.ty[I_, None] * fr[:, None] + road.ny[I_, None] * D
+        if CLPOLY is not None and rname != "niles_canyon_road":   # cluster road: inside the cluster only (2 m in);
+            keep &= shapely.contains_xy(CLPOLY, X, Y)              # its ends there continue in roads not built yet
         xy = np.c_[X.ravel(), Y.ravel()]
         hits = cast(xy)
         Z = np.full(len(xy), np.nan)
@@ -167,8 +172,8 @@ def check(rname, s_arg):
                slope_breaks_checked=len(breaks),
                asphalt_kinks=len(kinks), asphalt_kinks_list=sorted(kinks, key=lambda t: -t[2])[:30],
                overlaps=len(overl), overlaps_list=overl[:50],
-               grade_max_pct_25m=float(np.nanmax(np.abs(g25)) * 100), grade_max_pct_5m=float(np.nanmax(np.abs(g5[10:-10] if len(g5) > 30 else g5)) * 100),
-               grade_max_s=float(st[w25:-w25][np.nanargmax(np.abs(g25))]),
+               grade_max_pct_25m=(float(np.nanmax(np.abs(g25)) * 100) if np.isfinite(g25).any() else None), grade_max_pct_5m=(float(np.nanmax(np.abs(g5[10:-10]))) * 100 if np.isfinite(g5[10:-10]).any() else None),
+               grade_max_s=(float(st[w25:-w25][np.nanargmax(np.abs(g25))]) if np.isfinite(g25).any() else None),
                camber_change_max_pct_per_m=float(np.nanmax(dcam) * 100) if len(dcam) else 0.0)
     # open edges of the physics mesh union inside the band (welded at 1 mm)
     _, inv = np.unique(np.round(P, 3), axis=0, return_inverse=True); W_ = inv.ravel()[T]
@@ -180,6 +185,8 @@ def check(rname, s_arg):
     off = (mid[:, 0] - road.x[j]) * road.nx[j] + (mid[:, 1] - road.y[j]) * road.ny[j]
     hw = np.where(off > 0, road.el[j], road.er[j]) + SH
     inb = (np.abs(off) < hw - 0.05) & (j >= i0) & (j <= i1) & (dmid < hw + 1)
+    if CLPOLY is not None and rname != "niles_canyon_road":
+        inb &= shapely.contains_xy(CLPOLY, mid[:, 0], mid[:, 1])
     from geom import load_centerline, CFG
     _pal = load_centerline(CFG["build_end_m"] + 150); _dp, _ = cKDTree(np.c_[_pal["x_local"], _pal["y_local"]]).query(mid[:, :2])
     pj = inb & (_dp < 152)        # inside the Palomares terrain footprint: stitched by the junction step, reported apart
@@ -197,8 +204,9 @@ for _cn in ("town", "sunol"):
     _f = BUILD / "dev7" / f"{_cn}_build.json"
     if _f.exists():
         _cl = (_cl or {}); _cl.update(json.load(open(_f))["log"].get("roads", {}))
+_S0 = A.s
 for rn in ROADS:
-    s_arg = A.s
+    s_arg = _S0
     if s_arg is None and _cl and rn in _cl and rn != "niles_canyon_road":
         s_arg = f"{_cl[rn][0]}-{_cl[rn][1]}"
     results[rn] = check(rn, s_arg)

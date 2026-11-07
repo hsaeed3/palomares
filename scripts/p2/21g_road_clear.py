@@ -63,65 +63,42 @@ for gname, lst in G.items():
             for s in np.unique(road.s[j[bad]] // 100 * 100):
                 LOG[(gname, nm.rstrip("0123456789_"), int(s))] += 1
 
-# ---- crease smoothing on drivable non-road surfaces (kerbs, run-off, shoulders): interior vertices of folded edges
-# are relaxed in z towards their neighbours; boundary vertices (shared with road / terrain) never move, so no steps.
-LIM = {"1KERB": 22.0, "1RUNOFF": 22.0, "1GRASS_sh": 40.0}
-SM = collections.Counter()
+# ---- kerbs / run-off: drop any single kerb piece (connected component) that folds more than KERB_LIM.
+# Folds sit where a kerb drapes over an uneven shoulder edge; a missing kerb is safe, a folded one is not.
+KERB_LIM = 24.0
+DROP = collections.Counter()
 
 
-def smooth_creases(m, lim):
+def drop_folded(m):
     P = np.asarray(m["P"], float); T = np.asarray(m["T"])
     if len(T) < 2:
-        return 0
+        return
     key = np.round(P * 1000).astype(np.int64)
-    _, w, inv = np.unique(key, axis=0, return_index=True, return_inverse=True); inv = inv.ravel()
-    Q = P[w].copy(); F = inv[T]
-    E = np.sort(np.r_[F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]], 1); fid = np.r_[np.arange(len(F))] .repeat(1)
-    fid = np.r_[np.arange(len(F)), np.arange(len(F)), np.arange(len(F))]
-    o = np.lexsort((E[:, 1], E[:, 0])); E, fid = E[o], fid[o]
-    same = np.all(E[1:] == E[:-1], 1)
-    bnd = np.ones(len(Q), bool); inner = np.zeros(len(Q), bool)
-    cnt = np.bincount(np.r_[E[:, 0], E[:, 1]], minlength=len(Q))
-    pair_a, pair_b = fid[:-1][same], fid[1:][same]
-    ein = E[:-1][same]
-    inner[np.r_[ein[:, 0], ein[:, 1]]] = True
-    # boundary vertex: touches an edge used once
-    once = np.ones(len(E), bool); once[:-1] &= ~same; once[1:] &= ~same
-    bnd[:] = False; bnd[np.r_[E[once, 0], E[once, 1]]] = True
-    nb = [[] for _ in range(len(Q))]
-    for a_, b_ in ein:
-        nb[a_].append(b_); nb[b_].append(a_)
-    moved = 0
-    for it in range(60):
-        n = np.cross(Q[F[:, 1]] - Q[F[:, 0]], Q[F[:, 2]] - Q[F[:, 0]]); n /= np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-12)
-        ang = np.degrees(np.arccos(np.clip((n[pair_a] * n[pair_b]).sum(1), -1, 1)))
-        hot = ang > lim
-        if not hot.any():
-            break
-        vs = np.unique(np.r_[F[pair_a[hot]].ravel(), F[pair_b[hot]].ravel()])
-        vs = vs[~bnd[vs]]
-        if not len(vs):
-            break
-        for v in vs:
-            if nb[v]:
-                Q[v, 2] = 0.5 * Q[v, 2] + 0.5 * Q[nb[v], 2].mean()
-        moved += len(vs)
-    m["P"] = Q[inv]
-    return moved
+    _, inv = np.unique(key, axis=0, return_inverse=True); F = inv.ravel()[T]; nv = F.max() + 1
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    r_ = np.r_[F[:, 0], F[:, 1], F[:, 2]]; c_ = np.r_[F[:, 1], F[:, 2], F[:, 0]]
+    _, lab = connected_components(coo_matrix((np.ones(len(r_)), (r_, c_)), shape=(nv, nv)), directed=False)
+    E = np.sort(np.r_[F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]], 1); fid = np.tile(np.arange(len(F)), 3)
+    o = np.lexsort((E[:, 1], E[:, 0])); E, fid = E[o], fid[o]; same = np.all(E[1:] == E[:-1], 1)
+    Pn = np.zeros((nv, 3)); Pn[F.ravel()] = P[T.ravel()]
+    n = np.cross(Pn[F[:, 1]] - Pn[F[:, 0]], Pn[F[:, 2]] - Pn[F[:, 0]]); ln_ = np.linalg.norm(n, axis=1)
+    n /= np.maximum(ln_[:, None], 1e-12)
+    a_, b_ = fid[:-1][same], fid[1:][same]
+    ok = (ln_[a_] > 1e-6) & (ln_[b_] > 1e-6)
+    ang = np.degrees(np.arccos(np.clip((n[a_] * n[b_]).sum(1), -1, 1)))
+    hot = ok & (ang > KERB_LIM)
+    if not hot.any():
+        return
+    badc = np.unique(lab[F[a_[hot], 0]]); kill = np.isin(lab[F[:, 0]], badc)
+    m["T"] = T[~kill]; DROP[m["name"]] += int(len(badc))
 
 
-for gname, lst in G.items():
-    if not isinstance(lst, list):
-        continue
-    for m in lst:
-        if not isinstance(m, dict) or "P" not in m:
-            continue
-        for pre, lim in LIM.items():
-            if m["name"].startswith(pre):
-                k_ = smooth_creases(m, lim)
-                if k_:
-                    SM[m["name"]] += k_
-print(f"21g: crease smoothing moved vertices in {len(SM)} meshes: {dict(SM.most_common(8))}")
+for gname in ("kerbs_nb", "kerbs_sb"):
+    for m in G.get(gname, []):
+        if isinstance(m, dict) and m.get("name", "").startswith(("1KERB", "1RUNOFF")):
+            drop_folded(m)
+print(f"21g: folded kerb pieces dropped: {dict(DROP)}")
 
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 print(f"21g: terrain vertices pushed below asphalt: {TER}; meshes trimmed at {len(LOG)} (group, kind, 100 m) spots")
