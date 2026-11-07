@@ -31,6 +31,7 @@ S_A, S_B = 70.0, float(road.s[-1]) - 35.0            # Mission Blvd -> just befo
 BASEF = ["palomares_road_dev7.kn5", "palomares_terrain_dev7.kn5", "palomares_lines_road_dev7.kn5",
          "palomares_niles_town.kn5", "palomares_niles_town_terrain.kn5",
          "palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5",
+         "palomares_niles_sunolmain.kn5", "palomares_niles_sunolmain_terrain.kn5", "palomares_niles_ncr_e.kn5", "palomares_niles_ncr_e_terrain.kn5",
          "palomares_niles_sunol.kn5", "palomares_niles_sunol_terrain.kn5", "palomares_niles_lines.kn5", "palomares_niles_assets.kn5"]
 LAYOUTS = {
     "canyon_road": dict(s_from=S_A, s_to=S_B, dir="nb", style="Road"),

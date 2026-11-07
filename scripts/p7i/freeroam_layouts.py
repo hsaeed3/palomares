@@ -27,7 +27,8 @@ TRACK = CL.TRACK; PAL = ROOT / "build/palomares_road"
 PAL_SHARED = ["palomares_trees.kn5", "palomares_barriers.kn5", "palomares_roadside.kn5"]
 DEV7 = ["palomares_road_dev7.kn5", "palomares_terrain_dev7.kn5", "palomares_lines_road_dev7.kn5",
         "palomares_niles_town.kn5", "palomares_niles_town_terrain.kn5", "palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5",
-        "palomares_niles_sunol.kn5", "palomares_niles_sunol_terrain.kn5", "palomares_niles_lines.kn5", "palomares_niles_assets.kn5", "palomares_niles_town_assets.kn5"]
+        "palomares_niles_sunolmain.kn5", "palomares_niles_sunolmain_terrain.kn5", "palomares_niles_ncr_e.kn5", "palomares_niles_ncr_e_terrain.kn5",
+         "palomares_niles_sunol.kn5", "palomares_niles_sunol_terrain.kn5", "palomares_niles_lines.kn5", "palomares_niles_assets.kn5", "palomares_niles_town_assets.kn5"]
 TRACKX = ["palomares_kerbs_nb.kn5", "palomares_dressing.kn5", "palomares_dressing_nb.kn5", "palomares_niles_kerbs_nb.kn5"]
 LAYOUTS = {"freeroam": [], "freeroam_track": TRACKX}
 DRAW_BUDGET = 1500
