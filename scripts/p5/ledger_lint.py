@@ -13,10 +13,19 @@ CLS = set("sign post pole mailbox guardrail fence wall bridge culvert building d
 LINEAR = {"fence", "guardrail", "wall", "marking", "hedge", "tree_density"}
 POINT_MIN_SEP = {"sign": 0.6, "post": 0.3, "pole": 1.0, "mailbox": 0.4, "building": 4.0, "tree_add": 2.0, "shrub": 0.5, "rock": 0.5}
 REQ = ["id", "cls", "s", "side", "off", "status"]
+DEV7 = SC.ROOT / "data/derived/dev7"
+
+
+def road_len(road, _c={}):
+    """dev7 rows carry `road`: station range is that road's refined centerline (data/derived/dev7/centerline_<road>.csv)"""
+    if road not in _c:
+        f = DEV7 / f"centerline_{road}.csv"
+        _c[road] = float(open(f).read().strip().splitlines()[-1].split(",")[0]) if f.exists() else None
+    return _c[road]
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--ledger", default=str(SC.SCENE / "ledger.jsonl"))
+    ap = argparse.ArgumentParser(); ap.add_argument("--ledger", default=str(SC.SCENE / "ledger.jsonl"))   # dev7: --ledger data/scene/ledger_dev7.jsonl
     ap.add_argument("--strict", action="store_true"); a = ap.parse_args()
     cat = SC.load_catalog(); errs, warns = [], []
     E = lambda i, m: errs.append(f"line {i}: {m}"); Wn = lambda i, m: warns.append(f"line {i}: {m}")
@@ -38,7 +47,11 @@ def main():
         try:
             s = float(o.get("s")); off = float(o.get("off", 0))
         except (TypeError, ValueError): E(i, "s/off not numeric"); continue
-        if not 0 <= s <= SC.S_MAX: E(i, f"s={s} outside 0..{SC.S_MAX:.0f}")
+        smax = SC.S_MAX
+        if "road" in o:
+            smax = road_len(o["road"])
+            if smax is None: E(i, f"road {o['road']!r} has no data/derived/dev7/centerline_*.csv"); continue
+        if not 0 <= s <= smax + 0.5: E(i, f"s={s} outside 0..{smax:.0f}")
         s1 = o.get("s1")
         if c in LINEAR and s1 is None: E(i, f"linear {c} needs s1")
         if s1 is not None and float(s1) < s: E(i, "s1 < s")
@@ -62,8 +75,8 @@ def main():
     # overlaps: same side, same cls, live objects
     live = [o for o in objs if o.get("status") != "rejected"]
     by = collections.defaultdict(list)
-    for o in live: by[(o.get("cls"), o.get("side"))].append(o)
-    for (c, side), L in by.items():
+    for o in live: by[(o.get("cls"), o.get("side"), o.get("road"))].append(o)
+    for (c, side, _road), L in by.items():
         L.sort(key=lambda o: float(o["s"]))
         for p, q in zip(L, L[1:]):
             if c in LINEAR:

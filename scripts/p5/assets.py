@@ -1357,6 +1357,9 @@ def write_yaml():
            "# proxy: simple shape for the scorer (local frame x fwd, y out, z up; plane = vertical sheet facing the road,\n"
            "#   plane_h = flat on the ground, sign planes face -x).  materials: one atlas material 'ledger' (build/ledger_atlas.png).\n"
            "# seg_class: class name from data/scene/seg_classes.json; z0: proxy base above ground.  frames: GoPro frames where the type is seen (survey files + by eye).\n")
+    old = ROOT / "config/asset_catalog.yaml"          # keep dev7 survey types (flag dev7: true) that have no generator here yet
+    if old.exists():
+        rows += [a for a in (yaml.safe_load(open(old)) or {}).get("assets", []) if a.get("dev7") and a["id"] not in CATALOG]
     (ROOT / "config/asset_catalog.yaml").write_text(hdr + yaml.safe_dump(dict(version=1, material="ledger", atlas="build/ledger_atlas.png",
                                                                                 assets=rows), sort_keys=False, width=140))
     print("wrote config/asset_catalog.yaml:", len(rows), "types")
