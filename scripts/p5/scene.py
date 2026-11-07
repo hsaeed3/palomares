@@ -258,6 +258,22 @@ def ledger_tris(ledger, catalog, s_lo, s_hi):
         if o.get("status") == "rejected": continue
         s0 = float(o.get("s", -1e9)); s1 = float(o.get("s1") or s0)
         if s1 < s_lo or s0 > s_hi: continue
+        pr = o.get("params") or {}
+        if pr.get("parts"):           # dev6 measured building: one box per footprint part (absolute local coords)
+            zg = float(pr.get("ground_z", 0))
+            for q in pr["parts"]:
+                V = _box(float(q["cx"]), float(q["cy"]), zg, float(q["yaw"]), float(q["Lu"]), float(q["Lv"]), max(float(q["ridge_z"]) - zg, 2.5))
+                Vs.append(V); Cs.append(np.full(len(V), CID["building"])); Is.append(np.full(len(V), j))
+            continue
+        if pr.get("xy") and len(pr["xy"]) >= 2:   # dev6 measured line (absolute local coords)
+            P2 = np.asarray(pr["xy"], float); zz = _ground(P2[:, 0], P2[:, 1]); zz = np.where(np.isfinite(zz), zz, np.interp(o["s"], S, Z))
+            cl_ = {"fence": "fence", "wall": "wall", "guardrail": "guardrail", "hedge": "shrub"}.get(o.get("cls"), "fence")
+            hh = {"hedge": 1.4, "guardrail": 0.75, "wall": 1.2}.get(o.get("cls"), 1.3)
+            for k in range(len(P2) - 1):
+                L = np.hypot(*(P2[k + 1] - P2[k])); a = np.arctan2(*(P2[k + 1] - P2[k])[::-1])
+                V = _box((P2[k, 0] + P2[k + 1, 0]) / 2, (P2[k, 1] + P2[k + 1, 1]) / 2, zz[k], a, L, 0.15 if cl_ != "shrub" else 1.2, hh)
+                Vs.append(V); Cs.append(np.full(len(V), CID[cl_])); Is.append(np.full(len(V), j))
+            continue
         cat = catalog.get(o.get("asset"), {})
         w, dp, h, z0, cl = DEFAULT_PROXY.get(o.get("cls"), (1, 1, 1, 0, "other_prop"))
         sz = cat.get("proxy") or cat.get("size")

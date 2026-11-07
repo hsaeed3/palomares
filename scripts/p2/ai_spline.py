@@ -9,7 +9,8 @@ AiPointExtra.cs, AiSplineGrid.cs:
                             normal.xyz, length, forward.xyz, tag, grade }
   int32 hasGrid (0: AC builds its own lookup grid)
 Units used here: speed m/s, radius m (unsigned, capped 1000), sideLeft/Right = m from the line to the driver's
-left / right asphalt edge, camber/grade/direction in radians. lapTime/sampleCount 0 (= not a recording).
+left / right asphalt edge, camber/grade in radians, direction = turn side +-1, extra length ~7.7 (Kunos value;
+meaning unknown, NOT cumulative), points every 1.0 m lifted 6 cm above the asphalt. See docs/AC_CONVENTIONS.md. lapTime/sampleCount 0 (= not a recording).
 """
 import struct
 import numpy as np
@@ -43,44 +44,63 @@ def read(path):
     (ne,) = struct.unpack_from("<i", b, o); o += 4
     ex = np.frombuffer(b, "<f4", count=18 * ne, offset=o).reshape(ne, 18); o += 72 * ne
     (grid,) = struct.unpack_from("<i", b, o); o += 4
-    assert o == len(b), (o, len(b))
+    assert o == len(b) or grid != 0, (o, len(b))   # a grid (Kunos files) follows when hasGrid != 0
     return dict(version=ver, n=n, lap_time=lap, sample_count=samp, P=rec["p"].copy(), length=rec["l"].copy(),
                 id=rec["id"].copy(), extra={k: ex[:, i].copy() for i, k in enumerate(EXTRA)}, has_grid=grid)
 
 
-def layout_spline(D, road, i_from, i_to, C, lift=0.0):
-    """points (run order, 1 m) + extras for one layout, standing start at i_from"""
+LIFT_M = 0.06        # line drawn this far above the asphalt: clears the +4 mm surface noise, the +12 mm paint and the
+                     # +10 mm patch decals, which otherwise hid most of it (only scattered arrows poked through)
+STEP_M = 1.0         # uniform point spacing (Kunos files: ~1-1.5 m; the ideal line is drawn point to point)
+KUNOS_EXTRA_LENGTH = 7.7   # extra[12] in Kunos files is ~7-9 m everywhere (sepang), NOT the cumulative length
+
+
+def layout_spline(D, road, i_from, i_to, C, lift=LIFT_M, step=STEP_M):
+    """points (run order, uniform `step` m) + extras for one layout, standing start at i_from"""
     import racing_line as RL
     from kn5 import ac_from_local
+    from scipy.ndimage import gaussian_filter1d as gf
     v, ph, idx = RL.speed_profile(D, road, i_from, i_to, C)
     sd = 1 if i_to >= i_from else -1
-    x, y, z = D["x"][idx], D["y"][idx], D["z"][idx] + lift
+    ch = C["car_half_width_m"]
+    # per-station source arrays (run order). Light plan smoothing (sigma 1 station, < 3 cm even in the hairpins)
+    # removes the ~1-2 cm station-to-station jitter of road.xy() that made the curvature flip sign ~575x per km.
+    xs = gf(D["x"][idx], 1.0, mode="nearest"); ys = gf(D["y"][idx], 1.0, mode="nearest"); zs = D["z"][idx]
+    src = dict(v=v, ph=ph.astype(float), k=np.abs(D["k"][idx]), slope=D["slope"][idx] * sd,
+               gl=(D["gap_l"] if sd > 0 else D["gap_r"])[idx] + ch,       # driver's left = station-left for nb
+               gr=(D["gap_r"] if sd > 0 else D["gap_l"])[idx] + ch, ks=np.sign(D["k"][idx]) * sd)
+    seg = np.sqrt(np.diff(xs) ** 2 + np.diff(ys) ** 2 + np.diff(zs) ** 2); L0 = np.r_[0, np.cumsum(seg)]
+    n = int(np.floor(L0[-1] / step)) + 1
+    Lu = np.arange(n) * step
+    x, y, z = (np.interp(Lu, L0, a) for a in (xs, ys, zs))
+    z = z + lift
+    S = {k_: np.interp(Lu, L0, a_) for k_, a_ in src.items()}
+    v = S["v"]; ph = np.rint(S["ph"])
     seg = np.sqrt(np.diff(x) ** 2 + np.diff(y) ** 2 + np.diff(z) ** 2)
     L = np.r_[0, np.cumsum(seg)]
     fx, fy, fz = np.gradient(x), np.gradient(y), np.gradient(z)
     fn = np.sqrt(fx ** 2 + fy ** 2 + fz ** 2); fx, fy, fz = fx / fn, fy / fn, fz / fn
-    # driver's left = station-left for nb, station-right for sb
-    ch = C["car_half_width_m"]
-    side_l = (D["gap_l"] if sd > 0 else D["gap_r"])[idx] + ch
-    side_r = (D["gap_r"] if sd > 0 else D["gap_l"])[idx] + ch
-    slope_run = D["slope"][idx] * sd                    # dz per m toward the driver's left
+    slope_run = S["slope"]                              # dz per m toward the driver's left
     camber = np.arctan(slope_run)
-    lx, ly = -fy, fx                                     # driver's left (plan)
+    lx, ly = -fy, fx
     ln = np.hypot(lx, ly); lx, ly = lx / ln, ly / ln
-    # surface normal = forward x left-with-camber
     Lv = np.stack([lx, ly, slope_run], -1); Fv = np.stack([fx, fy, fz], -1)
     Nv = np.cross(Fv, Lv); Nv /= np.linalg.norm(Nv, axis=1, keepdims=True)
     Nv[Nv[:, 2] < 0] *= -1
-    k = np.abs(D["k"][idx]); radius = np.minimum(1 / np.maximum(k, 1e-3), 1000)
-    dv = np.gradient(v)
+    radius = np.minimum(1 / np.maximum(S["k"], 1e-3), 1000)
+    dv = np.gradient(v) / step
     gas = np.where(ph == 1, 1.0, np.where(ph == 0, 0.5, 0.0))
-    brake = np.where(ph == -1, np.clip(-dv * v / (C["g"] * C["brake_g"]) , 0, 1), 0.0)
+    brake = np.where(ph == -1, np.clip(-dv * v / (C["g"] * C["brake_g"]), 0, 1), 0.0)
     P = ac_from_local(np.stack([x, y, z], -1))
     F = ac_from_local(Fv); Nn = ac_from_local(Nv)
-    direction = np.arctan2(F[:, 0], F[:, 2])
-    extra = dict(speed=v, gas=gas, brake=brake, radius=radius, side_l=side_l, side_r=side_r, camber=camber,
-                 direction=direction, nx=Nn[:, 0], ny=Nn[:, 1], nz=Nn[:, 2], length=L, fx=F[:, 0], fy=F[:, 1], fz=F[:, 2],
-                 grade=np.arctan(np.gradient(z) / np.maximum(seg.mean(), 0.5)))
+    # extra[8] "direction" is the turn side, +-1 (Kunos files; AssettoServer FastLaneParser: signed camber =
+    # camber * direction). Kunos sign: -1 where the AC-plan heading atan2(z, x) increases. Run-order curvature
+    # ks > 0 = turning to the driver's left (local plan) = AC heading atan2(z, x) decreasing (AC z = -north) -> +1.
+    turn = gf(S["ks"] * radius ** -1, 5.0, mode="nearest")
+    direction = np.where(turn >= 0, 1.0, -1.0)
+    extra = dict(speed=v, gas=gas, brake=brake, radius=radius, side_l=S["gl"], side_r=S["gr"], camber=camber,
+                 direction=direction, nx=Nn[:, 0], ny=Nn[:, 1], nz=Nn[:, 2], length=np.full(n, KUNOS_EXTRA_LENGTH),
+                 fx=F[:, 0], fy=F[:, 1], fz=F[:, 2], grade=np.arctan(np.gradient(z) / step))
     return P, L, extra, idx
 
 

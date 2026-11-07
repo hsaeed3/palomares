@@ -368,6 +368,7 @@ def build_atlas():
         extra["veg_" + k] = t_shrub(k)
     for k, im in extra.items():
         A.put(k, im)
+    _p6_houses().tiles(dict(put=A.put, rgba=RX.rgba, _tile=_tile, siding=t_siding))   # dev6 measured-house palette
     return A
 
 
@@ -1269,6 +1270,14 @@ reg("prop.flag_pole", "prop", g_flag_pole, (1.9, 0.3, 6.8), dict(shape="cylinder
 reg("debris.rockfall_pile", "debris", g_rockfall_pile, (3.6, 3.0, 0.9), dict(shape="box", w=3.6, d=3.0, h=0.9), True, 8, desc="angular talus / rockfall pile on the shoulder")
 reg("curb.concrete", "wall", g_curb, (1, 0.2, 0.14), dict(shape="box", d=0.2, h=0.14), False, 5, True, "concrete curb / gutter lip")
 reg("tree.remove", "tree_remove", g_none, (1, 1, 1), dict(shape="none"), False, 9, desc="remove LiDAR tree(s) within params.radius")
+
+def _p6_houses():
+    sys.path.insert(0, str(ROOT / "scripts/p6")); import p6_houses
+    return p6_houses
+
+
+_p6_houses().register(sys.modules[__name__])      # building.measured (dev6 footprint houses, world coords)
+
 
 def generate(aid, L=None, params=None):
     e = CATALOG[aid]; p = dict(params or {})

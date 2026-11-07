@@ -143,6 +143,14 @@ class Line:
         zg = ground(self.x, self.y); w = np.clip(offv / 1.2, 0, 1)
         z = np.where(np.isfinite(zg), zs * (1 - w) + zg * w, zs)
         self.z = gaussian_filter1d(z, 1.5, mode="nearest") + float(r.get("dz") or 0)
+        xy = (r.get("params") or {}).get("xy")
+        if xy and len(xy) >= 2:    # dev6 measured line (LiDAR fence/hedge), absolute local coords in NB order
+            xy = np.asarray(xy, float); seg = np.r_[0, np.cumsum(np.hypot(*np.diff(xy, axis=0).T))]
+            q = np.linspace(0, seg[-1], max(2, int(math.ceil(seg[-1])) + 1))
+            self.x = np.interp(q, seg, xy[:, 0]); self.y = np.interp(q, seg, xy[:, 1])
+            zg = ground(self.x, self.y); _, _, jj = station_lateral(np.c_[self.x, self.y, np.zeros_like(self.x)])
+            zr = road.surface_z(jj, np.zeros(len(jj)), noise=False)
+            self.z = gaussian_filter1d(np.where(np.isfinite(zg), zg, zr), 1.5, mode="nearest") + float(r.get("dz") or 0)
         self.cum = np.r_[0, np.cumsum(np.hypot(np.diff(self.x), np.diff(self.y)))]; self.L = float(self.cum[-1])
         t = np.gradient(np.c_[self.x, self.y], axis=0); t /= np.hypot(t[:, 0], t[:, 1])[:, None] + 1e-12
         self.t = t; self.n = np.c_[-t[:, 1], t[:, 0]]; self.sgn = sgn; self.ss = ss; self.idx = idx; self.d = d
@@ -224,6 +232,19 @@ def place_point(r, cat):
         p.setdefault("scale", float(r["scale"]))
     m = AS.generate(r["asset"], None, p); P, T, UV, N_ = m.arrays()
     xa, ya = point_axes(r, f)
+    if m.meta.get("world"):     # dev6 measured houses: generator already wrote absolute local coords (scripts/p6/p6_houses.py)
+        acc = ACC[chunk_of(f.s)]; acc.add(P, T, UV, N_)
+        if cat.get("collision") and f.off <= 15.0:
+            for c in m.col:
+                if c[0] == "box":
+                    _, cx, cy, L, Wd, z0, z1, yaw = c; fw = np.array([math.cos(yaw), math.sin(yaw)])
+                    acc.col.box(cx, cy, fw, L, Wd, z0, z1)
+                    fl = np.array([-fw[1], fw[0]]); cand = [np.array([cx, cy]) + v for v in (fw * L / 2, -fw * L / 2, fl * Wd / 2, -fl * Wd / 2)]
+                    q = min(cand, key=lambda c_: abs(station_lateral(np.array([[*c_, 0.0]]))[1][0]))
+                    need_col(r["asset"], [tuple(q)], [z0 + 0.5], f.s, f.s)
+        elif cat.get("collision"):
+            SKIP[r["cls"]] += 1
+        return
     W = np.c_[f.x + P[:, 0] * xa[0] + P[:, 1] * ya[0], f.y + P[:, 0] * xa[1] + P[:, 1] * ya[1]]
     if m.meta.get("drape"):
         Z = np.where(np.isfinite(g := ground(W[:, 0], W[:, 1])), g, f.z) + P[:, 2]

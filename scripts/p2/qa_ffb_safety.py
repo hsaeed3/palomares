@@ -135,8 +135,11 @@ for fn_, k in K.items():
                 ext = np.ptp(Pc[:, :2], axis=0); hgt = np.ptp(Pc[:, 2])
                 long_ = np.ptp(sc) >= CC.LIN_MIN_LEN
                 u, sv, vt = np.linalg.svd(Pc[:, :2] - Pc[:, :2].mean(0), full_matrices=False)
-                thick = float(np.ptp((Pc[:, :2] - Pc[:, :2].mean(0)) @ vt[1])) if not long_ else float(np.ptp(np.abs(dc)) if np.ptp(sc) < 3 else
-                                                                                       np.median([np.ptp(np.abs(dc[np.abs(sc - q) < 1.0])) for q in np.linspace(sc.min() + 1, sc.max() - 1, 8)]))
+                if not long_:
+                    thick = float(np.ptp((Pc[:, :2] - Pc[:, :2].mean(0)) @ vt[1]))
+                else:   # depth across the road, measured in windows along the run (median over the run)
+                    ws = [np.ptp(np.abs(dc[w])) for q in np.linspace(sc.min(), sc.max(), 12) for w in [np.abs(sc - q) < 1.5] if w.sum() >= 2]
+                    thick = float(np.median(ws)) if ws else 0.0
                 if thick < MIN_THICK:
                     fail(f"{fn_}:{nm} wall thinner than {MIN_THICK} m ({thick:.2f}) at s={sc.mean():.0f}")
                 if hgt < MIN_H:

@@ -1,0 +1,4 @@
+15,046,443 single-return HAG>=1.8 candidate points
+3,505,502 in planar 1 m cells
+16265 components
+445 buildings {'gable': 91, 'flat': 62, 'shed': 237, 'hip': 55} rejected {'green': 3040, 'small': 225, 'low': 62, 'rough': 36, 'far': 8, 'thin': 23, 'canopy': 4539} OSM 26 (3 without a LiDAR match)

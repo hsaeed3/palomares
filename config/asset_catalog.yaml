@@ -3228,3 +3228,25 @@ assets:
   frames: []
   generator: scripts/p5/assets.py:g_none
   desc: remove LiDAR tree(s) within params.radius
+- id: building.measured
+  cls: building
+  linear: false
+  dims_m:
+    L: 10
+    W: 10
+    H: 6
+  proxy:
+    shape: none
+    w: 10
+    d: 10
+    h: 6
+  z0: 0.0
+  collision: true
+  seg_class: building
+  materials:
+  - ledger
+  tris: 26
+  tris_per_10m: null
+  frames: []
+  generator: scripts/p5/assets.py:g_measured
+  desc: house/barn generated from its measured LiDAR footprint parts and roof fit (dev6, world coordinates)
