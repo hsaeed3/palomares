@@ -18,3 +18,4 @@ assets/*/lod*.npz
 reports/view/
 build_dev7/
 dist/_stage_dev7/
+dist/_qa_*/
