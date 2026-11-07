@@ -84,6 +84,9 @@ def refine(img, lab):
     tr = t & ~((h > 50) & (h < 170) & (s > 50)) & (v < 90) & (s < 90) & (yy > H * 0.3)
     tr = ndi.binary_opening(tr, np.ones((25, 3)))   # keep tall thin dark structures only
     lab[tr] = CID["trunk"]
+    # model border artefact: thin "pole" strip on the outermost columns -> copy neighbour column
+    for sl, nb in ((slice(0, 4), 4), (slice(W - 4, W), W - 5)):
+        b = lab[:, sl]; b[b == CID["pole"]] = np.repeat(lab[:, nb:nb + 1], 4, 1)[b == CID["pole"]]
     # GoPro overlays
     lab[int(H * 0.93):, int(W * 0.90):] = CID["unknown"]
     lab[:int(H * 0.08), int(W * 0.85):] = CID["unknown"]
