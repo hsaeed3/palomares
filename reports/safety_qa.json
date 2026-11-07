@@ -46,16 +46,16 @@
    "p999_az_R_g": 1.123907691160354,
    "min_load_R": 0.0,
    "kerb_rides": 73,
-   "kerb_ride_max_az_g": 5.565543943305753,
-   "kerb_ride_max_step_m": 0.01660341924542763,
+   "kerb_ride_max_az_g": 5.5099677117883825,
+   "kerb_ride_max_step_m": 0.012431535446552289,
    "kerb_ride_min_load": 0.0,
    "kerb_profile": {
     "n": 751,
-    "max_height_above_base_m": 0.05264208077416299,
-    "p95_height_m": 0.04650925030254882,
-    "max_ramp_deg": 67.23155607019102,
-    "p95_ramp_deg": 55.19907255714952,
-    "max_outer_drop_m": 0.2949686335371666
+    "max_height_above_base_m": 0.0590565159214691,
+    "p95_height_m": 0.047955583519851075,
+    "max_ramp_deg": 71.73070237962479,
+    "p95_ramp_deg": 58.16236345732226,
+    "max_outer_drop_m": 0.4723630042804956
    },
    "end_walls_touch_line": false,
    "walls_in_envelope": 0
@@ -74,16 +74,16 @@
    "p999_az_R_g": 1.2677767968885136,
    "min_load_R": 0.0,
    "kerb_rides": 77,
-   "kerb_ride_max_az_g": 4.363319028502116,
-   "kerb_ride_max_step_m": 0.013704429371301785,
+   "kerb_ride_max_az_g": 4.630937456169279,
+   "kerb_ride_max_step_m": 0.014186489832809457,
    "kerb_ride_min_load": 0.0,
    "kerb_profile": {
     "n": 789,
-    "max_height_above_base_m": 0.05122015379303946,
-    "p95_height_m": 0.043952570648860954,
-    "max_ramp_deg": 71.95402959004448,
-    "p95_ramp_deg": 53.802435008306404,
-    "max_outer_drop_m": 0.28717103656366305
+    "max_height_above_base_m": 0.05509503880549005,
+    "p95_height_m": 0.04536288093947291,
+    "max_ramp_deg": 76.5390772801439,
+    "p95_ramp_deg": 56.50526859224967,
+    "max_outer_drop_m": 0.4778856022249869
    },
    "end_walls_touch_line": false,
    "walls_in_envelope": 0
@@ -96,7 +96,25 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 152 km/h: body accel 3.0 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 152 km/h: body accel 3.1 g, min tyre load 0%, step 0.8 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1224.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 125 km/h: body accel 2.5 g, min tyre load 105%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 1908.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 73 km/h: body accel 2.2 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -105,7 +123,16 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 95 km/h: body accel 2.1 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 95 km/h: body accel 2.2 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 2538.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 117 km/h: body accel 4.4 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -114,7 +141,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 148 km/h: body accel 2.6 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 148 km/h: body accel 2.5 g, min tyre load 0%, step 0.6 cm",
    "fix": ""
   },
   {
@@ -123,7 +150,16 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 140 km/h: body accel 3.3 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 140 km/h: body accel 3.9 g, min tyre load 0%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3258.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 105 km/h: body accel 2.5 g, min tyre load 43%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -132,7 +168,16 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 133 km/h: body accel 2.9 g, min tyre load 97%, step 0.9 cm",
+   "msg": "riding the kerb at 133 km/h: body accel 2.8 g, min tyre load 97%, step 1.0 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 3912.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 109 km/h: body accel 3.3 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
@@ -141,7 +186,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 161 km/h: body accel 2.3 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 161 km/h: body accel 2.1 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -150,16 +195,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 160 km/h: body accel 4.9 g, min tyre load 0%, step 0.7 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 4991.0,
-   "side": "L",
-   "severity": "HIGH",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 93 km/h: body accel 2.6 g, min tyre load 15%, step 0.6 cm",
+   "msg": "riding the kerb at 160 km/h: body accel 5.2 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -168,16 +204,16 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 140 km/h: body accel 5.4 g, min tyre load 0%, step 1.7 cm",
+   "msg": "riding the kerb at 140 km/h: body accel 5.5 g, min tyre load 0%, step 1.1 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 5257.0,
+   "s": 5409.0,
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 126 km/h: body accel 2.1 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 93 km/h: body accel 2.6 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -186,25 +222,34 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 174 km/h: body accel 2.5 g, min tyre load 68%, step 0.5 cm",
+   "msg": "riding the kerb at 174 km/h: body accel 2.5 g, min tyre load 65%, step 0.5 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 11082.0,
-   "side": "R",
+   "s": 6806.0,
+   "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 154 km/h: body accel 2.8 g, min tyre load 88%, step 0.5 cm",
+   "msg": "riding the kerb at 118 km/h: body accel 2.0 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 11134.0,
+   "s": 11081.0,
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 137 km/h: body accel 2.0 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 154 km/h: body accel 2.5 g, min tyre load 88%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 11135.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 137 km/h: body accel 2.3 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -213,7 +258,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 93 km/h: body accel 3.1 g, min tyre load 7%, step 1.0 cm",
+   "msg": "riding the kerb at 93 km/h: body accel 2.6 g, min tyre load 20%, step 1.0 cm",
    "fix": ""
   },
   {
@@ -222,7 +267,16 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 147 km/h: body accel 5.6 g, min tyre load 10%, step 0.6 cm",
+   "msg": "riding the kerb at 147 km/h: body accel 5.4 g, min tyre load 0%, step 0.7 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 13778.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 142 km/h: body accel 3.5 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
@@ -231,7 +285,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 110 km/h: body accel 2.1 g, min tyre load 37%, step 0.5 cm",
+   "msg": "riding the kerb at 110 km/h: body accel 2.2 g, min tyre load 49%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -240,16 +294,16 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 186 km/h: body accel 2.1 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 186 km/h: body accel 2.0 g, min tyre load 6%, step 0.3 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 14584.0,
+   "s": 14585.0,
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 86 km/h: body accel 3.0 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 86 km/h: body accel 2.9 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
@@ -258,16 +312,16 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 176 km/h: body accel 3.5 g, min tyre load 67%, step 0.3 cm",
+   "msg": "riding the kerb at 176 km/h: body accel 3.7 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 705.0,
+   "s": 704.0,
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 149 km/h: body accel 2.2 g, min tyre load 0%, step 0.6 cm",
+   "msg": "riding the kerb at 150 km/h: body accel 2.5 g, min tyre load 0%, step 0.6 cm",
    "fix": ""
   },
   {
@@ -276,7 +330,25 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 123 km/h: body accel 2.4 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 123 km/h: body accel 4.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1446.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 106 km/h: body accel 2.6 g, min tyre load 0%, step 0.9 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 1906.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 72 km/h: body accel 2.4 g, min tyre load 24%, step 0.6 cm",
    "fix": ""
   },
   {
@@ -285,7 +357,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 84 km/h: body accel 2.7 g, min tyre load 56%, step 0.8 cm",
+   "msg": "riding the kerb at 84 km/h: body accel 2.2 g, min tyre load 51%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -294,7 +366,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 130 km/h: body accel 4.4 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 130 km/h: body accel 3.9 g, min tyre load 0%, step 0.8 cm",
    "fix": ""
   },
   {
@@ -303,16 +375,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 129 km/h: body accel 2.6 g, min tyre load 42%, step 0.5 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 3345.0,
-   "side": "L",
-   "severity": "HIGH",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 103 km/h: body accel 2.1 g, min tyre load 52%, step 0.6 cm",
+   "msg": "riding the kerb at 129 km/h: body accel 3.3 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
@@ -330,7 +393,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 141 km/h: body accel 2.8 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 141 km/h: body accel 2.9 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -339,7 +402,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 151 km/h: body accel 2.2 g, min tyre load 38%, step 0.6 cm",
+   "msg": "riding the kerb at 151 km/h: body accel 2.2 g, min tyre load 0%, step 0.6 cm",
    "fix": ""
   },
   {
@@ -348,7 +411,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 132 km/h: body accel 2.6 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 132 km/h: body accel 2.5 g, min tyre load 0%, step 0.8 cm",
    "fix": ""
   },
   {
@@ -357,7 +420,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 100 km/h: body accel 2.0 g, min tyre load 63%, step 0.5 cm",
+   "msg": "riding the kerb at 100 km/h: body accel 3.0 g, min tyre load 17%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -366,7 +429,16 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 106 km/h: body accel 2.6 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 106 km/h: body accel 2.5 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 6637.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 163 km/h: body accel 3.5 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -375,7 +447,16 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 152 km/h: body accel 3.4 g, min tyre load 46%, step 0.6 cm",
+   "msg": "riding the kerb at 152 km/h: body accel 3.1 g, min tyre load 17%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 11131.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 145 km/h: body accel 2.4 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
@@ -384,7 +465,7 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 158 km/h: body accel 2.4 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 158 km/h: body accel 2.3 g, min tyre load 27%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -393,7 +474,25 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 144 km/h: body accel 3.8 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 144 km/h: body accel 2.3 g, min tyre load 0%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12859.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 148 km/h: body accel 2.2 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 12989.0,
+   "side": "L",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 117 km/h: body accel 2.2 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -402,7 +501,16 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 175 km/h: body accel 3.6 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 175 km/h: body accel 4.3 g, min tyre load 0%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 13766.0,
+   "side": "R",
+   "severity": "HIGH",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 151 km/h: body accel 2.6 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -411,7 +519,7 @@
    "side": "L",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 168 km/h: body accel 2.4 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 168 km/h: body accel 2.1 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
@@ -420,7 +528,52 @@
    "side": "R",
    "severity": "HIGH",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 177 km/h: body accel 2.9 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 177 km/h: body accel 4.6 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "palomares_roadside",
+   "s": 1800.0,
+   "side": "-",
+   "severity": "HIGH",
+   "kind": "prop_on_road",
+   "msg": "lg_09 has geometry over the asphalt below 4.5 m",
+   "fix": ""
+  },
+  {
+   "layout": "palomares_roadside",
+   "s": 1850.0,
+   "side": "-",
+   "severity": "HIGH",
+   "kind": "prop_on_road",
+   "msg": "lg_09 has geometry over the asphalt below 4.5 m",
+   "fix": ""
+  },
+  {
+   "layout": "palomares_roadside",
+   "s": 2850.0,
+   "side": "-",
+   "severity": "HIGH",
+   "kind": "prop_on_road",
+   "msg": "lg_14 has geometry over the asphalt below 4.5 m",
+   "fix": ""
+  },
+  {
+   "layout": "palomares_roadside",
+   "s": 7600.0,
+   "side": "-",
+   "severity": "HIGH",
+   "kind": "prop_on_road",
+   "msg": "lg_38 has geometry over the asphalt below 4.5 m",
+   "fix": ""
+  },
+  {
+   "layout": "palomares_roadside",
+   "s": 14700.0,
+   "side": "-",
+   "severity": "HIGH",
+   "kind": "prop_on_road",
+   "msg": "lg_73 has geometry over the asphalt below 4.5 m",
    "fix": ""
   },
   {
@@ -1739,38 +1892,47 @@
   },
   {
    "layout": "track_full",
-   "s": 6863.0,
-   "side": "left",
+   "s": 1965.0,
+   "side": "right",
    "severity": "MED",
    "kind": "kerb_height",
-   "msg": "kerb top 52 mm above the surface below it (ramp 44 deg, outer drop 145 mm)",
+   "msg": "kerb top 59 mm above the surface below it (ramp 65 deg, outer drop 152 mm)",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 12817.0,
+   "s": 3254.0,
    "side": "right",
    "severity": "MED",
    "kind": "kerb_height",
-   "msg": "kerb top 52 mm above the surface below it (ramp 28 deg, outer drop 179 mm)",
+   "msg": "kerb top 54 mm above the surface below it (ramp 65 deg, outer drop 168 mm)",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 13852.0,
+   "s": 3258.0,
    "side": "right",
    "severity": "MED",
    "kind": "kerb_height",
-   "msg": "kerb top 53 mm above the surface below it (ramp 30 deg, outer drop 192 mm)",
+   "msg": "kerb top 58 mm above the surface below it (ramp 69 deg, outer drop 144 mm)",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 4282.0,
-   "side": "left",
+   "s": 1963.0,
+   "side": "right",
    "severity": "MED",
    "kind": "kerb_height",
-   "msg": "kerb top 51 mm above the surface below it (ramp 24 deg, outer drop 154 mm)",
+   "msg": "kerb top 52 mm above the surface below it (ramp 53 deg, outer drop 149 mm)",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 3251.0,
+   "side": "right",
+   "severity": "MED",
+   "kind": "kerb_height",
+   "msg": "kerb top 55 mm above the surface below it (ramp 61 deg, outer drop 190 mm)",
    "fix": ""
   },
   {
@@ -1779,16 +1941,7 @@
    "side": "right",
    "severity": "MED",
    "kind": "kerb_height",
-   "msg": "kerb top 51 mm above the surface below it (ramp 51 deg, outer drop 95 mm)",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 13834.0,
-   "side": "right",
-   "severity": "MED",
-   "kind": "kerb_height",
-   "msg": "kerb top 51 mm above the surface below it (ramp 27 deg, outer drop 195 mm)",
+   "msg": "kerb top 52 mm above the surface below it (ramp 43 deg, outer drop 86 mm)",
    "fix": ""
   },
   {
@@ -1797,7 +1950,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 63 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 63 km/h: body accel 1.2 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -1815,16 +1968,16 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 128 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 127 km/h: body accel 1.4 g, min tyre load 0%, step 1.0 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 1318.0,
+   "s": 1327.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 142 km/h: body accel 1.2 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 135 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
    "fix": ""
   },
   {
@@ -1833,7 +1986,7 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 100 km/h: body accel 1.8 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 100 km/h: body accel 1.5 g, min tyre load 0%, step 0.8 cm",
    "fix": ""
   },
   {
@@ -1842,43 +1995,25 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 148 km/h: body accel 1.0 g, min tyre load 0%, step 0.1 cm",
+   "msg": "riding the kerb at 148 km/h: body accel 1.0 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 1768.0,
+   "s": 1771.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 94 km/h: body accel 1.2 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 95 km/h: body accel 1.3 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 1826.0,
+   "s": 1833.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 87 km/h: body accel 1.3 g, min tyre load 0%, step 0.6 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 1908.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 73 km/h: body accel 1.8 g, min tyre load 0%, step 0.5 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 1962.0,
-   "side": "R",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 77 km/h: body accel 1.2 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 89 km/h: body accel 1.6 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -1887,30 +2022,30 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 100 km/h: body accel 0.9 g, min tyre load 5%, step 0.2 cm",
+   "msg": "riding the kerb at 100 km/h: body accel 1.0 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 2537.0,
+   "s": 2438.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 117 km/h: body accel 1.9 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 145 km/h: body accel 1.4 g, min tyre load 5%, step 0.4 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 3347.0,
+   "s": 3346.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 92 km/h: body accel 1.4 g, min tyre load 0%, step 1.3 cm",
+   "msg": "riding the kerb at 92 km/h: body accel 1.2 g, min tyre load 0%, step 1.2 cm",
    "fix": ""
   },
   {
    "layout": "track_full",
-   "s": 3415.0,
+   "s": 3416.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
@@ -1923,7 +2058,25 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 121 km/h: body accel 0.9 g, min tyre load 9%, step 0.2 cm",
+   "msg": "riding the kerb at 121 km/h: body accel 1.0 g, min tyre load 9%, step 0.2 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 4986.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 88 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full",
+   "s": 5257.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 126 km/h: body accel 1.9 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -1932,7 +2085,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 120 km/h: body accel 1.1 g, min tyre load 0%, step 0.9 cm",
+   "msg": "riding the kerb at 121 km/h: body accel 1.0 g, min tyre load 0%, step 0.9 cm",
    "fix": ""
   },
   {
@@ -1946,29 +2099,11 @@
   },
   {
    "layout": "track_full",
-   "s": 5404.0,
+   "s": 6852.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 89 km/h: body accel 1.8 g, min tyre load 0%, step 0.3 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 6806.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 118 km/h: body accel 1.6 g, min tyre load 0%, step 0.4 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 6839.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 123 km/h: body accel 1.5 g, min tyre load 1%, step 0.3 cm",
+   "msg": "riding the kerb at 129 km/h: body accel 1.5 g, min tyre load 4%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -1977,7 +2112,7 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.1 cm",
+   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
@@ -1986,7 +2121,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 140 km/h: body accel 1.6 g, min tyre load 0%, step 0.1 cm",
+   "msg": "riding the kerb at 140 km/h: body accel 1.5 g, min tyre load 0%, step 0.1 cm",
    "fix": ""
   },
   {
@@ -1995,7 +2130,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 155 km/h: body accel 1.0 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 155 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -2004,7 +2139,7 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 151 km/h: body accel 1.1 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -2018,20 +2153,11 @@
   },
   {
    "layout": "track_full",
-   "s": 11681.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 158 km/h: body accel 1.0 g, min tyre load 0%, step 0.1 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
    "s": 12600.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 90 km/h: body accel 1.0 g, min tyre load 0%, step 0.9 cm",
+   "msg": "riding the kerb at 91 km/h: body accel 1.3 g, min tyre load 0%, step 1.0 cm",
    "fix": ""
   },
   {
@@ -2045,11 +2171,11 @@
   },
   {
    "layout": "track_full",
-   "s": 13646.0,
+   "s": 13647.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 186 km/h: body accel 1.4 g, min tyre load 0%, step 0.6 cm",
+   "msg": "riding the kerb at 186 km/h: body accel 2.0 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -2058,16 +2184,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 151 km/h: body accel 1.8 g, min tyre load 2%, step 0.2 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full",
-   "s": 14182.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 161 km/h: body accel 1.1 g, min tyre load 0%, step 0.1 cm",
+   "msg": "riding the kerb at 151 km/h: body accel 1.9 g, min tyre load 5%, step 0.2 cm",
    "fix": ""
   },
   {
@@ -2076,70 +2193,61 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 64 km/h: body accel 1.1 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 64 km/h: body accel 1.3 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 1089.0,
+   "s": 1092.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 159 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 157 km/h: body accel 1.2 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 1125.0,
+   "s": 1116.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 139 km/h: body accel 1.0 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 144 km/h: body accel 1.1 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 1313.0,
+   "s": 1316.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 150 km/h: body accel 1.1 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 149 km/h: body accel 1.7 g, min tyre load 0%, step 0.4 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 1821.0,
+   "s": 2136.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 89 km/h: body accel 1.0 g, min tyre load 0%, step 0.7 cm",
+   "msg": "riding the kerb at 131 km/h: body accel 1.2 g, min tyre load 0%, step 1.4 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 2137.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 131 km/h: body accel 1.5 g, min tyre load 0%, step 1.4 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 2182.0,
+   "s": 2175.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 98 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 104 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 2334.0,
+   "s": 2336.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 128 km/h: body accel 1.0 g, min tyre load 0%, step 0.2 cm",
+   "msg": "riding the kerb at 128 km/h: body accel 1.1 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -2157,7 +2265,16 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 153 km/h: body accel 1.4 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 153 km/h: body accel 1.3 g, min tyre load 10%, step 0.5 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 2985.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 109 km/h: body accel 1.0 g, min tyre load 1%, step 0.1 cm",
    "fix": ""
   },
   {
@@ -2171,11 +2288,11 @@
   },
   {
    "layout": "track_full_rev",
-   "s": 4777.0,
+   "s": 4778.0,
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 154 km/h: body accel 1.1 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 154 km/h: body accel 1.2 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -2189,11 +2306,20 @@
   },
   {
    "layout": "track_full_rev",
-   "s": 7035.0,
+   "s": 6771.0,
+   "side": "R",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 120 km/h: body accel 1.2 g, min tyre load 8%, step 0.3 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 7033.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 110 km/h: body accel 1.1 g, min tyre load 0%, step 0.2 cm",
+   "msg": "riding the kerb at 110 km/h: body accel 1.3 g, min tyre load 0%, step 0.5 cm",
    "fix": ""
   },
   {
@@ -2220,16 +2346,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 137 km/h: body accel 1.1 g, min tyre load 0%, step 0.6 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 11129.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 146 km/h: body accel 1.6 g, min tyre load 0%, step 0.5 cm",
+   "msg": "riding the kerb at 137 km/h: body accel 1.7 g, min tyre load 0%, step 0.7 cm",
    "fix": ""
   },
   {
@@ -2247,7 +2364,7 @@
    "side": "R",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 122 km/h: body accel 1.3 g, min tyre load 7%, step 0.3 cm",
+   "msg": "riding the kerb at 122 km/h: body accel 1.3 g, min tyre load 9%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -2256,7 +2373,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 146 km/h: body accel 1.2 g, min tyre load 0%, step 0.6 cm",
+   "msg": "riding the kerb at 146 km/h: body accel 1.1 g, min tyre load 0%, step 0.6 cm",
    "fix": ""
   },
   {
@@ -2265,16 +2382,7 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 121 km/h: body accel 1.4 g, min tyre load 0%, step 0.3 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 12859.0,
-   "side": "R",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 148 km/h: body accel 2.0 g, min tyre load 0%, step 0.4 cm",
+   "msg": "riding the kerb at 121 km/h: body accel 1.3 g, min tyre load 0%, step 0.3 cm",
    "fix": ""
   },
   {
@@ -2283,25 +2391,16 @@
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 133 km/h: body accel 1.7 g, min tyre load 0%, step 0.3 cm",
+   "msg": "riding the kerb at 133 km/h: body accel 1.6 g, min tyre load 0%, step 0.2 cm",
    "fix": ""
   },
   {
    "layout": "track_full_rev",
-   "s": 12989.0,
+   "s": 13836.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 116 km/h: body accel 1.4 g, min tyre load 0%, step 0.5 cm",
-   "fix": ""
-  },
-  {
-   "layout": "track_full_rev",
-   "s": 13839.0,
-   "side": "L",
-   "severity": "MED",
-   "kind": "kerb_ride",
-   "msg": "riding the kerb at 110 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 111 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
    "fix": ""
   },
   {
@@ -2315,11 +2414,20 @@
   },
   {
    "layout": "track_full_rev",
-   "s": 14122.0,
+   "s": 14123.0,
    "side": "L",
    "severity": "MED",
    "kind": "kerb_ride",
-   "msg": "riding the kerb at 152 km/h: body accel 1.1 g, min tyre load 0%, step 0.8 cm",
+   "msg": "riding the kerb at 153 km/h: body accel 1.0 g, min tyre load 0%, step 0.9 cm",
+   "fix": ""
+  },
+  {
+   "layout": "track_full_rev",
+   "s": 14574.0,
+   "side": "L",
+   "severity": "MED",
+   "kind": "kerb_ride",
+   "msg": "riding the kerb at 88 km/h: body accel 1.2 g, min tyre load 0%, step 0.1 cm",
    "fix": ""
   },
   {
@@ -3349,5 +3457,5 @@
    "fix": "covered by 21b event barrier"
   }
  ],
- "runtime_s": 315.0973844528198
+ "runtime_s": 196.77409386634827
 }

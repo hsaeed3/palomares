@@ -1,17 +1,72 @@
 {
  "kn5_files": 17,
- "physics_meshes": 190,
- "collision_triangles": 217386,
- "solid_items": 478,
- "uncovered_items": 15,
+ "physics_meshes": 195,
+ "collision_triangles": 219062,
+ "solid_items": 550,
+ "uncovered_items": 1,
  "per_type": {
   "guardrail_candidate": {
    "items": 12,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
+  "guardrail_wbeam": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
   "road_sign": {
-   "items": 40,
+   "items": 55,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "utility_pole": {
+   "items": 13,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "retaining_wall_stone": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate_estate": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wood_split_rail_fence": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "ranch_wire_fence": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wood_board_fence": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "mailbox_cluster": {
+   "items": 6,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "bridge_parapet_stone": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.back_rect": {
+   "items": 5,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -20,23 +75,23 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
+  "rock.boulder_m": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
   "pole.utility_wood": {
-   "items": 78,
+   "items": 75,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.chainlink": {
+   "items": 23,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "sign.round_prohibition": {
    "items": 1,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "sign.back_rect": {
-   "items": 3,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "fence.chainlink": {
-   "items": 22,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -51,27 +106,37 @@
    "uncovered_m": 0.0
   },
   "sign.warning_blank": {
-   "items": 14,
+   "items": 13,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "sign.back_diamond": {
-   "items": 7,
+   "items": 8,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "tree.oak": {
+   "items": 6,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "mailbox.cluster": {
-   "items": 20,
+   "items": 18,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "fence.ranch_wire": {
-   "items": 30,
+   "items": 28,
+   "uncovered": 1,
+   "uncovered_m": 0.5
+  },
+  "rock.outcrop": {
+   "items": 4,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "guardrail.wbeam_wood": {
-   "items": 13,
+   "items": 10,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -81,7 +146,12 @@
    "uncovered_m": 0.0
   },
   "fence.board_3rail": {
-   "items": 14,
+   "items": 13,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.privacy": {
+   "items": 6,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -115,13 +185,18 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
+  "rock.cluster": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
   "sign.text_private": {
    "items": 1,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "sign.blank_white": {
-   "items": 3,
+   "items": 5,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -131,47 +206,57 @@
    "uncovered_m": 0.0
   },
   "sign.hump": {
-   "items": 5,
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "fence.split_rail": {
-   "items": 17,
-   "uncovered": 1,
-   "uncovered_m": 0.5
+  "mailbox.single": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "fence.white_rail": {
    "items": 14,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "mailbox.single": {
-   "items": 4,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "fence.iron_picket": {
-   "items": 2,
-   "uncovered": 0,
-   "uncovered_m": 0.0
-  },
-  "gate.white_rail": {
+  "guardrail.timber_rail": {
    "items": 3,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
+  "fence.iron_picket": {
+   "items": 3,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building.garage": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "fence.split_rail": {
+   "items": 15,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
   "gate.estate_brick_iron": {
-   "items": 6,
+   "items": 7,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "wall.retaining_concrete": {
+   "items": 3,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "sign.chevron_left": {
-   "items": 9,
+   "items": 8,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "sign.stop": {
-   "items": 1,
+  "mailbox.brick_column": {
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -180,13 +265,23 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "sign.object_marker": {
-   "items": 4,
+  "sign.curve_right": {
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "sign.mile_marker": {
-   "items": 1,
+  "sign.chevron_right": {
+   "items": 5,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building.ranch_house": {
+   "items": 6,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "gate.pipe_ranch": {
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -195,7 +290,17 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "gate.pipe_ranch": {
+  "sign.mile_marker": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "sign.object_marker": {
+   "items": 4,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "building.shed": {
    "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
@@ -205,13 +310,13 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "fence.privacy": {
-   "items": 4,
+  "gate.white_rail": {
+   "items": 2,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "wall.retaining_concrete": {
-   "items": 2,
+  "building.house_two_storey": {
+   "items": 1,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
@@ -220,49 +325,49 @@
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "building.ranch_house": {
-   "items": 8,
-   "uncovered": 8,
-   "uncovered_m": 4.0
-  },
-  "building.shed": {
-   "items": 2,
-   "uncovered": 2,
-   "uncovered_m": 1.0
-  },
-  "building.house_two_storey": {
-   "items": 1,
-   "uncovered": 1,
-   "uncovered_m": 0.5
-  },
   "building.barn": {
    "items": 2,
-   "uncovered": 2,
-   "uncovered_m": 1.0
-  },
-  "sign.chevron_right": {
-   "items": 5,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
   "building.water_tank": {
    "items": 1,
-   "uncovered": 1,
-   "uncovered_m": 0.5
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "tree.winter_sycamore": {
+   "items": 2,
+   "uncovered": 0,
+   "uncovered_m": 0.0
   },
   "sign.arrow_left": {
    "items": 1,
    "uncovered": 0,
    "uncovered_m": 0.0
   },
-  "sign.curve_right": {
-   "items": 2,
+  "prop.hydrant": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "tree.winter_poplar": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "prop.utility_box": {
+   "items": 1,
+   "uncovered": 0,
+   "uncovered_m": 0.0
+  },
+  "mailbox.cbu": {
+   "items": 1,
    "uncovered": 0,
    "uncovered_m": 0.0
   }
  },
  "failures": [
-  "15 solid items lack collision within 0.3 m / 1.25 m height"
+  "1 solid items lack collision within 0.3 m / 1.25 m height"
  ],
  "tolerance_m": 0.3,
  "min_height_m": 1.25

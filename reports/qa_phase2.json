@@ -24,18 +24,18 @@
    "problems": [],
    "n_problems": 0,
    "draw_calls": {
-    "road_full": 1267,
-    "road_full_rev": 1267,
-    "road_north": 1267,
-    "road_north_rev": 1267,
-    "road_summit": 1267,
-    "road_summit_rev": 1267,
-    "track_full": 1302,
-    "track_full_rev": 1302,
-    "track_north": 1302,
-    "track_north_rev": 1302,
-    "track_summit": 1302,
-    "track_summit_rev": 1302
+    "road_full": 1385,
+    "road_full_rev": 1385,
+    "road_north": 1385,
+    "road_north_rev": 1385,
+    "road_summit": 1385,
+    "road_summit_rev": 1385,
+    "track_full": 1420,
+    "track_full_rev": 1421,
+    "track_north": 1420,
+    "track_north_rev": 1421,
+    "track_summit": 1420,
+    "track_summit_rev": 1421
    },
    "note": "draw calls = all meshes in layout kn5s (reader does not expose visible flag; upper bound)"
   },
@@ -87,13 +87,13 @@
   },
   "3a_vertical_steps": {
    "status": "PASS",
-   "n_boundary_vertices_checked": 458474,
-   "n_with_overlap_surface": 455242,
+   "n_boundary_vertices_checked": 479195,
+   "n_with_overlap_surface": 475799,
    "n_steps_over_2cm": 0,
-   "max_step": 0.049411834828646306,
-   "coincident_vertex_max_dz": 0.0402984619140625,
-   "n_coincident_over_2cm": 17,
-   "n_hidden_under_higher_surface": 34,
+   "max_step": 0.04803136880869374,
+   "coincident_vertex_max_dz": 0.040313720703125,
+   "n_coincident_over_2cm": 18,
+   "n_hidden_under_higher_surface": 40,
    "by_mesh_pair": {},
    "road_or_kerb_steps_n": 0,
    "worst": [],
@@ -102,23 +102,23 @@
   },
   "3b_holes": {
    "status": "PASS",
-   "n_boundary_edges_union": 9528,
-   "n_open_boundary_edges": 4944,
+   "n_boundary_edges_union": 9537,
+   "n_open_boundary_edges": 4957,
    "n_open_edges_within_road_plus3m": 0,
    "stations_road_holes": [],
    "n_open_edges_within_30m": 0,
    "stations_within_30m": [],
-   "n_nonmanifold_edges": 10762,
+   "n_nonmanifold_edges": 10786,
    "note": "T-junction gaps where another surface covers both sides are not counted (probe 5 cm either side)"
   },
   "3c_normals": {
    "status": "PASS",
    "vertex_normals_with_negative_up": 0,
    "triangles_winding_a": 0,
-   "triangles_winding_b": 2386946,
+   "triangles_winding_b": 2832675,
    "minority_winding_triangles": 0,
    "meshes_with_mixed_winding": [],
-   "min_vertex_normal_up": 0.07113625854253769
+   "min_vertex_normal_up": 0.018508583307266235
   },
   "3d_grade_crossfall": {
    "status": "PASS",
@@ -140,67 +140,54 @@
   },
   "4_package": {
    "status": "PASS",
-   "problems": [
-    "NOTE road_full: ui/preview.png missing",
-    "NOTE road_full_rev: ui/preview.png missing",
-    "NOTE road_north: ui/preview.png missing",
-    "NOTE road_north_rev: ui/preview.png missing",
-    "NOTE road_summit: ui/preview.png missing",
-    "NOTE road_summit_rev: ui/preview.png missing",
-    "NOTE track_full: ui/preview.png missing",
-    "NOTE track_full_rev: ui/preview.png missing",
-    "NOTE track_north: ui/preview.png missing",
-    "NOTE track_north_rev: ui/preview.png missing",
-    "NOTE track_summit: ui/preview.png missing",
-    "NOTE track_summit_rev: ui/preview.png missing"
-   ],
+   "problems": [],
    "ui": {
     "road_full": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Road) v0.2.0-dev5",
      "length": "15543"
     },
     "road_full_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Road) v0.2.0-dev5",
      "length": "15543"
     },
     "road_north": {
-     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Road) v0.2.0-dev5",
      "length": "8171"
     },
     "road_north_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Road) v0.2.0-dev5",
      "length": "8171"
     },
     "road_summit": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Road) v0.2.0-dev5",
      "length": "7372"
     },
     "road_summit_rev": {
-     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Road) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Road) v0.2.0-dev5",
      "length": "7372"
     },
     "track_full": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Castro Valley (full) (Track) v0.2.0-dev5",
      "length": "15543"
     },
     "track_full_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Niles Canyon (full) (Track) v0.2.0-dev5",
      "length": "15543"
     },
     "track_north": {
-     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Summit \u2192 Castro Valley (Track) v0.2.0-dev5",
      "length": "8171"
     },
     "track_north_rev": {
-     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Castro Valley \u2192 Summit (Track) v0.2.0-dev5",
      "length": "8171"
     },
     "track_summit": {
-     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Niles Canyon \u2192 Summit (Track) v0.2.0-dev5",
      "length": "7372"
     },
     "track_summit_rev": {
-     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Track) v0.2.0-dev4",
+     "name": "Palomares Road \u2014 Summit \u2192 Niles Canyon (Track) v0.2.0-dev5",
      "length": "7372"
     }
    },
@@ -401,5 +388,5 @@
    }
   }
  },
- "runtime_s": 135.3
+ "runtime_s": 97.6
 }
