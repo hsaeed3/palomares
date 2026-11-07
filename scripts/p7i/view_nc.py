@@ -9,12 +9,13 @@ from kn5 import read_kn5
 from PIL import Image
 s0 = float(sys.argv[1]); sb = "--dir" in sys.argv and sys.argv[sys.argv.index("--dir") + 1] == "sb"
 TR = pathlib.Path(os.environ.get("PALOMARES_BUILD_DIR", ROOT / "build_dev7")) / "palomares_road"
-road = NW.load_road("niles_canyon_road"); i = int(s0); sd = -1 if sb else 1
+RN = sys.argv[sys.argv.index("--road") + 1] if "--road" in sys.argv else "niles_canyon_road"
+road = NW.load_road(RN); i = int(s0); sd = -1 if sb else 1
 ie = int(np.clip(i - sd * 45, 0, len(road.s) - 1)); lane = 1.6 * (1 if sb else -1)
 eye = np.array([road.x[ie] + road.nx[ie] * lane, road.y[ie] + road.ny[ie] * lane, road.z[ie] + 1.25])
 tgt = np.array([road.x[i] + road.nx[i] * lane, road.y[i] + road.ny[i] * lane, road.z[i] + 1.0])
 P, T, C = [], [], []; n = 0
-for f in ["palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomares_niles_assets.kn5", f"palomares_niles_kerbs_{'sb' if sb else 'nb'}.kn5"]:
+for f in (["palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomares_niles_assets.kn5", f"palomares_niles_kerbs_{'sb' if sb else 'nb'}.kn5"] if RN == "niles_canyon_road" else ["palomares_niles_town.kn5", "palomares_niles_town_terrain.kn5", "palomares_niles_lines.kn5", "palomares_niles_town_assets.kn5"]):
     k = read_kn5(str(TR / f)); tex = {}
     for m in k["meshes"]:
         if not m.get("renderable", True) or not len(m["pos"]):
@@ -34,8 +35,8 @@ for f in ["palomares_niles_ncr.kn5", "palomares_niles_ncr_terrain.kn5", "palomar
 P = np.concatenate(P); T = np.concatenate(T); C = np.concatenate(C).astype(float)
 tiles = [("driver", view.render(P, T, C, eye, tgt, fov=60, far=400))]
 rows = [json.loads(l) for l in open(ROOT / "data/scene/ledger_dev7.jsonl")]
-r = min((r for r in rows if r["road"] == "niles_canyon_road" and r.get("mly")), key=lambda r: abs(r["s"] - s0))
+r = min((r for r in rows if r["road"] == RN and r.get("mly")), key=lambda r: abs(r["s"] - s0))
 q = ROOT / f"data/raw/dev7/mapillary/img/{r['mly'][0]}.jpg"
 if q.exists():
     tiles.append((f"Mapillary {r['mly'][0]} ({r['asset']} s {r['s']:.0f})", Image.open(q)))
-print(view.strip(tiles, view.OUT / f"nc_{int(s0)}{'_sb' if sb else ''}.jpg", f"Niles Canyon built kn5 at s {s0:.0f} ({'sb' if sb else 'nb'})"))
+print(view.strip(tiles, view.OUT / f"{RN[:6]}_{int(s0)}{'_sb' if sb else ''}.jpg", f"Niles Canyon built kn5 at s {s0:.0f} ({'sb' if sb else 'nb'})"))

@@ -115,7 +115,7 @@ def main():
     # 5. QA on the staged folder
     if not a.no_qa:
         p2 = ROOT / "scripts/p2"; qa = {}
-        def view(tag, lays):
+        def view(tag, lays, pat=None):
             """temp build dir whose palomares_road holds only these layouts' kn5 + data (symlinks): the QA globs
             then see exactly what those layouts load (the shipped Palomares road and G's cut copy never meet)"""
             QB = STG / f"qa_{tag}"; T = QB / "palomares_road"; T.mkdir(parents=True)
@@ -124,7 +124,15 @@ def main():
                     if not (T / k).exists():
                         os.symlink(OUT / k, T / k)
                 (T / lay).mkdir(); os.symlink(OUT / lay / "data", T / lay / "data")
-                os.symlink(OUT / f"models_{lay}.ini", T / f"models_{lay}.ini")
+                if pat is None:
+                    os.symlink(OUT / f"models_{lay}.ini", T / f"models_{lay}.ini")
+                else:                                # split QA run: the layout lists only the kn5 of this run
+                    import fnmatch
+                    fs = [k for k in allm[lay] if fnmatch.fnmatch(k, pat)]
+                    (T / f"models_{lay}.ini").write_text("".join(f"[MODEL_{i}]\nFILE={k}\n\n" for i, k in enumerate(fs)))
+                    for k in allm[lay]:
+                        if not fnmatch.fnmatch(k, pat) and (T / k).is_symlink():
+                            (T / k).unlink()
             return QB
         def run(tag, QB, cmd, extra=None):
             env = dict(os.environ, PALOMARES_BUILD_DIR=str(QB), **(extra or {}))
@@ -140,6 +148,19 @@ def main():
             QC = view("canyon", cl)
             run("on_road_niles_canyon", QC, ["qa_on_road.py", "--track", str(QC / "palomares_road"), "--road", "niles_canyon_road", "--kn5", "palomares_niles_*.kn5"])
             run("ffb_canyon", QC, ["qa_ffb_safety.py"], dict(QA_FFB_ROAD_KN5="palomares_niles_ncr.kn5", QA_FFB_ROAD="niles_canyon_road", QA_FFB_OUT="dev7/qa_ffb_package_canyon.json"))
+        fl = [k for k in d7 if k.startswith("freeroam")]
+        if fl:
+            QF = view("freeroam", fl)
+            run("on_road_freeroam_palomares", QF, ["qa_on_road.py", "--track", str(QF / "palomares_road"), "--kn5", "palomares_[!n]*.kn5"])
+            for rn in ("niles_canyon_road", "niles_blvd", "main_street", "mission_boulevard"):
+                run(f"on_road_freeroam_{rn}", QF, ["qa_on_road.py", "--track", str(QF / "palomares_road"), "--road", rn, "--kn5", "palomares_niles_*.kn5"])
+            # qa_ffb_safety classifies colliders in ONE road frame: run it per frame on the kn5 that live in it
+            # (Palomares frame: shipped Palomares kn5 + G's junction-cut copies; NCR frame: every palomares_niles_*)
+            QFp = view("freeroam_pal", fl, "palomares_[!n]*.kn5"); QFn = view("freeroam_nil", fl, "palomares_niles_*.kn5")
+            run("ffb_freeroam_palomares", QFp, ["qa_ffb_safety.py"], dict(QA_FFB_KN5="palomares_[!n]*.kn5", QA_FFB_ROAD_KN5="palomares_road_dev7.kn5",
+                                                                       QA_FFB_OUT="dev7/qa_ffb_package_freeroam_palomares.json"))
+            run("ffb_freeroam_niles", QFn, ["qa_ffb_safety.py"], dict(QA_FFB_KN5="palomares_niles_*.kn5", QA_FFB_ROAD_KN5="palomares_niles_ncr.kn5", QA_FFB_ROAD="niles_canyon_road",
+                                                                   QA_FFB_OUT="dev7/qa_ffb_package_freeroam_niles.json"))
         rep["qa"] = qa
         for q in STG.glob("qa_*"):
             shutil.rmtree(q)

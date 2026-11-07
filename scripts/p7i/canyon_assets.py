@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """dev7 I: Niles Canyon Rd ledger assets -> $BUILD/palomares_road/palomares_niles_assets.kn5 (+ kerbs kn5s).
 
-  PALOMARES_BUILD_DIR=build_dev7 python3 scripts/p7i/canyon_assets.py      (about 30 s)
+  PALOMARES_BUILD_DIR=build_dev7 python3 scripts/p7i/canyon_assets.py [--town]   (about 30 s)
+  --town: every other dev7 road (Niles / Sunol clusters, Mission Blvd) -> palomares_niles_town_assets.kn5
 
 * rows of data/scene/ledger_dev7.jsonl with road == niles_canyon_road; dev5 types via assets.generate on the
   "ledger" atlas (material nc_ledger), dev7 types via assets_dev7.generate_parts (nc_ledger7 + emissive parts).
@@ -35,7 +36,29 @@ assert BUILD.resolve() != (ROOT / "build").resolve(), "never write to build/"
 ROADN = "niles_canyon_road"; CHUNK = 1000.0; CLEAR = 0.30
 BASE = {"ksAmbient": 0.5, "ksDiffuse": 0.5, "ksSpecular": 0.0, "ksSpecularEXP": 1.0, "ksEmissive": (0, 0, 0), "ksAlphaRef": 0.0}
 
-road = NW.load_road(ROADN); N = len(road.s); KD = cKDTree(np.c_[road.x, road.y])
+GROUP = "town" if "--town" in sys.argv else "canyon"
+ROADS = {}
+
+
+def set_road(name):
+    """switch the module's current road (placement frame of a ledger row)"""
+    global road, N, KD
+    if name not in ROADS:
+        r = NW.load_road(name); ROADS[name] = (r, len(r.s), cKDTree(np.c_[r.x, r.y]))
+    road, N, KD = ROADS[name]
+
+
+set_road(ROADN)
+# whole-network pavement for the clearance rule: nothing on ANY road's asphalt (town streets cross each other)
+_pv = []
+for _nm in NW.roles():
+    try:
+        _r = NW.load_road(_nm)
+    except Exception:
+        continue
+    _n = len(_r.s); _e = np.zeros(_n, bool); _e[:3] = _e[-3:] = True
+    _pv.append((_r.x, _r.y, _r.nx, _r.ny, _r.el, _r.er, _r.z, _r.cl, _r.cr, _e))
+PV = [np.concatenate(a) for a in zip(*_pv)]; PKD = cKDTree(np.c_[PV[0], PV[1]])
 dtm = Raster(DEV7 / "dtm_r050_b40.tif")
 GROUND_FREE = ("building", "bridge", "marking", "driveway", "tree_add")
 
@@ -50,9 +73,10 @@ def station_lateral(P):
 
 
 def on_asphalt(P, clear=CLEAR):
-    s, off, j = station_lateral(P)
-    half = np.where(off > 0, road.el[j], road.er[j]); zr = road.surface_z(j, off, noise=False)
-    return (np.abs(off) < half + clear) & (P[:, 2] > zr + 0.02) & (P[:, 2] < zr + 4.5) & (j > 2) & (j < N - 3), j, off, half
+    X, Y, NX, NY, EL, ER, Z, CL, CR, END = PV
+    _, j = PKD.query(P[:, :2]); off = (P[:, 0] - X[j]) * NX[j] + (P[:, 1] - Y[j]) * NY[j]
+    half = np.where(off > 0, EL[j], ER[j]); zr = Z[j] + np.where(off > 0, CL[j] * off, CR[j] * off)
+    return (np.abs(off) < half + clear) & (P[:, 2] > zr + 0.02) & (P[:, 2] < zr + 4.5) & ~END[j], j, off, half
 
 
 CLEARLOG = {"pushed": 0, "trimmed_tris": 0}
@@ -65,7 +89,7 @@ def clear_road(P, T):
     if float(np.ptp(P[:, :2], 0).max()) < 12:
         side = np.sign(np.median(off)) or 1.0; k = j[bad][0]
         need = float(np.max(half[bad] + CLEAR - side * off[bad])) + 0.01
-        Q = P.copy(); Q[:, 0] += side * need * road.nx[k]; Q[:, 1] += side * need * road.ny[k]
+        Q = P.copy(); Q[:, 0] += side * need * PV[2][k]; Q[:, 1] += side * need * PV[3][k]
         if not on_asphalt(Q)[0].any():
             CLEARLOG["pushed"] += 1; return Q, T
     keep = ~bad[T].any(1); CLEARLOG["trimmed_tris"] += int((~keep).sum())
@@ -85,10 +109,12 @@ class Acc:
 
 VIS = {}       # (material, chunk) -> Acc
 WALLS = []     # 1WALL boxes (P, T) in world
+CUR = {"cls": ""}  # class of the row being placed (buildings collide in one shared pass)
+BLD_POLYS = []  # footprints of placed surveyed buildings (shapely)
 
 
 def acc(mat, s):
-    k = (mat, int(np.clip(s // CHUNK, 0, N // CHUNK)))
+    i = int(np.clip(round(s), 0, N - 1)); k = (mat, int(road.x[i] // CHUNK), int(road.y[i] // CHUNK))   # 1 km world grid
     return VIS.setdefault(k, Acc())
 
 
@@ -97,7 +123,7 @@ def wbox(X, Y, fw, L, Wd, z0, z1):
     co = [c - fw * L / 2 - fl * Wd / 2, c + fw * L / 2 - fl * Wd / 2, c + fw * L / 2 + fl * Wd / 2, c - fw * L / 2 + fl * Wd / 2]
     P = np.array([[*q, z0] for q in co] + [[*q, z1] for q in co])
     T = np.array([[0, 2, 1], [0, 3, 2], [4, 5, 6], [4, 6, 7], [0, 1, 5], [0, 5, 4], [1, 2, 6], [1, 6, 5], [2, 3, 7], [2, 7, 6], [3, 0, 4], [3, 4, 7]])
-    WALLS.append((P, T))
+    WALLS.append((P, T, "__bld__" if CUR["cls"] == "building" else road.name))
 
 
 def wribbon(Q, half, z0, z1):
@@ -113,7 +139,7 @@ def wribbon(Q, half, z0, z1):
     for k, sgn in ((0, 1), (n - 1, -1)):
         c = [a * n + k for a in range(4)]
         T += ([[c[0], c[2], c[1]], [c[0], c[3], c[2]]] if sgn > 0 else [[c[0], c[1], c[2]], [c[0], c[2], c[3]]])
-    WALLS.append((P, np.array(T)))
+    WALLS.append((P, np.array(T), road.name))
 
 
 def side_sgn(r):
@@ -187,6 +213,15 @@ def place_point(r):
     cat = AS.CATALOG[r["asset"]]; parts, main = parts_of(r)
     s, i, sg, t, n, x, y, z = frame(r)
     fp = (r.get("params") or {}).get("footprint")
+    if r["asset"] == "building.town_generic":
+        # surveyed storefront / depot rows replace the OSM box they stand on (no doubled buildings)
+        from shapely.geometry import Polygon
+        if (r.get("params") or {}).get("by_eye_row"):
+            CLEARLOG["bld_dup_skipped"] = CLEARLOG.get("bld_dup_skipped", 0) + 1; return
+        if fp and len(fp) >= 3:
+            pg = Polygon(fp).buffer(0)
+            if any(pg.intersection(q).area > 0.2 * max(pg.area, 1e-6) for q in BLD_POLYS):
+                CLEARLOG["bld_dup_skipped"] = CLEARLOG.get("bld_dup_skipped", 0) + 1; return
     if r["asset"] == "building.town_generic" and fp:
         c = np.asarray(fp, float); c = (c[:-1] if np.allclose(c[0], c[-1]) else c).mean(0)
         zg = ground([c[0]], [c[1]])[0]; x, y = c; z = float(zg) if np.isfinite(zg) else z
@@ -200,6 +235,9 @@ def place_point(r):
         if not len(P):
             continue
         W = np.c_[x + P[:, 0] * xa[0] + P[:, 1] * ya[0], y + P[:, 0] * xa[1] + P[:, 1] * ya[1], z + P[:, 2]]
+        if r["asset"] in ("building.storefront", "building.storefront_row", "building.depot") and mat == "nc_ledger7":
+            from shapely.geometry import MultiPoint
+            BLD_POLYS.append(MultiPoint(W[:, :2]).convex_hull)
         Nw = np.c_[Nn[:, 0] * xa[0] + Nn[:, 1] * ya[0], Nn[:, 0] * xa[1] + Nn[:, 1] * ya[1], Nn[:, 2]]
         acc(mat, s).add(W, T, UV, Nw)
     if cat["collide"]:
@@ -276,43 +314,65 @@ def main():
                 AS.generate(aid, 10.0 if e["linear"] else None, {"seed": 7})
             except Exception:
                 pass
-    rr = [r for r in rows if r["road"] == ROADN and r.get("status", "placed") != "removed" and r["asset"] in AS.CATALOG]
+    roads_ok = set(NW.roles())
+    if GROUP == "canyon":
+        rr = [r for r in rows if r["road"] == ROADN]
+    else:                                     # town: every other dev7 road of the network (Palomares rows live in 21c/21e)
+        rr = [r for r in rows if r["road"] not in (ROADN, "palomares_road") and r["road"] in roads_ok]
+    rr = [r for r in rr if r.get("status", "placed") != "removed" and r["asset"] in AS.CATALOG]
     skipped = {}
+    rr.sort(key=lambda r: r["asset"] not in ("building.storefront", "building.storefront_row", "building.depot"))
     for r in rr:
         e = AS.CATALOG[r["asset"]]
         try:
-            (place_linear if e["linear"] else place_point)(r)
+            set_road(r["road"]); CUR["cls"] = r["cls"]; (place_linear if e["linear"] else place_point)(r)
         except Exception as ex:      # noqa: BLE001
             skipped[r["id"]] = f"{r['asset']}: {ex}"
+    tagp = "nc" if GROUP == "canyon" else "nt"
     meshes = []
-    for (mat, c), a in sorted(VIS.items()):
-        if not a.P:
+    for (mat, cx_, cy_), a_ in sorted(VIS.items()):
+        if not a_.P:
             continue
-        P = np.concatenate(a.P); T = np.concatenate(a.T); UV = np.concatenate(a.UV); Nn = vnorm(np.concatenate(a.N))
-        meshes.append(dict(name=f"nc_{mat}_{c:02d}", P=P, T=T, UV=UV, N=Nn, material=mat,
+        P = np.concatenate(a_.P); T = np.concatenate(a_.T); UV = np.concatenate(a_.UV); Nn = vnorm(np.concatenate(a_.N))
+        meshes.append(dict(name=f"{tagp}_{mat}_{cx_}_{cy_}", P=P, T=T, UV=UV, N=Nn, material=mat,
                            cast_shadows=mat in ("nc_ledger", "nc_ledger7"), lod_out=1200.0 if mat.startswith("nc_ledger") else 600.0))
-    # collision: per-object boxes -> collision_conv convention
-    G = {"assets": []}
-    # G's bridge parapet slabs (1WALL_<tag>_br*) already collide: drop ours on the same side over those stations
-    occ = []
-    for f in sorted(TRACK.glob("palomares_niles_ncr*.kn5")):
+    # G's walls (bridge parapets etc.) already collide: drop ours within 2.5 m of any of them
+    gw = []
+    for f in sorted(TRACK.glob("palomares_niles_*.kn5")):
+        if "assets" in f.name or "kerbs" in f.name or "timing" in f.name:
+            continue
         for m in read_kn5(str(f))["meshes"]:
             if m["name"].startswith("1WALL") and len(m["pos"]):
-                Pm = np.asarray(m["pos"], float); Pm = np.c_[Pm[:, 0], -Pm[:, 2], Pm[:, 1]]; s_, o_, _ = station_lateral(Pm)
-                occ.append((s_.min() - 4, s_.max() + 4, np.sign(np.median(o_))))
-    def occupied(P):
-        s_, o_, _ = station_lateral(P); sd = np.sign(np.median(o_))
-        return any(a <= s_.max() and s_.min() <= b and sd == c for a, b, c in occ)
-    WALLS[:] = [w for w in WALLS if not occupied(w[0])]
-    for k, (P, T) in enumerate(WALLS):
-        G["assets"].append(dict(name=f"1WALL_nc_obj{k:04d}", P=P, T=T, N=np.zeros_like(P), UV=np.zeros((len(P), 2)), material="invisible"))
-    cl = load_centerline(None, DEV7 / f"centerline_{ROADN}.csv")
-    st = CC.rebuild(G, cl, None)
-    cols = [m for g in G.values() for m in g if m["name"].startswith("1WALL")]
-    # clearance on collision too: drop collider triangles on the asphalt
+                Pm = np.asarray(m["pos"], float); gw.append(np.c_[Pm[:, 0], -Pm[:, 2]])
+    if gw:
+        GKD = cKDTree(np.concatenate(gw))
+        WALLS[:] = [w for w in WALLS if GKD.query(w[0][:, :2])[0].min() > 2.5]
+    WALLS[:] = [w for w in WALLS if not on_asphalt(w[0], 0.0)[0].any()]          # input boxes on any asphalt: none
+    # collision per road frame (collision_conv classifies in the road frame), names tagged per road
+    cols = []; st = {}
+    for rn in sorted({w[2] for w in WALLS}):
+        G = {"assets": [dict(name=f"1WALL_{tagp}_obj{k:04d}", P=P, T=T, N=np.zeros_like(P), UV=np.zeros((len(P), 2)), material="invisible")
+                        for k, (P, T, rn_) in enumerate(WALLS) if rn_ == rn]}
+        # buildings of every road in ONE pass (overlapping footprints merge into one box; frame-independent),
+        # walls / fences per road frame
+        cl = load_centerline(None, DEV7 / f"centerline_{ROADN if rn == '__bld__' else rn}.csv")
+        st[rn] = CC.rebuild(G, cl, None, log=lambda *a: None)
+        tag = "" if GROUP == "canyon" else ("bld_" if rn == "__bld__" else f"{rn[:10]}_")
+        for m in (m for g in G.values() for m in g if m["name"].startswith("1WALL")):
+            m["name"] = m["name"].replace("1WALL_", f"1WALL_{tag}", 1); cols.append(m)
+    # clearance on collision too: drop whole collider components that touch any asphalt (trimming triangles would
+    # leave open, zero-thickness shells: qa_ffb_safety watertight / thickness gates)
     for m in cols:
         P = np.asarray(m["P"], float); T = np.asarray(m["T"]).reshape(-1, 3); bad = on_asphalt(P, 0.0)[0]
-        m["T"] = T[~bad[T].any(1)]
+        if not bad.any():
+            continue
+        keep = []
+        for comp in CC.components(P, T):
+            cs = set(int(v) for v in comp)
+            if not bad[list(cs)].any():
+                keep += [t for t in T if int(t[0]) in cs]
+        CLEARLOG["col_components_dropped"] = CLEARLOG.get("col_components_dropped", 0) + 1
+        m["T"] = np.asarray(keep).reshape(-1, 3)
     M, TX = materials()
     nodes = []
     for m in meshes:
@@ -325,13 +385,14 @@ def main():
                               cast_shadows=False, visible=True, renderable=False))
     used = sorted({n.material for n in nodes})
     TRACK.mkdir(parents=True, exist_ok=True)
-    out = TRACK / "palomares_niles_assets.kn5"
+    out = TRACK / ("palomares_niles_assets.kn5" if GROUP == "canyon" else "palomares_niles_town_assets.kn5")
     write_kn5(out, [M[u] for u in used], {t: TX[t] for t in sorted({v for u in used for v in M[u].textures.values()})}, nodes)
     rt = read_kn5(str(out)); vmax = max(len(m["pos"]) for m in rt["meshes"])
     rep = dict(rows=len(rr), skipped=skipped, clear=CLEARLOG, collision=st, kn5=out.name, meshes=len(rt["meshes"]), vmax=vmax,
                draw_calls=sum(1 for m in rt["meshes"] if m.get("renderable", True) and not m["name"].startswith("1")), secs=round(time.time() - t0, 1))
-    write_kerbs(rep)
-    (BUILD / "dev7").mkdir(exist_ok=True); (BUILD / "dev7/canyon_assets.json").write_text(json.dumps(rep, indent=1, default=str))
+    if GROUP == "canyon":
+        write_kerbs(rep)
+    (BUILD / "dev7").mkdir(exist_ok=True); (BUILD / f"dev7/{GROUP}_assets.json").write_text(json.dumps(rep, indent=1, default=str))
     print(json.dumps({k: v for k, v in rep.items() if k != "skipped"}, default=str), "skipped", len(skipped))
 
 
