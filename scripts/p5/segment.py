@@ -72,8 +72,9 @@ def refine(img, lab):
     for y in range(int(H * 0.4), H):
         xs = np.flatnonzero(wh[y])
         if xs.size == 0: continue
-        yx = np.flatnonzero(ye[y]); mid = yx.mean() if yx.size else W / 2
-        l = xs[xs < mid]; r = xs[xs > mid]
+        yx = np.flatnonzero(ye[y])
+        lo, hi = (yx.min() - 40, yx.max() + 40) if yx.size else (W / 2, W / 2)
+        l = xs[xs < lo]; r = xs[xs > hi]   # edge lines must sit well outside the centre line
         if l.size: sh[y, :l.min()] = True
         if r.size: sh[y, r.max() + 1:] = True
     sh = ndi.binary_opening(sh & rd, np.ones((9, 1)))   # drop 1-row streaks from stray paint pixels

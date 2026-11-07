@@ -11,7 +11,7 @@ x in [0, L] and are bent along the road by 21e. Signs face -x (toward an approac
     python3 scripts/p5/assets.py --yaml      # rewrite config/asset_catalog.yaml from CATALOG
     python3 scripts/p5/assets.py --sheet     # contact sheet reports/dev5/catalog.html (+ thumbnails)
 """
-import math, pathlib, sys
+import math, pathlib, sys, zlib
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -128,8 +128,70 @@ def _blobs(w, h, cols, n, rmin, rmax, shape, rng, alpha_noise=True):
     return im
 
 
+def _leaves(w, h, cols, n, rmin, rmax, shape, rng):
+    """foliage card of pointed leaves (rotated lens polygons) instead of round blobs: reads as leaves, not dots"""
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im); k = 0
+    while k < n:
+        x, y = rng.uniform(0, 1), rng.uniform(0, 1)
+        if not shape(x, y):
+            continue
+        r = rng.uniform(rmin, rmax); a = rng.uniform(0, 2 * math.pi); c = cols[rng.integers(len(cols))]
+        j = rng.uniform(0.88, 1.12); col = tuple(int(min(255, v * j)) for v in c) + (255,)
+        cx, cy = x * w, y * h; ca, sa = math.cos(a), math.sin(a)
+        pts = [(cx + ca * r, cy + sa * r), (cx + ca * r * 0.2 - sa * r * 0.45, cy + sa * r * 0.2 + ca * r * 0.45), (cx - ca * r * 0.7, cy - sa * r * 0.7),
+               (cx + ca * r * 0.2 + sa * r * 0.45, cy + sa * r * 0.2 - ca * r * 0.45)]
+        d.polygon(pts, fill=col); k += 1
+    return im
+
+
+def _oak_tex(rng):
+    W, H = 512, 320; im = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+
+    def limb(p0, p1, w0, w1, col):
+        (x0, y0), (x1, y1) = p0, p1; L = math.hypot(x1 - x0, y1 - y0) + 1e-6; nx, ny = -(y1 - y0) / L, (x1 - x0) / L
+        d.polygon([(x0 + nx * w0 / 2, y0 + ny * w0 / 2), (x1 + nx * w1 / 2, y1 + ny * w1 / 2), (x1 - nx * w1 / 2, y1 - ny * w1 / 2),
+                   (x0 - nx * w0 / 2, y0 - ny * w0 / 2)], fill=col + (255,))
+    lobes = [(62, 196, 56, 34), (150, 150, 62, 36), (232, 104, 70, 36), (322, 148, 66, 36), (400, 108, 52, 30), (452, 190, 52, 32), (250, 190, 40, 24), (118, 238, 34, 20)]
+    bark = [(72, 60, 48), (86, 72, 56), (60, 50, 42)]
+    # three leaning trunks, each forking at ~y 250 into spreading limbs that run out (and up) under their foliage lobes
+    for k, (bx, fx, fy) in enumerate(((190, 160, 252), (262, 262, 236), (336, 372, 250))):
+        limb((bx, H), (fx, fy), 32, 20, bark[k % 3])
+        near = sorted(lobes, key=lambda l: abs(l[0] - fx))[:3]
+        for lx, ly, rx, ry in near:
+            mid = ((fx + lx) / 2 + rng.normal(0, 6), (fy + ly + ry) / 2 + 12)
+            limb((fx, fy), mid, 17, 11, bark[(k + 1) % 3]); limb(mid, (lx, ly + ry * 0.55), 11, 5, bark[(k + 2) % 3])
+    cols = [(46, 66, 34), (58, 82, 40), (36, 52, 28), (70, 92, 46)]
+    for lx, ly, rx, ry in lobes:       # each lobe: blobs inside an ellipse, darker underneath, lighter on top, scalloped edge
+        n = int(rx * ry / 3.6)
+        for _ in range(n):
+            a = rng.uniform(0, 2 * math.pi); rr = math.sqrt(rng.uniform(0, 1)); x = lx + math.cos(a) * rx * rr; y = ly + math.sin(a) * ry * rr
+            r = rng.uniform(5, 9); c = cols[rng.integers(4)]; sh = 0.7 + 0.45 * (1 - (y - (ly - ry)) / (2 * ry)); sh *= rng.uniform(0.9, 1.1)
+            d.ellipse((x - r, y - r * 0.8, x + r, y + r * 0.8), fill=tuple(int(min(255, v * sh)) for v in c) + (255,))
+    return im
+
+
+def _bare_tree(w, h, rng, x0, trunk_w, len0, col0, col1, spread, up, depth):
+    """leafless tree by recursive forking: colour/width taper from trunk to twigs, branches bend back toward vertical"""
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+
+    def br(x, y, ang, L, wd, k):
+        a2 = ang + (math.pi / 2 - ang) * up * 0.3
+        x1, y1 = x + math.cos(a2) * L, y - math.sin(a2) * L
+        t = k / depth; col = tuple(int(col0[i] * (1 - t) + col1[i] * t) for i in range(3)) + (255,)
+        d.line((x, y, x1, y1), fill=col, width=max(1, int(round(wd))))
+        if k >= depth:
+            return
+        for s in rng.choice([-1, 1], 2, replace=False) if rng.uniform() < 0.8 else (-1, 1, 0):
+            da = math.radians(rng.uniform(*spread)) * (s if s else rng.choice([-0.4, 0.4]))
+            br(x1, y1, a2 + da, L * rng.uniform(0.66, 0.8), wd * 0.68, k + 1)
+        if k >= 2 and rng.uniform() < 0.5:   # extra side twig
+            br(x1, y1, a2 + math.radians(rng.choice([-1, 1]) * rng.uniform(40, 70)), L * 0.5, wd * 0.5, k + 2)
+    br(x0, h, math.pi / 2, h * len0 * 0.5, trunk_w, 0)
+    return im
+
+
 def t_shrub(kind):
-    rng = np.random.default_rng(hash(kind) % 2 ** 31)
+    rng = np.random.default_rng(zlib.crc32(kind.encode()))
     dome = lambda x, y: (x - 0.5) ** 2 / 0.22 + (y - 1.0) ** 2 / 0.95 < 1 and y > 0.08
     if kind == "coyote":       # dense dark olive mound (Baccharis pilularis)
         return _blobs(256, 192, [(58, 78, 38), (74, 94, 46), (46, 62, 32), (88, 104, 52)], 2600, 3, 7, dome, rng)
@@ -158,15 +220,37 @@ def t_shrub(kind):
             c = [(118, 150, 60), (140, 162, 70), (96, 130, 50), (170, 170, 96)][rng.integers(4)]
             d.line((x0, 192, x0 + lean, 192 - h), fill=(*c, 255), width=2)
         return im
-    if kind == "ivy":
-        return _blobs(256, 128, [(40, 74, 34), (54, 92, 40), (30, 60, 28)], 1500, 4, 8, lambda x, y: y > 0.1, rng)
+    if kind == "ivy":          # English ivy: pointed heart-ish leaves, glossy dark green, a few pale new leaves
+        return _leaves(256, 160, [(34, 66, 30), (46, 84, 38), (28, 54, 26), (62, 100, 44), (88, 120, 56)], 1100, 9, 17,
+                       lambda x, y: y > 0.06, rng)
+    if kind == "toyon":        # Heteromeles: tall rounded evergreen, serrated glossy leaves, red berry clusters, trunks at the base
+        im = Image.new("RGBA", (256, 256), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+        for bx, lean in ((112, -18), (132, 4), (150, 22)):
+            d.line((bx, 256, bx + lean, 150), fill=(84, 66, 52, 255), width=7)
+            d.line((bx + lean, 150, bx + lean * 2, 100), fill=(84, 66, 52, 255), width=4)
+        crown = lambda x, y: (x - 0.5) ** 2 / 0.23 + (y - 0.45) ** 2 / 0.19 < 1 and y > 0.05
+        fol = _leaves(256, 256, [(38, 72, 36), (50, 88, 42), (30, 58, 30), (64, 100, 46), (74, 108, 50)], 1500, 8, 15, crown, rng)
+        im.alpha_composite(fol); d = ImageDraw.Draw(im)
+        for _ in range(26):            # berry clusters near the crown top
+            x, y = rng.uniform(0.2, 0.8), rng.uniform(0.1, 0.5)
+            if crown(x, y):
+                for _k in range(5):
+                    bx_, by_ = x * 256 + rng.normal(0, 5), y * 256 + rng.normal(0, 4)
+                    d.ellipse((bx_ - 2.5, by_ - 2.5, bx_ + 2.5, by_ + 2.5), fill=(184, 36, 30, 255))
+        return im
+    if kind == "oak":          # coast live oak: wide, spreading, 3 leaning trunks forking into limbs, lobed crown with gaps
+        return _oak_tex(rng)
+    if kind == "sycamore":     # bare winter sycamore / cottonwood: pale mottled limbs forking wide, fine twig mesh
+        return _bare_tree(384, 384, rng, 192, 18, 0.52, (196, 190, 178), (142, 130, 114), spread=(22, 48), up=0.18, depth=7)
+    if kind == "poplar":       # bare winter poplar: columnar, steep fastigiate branches
+        return _bare_tree(192, 512, rng, 96, 10, 0.72, (176, 170, 158), (126, 116, 102), spread=(6, 15), up=0.7, depth=6)
+    if kind == "conifer":      # dark redwood / pine: tiered drooping boughs, brown bole at the foot
+        im = _blobs(192, 384, [(28, 52, 32), (36, 64, 38), (22, 44, 28), (46, 76, 44)], 2300, 5, 11,
+                    lambda x, y: 0.02 < y < 0.93 and abs(x - 0.5) < 0.05 + 0.44 * y * (0.72 + 0.28 * abs(math.sin(y * 17))), rng)
+        d = ImageDraw.Draw(im); d.polygon([(88, 384), (104, 384), (100, 330), (92, 330)], fill=(84, 58, 44, 255))
+        return im
     if kind == "hedge":        # clipped privet / laurel face
         return _blobs(256, 192, [(48, 80, 38), (60, 94, 44), (40, 66, 32)], 3200, 3, 6, lambda x, y: True, rng)
-    if kind == "oak":          # coast live oak crown card with trunk
-        im = _blobs(256, 256, [(46, 66, 34), (58, 82, 40), (36, 52, 28), (70, 92, 46)], 2600, 4, 9,
-                    lambda x, y: (x - 0.5) ** 2 / 0.24 + (y - 0.42) ** 2 / 0.14 < 1, rng)
-        d = ImageDraw.Draw(im); d.polygon([(118, 256), (138, 256), (134, 150), (122, 150)], fill=(70, 58, 46, 255))
-        return im
     if kind == "litter":       # leaf litter / branch debris patch (ground decal)
         im = _blobs(128, 128, [(118, 96, 64), (96, 78, 52), (140, 116, 76), (80, 66, 46)], 900, 2, 4,
                     lambda x, y: (x - .5) ** 2 + (y - .5) ** 2 < .2, rng)
@@ -203,6 +287,36 @@ def t_cmp():
     r = np.hypot(x - 64, y - 64); a[..., :3] *= (0.85 + 0.15 * np.sin(r / 2.0))[..., None]
     a[r < 40, :3] = (20, 20, 22)
     return RX.rgba(a)
+
+
+def t_girder():
+    """painted steel plate-girder web: blue-grey, rivet rows top/bottom, vertical rust streaks"""
+    w, h = 256, 128; a = _tile(h, w, (86, 94, 100), 7, (1.0, 5.0))
+    rng = np.random.default_rng(11)
+    for _ in range(22):
+        x = int(rng.integers(0, w)); a[:, x:x + int(rng.integers(1, 4)), :3] *= np.array([1.18, 0.95, 0.78])
+    im = RX.rgba(a); d = ImageDraw.Draw(im)
+    for x in range(6, w, 12):
+        for y in (8, h - 9):
+            d.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(126, 132, 138, 255))
+    d.rectangle((0, 0, w, 3), fill=(60, 66, 72, 255)); d.rectangle((0, h - 4, w, h), fill=(60, 66, 72, 255))
+    return im
+
+
+def t_flag():
+    """US flag, redrawn: 13 stripes, blue canton, 50 stars (public-domain design)"""
+    w, h = 260, 140; im = Image.new("RGBA", (w, h), (255, 255, 255, 255)); d = ImageDraw.Draw(im)
+    sh = h / 13.0
+    for k in range(0, 13, 2):
+        d.rectangle((0, k * sh, w, (k + 1) * sh), fill=(178, 34, 52, 255))
+    cw, ch = int(w * 0.4), int(sh * 7)
+    d.rectangle((0, 0, cw, ch), fill=(10, 49, 97, 255))
+    for r in range(9):
+        n = 6 if r % 2 == 0 else 5
+        for c in range(n):
+            x = cw * ((c + 0.5) / 6 + (0 if r % 2 == 0 else 0.5 / 6)); y = ch * (r + 0.7) / 9.4
+            d.ellipse((x - 2.6, y - 2.6, x + 2.6, y + 2.6), fill=(250, 250, 250, 255))
+    return im
 
 
 class LAtlas(RX.Atlas):
@@ -248,9 +362,9 @@ def build_atlas():
         "reflector_r": Image.new("RGBA", (16, 16), (200, 30, 30, 255)), "yellow": Image.new("RGBA", (16, 16), (232, 196, 30, 255)),
         "paint_white": Image.new("RGBA", (16, 16), (236, 236, 230, 255)), "cmp": t_cmp(), "branches": t_branches(),
         "plaque_15": t_plaque("15\nMPH"), "plaque_25": t_plaque("25\nMPH"), "address": t_address(),
-        "plaque_end": t_plaque("END", RX.WHT), "trash_lid": RX.rgba(_tile(32, 32, (40, 90, 48), 4, (1.0,))),
+        "plaque_end": t_plaque("END", RX.WHT), "girder": t_girder(), "flag": t_flag(), "trash_lid": RX.rgba(_tile(32, 32, (40, 90, 48), 4, (1.0,))),
     }
-    for k in ("coyote", "poisonoak", "blackberry", "fern", "grass", "ivy", "hedge", "oak", "litter"):
+    for k in ("coyote", "poisonoak", "blackberry", "fern", "grass", "ivy", "hedge", "oak", "litter", "toyon", "sycamore", "poplar", "conifer"):
         extra["veg_" + k] = t_shrub(k)
     for k, im in extra.items():
         A.put(k, im)
@@ -335,6 +449,42 @@ class MB:
             a = rot + math.pi * k / n; d = np.array([math.cos(a), math.sin(a)]) * w / 2
             self.quad2([[cx - d[0], cy - d[1], z0], [cx + d[0], cy + d[1], z0], [cx + d[0], cy + d[1], z0 + h], [cx - d[0], cy - d[1], z0 + h]], rect)
 
+    def ycyl(self, cx, z, y0, y1, r, sides, rect, inward=False):
+        """horizontal cylinder along y (culvert pipe). u runs along the length (ribs), v around; inward=True faces the axis"""
+        a = np.linspace(0, 2 * np.pi, sides + 1)
+        for k in range(sides):
+            c0, s0, c1, s1 = math.cos(a[k]), math.sin(a[k]), math.cos(a[k + 1]), math.sin(a[k + 1])
+            mid = np.array([(c0 + c1) / 2, 0, (s0 + s1) / 2]) * (-1 if inward else 1)
+            self.quad([[cx + r * c0, y0, z + r * s0], [cx + r * c0, y1, z + r * s0], [cx + r * c1, y1, z + r * s1], [cx + r * c1, y0, z + r * s1]],
+                      rect, out=mid, vspan=(0, 1), uspan=(0, 1))
+        return self
+
+    def disc_y(self, cx, z, y, r, sides, rect, out_sign=-1.0):
+        a = np.linspace(0, 2 * np.pi, sides + 1)
+        for k in range(sides):
+            P3 = [[cx, y, z], [cx + r * math.cos(a[k]), y, z + r * math.sin(a[k])], [cx + r * math.cos(a[k + 1]), y, z + r * math.sin(a[k + 1])]]
+            P3 = np.array(P3)
+            if np.dot(np.cross(P3[1] - P3[0], P3[2] - P3[0]), [0, out_sign, 0]) < 0:
+                P3 = P3[[0, 2, 1]]
+            self.tri(P3, rect, [(0.5, 0.5), (0.5, 0.5), (0.5, 0.5)])
+
+    def clump(self, cx, cy, w, h, rect, rng, nv=3, ntilt=4, cap=True, z0=-0.1):
+        """volumetric foliage clump: nv crossed vertical cards + ntilt inward-leaning skirt cards + a horizontal canopy cap.
+        Reads as a rounded bush from any angle (and from above), ~ (4 nv + 4 ntilt + 8) tris"""
+        r0 = rng.uniform(0, math.pi)
+        for k in range(nv):
+            a = r0 + math.pi * k / nv; d = np.array([math.cos(a), math.sin(a)]) * w / 2
+            self.quad2([[cx - d[0], cy - d[1], z0], [cx + d[0], cy + d[1], z0], [cx + d[0], cy + d[1], z0 + h], [cx - d[0], cy - d[1], z0 + h]], rect)
+        for k in range(ntilt):                   # skirt: base on the rim, top leaning in to 55 % radius at 0.8 h
+            a = r0 + 0.4 + 2 * math.pi * k / ntilt; dirn = np.array([math.cos(a), math.sin(a)]); t = np.array([-dirn[1], dirn[0]])
+            b = dirn * w * 0.5; tp = dirn * w * 0.22; ww = w * 0.36
+            self.quad2([[*(np.array([cx, cy]) + b - t * ww), z0], [*(np.array([cx, cy]) + b + t * ww), z0],
+                        [*(np.array([cx, cy]) + tp + t * ww * 0.7), z0 + h * 0.82], [*(np.array([cx, cy]) + tp - t * ww * 0.7), z0 + h * 0.82]], rect)
+        if cap:
+            for ang, rr, zz in ((r0 + 0.3, w * 0.34, z0 + h * 0.86), (r0 + 1.2, w * 0.26, z0 + h * 0.97)):
+                q = [[cx + rr * math.cos(ang + k * math.pi / 2), cy + rr * math.sin(ang + k * math.pi / 2), zz] for k in range(4)]
+                self.quad2(q, rect, uspan=(0.2, 0.8), vspan=(0.1, 0.6))
+
     def flat(self, x0, x1, y0, y1, z, rect, nx=1, ny=1):
         """horizontal patch subdivided nx*ny (so it can drape over terrain)"""
         for i in range(nx):
@@ -385,6 +535,20 @@ class MB:
         for a, b, c in F:
             P3 = V[[a, b, c]]
             if np.dot(np.cross(P3[1] - P3[0], P3[2] - P3[0]), P3.mean(0) - np.array([cx, cy, h * 0.35])) < 0:
+                P3 = P3[[0, 2, 1]]
+            self.tri(P3, rect, [(0, 0), (1, 0), (0.5, 1)])
+
+    def rubble(self, cx, cy, r, h, rect, rng, z=0.0):
+        """angular broken-rock chunk: jittered octahedron, 8 tris, flat-ish with sharp edges (talus / rockfall, not a blob)"""
+        V = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]], float)
+        F = [(0, 2, 4), (2, 1, 4), (1, 3, 4), (3, 0, 4), (2, 0, 5), (1, 2, 5), (3, 1, 5), (0, 3, 5)]
+        V = V * rng.uniform(0.55, 1.35, (6, 1)); V[:, :2] += rng.normal(0, 0.12, (6, 2))
+        th = rng.uniform(0, math.pi); R2 = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]]); V[:, :2] = V[:, :2] @ R2.T
+        V = V * np.array([r, r * rng.uniform(0.6, 1.0), h / 2]) + np.array([cx, cy, z + h * 0.3])
+        ctr = np.array([cx, cy, z + h * 0.3])
+        for a, b, c in F:
+            P3 = V[[a, b, c]]
+            if np.dot(np.cross(P3[1] - P3[0], P3[2] - P3[0]), P3.mean(0) - ctr) < 0:
                 P3 = P3[[0, 2, 1]]
             self.tri(P3, rect, [(0, 0), (1, 0), (0.5, 1)])
 
@@ -608,24 +772,78 @@ WALL = {"wall.retaining_concrete": ("concrete", 0.35, 1.2), "wall.retaining_ston
         "wall.timber_crib": ("timber", 0.30, 1.2), "wall.brick_low": ("brick", 0.3, 0.9), "wall.sackcrete": ("rock", 0.5, 1.0)}
 
 
+def _crib(L, h, th):
+    """timber crib wall. Dark soil/rock fill recessed behind; every 0.30 m a course: even courses are long stretchers on the face,
+    odd courses are cross-logs whose square ends (light end grain, ring-coloured) stick out 0.10 m every 1.2 m. The gaps between
+    headers show the dark fill, so the pattern reads as a stacked-log grid, the way the real ones do."""
+    m = MB(); ch = 0.30; ncour = max(2, int(math.ceil((h + 0.45) / ch)))
+    m.slab(0, L, 0.14, th, -0.45, h, R("rock_dark"), tw=2.4)                        # fill behind the logs
+    hs = 1.2
+    for c in range(ncour):
+        z0 = -0.45 + c * ch; z1 = z0 + ch - 0.03
+        if c % 2 == 0:
+            m.slab(0, L, 0.0, 0.16, z0, z1, R("timber"), tw=2.4, seg=2.4)
+        else:
+            nh = max(1, int(L / hs)); off = 0.3 if (c // 2) % 2 else 0.6
+            for k in range(nh + 1):
+                x = off + k * hs
+                if x > L - 0.1:
+                    break
+                m.box(x, 0.05, z0, z1, 0.22, 0.30, R("timber"))                      # y -0.10 .. +0.20
+                m.quad([[x - 0.11, -0.101, z0], [x + 0.11, -0.101, z0], [x + 0.11, -0.101, z1], [x - 0.11, -0.101, z1]], R("stump_top"), out=np.array([0, -1.0, 0]))
+    m.cline(th / 2, -0.7, max(1.4, h), half=max(0.07, th * 0.45))
+    return m
+
+
 def g_wall(L, p, kind="wall.retaining_concrete"):
     tile, th, hd = WALL[kind]; h = float(p.get("height", hd)); m = MB()
+    if kind == "wall.timber_crib":
+        return _crib(L, h, th)
     m.slab(0, L, 0.0, th, -0.45, h, R(tile), tw=2.4 if tile == "timber" else 1.6)
-    if kind == "wall.timber_crib":                              # crib headers sticking out
-        for x in np.arange(0.6, L, 2.4):
-            for z in np.arange(0.1, h, 0.45):
-                m.box(x, -0.05, z, z + 0.2, 0.2, 0.15, R("timber"))
     m.cline(th / 2, -0.7, max(1.4, h), half=max(0.07, th * 0.45))
     return m
 
 
 def g_rockfall_mesh(L, p):
-    m = MB(); h = float(p.get("height", 4.0))
-    m.sheet(0, L, 0.1, 0.0, h, R("rockmesh"), 2.0)
-    for x in np.arange(0, L + 0.01, 6.0):
-        m.box(x, 0.1, h - 0.2, h + 0.3, 0.1, 0.1, R("galv"))
+    """draped rockfall netting on a cut: 3 m panels leaning back 0.4 m at the top, each bellying outward (more near the bottom where
+    the net is pocketed with caught rock), top + bottom cable, rock bolts / posts at panel joints, rubble in the pockets"""
+    m = MB(); h = float(p.get("height", 4.0)); rng = _rng(p); rect = R("rockmesh")
+    npan = max(1, int(round(L / 3.0))); nz = 4; nx = 3; lean = 0.4
+    def Y(u, v, belly):                    # u along panel 0..1, v up 0..1 -> y offset
+        return 0.1 + lean * v - belly * math.sin(math.pi * u) * (math.sin(math.pi * min(1.0, v * 1.15)) * (0.6 + 0.8 * (1 - v)))
+    for i in range(npan):
+        xa, xb = L * i / npan, L * (i + 1) / npan; belly = rng.uniform(0.12, 0.26)
+        for ix in range(nx):
+            for iz in range(nz):
+                u0, u1, v0, v1 = ix / nx, (ix + 1) / nx, iz / nz, (iz + 1) / nz
+                P = [[xa + (xb - xa) * u0, Y(u0, v0, belly), h * v0], [xa + (xb - xa) * u1, Y(u1, v0, belly), h * v0],
+                     [xa + (xb - xa) * u1, Y(u1, v1, belly), h * v1], [xa + (xb - xa) * u0, Y(u0, v1, belly), h * v1]]
+                m.quad(P, rect, out=np.array([0, -1.0, 0.3]), uspan=(u0, u1), vspan=(v0, v1))
+        for _ in range(int(rng.integers(2, 5))):                                  # rubble caught in the pocket
+            m.rubble(xa + (xb - xa) * rng.uniform(0.15, 0.85), Y(0.5, 0.05, belly) - 0.12, rng.uniform(0.12, 0.3), rng.uniform(0.15, 0.35), R("rock" if rng.uniform() < 0.6 else "rock_dark"), rng, z=0.0)
+    for x in np.linspace(0, L, npan + 1):                                          # bolts / posts at joints
+        m.box(x, 0.1 + lean, h - 0.1, h + 0.25, 0.08, 0.08, R("galv"))
+        m.box(x, 0.08, -0.05, 0.1, 0.1, 0.1, R("galv"))
+    m.hcyl(0, L, 0.1 + lean, h, 0.03, 4, R("galv")); m.hcyl(0, L, 0.1, 0.02, 0.03, 4, R("galv"))
     m.cline(0.1, -0.7, 1.4)
     return m
+
+
+def g_rockfall_pile(L, p):
+    """talus / rockfall on the shoulder: angular chunks (large at the back, small and spreading toward the road), soil + gravel fan"""
+    m = MB(); rng = _rng(p); s = float(p.get("scale", 1.0)); n = int(p.get("count", 20))
+    m.flat(-1.8 * s, 1.8 * s, -0.5, 2.6 * s, 0.02, R("gravel"), 2, 2); m.meta["drape"] = True
+    for k in range(n):
+        t = rng.beta(1.3, 2.2)                         # 0 = at the cut foot, 1 = out toward the road
+        y = (0.4 + 2.0 * (1 - t)) * s - 0.3; x = rng.normal(0, 0.9 * s); sz = (0.55 - 0.35 * t) * rng.uniform(0.5, 1.2) * s
+        m.rubble(x, y, sz, sz * rng.uniform(0.7, 1.2), R("rock" if k % 3 else "rock_dark"), rng, z=0.0)
+    m.cbox(0, 1.0 * s, 3.0 * s, 2.2 * s, -0.3, 0.9 * s)
+    return m
+
+
+def g_curb(L, p):
+    """concrete curb / gutter lip along the pavement edge (frames 196, 206, 210, 211)"""
+    m = MB(); m.slab(0, L, 0.0, 0.2, -0.15, 0.14, R("concrete"), tw=2.0, seg=2.0, top=R("concrete")); return m
 
 
 # ---- bridges / culverts --------------------------------------------------------------------------------------------
@@ -651,14 +869,21 @@ def g_bridge_timber(L, p):
 
 
 def g_bridge_steel(L, p):
-    """steel-girder bridge edge: I-girder fascia + steel tube railing on posts"""
-    m = MB()
-    m.slab(-0.5, L + 0.5, -0.1, 0.25, -1.3, -0.15, R("rock_dark"), tw=2.0)
-    m.slab(-0.5, L + 0.5, 0.0, 0.25, -0.15, 0.15, R("concrete"))
-    for z in (0.55, 1.0):
-        m.hcyl(-0.5, L + 0.5, 0.12, z, 0.05, 5, R("galv"))
-    for x in np.arange(-0.5, L + 0.51, 2.0):
-        m.box(x, 0.12, 0.15, 1.05, 0.08, 0.08, R("galv"))
+    """steel plate-girder bridge edge: concrete curb on the deck, I-girder fascia below (web with rivet rows, top + bottom flanges,
+    vertical stiffeners every 1.5 m, cross-bracing stubs), square steel posts with base plates and a 3-tube railing"""
+    m = MB(); x0, x1 = -0.5, L + 0.5
+    m.slab(x0, x1, -0.02, 0.38, -0.28, 0.2, R("concrete"), tw=2.0, top=R("concrete"))               # deck edge curb
+    m.sheet(x0, x1, 0.40, -1.75, -0.28, R("girder"), 2.4, double=True)                               # girder web (below the deck)
+    m.box((x0 + x1) / 2, 0.40, -0.36, -0.28, x1 - x0, 0.34, R("galv"))                               # top flange
+    m.box((x0 + x1) / 2, 0.40, -1.83, -1.75, x1 - x0, 0.34, R("galv"))                               # bottom flange
+    for x in np.arange(x0 + 0.5, x1, 1.5):
+        m.box(x, 0.45, -1.75, -0.36, 0.08, 0.1, R("galv"))                                            # stiffener
+    for x in np.arange(x0 + 1.25, x1 - 0.3, 3.0):                                                     # bracing stubs
+        m.quad2([[x, 0.40, -1.7], [x + 1.0, 0.40, -0.4], [x + 1.0, 0.64, -0.4], [x, 0.64, -1.7]], R("galv"))
+    for z in (0.5, 0.85, 1.2):
+        m.hcyl(x0, x1, 0.12, z, 0.04, 5, R("galv"))
+    for x in np.arange(x0, x1 + 0.01, 1.9):
+        m.box(x, 0.12, 0.2, 1.25, 0.09, 0.09, R("galv")); m.box(x, 0.12, 0.2, 0.25, 0.22, 0.22, R("galv"))
     m.cline(0.12, -0.8, 1.4)
     return m
 
@@ -671,10 +896,36 @@ def g_headwall(L, p):
 
 
 def g_cmp(L, p):
-    """corrugated metal pipe end poking out of the fill (point, opening faces the road)"""
-    m = MB(); r = float(p.get("radius", 0.45))
-    m.quad([[-r, -0.02, 0.0], [r, -0.02, 0.0], [r, -0.02, 2 * r], [-r, -0.02, 2 * r]], R("cmp"), out=np.array([0, -1.0, 0]))
-    m.flat(-r - 0.6, r + 0.6, -0.8, 0.0, 0.02, R("rock_dark"))
+    """culvert outlet: round concrete headwall (rectangular face with a circular hole), corrugated pipe projecting 0.35 m out of it
+    toward the road (rib-textured, dark bore inside), rip-rap apron. Faces the road (-y)."""
+    m = MB(); r = float(p.get("radius", 0.45)); cz = r + 0.05; sides = 14
+    xl, xr, zb, zt = -r - 0.75, r + 0.75, -0.3, cz + r + 0.4; con = R("concrete")
+    cx0 = (xl + xr) / 2
+    a = np.linspace(0, 2 * np.pi, sides + 1); hits = []
+    for t in a:                                           # ray from the pipe centre to the rectangle
+        dx, dz = math.cos(t), math.sin(t); ts = []
+        if dx > 1e-9: ts.append(((xr - 0) / dx, "x"))
+        if dx < -1e-9: ts.append(((xl - 0) / dx, "x"))
+        if dz > 1e-9: ts.append(((zt - cz) / dz, "z"))
+        if dz < -1e-9: ts.append(((zb - cz) / dz, "z"))
+        tt, ed = min(ts); hits.append((np.array([dx * tt, cz + dz * tt]), ed))
+    for k in range(sides):
+        A, ea = hits[k]; B, eb = hits[k + 1]
+        ra = np.array([r * math.cos(a[k]), cz + r * math.sin(a[k])]); rb = np.array([r * math.cos(a[k + 1]), cz + r * math.sin(a[k + 1])])
+        m.quad([[ra[0], 0, ra[1]], [rb[0], 0, rb[1]], [B[0], 0, B[1]], [A[0], 0, A[1]]], con, out=np.array([0, -1.0, 0]), uspan=(0, 0.5), vspan=(0, 0.5))
+        if ea != eb:
+            C = np.array([xr if A[0] > 0 else xl, zt if A[1] > cz else zb])
+            m.tri(np.array([[A[0], 0, A[1]], [B[0], 0, B[1]], [C[0], 0, C[1]]]), con, [(0, 0), (1, 0), (0.5, 1)])
+    m.quad([[xl, 0, zt], [xr, 0, zt], [xr, 0.35, zt], [xl, 0.35, zt]], con, out=np.array([0, 0, 1.0]))      # cap
+    for x, sg in ((xl, -1.0), (xr, 1.0)):
+        m.quad([[x, 0, zb], [x, 0.35, zb], [x, 0.35, zt], [x, 0, zt]], con, out=np.array([sg, 0, 0]))
+    m.ycyl(0, cz, -0.35, 1.0, r, sides, R("corr_grey"))                                              # pipe outside, ribs along u
+    m.ycyl(0, cz, -0.35, 1.0, r * 0.96, sides, R("black"), inward=True)                              # dark bore
+    m.disc_y(0, cz, 1.0, r * 0.96, sides, R("black"), out_sign=-1.0)
+    rng = _rng(p)
+    m.flat(xl - 0.4, xr + 0.4, -1.1, 0.0, 0.02, R("rock_dark"), 3, 2)                                  # apron
+    for k in range(6):
+        m.rubble(rng.uniform(xl, xr), rng.uniform(-1.0, -0.3), rng.uniform(0.12, 0.26), rng.uniform(0.12, 0.25), R("rock"), rng, z=0.0)
     return m
 
 
@@ -778,11 +1029,14 @@ def g_gate(L, p, kind="gate.estate_brick_iron"):
 # ---- vegetation (alpha cards in the same atlas) ------------------------------------------------------------------
 SHRUB = {"shrub.coyote_brush": ("veg_coyote", 2.2, 1.5), "shrub.poison_oak": ("veg_poisonoak", 1.6, 1.2),
          "shrub.blackberry": ("veg_blackberry", 3.0, 1.6), "shrub.fern": ("veg_fern", 1.2, 0.7),
-         "shrub.grass_clump": ("veg_grass", 0.9, 0.9), "shrub.ivy": ("veg_ivy", 2.0, 0.5), "shrub.toyon": ("veg_hedge", 2.6, 2.6)}
+         "shrub.grass_clump": ("veg_grass", 0.9, 0.9), "shrub.ivy": ("veg_ivy", 2.0, 0.5), "shrub.toyon": ("veg_toyon", 2.6, 2.6)}
+VOLUMETRIC = {"shrub.toyon": dict(nv=3, ntilt=4, cap=True), "shrub.ivy": dict(nv=2, ntilt=4, cap=True)}
 
 
 def g_shrub(L, p, kind="shrub.coyote_brush"):
     tile, w, h = SHRUB[kind]; s = float(p.get("scale", 1.0)); m = MB(); rng = _rng(p)
+    if kind in VOLUMETRIC:
+        m.clump(0, 0, w * s, h * s, R(tile), rng, **VOLUMETRIC[kind]); return m
     m.card(0, 0, w * s, h * s, R(tile), n=3, z0=-0.1, rot=rng.uniform(0, math.pi))
     return m
 
@@ -791,7 +1045,11 @@ def g_shrub_line(L, p, kind="shrub.blackberry"):
     """hedge-like linear strip of shrub cards (blackberry thicket, ivy band, grass verge)"""
     tile, w, h = SHRUB[kind]; m = MB(); rng = _rng(p); dens = float(p.get("density", 1.0))
     for x in np.arange(0, L + 0.01, max(0.4, w * 0.6 / dens)):
-        s = rng.uniform(0.75, 1.2); m.card(x + rng.uniform(-0.3, 0.3), rng.uniform(0.0, 0.8), w * s, h * s, R(tile), n=2, z0=-0.1, rot=rng.uniform(0, 3.14))
+        s = rng.uniform(0.75, 1.2)
+        if kind in VOLUMETRIC:
+            m.clump(x + rng.uniform(-0.2, 0.2), rng.uniform(0.0, 0.6), w * s, h * s * (1.25 if kind == "shrub.ivy" else 1.0), R(tile), rng, **VOLUMETRIC[kind])
+            continue
+        m.card(x + rng.uniform(-0.3, 0.3), rng.uniform(0.0, 0.8), w * s, h * s, R(tile), n=2, z0=-0.1, rot=rng.uniform(0, 3.14))
     return m
 
 
@@ -812,10 +1070,51 @@ def g_cypress_row(L, p):
 
 
 def g_tree_card(L, p):
-    """tree_add: coast-live-oak crown card + collider trunk"""
-    m = MB(); h = float(p.get("height", 9.0)); w = float(p.get("crown", h * 0.9))
-    m.card(0, 0, w, h, R("veg_oak"), n=3, z0=-0.2)
-    m.cbox(0, 0, 0.5, 0.5, -0.5, 2.5)
+    """tree_add: coast live oak. Wide (crown ~1.5 h), three leaning trunks, spreading lobed crown: 3 crossed cards whose centres are
+    spread apart so the crown is a broad dome with daylight between limbs, plus a lower skirt card for the underside"""
+    m = MB(); h = float(p.get("height", 9.0)); w = float(p.get("crown", h * 1.5)); rect = R("veg_oak"); rng = _rng(p)
+    r0 = rng.uniform(0, math.pi)
+    for k in range(3):
+        a = r0 + math.pi * k / 3; d = np.array([math.cos(a), math.sin(a)]) * w / 2; o = np.array([-math.sin(a), math.cos(a)]) * w * 0.08 * (k - 1)
+        m.quad2([[o[0] - d[0], o[1] - d[1], -0.2], [o[0] + d[0], o[1] + d[1], -0.2], [o[0] + d[0], o[1] + d[1], h], [o[0] - d[0], o[1] - d[1], h]], rect)
+    a = r0 + 0.5; d = np.array([math.cos(a), math.sin(a)]) * w * 0.3                    # lower, smaller crown mass on the second layer
+    m.quad2([[-d[0], -d[1], h * 0.18], [d[0], d[1], h * 0.18], [d[0], d[1], h * 0.7], [-d[0], -d[1], h * 0.7]], rect, uspan=(0.2, 0.8), vspan=(0.1, 0.9))
+    m.cbox(0, 0, 0.55, 0.55, -0.5, 2.5)
+    for dx, dy in ((0.9, 0.5), (-0.8, -0.6)):
+        m.cbox(dx * w * 0.06, dy * w * 0.06, 0.4, 0.4, -0.5, 2.0)
+    return m
+
+
+def g_tree_bare(L, p, kind="sycamore"):
+    """leafless winter tree: crossed alpha cards of the branch skeleton"""
+    m = MB(); rng = _rng(p); sy = kind == "sycamore"
+    h = float(p.get("height", 15.0 if sy else 17.0)); w = float(p.get("crown", h * (1.0 if sy else 0.4)))
+    n = 3 if sy else 2
+    m.card(0, 0, w, h, R("veg_sycamore" if sy else "veg_poplar"), n=n, z0=-0.3, rot=rng.uniform(0, 3.14))
+    m.cbox(0, 0, 0.5 if sy else 0.35, 0.5 if sy else 0.35, -0.5, 2.5)
+    return m
+
+
+def g_tree_conifer(L, p):
+    """dark redwood / pine: 3 crossed cards of a tiered cone"""
+    m = MB(); rng = _rng(p); h = float(p.get("height", 15.0)); w = float(p.get("crown", h * 0.42))
+    m.card(0, 0, w, h, R("veg_conifer"), n=3, z0=-0.3, rot=rng.uniform(0, 3.14))
+    m.cbox(0, 0, 0.6, 0.6, -0.5, 2.5)
+    return m
+
+
+def g_flag_pole(L, p):
+    """flagpole with ball finial and a US flag (public-domain design, no logos) hanging in a gentle wave"""
+    m = MB(); H = float(p.get("height", 6.5)); fw = float(p.get("flag_w", 1.7)); fh = fw * 140 / 260 * 1.0; rect = R("flag")
+    m.cyl(0, 0, -0.3, H, 0.06, 8, R("galv"), r1=0.04)
+    m.cyl(0, 0, H, H + 0.14, 0.08, 6, R("yellow"), top=R("yellow"))
+    m.box(0, 0, 0.0, 0.2, 0.3, 0.3, R("concrete"))
+    ztop = H - 0.25; n = 6; xs = np.linspace(0.05, 0.05 + fw, n + 1)
+    def pt(x, z):
+        t = (x - 0.05) / fw; return [x, 0.18 * math.sin(t * 5.0) * t, z - 0.22 * t * t - 0.10 * t * math.sin(t * 7)]
+    for i in range(n):
+        m.quad2([pt(xs[i], ztop - fh), pt(xs[i + 1], ztop - fh), pt(xs[i + 1], ztop), pt(xs[i], ztop)], rect, uspan=(i / n, (i + 1) / n))
+    m.cbox(0, 0, 0.3, 0.3, -0.5, 2.6)
     return m
 
 
@@ -927,7 +1226,7 @@ reg("bridge.parapet_rail", "bridge", _p(g_parapet, tile="concrete", h=0.6, rail=
 reg("bridge.timber_rail", "bridge", g_bridge_timber, (1, 0.3, 1.0), dict(shape="plane", h=1.0), True, 19, True, "timber bridge rail on posts")
 reg("bridge.steel_girder", "bridge", g_bridge_steel, (1, 0.3, 1.05), dict(shape="plane", h=1.05), True, 19, True, "steel girder fascia + tube railing")
 reg("culvert.headwall", "culvert", g_headwall, (4, 0.35, 0.6), dict(shape="box", w=4, d=0.35, h=0.6), True, 17, True, "concrete culvert headwall")
-reg("culvert.cmp_end", "culvert", g_cmp, (0.9, 0.1, 0.9), dict(shape="plane", w=0.9, h=0.9), False, 24, desc="corrugated pipe outlet + rip-rap")
+reg("culvert.cmp_end", "culvert", g_cmp, (2.4, 0.35, 1.5), dict(shape="box", w=2.4, d=0.35, h=1.5), False, 17, desc="corrugated pipe mouth (ribbed, dark bore) in a round-holed concrete headwall + rip-rap")
 reg("culvert.drop_inlet", "culvert", g_drop_inlet, (1.0, 0.8, 0.15), dict(shape="box", w=1, d=0.8, h=0.15), False, 24)
 for aid in ("building.ranch_house", "building.house_two_storey", "building.barn", "building.shed", "building.garage", "building.stable"):
     reg(aid, "building", _p(g_building, kind=aid), (16, 10, 5), dict(shape="box", w=16, d=10, h=5), True, 18, desc=aid.split(".")[1].replace("_", " "))
@@ -962,7 +1261,13 @@ reg("marking.stop_bar", "marking", g_stop_bar, (0.45, 3, 0.02), dict(shape="plan
 reg("terrain.mound", "mound", g_none, (6, 6, 1), dict(shape="none"), False, 6, desc="DTM edit (gaussian/capsule)")
 reg("terrain.ditch", "ditch", g_none, (6, 2, 0.5), dict(shape="none"), False, 5, desc="DTM edit (negative)")
 reg("tree.density", "tree_density", g_none, (1, 1, 1), dict(shape="none"), False, 10, True, "shrub density multiplier / canopy fill")
-reg("tree.oak", "tree_add", g_tree_card, (8, 8, 9), dict(shape="cylinder", r=4, h=9), True, 9, desc="extra coast live oak card")
+reg("tree.oak", "tree_add", g_tree_card, (8, 8, 9), dict(shape="cylinder", r=4, h=9), True, 9, desc="coast live oak: wide, multi-trunk, lobed spreading crown (crown ~1.5 h)")
+reg("tree.winter_sycamore", "tree_add", _p(g_tree_bare, kind="sycamore"), (10, 10, 15), dict(shape="cylinder", r=0.3, h=15), True, 9, desc="bare winter sycamore / cottonwood: pale forking limbs, twig mesh")
+reg("tree.winter_poplar", "tree_add", _p(g_tree_bare, kind="poplar"), (4, 4, 17), dict(shape="cylinder", r=0.25, h=17), True, 9, desc="bare winter poplar, columnar")
+reg("tree.conifer", "tree_add", g_tree_conifer, (6, 6, 15), dict(shape="cylinder", r=0.3, h=15), True, 9, desc="dark redwood / pine cone, tiered boughs")
+reg("prop.flag_pole", "prop", g_flag_pole, (1.9, 0.3, 6.8), dict(shape="cylinder", r=0.1, h=6.8), True, 24, desc="flagpole + US flag (public-domain design, no logos)")
+reg("debris.rockfall_pile", "debris", g_rockfall_pile, (3.6, 3.0, 0.9), dict(shape="box", w=3.6, d=3.0, h=0.9), True, 8, desc="angular talus / rockfall pile on the shoulder")
+reg("curb.concrete", "wall", g_curb, (1, 0.2, 0.14), dict(shape="box", d=0.2, h=0.14), False, 5, True, "concrete curb / gutter lip")
 reg("tree.remove", "tree_remove", g_none, (1, 1, 1), dict(shape="none"), False, 9, desc="remove LiDAR tree(s) within params.radius")
 
 def generate(aid, L=None, params=None):
@@ -990,7 +1295,8 @@ EYE_FRAMES = {   # seen by eye in the GoPro frames (contact sheets of every 5th 
     "rock.boulder_l": [1], "rock.cluster": [1], "debris.branch_pile": [26, 31], "shrub.fern": [76, 81], "shrub.coyote_brush": [36, 46, 186],
     "hedge.blackberry_thicket": [61, 66], "fence.lattice": [191], "fence.iron_picket": [206], "gate.estate_brick_iron": [141],
     "gate.pipe_ranch": [136], "building.water_tank": [171], "prop.trash_bins": [56], "sign.advisory_15": [91],
-    "guardrail.timber_rail": [56], "hedge.cypress_row": [211], "mailbox.brick_column": [201], "sign.address_fire": [141],
+    "guardrail.timber_rail": [56], "tree.winter_sycamore": [206, 207], "tree.winter_poplar": [206], "tree.conifer": [64, 85, 99, 106, 148, 169, 183],
+    "debris.rockfall_pile": [1, 15, 22], "curb.concrete": [196, 206, 210, 211], "hedge.cypress_row": [211], "mailbox.brick_column": [201], "sign.address_fire": [141],
     "shrub.grass_clump": [166, 196], "shrub.ivy": [156], "hedge.clipped": [196], "debris.stump": [136], "tree.oak": [101, 131],
 }
 

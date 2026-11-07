@@ -1674,7 +1674,7 @@ assets:
   materials:
   - ledger
   tris: null
-  tris_per_10m: 166
+  tris_per_10m: 448
   frames:
   - 17
   - 162
@@ -1743,7 +1743,7 @@ assets:
   materials:
   - ledger
   tris: null
-  tris_per_10m: 60
+  tris_per_10m: 256
   frames:
   - 23
   - 24
@@ -1863,7 +1863,7 @@ assets:
   materials:
   - ledger
   tris: null
-  tris_per_10m: 184
+  tris_per_10m: 348
   frames: []
   generator: scripts/p5/assets.py:g_bridge_steel
   desc: steel girder fascia + tube railing
@@ -1895,24 +1895,24 @@ assets:
   cls: culvert
   linear: false
   dims_m:
-    L: 0.9
-    W: 0.1
-    H: 0.9
+    L: 2.4
+    W: 0.35
+    H: 1.5
   proxy:
-    shape: plane
-    w: 0.9
-    h: 0.9
-    d: 0.1
+    shape: box
+    w: 2.4
+    d: 0.35
+    h: 1.5
   z0: 0.0
   collision: false
-  seg_class: other_prop
+  seg_class: wall
   materials:
   - ledger
-  tris: 4
+  tris: 168
   tris_per_10m: null
   frames: []
   generator: scripts/p5/assets.py:g_cmp
-  desc: corrugated pipe outlet + rip-rap
+  desc: corrugated pipe mouth (ribbed, dark bore) in a round-holed concrete headwall + rip-rap
 - id: culvert.drop_inlet
   cls: culvert
   linear: false
@@ -2537,7 +2537,7 @@ assets:
   seg_class: shrub
   materials:
   - ledger
-  tris: 12
+  tris: 32
   tris_per_10m: null
   frames:
   - 156
@@ -2561,11 +2561,11 @@ assets:
   seg_class: shrub
   materials:
   - ledger
-  tris: 12
+  tris: 36
   tris_per_10m: null
   frames: []
   generator: scripts/p5/assets.py:g_shrub
-  desc: hedge card clump
+  desc: toyon card clump
 - id: hedge.blackberry_thicket
   cls: hedge
   linear: true
@@ -2608,7 +2608,7 @@ assets:
   materials:
   - ledger
   tris: null
-  tris_per_10m: 72
+  tris_per_10m: 288
   frames: []
   generator: scripts/p5/assets.py:g_shrub_line
   desc: ''
@@ -3046,13 +3046,166 @@ assets:
   seg_class: vegetation_tree
   materials:
   - ledger
-  tris: 12
+  tris: 16
   tris_per_10m: null
   frames:
   - 101
   - 131
   generator: scripts/p5/assets.py:g_tree_card
-  desc: extra coast live oak card
+  desc: 'coast live oak: wide, multi-trunk, lobed spreading crown (crown ~1.5 h)'
+- id: tree.winter_sycamore
+  cls: tree_add
+  linear: false
+  dims_m:
+    L: 10
+    W: 10
+    H: 15
+  proxy:
+    shape: cylinder
+    r: 0.3
+    h: 15
+    w: 10
+    d: 0.6
+  z0: 0.0
+  collision: true
+  seg_class: vegetation_tree
+  materials:
+  - ledger
+  tris: 12
+  tris_per_10m: null
+  frames:
+  - 206
+  - 207
+  generator: scripts/p5/assets.py:g_?
+  desc: 'bare winter sycamore / cottonwood: pale forking limbs, twig mesh'
+- id: tree.winter_poplar
+  cls: tree_add
+  linear: false
+  dims_m:
+    L: 4
+    W: 4
+    H: 17
+  proxy:
+    shape: cylinder
+    r: 0.25
+    h: 17
+    w: 4
+    d: 0.5
+  z0: 0.0
+  collision: true
+  seg_class: vegetation_tree
+  materials:
+  - ledger
+  tris: 8
+  tris_per_10m: null
+  frames:
+  - 206
+  generator: scripts/p5/assets.py:g_?
+  desc: bare winter poplar, columnar
+- id: tree.conifer
+  cls: tree_add
+  linear: false
+  dims_m:
+    L: 6
+    W: 6
+    H: 15
+  proxy:
+    shape: cylinder
+    r: 0.3
+    h: 15
+    w: 6
+    d: 0.6
+  z0: 0.0
+  collision: true
+  seg_class: vegetation_tree
+  materials:
+  - ledger
+  tris: 12
+  tris_per_10m: null
+  frames:
+  - 64
+  - 85
+  - 99
+  - 106
+  - 148
+  - 169
+  - 183
+  generator: scripts/p5/assets.py:g_tree_conifer
+  desc: dark redwood / pine cone, tiered boughs
+- id: prop.flag_pole
+  cls: prop
+  linear: false
+  dims_m:
+    L: 1.9
+    W: 0.3
+    H: 6.8
+  proxy:
+    shape: cylinder
+    r: 0.1
+    h: 6.8
+    w: 1.9
+    d: 0.2
+  z0: 0.0
+  collision: true
+  seg_class: other_prop
+  materials:
+  - ledger
+  tris: 68
+  tris_per_10m: null
+  frames: []
+  generator: scripts/p5/assets.py:g_flag_pole
+  desc: flagpole + US flag (public-domain design, no logos)
+- id: debris.rockfall_pile
+  cls: debris
+  linear: false
+  dims_m:
+    L: 3.6
+    W: 3.0
+    H: 0.9
+  proxy:
+    shape: box
+    w: 3.6
+    d: 3.0
+    h: 0.9
+  z0: 0.0
+  collision: true
+  seg_class: rock_cut
+  materials:
+  - ledger
+  tris: 168
+  tris_per_10m: null
+  frames:
+  - 1
+  - 15
+  - 22
+  generator: scripts/p5/assets.py:g_rockfall_pile
+  desc: angular talus / rockfall pile on the shoulder
+- id: curb.concrete
+  cls: wall
+  linear: true
+  dims_m:
+    L: 1
+    W: 0.2
+    H: 0.14
+  proxy:
+    shape: box
+    d: 0.2
+    h: 0.14
+    w: 1
+  z0: 0.0
+  collision: false
+  seg_class: shoulder_dirt
+  materials:
+  - ledger
+  tris: null
+  tris_per_10m: 34
+  frames:
+  - 196
+  - 206
+  - 210
+  - 211
+  generator: scripts/p5/assets.py:g_curb
+  desc: concrete curb / gutter lip
 - id: tree.remove
   cls: tree_remove
   linear: false
