@@ -7,11 +7,9 @@
    more than CREASE_DEG (or that stick out of their 1-ring by > SPIKE m) get extra local smoothing.  Vertices shared
    with the road group (shoulder outer edge = the stitch) are pinned, so the stitch stays exact.  Visual = physics
    (same mesh), so wheels never float above / sink below what is drawn.
-2. Trees: an 8-sided closed prism collider (1WALL_tree_NN, one mesh per chunk, renderable=False) for every trunk
-   within TREE_R m of the road edge, sized from the actual trunk mesh.  Any tree mesh with a physical (digit) name is
-   renamed non-physical.
-3. Walls: every 1WALL mesh gets its away-from-road faces moved WALL_DEPTH m away (collide.thicken_away), so a
-   head-on hit can't push the car out through the back face of a thin box.
+2+3. Collision (dev6): collision_conv.rebuild() replaces every per-object 1WALL box with the community convention:
+   continuous welded invisible slabs per side along barrier lines and the dense-forest line, closed boxes for
+   buildings, no collision for trees / small props.  See docs/AC_CONVENTIONS.md "Collision convention (dev6)".
 Writes reports/qa_physics.json (terrain crease/spike stats within 25 m of the road edge).
 """
 import json, pickle, sys, pathlib
@@ -204,61 +202,28 @@ def fill_holes():
 n_open, n_fill = fill_holes()
 print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill} holes filled (1GRASS_hole_fill)")
 
-# ------------------------------------------------------------------ 2. trees
+# ------------------------------------------------------------------ 2+3. collision rebuild (dev6, collision_conv.py)
+# The per-object boxes of 21b/21c/21e/race_assets and dev4's 4,213 trunk prisms are replaced by continuous welded
+# slabs per side (barrier + forest line), simple closed boxes for buildings and nothing for props/trees.
 renamed = 0
 for m in G["trees"]:
-    if m["name"][:1].isdigit() and not m["name"].startswith("1WALL_tree"):
+    if m["name"][:1].isdigit() and not m["name"].startswith("1WALL"):
         m["name"] = "v" + m["name"]; renamed += 1
-G["trees"] = [m for m in G["trees"] if not m["name"].startswith("1WALL_tree")]   # idempotent
-import csv
+import csv, collision_conv as CC
+from geom import load_centerline as _lc
 DER = ROOT / "data" / "derived"
 tr = list(csv.DictReader(open(DER / "trees.csv")))
-tx = np.array([float(t["x_local"]) for t in tr]); ty = np.array([float(t["y_local"]) for t in tr])
-tz = np.array([float(t["ground_z"]) for t in tr])
-bark = np.concatenate([m["P"] for m in G["trees"] if m["material"] == "tree_trunk"])
-bkd = cKDTree(bark[:, :2])
-d_tree, _ = cKDTree(edge_xy).query(np.c_[tx, ty], workers=4)
-nchunks = int(geo["meta"]["nchunks"])
-cl_s = None
-colls = {}
-ntree = 0
-for k in np.nonzero(d_tree < TREE_R)[0]:
-    idx = bkd.query_ball_point([tx[k], ty[k]], 2.0)
-    if not idx:
-        continue
-    q = bark[idx]; q = q[q[:, 2] < q[:, 2].min() + 1.5]          # trunk base ring(s)
-    c = q[:, :2].mean(0); r = float(np.clip(np.linalg.norm(q[:, :2] - c, axis=1).max(), 0.15, 1.2))
-    zb = float(q[:, 2].min())
-    _, j = road_kd.query(c)
-    ch = min(int(j * nchunks // len(road_xy)), nchunks - 1)
-    colls.setdefault(ch, CO.Collider(f"1WALL_tree_{ch:02d}")).add(*CO.prism(c[0], c[1], r, zb - 1.0, zb + 4.5))
-    ntree += 1
-G["trees"] = [m for m in G["trees"] if not m["name"].startswith("1WALL_tree")]  # idempotent
-for ch, col in sorted(colls.items()):
-    G["trees"] += col.meshes()
-print(f"trees: {ntree} trunk colliders within {TREE_R} m in {len(colls)} meshes; {renamed} physical-named tree meshes renamed")
-
-# ------------------------------------------------------------------ 3. walls
-# dev4: 'away from the road' is measured from the CENTRELINE (1 m stations): with wide / paved shoulders the
-# 1ROAD vertices sit on the fence line itself, which flipped the away direction and pushed whole boxes 0.3 m out
-# (qa_collisions: chainlink s=3500, guardrail 3490, fences 13625-14385 uncovered)
-from geom import load_centerline as _lc
-_c = _lc(); CL_XY = np.c_[_c["x_local"], _c["y_local"]]
-nw = nv = 0
-for gn, ms in G.items():
-    if gn == "trees":
-        continue
-    for m in ms:
-        if m["name"].startswith("1WALL") and not m.get("_thick"):
-            nv += CO.thicken_away(m, CL_XY); m.update(CO.WALL_FLAGS); m["_thick"] = True; nw += 1
-print(f"walls: {nw} 1WALL meshes thickened to {CO.WALL_DEPTH} m away from the road ({nv} vertices moved)")
+trees = tuple(np.array([float(t[k]) for t in tr]) for k in ("x_local", "y_local", "ground_z"))
+cstats = CC.rebuild(G, _lc(), trees)
+ntree, nw = 0, cstats["new_meshes"]
+print(f"trees: no per-trunk colliders (convention); {renamed} physical-named tree meshes renamed")
 
 _prev = geo["meta"].get("physics", {})
 geo["meta"]["physics"] = dict(terrain_before=_prev.get("terrain_before") if TERRAIN_DONE else before,
                               terrain_after=_prev.get("terrain_after") if TERRAIN_DONE else after,
                               open_edges_near=_prev.get("open_edges_near") if TERRAIN_DONE else open_near,
                               open_edges_near_filled=n_open, holes_filled=n_fill,
-                              tree_colliders=ntree, walls_thickened=nw)
+                              tree_colliders=0, collision=cstats)
 geo["meta"]["physics_21d_done"] = True
 pickle.dump(geo, open(BUILD / "geometry.pkl", "wb"))
 (ROOT / "reports").mkdir(exist_ok=True)

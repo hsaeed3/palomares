@@ -60,7 +60,7 @@ def register_frame(f, prior, win, pin=None, lo=None, hi=None):
     t0 = time.time()
     seg, src = SCR.load_seg(f)
     ph = seg_for_fit(seg)
-    seg_u, valid = SC.undistort(seg, order=0, ow=RW, oh=RH)
+    seg_u, valid = SC.undistort(seg, order=0, ow=RW, oh=RH, src_size=SC.photo_size(f))
     valid &= ~np.isin(seg_u, list(SC.IGNORE))
     s0 = float(pin if pin is not None else prior["s"])
     if pin is not None: win = 15

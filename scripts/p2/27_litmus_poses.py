@@ -19,7 +19,7 @@ MIN_CONF = 0.6
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=8); ap.add_argument("--seed", type=int, default=5)
     ap.add_argument("--frames", type=int, nargs="*"); a = ap.parse_args()
-    src = json.load(open(ROOT / "data/scene/poses.json"))
+    src = json.load(open(ROOT / "data/scene/poses.json")); L = json.load(open(ROOT / "config/camera.json"))
     smax = float(fit.S[-1])
     elig = [p for p in src["poses"] if p["conf"] >= MIN_CONF and p["frame"] not in MISALIGNED and p["s"] < smax - 30]
     if a.frames:
@@ -35,14 +35,13 @@ if __name__ == "__main__":
         q = [p["s"], p["lateral"], p["height"], np.radians(p["yaw"]), np.radians(p["pitch"]), np.radians(p["roll"])]
         eye, look, up = fit.to_three(q)
         out.append(dict(frame=p["frame"], s=p["s"], lateral_m=p["lateral"], height_m=p["height"], yaw_rel_deg=p["yaw"],
-                        pitch_deg=p["pitch"], roll_deg=p["roll"], eye=eye, look=look, up=up, fov=p["fov_v"],
+                        pitch_deg=p["pitch"], roll_deg=p["roll"], eye=eye, look=look, up=up, fov=L["render_vfov_deg"],
                         conf=p["conf"], score=p["score"], road_iou=p["road_iou"], pinned=p["pinned"]))
-    L = src["lens"]; ha = fit.edge_angles((L["f_rel"], L["lam"]))
     json.dump(dict(note="three.js/AC coords [x_local, z, -y_local]; fov = vertical deg of the pinhole render; photo 2042x1486 is "
-                        "undistorted to that pinhole by 28_litmus_sheet.py using lens. Poses from data/scene/poses.json (dev5, "
+                        "resampled to that pinhole by 28_litmus_sheet.py with config/camera.json (docs/phase2/CAMERA.md). Poses from data/scene/poses.json (dev5, "
                         "Mask2Former-registered, some pinned by eye); conf/score/road_iou copied from there.",
-                   source="data/scene/poses.json", lens=dict(f_rel=L["f_rel"], lam=L["lam"], vfov_photo=round(2 * ha[0], 1),
-                   hfov_photo=round(2 * ha[1], 1)), fov=src["fov_v"], aspect=2042 / 1486, size=[2042, 1486], seed=a.seed,
+                   source="data/scene/poses.json", lens=dict(model=L["model"], f_px=L["f_px"], dcx=L["dcx"], dcy=L["dcy"],
+                   k1=L["k1"], height_m=L["height_m"]), fov=L["render_vfov_deg"], aspect=L["ref_size"][0] / L["ref_size"][1], size=L["ref_size"], seed=a.seed,
                    n=a.n, min_conf=MIN_CONF, excluded=sorted(MISALIGNED), n_eligible=len(elig), poses=out),
               open(ROOT / "config/litmus_poses.json", "w"), indent=1)
     print("wrote config/litmus_poses.json:", [(p["frame"], round(p["s"]), p["conf"]) for p in out])

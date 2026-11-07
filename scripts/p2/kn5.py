@@ -70,8 +70,66 @@ def split_mesh(m, limit=65535):
     return out
 
 
+TEXTURES_AS_DDS = True     # dev6: every embedded texture is DDS (BC1/BC3) with mipmaps, power-of-two (scripts/p2/dds.py)
+_DDS_CACHE = {}
+
+
+def _dds_textures(materials, textures):
+    import hashlib, dds
+    ren, out = {}, {}
+    for n, data in textures.items():
+        if data[:4] == b"DDS ":
+            out[n] = data; continue
+        nn = n.rsplit(".", 1)[0] + ".dds"
+        h = hashlib.sha1(data).hexdigest()
+        if h not in _DDS_CACHE:
+            _DDS_CACHE[h] = dds.encode(data)
+        out[nn] = _DDS_CACHE[h]; ren[n] = nn
+    import copy
+    mats = []
+    for m in materials:          # copies: callers reuse their Material objects (with .png names) for other kn5s
+        c = copy.copy(m); c.textures = {k: ren.get(v, v) for k, v in m.textures.items()}; mats.append(c)
+    return mats, out
+
+
+def clean_normals_tangents(pos, nrm, uv, idx):
+    """unit vertex normals (zero / NaN normals rebuilt from the faces, else up) and UV-derived tangents
+    orthogonalised against the normal (dev1-5 wrote tangent = +X everywhere: parallel to the normal on every
+    east-facing wall/bank, a degenerate TBN that yields NaN/black or light-leaking normal-mapped shading)."""
+    pos = pos.astype(np.float64); n = nrm.astype(np.float64); T = idx.reshape(-1, 3)
+    n[~np.isfinite(n)] = 0
+    ln = np.linalg.norm(n, axis=1)
+    bad = (ln < 0.5) | (ln > 1.5)
+    e1 = pos[T[:, 1]] - pos[T[:, 0]]; e2 = pos[T[:, 2]] - pos[T[:, 0]]
+    if bad.any():
+        fn = np.cross(e1, e2); acc = np.zeros_like(pos)
+        for k in range(3):
+            np.add.at(acc, T[:, k], fn)
+        n[bad] = acc[bad]
+        ln = np.linalg.norm(n, axis=1); z = ln < 1e-9
+        n[z] = (0, 1, 0); ln[z] = 1
+    n /= np.linalg.norm(n, axis=1, keepdims=True)
+    du1 = uv[T[:, 1]] - uv[T[:, 0]]; du2 = uv[T[:, 2]] - uv[T[:, 0]]
+    r = du1[:, 0] * du2[:, 1] - du2[:, 0] * du1[:, 1]
+    ok = np.abs(r) > 1e-12
+    tf = np.zeros_like(e1)
+    tf[ok] = (e1[ok] * du2[ok, 1:2] - e2[ok] * du1[ok, 1:2]) / r[ok, None]
+    tacc = np.zeros_like(pos)
+    for k in range(3):
+        np.add.at(tacc, T[:, k], tf)
+    t = tacc - n * (tacc * n).sum(1, keepdims=True)
+    lt = np.linalg.norm(t, axis=1); w = lt < 1e-6
+    if w.any():   # no usable UV gradient: any unit vector perpendicular to the normal
+        ref = np.where(np.abs(n[w, 0:1]) < 0.9, np.array([[1.0, 0, 0]]), np.array([[0, 0, 1.0]]))
+        t[w] = ref - n[w] * (ref * n[w]).sum(1, keepdims=True); lt[w] = np.linalg.norm(t[w], axis=1)
+    t /= lt[:, None]
+    return n.astype(np.float32), t.astype(np.float32)
+
+
 def write_kn5(path, materials, textures, nodes):
     """textures: dict name->bytes (PNG/DDS). materials: list[Material]. nodes: list of Mesh/Dummy (top-level)."""
+    if TEXTURES_AS_DDS:
+        materials, textures = _dds_textures(materials, textures)
     matid = {m.name: i for i, m in enumerate(materials)}
     f = io.BytesIO()
     f.write(MAGIC); f.write(struct.pack("<I", 5))
@@ -108,8 +166,9 @@ def write_kn5(path, materials, textures, nodes):
         f.write(struct.pack("<I", 2)); _s(f, n.name); f.write(struct.pack("<I?", 0, True))
         f.write(struct.pack("<???", n.cast_shadows, n.visible, n.transparent))
         nv = len(n.pos)
-        tan = np.zeros((nv, 3), np.float32); tan[:, 0] = 1
-        vb = np.concatenate([n.pos, n.nrm, n.uv * np.array([1, -1], np.float32), tan], axis=1).astype("<f4")
+        assert np.isfinite(n.pos).all() and np.isfinite(n.uv).all(), f"non-finite vertex in {n.name}"
+        nrm, tan = clean_normals_tangents(n.pos, n.nrm, n.uv * np.array([1, -1], np.float32), n.idx)
+        vb = np.concatenate([n.pos, nrm, n.uv * np.array([1, -1], np.float32), tan], axis=1).astype("<f4")
         f.write(struct.pack("<I", nv)); f.write(vb.tobytes())
         f.write(struct.pack("<I", len(n.idx))); f.write(n.idx.astype("<u2").tobytes())
         c = (n.pos.min(0) + n.pos.max(0)) / 2; r = float(np.linalg.norm(n.pos - c, axis=1).max())
@@ -160,7 +219,7 @@ def read_kn5(path):
             vb = np.frombuffer(b, "<f4", nv * 11, o[0]).reshape(nv, 11); o[0] += nv * 44
             (ni,) = rd("I"); ib = np.frombuffer(b, "<u2", ni, o[0]); o[0] += ni * 2
             mid, layer, li, lo = rd("IIff"); rb = b[o[0] + 16:o[0] + 17]; bs = rd("4f?")
-            meshes.append(dict(name=name, active=_act, flag_bytes=fb, renderable_byte=rb, layer=layer, lod_in=li, cast_shadows=cs, visible=vis, transparent=tr, renderable=bs[4], pos=vb[:, :3].copy(), nrm=vb[:, 3:6].copy(), uv=vb[:, 6:8].copy(), idx=ib.astype(np.int64), material=mid, lod_out=lo))
+            meshes.append(dict(name=name, active=_act, flag_bytes=fb, renderable_byte=rb, layer=layer, lod_in=li, cast_shadows=cs, visible=vis, transparent=tr, renderable=bs[4], pos=vb[:, :3].copy(), nrm=vb[:, 3:6].copy(), uv=vb[:, 6:8].copy(), tan=vb[:, 8:11].copy(), idx=ib.astype(np.int64), material=mid, lod_out=lo))
         for _ in range(nch): rnode()
     rnode()
     assert o[0] == len(b), f"trailing bytes {len(b) - o[0]}"

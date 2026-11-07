@@ -109,7 +109,7 @@ def score_frame(f, pose, ledger, catalog, overlay=False, seg_full=None):
         seg_full, src = load_seg(f)
     else:
         src = "given"
-    seg, valid = SC.undistort(seg_full, order=0)
+    seg, valid = SC.undistort(seg_full, order=0, src_size=SC.photo_size(f))
     valid &= ~np.isin(seg, list(SC.IGNORE))
     res = dict(frame=f, s=round(float(p[0]), 1), pose_src=pose.get("src"), seg=src, classes={}, groups={}, instances=[])
     for name, ids in [(SC.CLASSES[i], [i]) for i in range(1, 25) if i not in SC.IGNORE] + [("G:" + k, v) for k, v in GROUPS.items()]:

@@ -5,6 +5,9 @@ import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from geom import ROOT, BUILD
 from kn5 import read_kn5
+import dds as _dds
+_png = lambda b: _dds.to_png(b) if b[:4] == b"DDS " else b   # dev6: kn5 textures are DDS; the browser renderer wants PNG
+_pn = lambda n: n and (n.rsplit('.', 1)[0] + '.png')
 
 TRACK = BUILD / "palomares_road"
 for lay in (sys.argv[1:] or ["road_full", "track_full"]):
@@ -17,14 +20,14 @@ for lay in (sys.argv[1:] or ["road_full", "track_full"]):
         k = read_kn5(TRACK / fn)
         base = len(mats)
         for m in k["materials"]:
-            tex = m["textures"].get("txDiffuse")
+            tex0 = m["textures"].get("txDiffuse"); tex = _pn(tex0)
             if tex and not (out / tex).exists():
-                (out / tex).write_bytes(k["textures"][tex])
+                (out / tex).write_bytes(_png(k["textures"][tex0]))
             ent_m = dict(name=m["name"], tex=tex, alpha=bool(m["alpha_tested"]), blend=int(m.get("blend", 0)))
-            det = m["textures"].get("txDetail")
+            det0 = m["textures"].get("txDetail"); det = _pn(det0)
             if det and m["shader"] == "ksPerPixelMultiMap" and m["props"].get("useDetail", [0])[0] > 0:
                 if not (out / det).exists():
-                    (out / det).write_bytes(k["textures"][det])
+                    (out / det).write_bytes(_png(k["textures"][det0]))
                 ent_m.update(det=det, dmul=float(m["props"]["detailUVMultiplier"][0]))   # AC: diffuse * detail where diffuse alpha = 0
             mats.append(ent_m)
         for m in k["meshes"]:

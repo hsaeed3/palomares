@@ -2,8 +2,9 @@
 
 Camera/lens convention is the one of scripts/p2/27_litmus_fit.py (local coords x,y,z NAVD88):
 pose (s, lateral, height, yaw, pitch, roll) relative to the centerline tangent at s; lateral >0 = right of centreline
-(as in 27). The GoPro photo is fisheye (f_rel, lam from config/litmus_poses.json); we render a PINHOLE view of
-vertical fov FOV and undistort the photo/seg to it (same as 28_litmus_sheet.py).
+(as in 27). Intrinsics: config/camera.json (docs/phase2/CAMERA.md, scripts/p5/calib.py): the frames are rectilinear
+360-viewer screenshots, model x = w/2+dcx + f*u*(1+k1*r^2) (f in screenshot px, shared; principal point = crop centre
++ offset). We render a PINHOLE view of vertical fov FOV and resample the photo/seg to it (same as 28_litmus_sheet.py).
 """
 import csv, json, pathlib, time
 import numpy as np
@@ -20,9 +21,10 @@ CLASSES = ["unknown", "sky", "road", "marking_yellow", "marking_white", "shoulde
            "building", "bridge", "vehicle", "person", "water", "mailbox_prop", "other_prop"]
 CID = {n: i for i, n in enumerate(CLASSES)}
 IGNORE = {0, 20, 21}
-_LP = json.load(open(ROOT / "config/litmus_poses.json"))
-LENS = (_LP["lens"]["f_rel"], _LP["lens"]["lam"])
-FOV = float(_LP["fov"])
+CAMERA = json.load(open(ROOT / "config/camera.json"))
+CAM_F, CAM_DCX, CAM_DCY, CAM_K1 = (float(CAMERA[k]) for k in ("f_px", "dcx", "dcy", "k1"))
+FOV = float(CAMERA["render_vfov_deg"])
+LENS = (CAM_F / CAMERA["ref_size"][1], 1.0)   # legacy (f_rel, lam) of 27_litmus_fit.project: lam=1 = pinhole
 AW, AH = 512, 372          # analysis size (pinhole)
 
 # ---------------------------------------------------------------- centerline
@@ -52,16 +54,22 @@ def cam_basis(p):
 
 
 def undistort_map(w_src, h_src, ow=AW, oh=AH, vfov=FOV):
-    """(sy, sx) source pixel coords in a fisheye image of size w_src x h_src for each pinhole output pixel"""
+    """(sy, sx) source pixel coords in a photo of size w_src x h_src for each ideal-pinhole output pixel.
+    w_src/h_src may be a resized copy (seg at 1021x743): the true screenshot size is given by `src_size`."""
+    return cam_map(w_src, h_src, ow, oh, vfov)
+
+
+def cam_map(w_src, h_src, ow, oh, vfov=FOV, src_size=None):
+    W0, H0 = src_size or (w_src, h_src); kx, ky = w_src / W0, h_src / H0
     fo = (oh / 2) / np.tan(np.radians(vfov) / 2)
     yy, xx = np.mgrid[0:oh, 0:ow]; u = (xx + .5 - ow / 2) / fo; v = (yy + .5 - oh / 2) / fo
-    ru = np.hypot(u, v); th = np.arctan(ru); f = LENS[0] * h_src; lam = LENS[1]
-    rd = f * np.tan(lam * th) / lam; sc = np.where(ru > 0, rd / np.maximum(ru, 1e-9), f)
-    return h_src / 2 + v * sc - .5, w_src / 2 + u * sc - .5
+    g = 1 + CAM_K1 * (u * u + v * v)
+    return (H0 / 2 + CAM_DCY + CAM_F * v * g) * ky - .5, (W0 / 2 + CAM_DCX + CAM_F * u * g) * kx - .5
 
 
-def undistort(a, order=1, ow=AW, oh=AH):
-    a = np.asarray(a); h, w = a.shape[:2]; sy, sx = undistort_map(w, h, ow, oh)
+def undistort(a, order=1, ow=AW, oh=AH, src_size=None, vfov=FOV):
+    """resample photo/seg `a` to the render pinhole; src_size = true screenshot (w, h) if `a` was resized"""
+    a = np.asarray(a); h, w = a.shape[:2]; sy, sx = cam_map(w, h, ow, oh, vfov, src_size)
     valid = (sx >= 0) & (sx <= w - 1) & (sy >= 0) & (sy <= h - 1)
     if a.ndim == 2:
         out = ndimage.map_coordinates(a, [sy, sx], order=order, cval=0)
@@ -324,3 +332,7 @@ def render(p, w=AW, h=AH, ahead=250.0, behind=30.0, ledger=None, catalog=None, b
         if di is not None:
             di.polygon(q, fill=Il[t])
     return np.asarray(img), (np.asarray(inst, np.int32) if inst else np.full((h, w), -1, np.int32))
+
+
+def photo_size(f):
+    return Image.open(ROOT / f"assets/gopro/{f:03d}.png").size
