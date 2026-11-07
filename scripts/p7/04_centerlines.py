@@ -7,7 +7,7 @@
 Writes data/derived/dev7/centerline_<road>.csv + .geojson, and data/cache/p7/xs_<road>.npz (raw profiles).
 Columns: s_m,x_local,y_local,z_navd88,x_utm,y_utm,lon,lat,width_m,edge_left_m,edge_right_m,crossfall_left,
  crossfall_right,grade,curvature_1pm,env_left,env_right,curb_left,curb_right,rise_left_5m,rise_right_5m,
- ground_cover,gdist_m,canopy_frac,bridge17,paint_center,paint_left,paint_right,snap_offset_m
+ ground_cover,gdist_m,canopy_frac,bridge17,paint_center,paint_left,paint_right,snap_offset_m,struct (bridge_lidar|bridge_interp|under_rail)
 Left/right relative to the line direction (NCR: Mission Blvd -> Sunol; others W->E / S->N); crossfall = dz/dd, d + left.
 Run: nice -n5 python3 scripts/p7/04_centerlines.py [road ...]
 """
@@ -38,13 +38,72 @@ def frame(xy, step):
     return ss, P, T
 
 
-def straighten(xy, DM, DS=0.5, DD=0.25):
-    ss, P, T = frame(xy, DS); N = np.c_[-T[:, 1], T[:, 0]]
+def straighten(xy, DM, DS=0.5, DD=0.25, at_points=False):
+    if at_points:
+        P = xy; T = np.gradient(P, axis=0); T /= np.maximum(np.linalg.norm(T, axis=1), 1e-9)[:, None]
+    else:
+        ss, P, T = frame(xy, DS)
+    N = np.c_[-T[:, 1], T[:, 0]]
     d = (np.arange(int(2 * DM / DD)) + .5) * DD - DM
     X = P[:, None, 0] + d[None] * N[:, None, 0]; Y = P[:, None, 1] + d[None] * N[:, None, 1]
     z = samp("dtm_r050_b40", X, Y); gd = samp("gdist_r050_b40", X, Y, 0); it = samp("int_r050_b40", X, Y, 0)
     n = (np.isfinite(z) & (np.nan_to_num(gd, nan=9) < 1.5)).astype(np.uint16)
     return {"z": np.where(n > 0, z, np.nan), "n": n, "i": it, "ds": DS, "dd": DD, "dm": DM, "zall": z}
+
+
+from shapely.geometry import LineString as _LS, Point as _Pt
+OSMF = json.load(open(DER7 / "osm_features.geojson"))["features"]
+
+
+def struct_lines(road, kind):
+    """OSM bridge edges of this road (kind='bridge') or rail-bridge lines crossing it (kind='under_rail'), local xy."""
+    out = []
+    if kind == "bridge":
+        for f in net:
+            p = f["properties"]; nm = slug(p.get("name") or "")
+            if p.get("bridge") in (None, "no") or p["highway"] == "service": continue
+            if (nm and (nm == road or road.startswith(nm + "_"))) or (road.startswith("palomares_link") and p["highway"].endswith("_link")):
+                c = np.array(f["geometry"]["coordinates"]); out.append(np.c_[ll2loc(c[:, 0], c[:, 1])])
+    else:
+        for f in OSMF:
+            q = f["properties"]
+            if q["kind"].startswith("rail_") and "bridge" in q["kind"] and f["geometry"]["type"] == "LineString":
+                c = np.array(f["geometry"]["coordinates"]); out.append(np.c_[ll2loc(c[:, 0], c[:, 1])])
+    return out
+
+
+def ranges_on(xy, road, kind, pad):
+    L = _LS(xy); rr = []
+    for b in struct_lines(road, kind):
+        B = _LS(b)
+        if kind == "bridge":
+            if L.distance(B) > 8: continue
+            s0, s1 = sorted((L.project(_Pt(b[0])), L.project(_Pt(b[-1]))))
+        else:
+            if not L.intersects(B.buffer(4)): continue
+            I = L.intersection(B.buffer(9)); 
+            if I.is_empty: continue
+            pts = np.array([c for g in getattr(I, "geoms", [I]) for c in g.coords])
+            ss = [L.project(_Pt(p)) for p in pts]; s0, s1 = min(ss), max(ss)
+        rr.append((max(0, s0 - pad), min(L.length, s1 + pad)))
+    return rr
+
+
+def fix_bridges(xy_osm, s, xyo, road):
+    """On OSM road bridges the deck often has no ground/17 returns, so the flat-strip search can slide onto the bank
+    under the deck: replace the snapped line there by the OSM line shifted by the offsets interpolated from both ends."""
+    L = _LS(xy_osm); out = xyo.copy()
+    for a, b in ranges_on(xyo, road, "bridge", 10.0):
+        ia, ib = np.searchsorted(s, a), min(np.searchsorted(s, b), len(s) - 1)
+        if ib - ia < 3: continue
+        def off(p):
+            t = L.project(_Pt(p)); q = np.array(L.interpolate(t).coords[0]); q2 = np.array(L.interpolate(min(t + 1, L.length)).coords[0])
+            tg = q2 - q; tg /= max(np.linalg.norm(tg), 1e-9); n = np.array([-tg[1], tg[0]]); return q, n, float(np.dot(p - q, n))
+        oa, ob = off(xyo[ia])[2], off(xyo[ib])[2]
+        for k in range(ia, ib + 1):
+            q, n, _ = off(xyo[k]); t = (s[k] - s[ia]) / max(s[ib] - s[ia], 1e-6)
+            out[k] = q + n * ((1 - t) * oa + t * ob)
+    return out
 
 
 def refine(xy):
@@ -59,6 +118,8 @@ def refine(xy):
     offB = gaussian_filter1d(P1.viterbi(CB, dB, lam=0.01, maxjump=0.5, prior_w=0.006), 4)
     xyB = P1.apply_offset(xyA, RB, rowsB, offB)
     s, xyo, _, _ = P1.smooth_resample(xyB, sigma=4.0)
+    xyF = fix_bridges(xy, s, xyo, ROAD)
+    if np.abs(xyF - xyo).max() > 0.05: s, xyo, _, _ = P1.smooth_resample(xyF, sigma=2.0)
     # snap offset vs OSM
     from shapely.geometry import LineString, Point
     L = LineString(xy); off = np.array([L.distance(Point(p)) for p in xyo[::1]])
@@ -104,7 +165,7 @@ def max_half(road):
 
 def cross_sections(road, xy, s, snap):
     NS = len(xy); DMX = max_half(road) + 7
-    R = straighten(xy, DMX, DS=1.0); z, I = R["z"], R["i"]; DD = R["dd"]
+    R = straighten(xy, DMX, at_points=True); z, I = R["z"], R["i"]; DD = R["dd"]
     nd = z.shape[1]; d = (np.arange(nd) + .5) * DD - DMX; c = nd // 2
     keys = ("zc", "wl", "wr", "cfl", "cfr", "rl2", "rl5", "rr2", "rr5", "cov", "pc", "pl", "pr", "curbl", "curbr")
     out = {k: np.full(NS, np.nan) for k in keys}
@@ -158,8 +219,23 @@ def cross_sections(road, xy, s, snap):
     cfl, cfr = sm(out["cfl"], 9, 3), sm(out["cfr"], 9, 3)
     zc = sm(out["zc"], 5, 2)
     zc = np.where(np.isfinite(zc), zc, samp("dtm_r100_b150", xy[:, 0], xy[:, 1]))
+    struct = np.array([""] * NS, dtype=object)
+    for a_, b_ in ranges_on(xy, road, "under_rail", 2.0):
+        struct[(s >= a_) & (s <= b_)] = "under_rail"
+    deck = []
+    for a_, b_ in ranges_on(xy, road, "bridge", 0.0):
+        ia, ib = int(np.searchsorted(s, a_)), min(int(np.searchsorted(s, b_)), NS - 1)
+        ja, jb = max(ia - 4, 0), min(ib + 4, NS - 1)
+        zl = np.interp(s[ja:jb + 1], [s[ja], s[jb]], [zc[ja], zc[jb]])
+        dev = np.abs(zc[ja:jb + 1] - zl)
+        src = "lidar" if np.nanpercentile(dev, 90) < 0.35 else "interp"
+        if src == "interp":
+            zc[ja:jb + 1] = zl; envs = None
+        struct[ia:ib + 1] = "bridge_" + src; deck.append((round(float(s[ia]), 1), round(float(s[ib]), 1), src))
     rl = [sm(out[k], 7, 2) for k in ("rl2", "rl5", "rr2", "rr5")]
     envl = [env(a, b) for a, b in zip(rl[0], rl[1])]; envr = [env(a, b) for a, b in zip(rl[2], rl[3])]
+    for k in np.flatnonzero(np.char.startswith(struct.astype(str), "bridge")):
+        envl[k] = envr[k] = "bridge"
     T = np.gradient(xy, axis=0); T /= np.maximum(np.linalg.norm(T, axis=1), 1e-9)[:, None]
     hd = np.unwrap(np.arctan2(T[:, 1], T[:, 0])); S = s
     curv = np.gradient(hd) / np.maximum(np.gradient(S), 1e-6); grade = np.gradient(zc) / np.maximum(np.gradient(S), 1e-6)
@@ -170,19 +246,20 @@ def cross_sections(road, xy, s, snap):
     X, Y = xy[:, 0] + X0, xy[:, 1] + Y0; lon, lat = T_UTM_LL.transform(X, Y)
     hdr = ("s_m,x_local,y_local,z_navd88,x_utm,y_utm,lon,lat,width_m,edge_left_m,edge_right_m,crossfall_left,crossfall_right,grade,"
            "curvature_1pm,env_left,env_right,curb_left,curb_right,rise_left_5m,rise_right_5m,ground_cover,gdist_m,canopy_frac,bridge17,"
-           "paint_center,paint_left,paint_right,snap_offset_m")
+           "paint_center,paint_left,paint_right,snap_offset_m,struct")
     with open(DER7 / f"centerline_{road}.csv", "w") as fo:
         fo.write(hdr + "\n")
         for k in range(NS):
             fo.write(f"{S[k]:.2f},{xy[k,0]:.3f},{xy[k,1]:.3f},{zc[k]:.3f},{X[k]:.3f},{Y[k]:.3f},{lon[k]:.7f},{lat[k]:.7f},{wl[k]+wr[k]:.2f},"
                      f"{wl[k]:.2f},{wr[k]:.2f},{cfl[k]:.4f},{cfr[k]:.4f},{grade[k]:.4f},{curv[k]:.5f},{envl[k]},{envr[k]},"
                      f"{out['curbl'][k]:.2f},{out['curbr'][k]:.2f},{rl[1][k]:.2f},{rl[3][k]:.2f},{out['cov'][k]:.2f},{gd[k]:.2f},{canopy[k]:.2f},"
-                     f"{b17[k]:.0f},{out['pc'][k]:.3f},{out['pl'][k]:.3f},{out['pr'][k]:.3f},{snap[k]:.2f}\n")
+                     f"{b17[k]:.0f},{out['pc'][k]:.3f},{out['pl'][k]:.3f},{out['pr'][k]:.3f},{snap[k]:.2f},{struct[k]}\n")
     dump_geojson(DER7 / f"centerline_{road}.geojson", [feat(line_ll(xy, zc), road=road, length_m=round(float(S[-1]), 1),
                  crs_note="WGS84 lon/lat/NAVD88 m; CSV has UTM10N + local (config/origin.json)")])
     return dict(length_m=round(float(S[-1]), 1), width_p5_50_95=np.round(np.percentile(wl + wr, [5, 50, 95]), 2).tolist(),
                 z_min=round(float(np.nanmin(zc)), 2), z_max=round(float(np.nanmax(zc)), 2), max_abs_grade=round(float(np.nanmax(np.abs(grade))), 4),
-                snap_p50_p95=np.round(np.percentile(snap, [50, 95]), 2).tolist())
+                snap_p50_p95=np.round(np.percentile(snap, [50, 95]), 2).tolist(), bridges=deck,
+                under_rail_m=int((struct == "under_rail").sum()))
 
 
 if __name__ == "__main__":
@@ -196,6 +273,7 @@ if __name__ == "__main__":
         a = np.genfromtxt(f, delimiter=",", names=True); xy = np.c_[a["x_local"], a["y_local"]]
         keep = np.r_[True, np.hypot(*np.diff(xy, axis=0).T) > 0.05]; xy = xy[keep]
         if len(xy) < 2: continue
+        ROAD = road
         s, xyo, snap = refine(xy)
         summ[road] = cross_sections(road, xyo, s, snap)
         print(road, summ[road], flush=True)

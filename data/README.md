@@ -38,3 +38,19 @@ All rasters are GeoTIFF in **EPSG:26910 (UTM 10N, m)**, with heights in **NAVD88
 | `derived/understory.geojson` | verge hedge rows (0.3–4 m beyond the edge) and bank shrubs (4–12 m) derived from understory.tif |
 | `derived/mapillary_images.geojson` | Mapillary images within 40 m (CC-BY-SA 4.0); thumbnails in `cache/p6/mapillary/` |
 | `cache/p6/nodes/` | reduced EPT nodes (not in git) |
+
+## dev7 data package D (scripts/p7, run `scripts/p7/run_all.sh`)
+
+`derived/dev7/` covers the Niles town streets, Niles Canyon Rd (SR-84, Mission Blvd → Sunol stop) and the Palomares connector. It uses the same CRS and fixed origin as Phase 1. See `reports/dev7/data_report.md`.
+
+| File | Description |
+|---|---|
+| `network.geojson`, `junctions.geojson` | OSM drivable edges split at junctions (tags: lanes, width, surface, oneway, bridge, …, role) and graph nodes (degree, roads, signal/stop control) — ODbL |
+| `osm_centerline_<road>.csv`, `osm_centerlines.geojson` | ordered OSM line per named road (local, UTM, lon/lat, node id) |
+| `centerline_<road>.csv/.geojson` | LiDAR-refined 1 m centerline + cross-sections (Phase-1 columns, plus curb_left/right, rise_*_5m, gdist_m, canopy_frac, bridge17, snap_offset_m) |
+| `centerlines_summary.json`, `termini.json`, `scope.json/.geojson` | per-road stats; confirmed termini; town / 40 m detail / 150 m terrain polygons (WKT local) |
+| `dtm_r050_b40.tif`, `dtm_r100_b150.tif`, `dsm_r100_b150.tif`, `chm_r100_b150.tif`, `gdist_r050_b40.tif`, `int_r050_b40.tif`, `cover_r100_b150.tif` | rasters (EPSG:26910, NAVD88) |
+| `features.geojson`, `gaps.csv` | junctions, signals/stops, bridges (OSM + class 17), rail underpass / crossings, culverts, walls/cuts, drops, guardrail candidates, curbs, LiDAR gaps, canyon high/low points |
+| `osm_features.geojson` | parking, rail lines/platforms/stations, buildings, barriers, waterways, POIs (ODbL) |
+| `trees.csv/.geojson`, `buildings.geojson` | CHM tree tops ≥ 4 m within 60 m; OSM footprints with LiDAR height |
+| `mapillary_index.csv`, `mapillary_coverage.csv` | Mapillary images within 40 m (id, lon/lat, compass, captured_at, road, s, offset) — CC-BY-SA 4.0, index only |

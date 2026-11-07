@@ -1,0 +1,572 @@
+{
+ "niles_blvd": {
+  "length_m": 1082.0,
+  "width_p5_50_95": [
+   6.76,
+   8.88,
+   10.23
+  ],
+  "z_min": 21.7,
+  "z_max": 25.74,
+  "max_abs_grade": 0.5551,
+  "snap_p50_p95": [
+   0.56,
+   2.87
+  ]
+ },
+ "niles_canyon_road": {
+  "length_m": 10733.0,
+  "width_p5_50_95": [
+   5.88,
+   7.73,
+   13.31
+  ],
+  "z_min": 24.34,
+  "z_max": 77.42,
+  "max_abs_grade": 0.6523,
+  "snap_p50_p95": [
+   0.88,
+   3.32
+  ]
+ },
+ "2nd_street": {
+  "length_m": 951.0,
+  "width_p5_50_95": [
+   7.47,
+   8.81,
+   9.94
+  ],
+  "z_min": 20.04,
+  "z_max": 25.28,
+  "max_abs_grade": 0.0212,
+  "snap_p50_p95": [
+   0.76,
+   2.66
+  ]
+ },
+ "3rd_street": {
+  "length_m": 963.0,
+  "width_p5_50_95": [
+   7.78,
+   9.12,
+   10.25
+  ],
+  "z_min": 21.08,
+  "z_max": 24.24,
+  "max_abs_grade": 0.0259,
+  "snap_p50_p95": [
+   1.11,
+   2.23
+  ]
+ },
+ "chase_court": {
+  "length_m": 87.0,
+  "width_p5_50_95": [
+   9.06,
+   9.38,
+   9.89
+  ],
+  "z_min": 22.17,
+  "z_max": 22.3,
+  "max_abs_grade": 0.0078,
+  "snap_p50_p95": [
+   0.38,
+   0.58
+  ]
+ },
+ "cinematic_common": {
+  "length_m": 172.0,
+  "width_p5_50_95": [
+   8.7,
+   9.54,
+   10.25
+  ],
+  "z_min": 23.12,
+  "z_max": 26.14,
+  "max_abs_grade": 0.0455,
+  "snap_p50_p95": [
+   0.27,
+   1.34
+  ]
+ },
+ "dollar_common": {
+  "length_m": 146.0,
+  "width_p5_50_95": [
+   8.04,
+   10.01,
+   10.25
+  ],
+  "z_min": 23.16,
+  "z_max": 24.13,
+  "max_abs_grade": 0.1545,
+  "snap_p50_p95": [
+   0.23,
+   1.18
+  ]
+ },
+ "e_street": {
+  "length_m": 117.0,
+  "width_p5_50_95": [
+   7.31,
+   9.02,
+   10.13
+  ],
+  "z_min": 20.18,
+  "z_max": 20.44,
+  "max_abs_grade": 0.0384,
+  "snap_p50_p95": [
+   0.41,
+   0.91
+  ]
+ },
+ "essanay_avenue": {
+  "length_m": 100.0,
+  "width_p5_50_95": [
+   7.53,
+   8.42,
+   10.14
+  ],
+  "z_min": 23.53,
+  "z_max": 24.24,
+  "max_abs_grade": 0.02,
+  "snap_p50_p95": [
+   0.66,
+   1.02
+  ]
+ },
+ "essanay_place": {
+  "length_m": 200.0,
+  "width_p5_50_95": [
+   7.92,
+   8.65,
+   10.12
+  ],
+  "z_min": 24.18,
+  "z_max": 25.51,
+  "max_abs_grade": 0.0284,
+  "snap_p50_p95": [
+   1.06,
+   2.7
+  ]
+ },
+ "f_street": {
+  "length_m": 235.0,
+  "width_p5_50_95": [
+   5.79,
+   6.57,
+   9.49
+  ],
+  "z_min": 20.81,
+  "z_max": 21.19,
+  "max_abs_grade": 0.0313,
+  "snap_p50_p95": [
+   0.58,
+   1.3
+  ]
+ },
+ "g_street": {
+  "length_m": 237.0,
+  "width_p5_50_95": [
+   6.63,
+   7.87,
+   10.22
+  ],
+  "z_min": 21.85,
+  "z_max": 22.89,
+  "max_abs_grade": 0.0182,
+  "snap_p50_p95": [
+   0.26,
+   1.13
+  ]
+ },
+ "h_street": {
+  "length_m": 241.0,
+  "width_p5_50_95": [
+   7.84,
+   8.93,
+   10.21
+  ],
+  "z_min": 23.1,
+  "z_max": 24.23,
+  "max_abs_grade": 0.0161,
+  "snap_p50_p95": [
+   0.68,
+   1.66
+  ]
+ },
+ "i_street": {
+  "length_m": 252.0,
+  "width_p5_50_95": [
+   7.62,
+   9.22,
+   10.23
+  ],
+  "z_min": 24.22,
+  "z_max": 24.83,
+  "max_abs_grade": 0.015,
+  "snap_p50_p95": [
+   0.55,
+   1.05
+  ]
+ },
+ "j_street": {
+  "length_m": 251.0,
+  "width_p5_50_95": [
+   8.33,
+   9.65,
+   10.25
+  ],
+  "z_min": 22.07,
+  "z_max": 25.33,
+  "max_abs_grade": 0.0734,
+  "snap_p50_p95": [
+   0.25,
+   1.14
+  ]
+ },
+ "l_street": {
+  "length_m": 68.0,
+  "width_p5_50_95": [
+   6.72,
+   7.19,
+   10.25
+  ],
+  "z_min": 22.71,
+  "z_max": 22.87,
+  "max_abs_grade": 0.014,
+  "snap_p50_p95": [
+   1.51,
+   1.72
+  ]
+ },
+ "limelight_terrace": {
+  "length_m": 93.0,
+  "width_p5_50_95": [
+   6.64,
+   9.06,
+   10.22
+  ],
+  "z_min": 21.63,
+  "z_max": 25.9,
+  "max_abs_grade": 0.4345,
+  "snap_p50_p95": [
+   0.76,
+   6.23
+  ]
+ },
+ "locomotive_common": {
+  "length_m": 250.0,
+  "width_p5_50_95": [
+   6.96,
+   8.65,
+   10.25
+  ],
+  "z_min": 22.53,
+  "z_max": 24.26,
+  "max_abs_grade": 0.1212,
+  "snap_p50_p95": [
+   1.45,
+   3.8
+  ]
+ },
+ "main_street": {
+  "length_m": 672.0,
+  "width_p5_50_95": [
+   5.7,
+   8.89,
+   10.25
+  ],
+  "z_min": 74.56,
+  "z_max": 80.68,
+  "max_abs_grade": 0.0419,
+  "snap_p50_p95": [
+   0.41,
+   2.5
+  ]
+ },
+ "mayhews_road": {
+  "length_m": 35.0,
+  "width_p5_50_95": [
+   10.25,
+   10.25,
+   10.25
+  ],
+  "z_min": 31.37,
+  "z_max": 32.63,
+  "max_abs_grade": 0.0897,
+  "snap_p50_p95": [
+   0.0,
+   0.0
+  ]
+ },
+ "mission_boulevard": {
+  "length_m": 719.0,
+  "width_p5_50_95": [
+   10.95,
+   13.08,
+   18.99
+  ],
+  "z_min": 23.06,
+  "z_max": 28.95,
+  "max_abs_grade": 0.0377,
+  "snap_p50_p95": [
+   0.18,
+   0.5
+  ]
+ },
+ "mission_boulevard_2": {
+  "length_m": 665.0,
+  "width_p5_50_95": [
+   8.84,
+   12.61,
+   16.47
+  ],
+  "z_min": 23.35,
+  "z_max": 27.38,
+  "max_abs_grade": 0.033,
+  "snap_p50_p95": [
+   0.22,
+   0.4
+  ]
+ },
+ "mission_boulevard_3": {
+  "length_m": 671.0,
+  "width_p5_50_95": [
+   10.16,
+   12.68,
+   16.98
+  ],
+  "z_min": 20.53,
+  "z_max": 32.55,
+  "max_abs_grade": 0.0298,
+  "snap_p50_p95": [
+   0.16,
+   0.29
+  ]
+ },
+ "mission_boulevard_4": {
+  "length_m": 734.0,
+  "width_p5_50_95": [
+   9.21,
+   10.41,
+   15.12
+  ],
+  "z_min": 19.69,
+  "z_max": 32.59,
+  "max_abs_grade": 0.0308,
+  "snap_p50_p95": [
+   0.15,
+   0.38
+  ]
+ },
+ "nichols_avenue": {
+  "length_m": 177.0,
+  "width_p5_50_95": [
+   6.5,
+   6.87,
+   13.74
+  ],
+  "z_min": 20.22,
+  "z_max": 22.9,
+  "max_abs_grade": 0.0301,
+  "snap_p50_p95": [
+   1.47,
+   2.44
+  ]
+ },
+ "nichols_court": {
+  "length_m": 40.0,
+  "width_p5_50_95": [
+   6.12,
+   7.3,
+   10.0
+  ],
+  "z_min": 22.86,
+  "z_max": 23.25,
+  "max_abs_grade": 0.0236,
+  "snap_p50_p95": [
+   0.28,
+   0.76
+  ]
+ },
+ "old_canyon_road": {
+  "length_m": 55.0,
+  "width_p5_50_95": [
+   9.75,
+   10.17,
+   10.25
+  ],
+  "z_min": 24.89,
+  "z_max": 25.98,
+  "max_abs_grade": 0.0397,
+  "snap_p50_p95": [
+   0.48,
+   0.93
+  ]
+ },
+ "paloma_road": {
+  "length_m": 343.0,
+  "width_p5_50_95": [
+   6.26,
+   7.86,
+   9.17
+  ],
+  "z_min": 74.86,
+  "z_max": 75.66,
+  "max_abs_grade": 0.0131,
+  "snap_p50_p95": [
+   3.03,
+   4.48
+  ]
+ },
+ "palomares_link_1": {
+  "length_m": 33.0,
+  "width_p5_50_95": [
+   5.78,
+   6.87,
+   9.39
+  ],
+  "z_min": 43.61,
+  "z_max": 44.54,
+  "max_abs_grade": 0.0501,
+  "snap_p50_p95": [
+   0.0,
+   0.0
+  ]
+ },
+ "palomares_road": {
+  "length_m": 240.0,
+  "width_p5_50_95": [
+   5.9,
+   7.0,
+   8.9
+  ],
+  "z_min": 43.56,
+  "z_max": 57.96,
+  "max_abs_grade": 0.1265,
+  "snap_p50_p95": [
+   0.43,
+   0.85
+  ]
+ },
+ "pleasanton_sunol_road": {
+  "length_m": 164.0,
+  "width_p5_50_95": [
+   7.0,
+   7.97,
+   10.24
+  ],
+  "z_min": 75.59,
+  "z_max": 79.41,
+  "max_abs_grade": 0.0417,
+  "snap_p50_p95": [
+   1.15,
+   3.54
+  ]
+ },
+ "quincy_terrace": {
+  "length_m": 58.0,
+  "width_p5_50_95": [
+   9.68,
+   10.2,
+   10.25
+  ],
+  "z_min": 23.27,
+  "z_max": 23.62,
+  "max_abs_grade": 0.0372,
+  "snap_p50_p95": [
+   0.19,
+   0.31
+  ]
+ },
+ "sennett_terrace": {
+  "length_m": 92.0,
+  "width_p5_50_95": [
+   8.41,
+   9.56,
+   10.25
+  ],
+  "z_min": 23.19,
+  "z_max": 24.85,
+  "max_abs_grade": 0.1575,
+  "snap_p50_p95": [
+   0.28,
+   0.74
+  ]
+ },
+ "sierra_terrace": {
+  "length_m": 46.0,
+  "width_p5_50_95": [
+   8.03,
+   8.31,
+   10.01
+  ],
+  "z_min": 22.69,
+  "z_max": 24.16,
+  "max_abs_grade": 0.1957,
+  "snap_p50_p95": [
+   1.39,
+   3.09
+  ]
+ },
+ "sullivan_underpass": {
+  "length_m": 182.0,
+  "width_p5_50_95": [
+   4.65,
+   8.38,
+   14.25
+  ],
+  "z_min": 18.06,
+  "z_max": 22.4,
+  "max_abs_grade": 0.1277,
+  "snap_p50_p95": [
+   0.3,
+   0.59
+  ]
+ },
+ "sycamore_street": {
+  "length_m": 271.0,
+  "width_p5_50_95": [
+   6.01,
+   6.46,
+   10.25
+  ],
+  "z_min": 24.32,
+  "z_max": 25.33,
+  "max_abs_grade": 0.0489,
+  "snap_p50_p95": [
+   1.86,
+   2.43
+  ]
+ },
+ "vallejo_street": {
+  "length_m": 285.0,
+  "width_p5_50_95": [
+   7.76,
+   8.79,
+   10.24
+  ],
+  "z_min": 22.74,
+  "z_max": 24.74,
+  "max_abs_grade": 0.0458,
+  "snap_p50_p95": [
+   0.26,
+   1.28
+  ]
+ },
+ "vallejo_way": {
+  "length_m": 630.0,
+  "width_p5_50_95": [
+   5.57,
+   7.25,
+   10.25
+  ],
+  "z_min": 20.94,
+  "z_max": 31.34,
+  "max_abs_grade": 0.0426,
+  "snap_p50_p95": [
+   0.62,
+   1.99
+  ]
+ }
+}

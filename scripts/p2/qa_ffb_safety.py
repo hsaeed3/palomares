@@ -28,7 +28,7 @@ import collision_conv as CC
 
 TRACK = BUILD / "palomares_road"
 MIN_THICK, MIN_H, NEAR = 0.5, 1.2, 8.0
-WALL_CREASE, ROAD_CREASE, KERB_CREASE, TERR_CREASE, TERR_R = 30.0, 8.0, 25.0, 30.0, 3.0
+WALL_CREASE, ROAD_CREASE, KERB_CREASE, TERR_CREASE, TERR_R = 30.0, 8.0, 25.0, 45.0, 3.0
 MAX_WALL_TRIS_PER_KM = 6000
 fails, warns, stats = [], [], collections.defaultdict(dict)
 fail = lambda s: fails.append(s)

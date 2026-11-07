@@ -92,5 +92,5 @@ with open(DER7 / "mapillary_coverage.csv", "w") as fo:
     for road, (c, y) in cov.items():
         for i in range(len(c)): fo.write(f"{road},{i*100},{c[i]},{y[i]}\n")
 for road, (c, y) in cov.items():
-    print(f"{road}: {sum(c)} imgs, 100 m bins covered {(c > 0).sum()}/{len(c)}, years {sorted(set(y[y > 0]))[:1]}..{max(y) if y.max() else '-'}")
+    print(f"{road}: {sum(c)} imgs, 100 m bins covered {(c > 0).sum()}/{len(c)}, years {int(y[y > 0].min()) if y.max() else '-'}..{int(y.max()) if y.max() else '-'}")
 print("total in index", len(rows))

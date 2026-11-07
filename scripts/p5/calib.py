@@ -142,7 +142,7 @@ def main():
         return commit(a.out)
     P = load_poses()
     frames = a.frames or sorted(P)
-    K = tuple(a.K) if a.K else tuple(json.load(open(CAMF))["K"]) if CAMF.exists() else (1021 / np.tan(np.radians(40.65)), 0, 0, 0)
+    K = tuple(a.K) if a.K else (SC.CAM_F, SC.CAM_DCX, SC.CAM_DCY, SC.CAM_K1)
     pins = json.load(open(SC.SCENE / "pose_pins.json"))
     jobs = [(f, pvec(P[f]), K, 15.0 if str(f) in pins else 30.0, tuple(a.hbox)) for f in frames if f in P]
     t0 = time.time()

@@ -207,7 +207,7 @@ print(f"terrain holes: {n_open} open edges within {QA_R} m of the road, {n_fill}
 # position) wherever two adjacent triangles fold by more than RUNOFF_CREASE deg (apron: APRON_CREASE): dev5 had
 # 30-62 deg folds at the shoulder/ditch edges, i.e. a wheel leaving the road hit a sharp ridge.  The main 1ROAD
 # surface and every vertex within KERB_KEEP m of a 1KERB (kerbs are draped there) are pinned, i.e. vertices within KERB_KEEP m of a kerb.  Heights only.
-RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP = 25.0, 6.0, 4.5, 0.0
+RUNOFF_CREASE, APRON_CREASE, RUNOFF_R, KERB_KEEP, MAX_DZ = 25.0, 6.0, 4.5, 0.0, 0.40
 
 
 def runoff_clamp():
@@ -262,6 +262,7 @@ def runoff_clamp():
             break
         L = Dinv @ (A @ z) - z
         z[bad] += 0.6 * L[bad]
+        np.clip(z, z0 - MAX_DZ, z0 + MAX_DZ, out=z)        # keep the surveyed shape: at most MAX_DZ change
         ang = ang_(z)
     after = float(ang.max()) if len(ang) else 0.0
     for m, o_ in zip(sel, off[:-1]):
@@ -296,10 +297,11 @@ def runoff_clamp():
             if len(idx_) < 3:
                 continue
             f_ = LinearNDInterpolator(ky[idx_], z[idx_])
-            zs = f_(m["P"][:, :2]); up = np.isfinite(zs) & (m["P"][:, 2] < zs + 0.002)
+            zs = f_(m["P"][:, :2]); up = np.isfinite(zs) & (m["P"][:, 2] < zs + 0.002) & (m["P"][:, 2] > zs - 0.06)   # only small lifts; deeper = kerb end buried in a ditch
             if up.any():
+                mx_lift = max(globals().get("_mxl", 0.0), float((zs[up] + 0.002 - m["P"][up, 2]).max())); globals()["_mxl"] = mx_lift
                 m["P"] = m["P"].copy(); m["P"][up, 2] = zs[up] + 0.002; nk += int(up.sum())
-    r["kerb_vertices_lifted"] = nk
+    r["kerb_vertices_lifted"] = nk; r["kerb_max_lift_m"] = round(globals().get("_mxl", 0.0), 3)
     print(f"run-off crease clamp: {r}")
     return r
 

@@ -147,3 +147,17 @@ light comes through hills, NVIDIA warnings on load. Findings and the rules now e
   <= 400 MB of textures, and the number of CSP shader replacements is reported.
 - Not verifiable here: whether the cache warning disappears. The user should clear `%LOCALAPPDATA%\NVIDIA\DXCache`
   once (Ctrl+X on that CSP screen) before testing dev6.
+
+### Drivable-surface folds, kerbs, buildings, vegetation (dev6)
+- **Run-off folds:** shoulder strips, aprons and terrain within 4.5 m of the pavement had folds of 30-72 deg (sharp
+  ditch edges, pavement-edge lips about 0.15 m wide that drop 0.2-0.3 m). 21d step 1c clamps them jointly to <= 25 deg
+  (aprons <= 6 deg) by local height smoothing: heights only, at most 0.40 m change, main 1ROAD pinned. Kerb
+  vertices are lifted onto the smoothed shoulder (<= 6 cm). Folds where one face is steeper than 40 deg (cut-bank
+  toes) are real terrain and stay. The gate allows <= 45 deg within 3 m of the drivable edge for these.
+- **Kerbs:** wider lips (profile starts rising over 15 % of the width instead of 6 %), taper ends at 50 % width.
+  dev5 lips were 40-65 deg micro-steps at the taper ends. Height is unchanged (2.5 cm apex, 1.5 cm exit).
+- **Buildings:** every building collides at any distance (21e used to stop at 15 m, so about 313 measured houses could
+  be driven into). Part boxes of one building are merged into one closed box, so no colliders overlap.
+- **Vegetation:** trees, shrubs, hedges and bushes never collide. 21e ignores the catalog `collision` flag for them
+  (the catalog marks `hedge.cypress_row` / `tree.*` as colliding), and 21c cypress / trunk boxes are classified
+  as props and dropped by collision_conv.

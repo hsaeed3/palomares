@@ -1,2 +1,6 @@
-{"model": "pinhole_k1", "f_px": 1216.78, "dcx": 0.0, "dcy": 0.0, "k1": 0.0, "height_m": 1.8, "ref_size": [2042, 1468],
- "render_vfov_deg": 62.2, "note": "provisional"}
+{"model": "pinhole_k1",
+ "f_px": 956.6, "dcx": 0.0, "dcy": 0.0, "k1": 0.0,
+ "height_m": 2.10, "height_bounds_m": [1.95, 2.25],
+ "ref_size": [2042, 1468],
+ "render_vfov_deg": 75.0,
+ "note": "Frames are rectilinear screenshots of a 360-panorama web viewer (UI buttons top-right, compass bottom-right), hand-cropped (1986..2066 x 1400..1496 px). x = w/2+dcx + f*u*(1+k1*r^2), y = h/2+dcy - f*v*(1+k1*r^2), u,v = camera-plane tangents, f in screenshot px shared by all frames. f = 734/tan(37.5 deg) (viewer vfov 75 deg at h=1468; hfov 93.7 deg at w=2042). See docs/phase2/CAMERA.md and scripts/p5/calib.py."}
