@@ -152,6 +152,9 @@ if STITCH:
     kept_all, cut_road = [], []
     for nm in ("palomares_terrain", "palomares_road", "palomares_lines_road"):
         src_ = STI.snapshot(ROOT / f"build/palomares_road/{nm}.kn5", snap)
+        if not src_.exists():      # full build in progress: develop against the quick copy, re-run before release
+            src_ = STI.snapshot(ROOT / f"build_quick/palomares_road/{nm}.kn5", snap / "quick")
+        LOG.setdefault("stitch", {}).setdefault("sources", []).append(str(src_))
         (kp, kt), (rp, rt) = STI.cut_copy(src_, BUILD / "palomares_road" / f"{nm}_dev7.kn5", in_cut, LOG.setdefault("stitch", {}))
         if nm != "palomares_lines_road":
             kept_all.append((kp, kt))
@@ -225,6 +228,15 @@ if KEPT is not None:
         np.add.at(sm, nb_[:, 0], P3[nb_[:, 1], 2]); np.add.at(ct, nb_[:, 0], 1)
         np.add.at(sm, nb_[:, 1], P3[nb_[:, 0], 2]); np.add.at(ct, nb_[:, 1], 1)
         P3[mv, 2] = sm[mv] / np.maximum(ct[mv], 1)
+    # mouth vertices on the cut Palomares asphalt take that (designed, smooth) surface, corrected toward this road's
+    # outline over 4 m (the two surfaces differ by a few cm at the edge); the membrane stays only off the asphalt
+    if ROADCUT is not None:
+        zr_, tr_ = ROADCUT.locate(P3[:, :2]); onr = mv & (tr_ >= 0)
+        bkd = cKDTree(bound); dbd, jb = bkd.query(P3[onr, :2])
+        zrb, trb = ROADCUT.locate(bound[jb]); corr = np.where(trb >= 0, bz[jb] - zrb, 0.0)
+        w_ = np.clip(1 - dbd / 4.0, 0, 1); w_ = w_ * w_ * (3 - 2 * w_)
+        P3[onr, 2] = zr_[onr] + w_ * corr
+        LOG["stitch"]["mouth_on_palomares_asphalt"] = int(onr.sum())
     LOG["stitch"]["membrane_vertices"] = int(mv.sum()); LOG["stitch"]["mouth_tris"] = int(MOUTH.sum())
 cr = np.cross(P3[TT[:, 1]] - P3[TT[:, 0]], P3[TT[:, 2]] - P3[TT[:, 0]])[:, 2]
 TT[cr < 0] = TT[cr < 0][:, [0, 2, 1]]
