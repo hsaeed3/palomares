@@ -80,3 +80,35 @@ style:
   niles_canyon:                    # Red-Bull-Ring-style red / white, green-painted run-off, yellow sausage kerbs
     blocks: [[198, 30, 34], [236, 234, 228]]
     runoff_rgb: [42, 140, 70]
+
+# dev7 K: Niles Canyon Rd track layouts (scripts/p7k/canyon_kerbs.py). Racing-line placement as above
+# (placement.*, overridden here), but NOTHING inside road.outer (asphalt + paved shoulder): every piece starts
+# clear_m beyond it, checked per vertex against every dev7 road by the lint (exit 1 on a hit).
+niles_canyon:
+  clear_m: 0.05                    # gap between road.outer and the kerb's inner edge
+  lint_tol_m: 0.02
+  min_kerb_length_m: 8
+  taper_m: 3.0                     # smoothstep height taper at both ends of every piece
+  skip_s_ranges: [[0, 60], [10650, 10730]]     # Mission Blvd start area, Sunol stop
+  placement: {touch_m: 1.2, apex_min_k_1pm: 0.004, exit_lookback_m: 140, min_touch_m: 4}
+  clear_kinds: {junction: 15, level_crossing: 20, rail_underpass: 10, bridge_osm: 5, bridge_lidar_class17: 5,
+                stream_crossing_bridge: 5, steep_drop: 3, guardrail_candidate: 2, wall_or_steep_cut: 2, crossing: 10}
+  types:
+    apex: {width_m: 0.8, height_m: 0.03, stripe_length_m: 1.0, profile_t: [0, 0.2, 0.5, 0.8, 1], profile_h: [0, 0.7, 1, 0.7, 0]}
+    exit: {width_m: 1.0, height_m: 0.015, stripe_length_m: 1.0, profile_t: [0, 0.2, 0.5, 0.8, 1], profile_h: [0, 0.8, 1, 0.8, 0]}
+  runoff:                          # green-painted run-off outside exit kerbs
+    width_m: 3.0
+    pre_m: 0
+    post_m: 25
+    min_length_m: 12
+    allowed_env: [flat, ditch]
+    max_rise_m: 0.4                # DTM within this of the road edge level across the strip
+    lift_m: 0.02
+    tex_m: 2.0
+  sausage:                         # yellow sausage kerb at the outer end of the run-off (extended track limit)
+    width_m: 0.6
+    height_m: 0.06                 # low half-cosine bump: max slope ~17 deg, creases well under 25 deg
+    gap_m: 0.0
+    from_frac: 0.15                # covers the middle of the run-off (lengthwise)
+    to_frac: 0.85
+    min_length_m: 6
