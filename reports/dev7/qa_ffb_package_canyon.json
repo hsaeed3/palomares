@@ -1,17 +1,6 @@
 {
- "ok": false,
- "fails": [
-  "overlapping colliders palomares_niles_ncr.kn5:1WALL_ncr_br2R / palomares_niles_assets.kn5:1WALL_R_42 at s=10662",
-  "overlapping colliders palomares_niles_ncr.kn5:1WALL_ncr_br2L / palomares_niles_assets.kn5:1WALL_L_42 at s=10660",
-  "canyon_rev_road: palomares_niles_sunol.kn5 missing",
-  "canyon_rev_road: palomares_niles_sunol_terrain.kn5 missing",
-  "canyon_rev_track: palomares_niles_sunol.kn5 missing",
-  "canyon_rev_track: palomares_niles_sunol_terrain.kn5 missing",
-  "canyon_road: palomares_niles_sunol.kn5 missing",
-  "canyon_road: palomares_niles_sunol_terrain.kn5 missing",
-  "canyon_track: palomares_niles_sunol.kn5 missing",
-  "canyon_track: palomares_niles_sunol_terrain.kn5 missing"
- ],
+ "ok": true,
+ "fails": [],
  "warnings": [],
  "n_warnings": 0,
  "stats": {
@@ -189,8 +178,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 24084,
-  "wall_tris_per_km": 2245,
-  "wall_components": 79
+  "wall_tris_total": 23772,
+  "wall_tris_per_km": 2216,
+  "wall_components": 77
  }
 }

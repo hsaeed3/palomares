@@ -5,26 +5,36 @@
   "palomares_niles_ncr_terrain.kn5",
   "palomares_niles_sunol_terrain.kn5",
   "palomares_niles_town.kn5",
-  "palomares_niles_town_terrain.kn5"
+  "palomares_niles_town_terrain.kn5",
+  "palomares_niles_sunol.kn5",
+  "palomares_niles_sunol_terrain.kn5",
+  "palomares_terrain_dev7.kn5",
+  "palomares_road_dev7.kn5"
  ],
  "s": [
   2.0,
-  249.5
+  10726.5
  ],
  "holes": 0,
  "holes_list": [],
  "steps": 0,
  "steps_list": [],
  "step_max_m": 0.0,
- "slope_breaks_checked": 13,
- "asphalt_kinks": 0,
- "asphalt_kinks_list": [],
+ "slope_breaks_checked": 231,
+ "asphalt_kinks": 1,
+ "asphalt_kinks_list": [
+  [
+   10518.5,
+   6.107181822983258,
+   0.03322212046323614
+  ]
+ ],
  "overlaps": 0,
  "overlaps_list": [],
- "grade_max_pct_25m": 1.233698728930932,
- "grade_max_pct_5m": 1.3689016576062585,
- "grade_max_s": 224.5,
- "camber_change_max_pct_per_m": 0.31840042013104863,
+ "grade_max_pct_25m": 5.719468440627651,
+ "grade_max_pct_5m": 6.52735880052262,
+ "grade_max_s": 5173.5,
+ "camber_change_max_pct_per_m": 1.4183240975732758,
  "open_edges_palomares_junction": 0,
  "open_edges_in_band": 0,
  "open_edges_in_band_s": []
