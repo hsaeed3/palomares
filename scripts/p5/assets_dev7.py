@@ -1001,7 +1001,7 @@ def csp_snippet():
     Pattern verified against ac-custom-shaders-patch/acc-extension-config config/tracks/shibuya.ini."""
     return """
 ; ---- dev7 flashers (assets_dev7.py): amber wig-wag beacons, crossing lights, signal heads, lamp globes
-[CONDITION_DEV7_0]
+[CONDITION_70]
 NAME=DEV7_BLINK
 INPUT=ONE
 DELAY=0
@@ -1012,7 +1012,7 @@ FLASHING_NOISE_AMPLITUDE=0
 FLASHING_MIN_VALUE=0.0
 FLASHING_SYNCED=1
 
-[CONDITION_DEV7_1]
+[CONDITION_71]
 NAME=DEV7_BLINK_ALT
 INPUT=ONE
 DELAY=0.5
@@ -1023,7 +1023,7 @@ FLASHING_NOISE_AMPLITUDE=0
 FLASHING_MIN_VALUE=0.0
 FLASHING_SYNCED=1
 
-[MATERIAL_ADJUSTMENT_DEV7_0]
+[MATERIAL_ADJUSTMENT_70]
 ACTIVE=1
 MATERIALS=beacon_a, xing_a
 KEY_0=ksEmissive
@@ -1031,7 +1031,7 @@ VALUE_0=60, 38, 4, 1
 VALUE_0_OFF=0, 0, 0
 CONDITION=DEV7_BLINK
 
-[MATERIAL_ADJUSTMENT_DEV7_1]
+[MATERIAL_ADJUSTMENT_71]
 ACTIVE=1
 MATERIALS=beacon_b, xing_b
 KEY_0=ksEmissive
@@ -1039,7 +1039,7 @@ VALUE_0=60, 38, 4, 1
 VALUE_0_OFF=0, 0, 0
 CONDITION=DEV7_BLINK_ALT
 
-[MATERIAL_ADJUSTMENT_DEV7_2]
+[MATERIAL_ADJUSTMENT_72]
 ACTIVE=1
 MATERIALS=lamp_glow
 KEY_0=ksEmissive

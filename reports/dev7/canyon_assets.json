@@ -1,0 +1,49 @@
+{
+ "rows": 537,
+ "skipped": {},
+ "clear": {
+  "pushed": 0,
+  "trimmed_tris": 249
+ },
+ "collision": {
+  "shared": {
+   "linear": 70,
+   "building": 11,
+   "prop": 413,
+   "across": 0,
+   "old_meshes": 494,
+   "old_tris": 26016,
+   "building_clusters": 16,
+   "stations_cut": 2,
+   "slab_meshes": 44,
+   "runs": 66,
+   "forest_stations": 0,
+   "new_tris": 19416,
+   "new_meshes": 45
+  },
+  "dressing": {
+   "linear": 0,
+   "building": 0,
+   "prop": 0,
+   "across": 0,
+   "old_meshes": 0,
+   "old_tris": 0,
+   "stations_cut": 0,
+   "slab_meshes": 0,
+   "runs": 0,
+   "forest_stations": 0,
+   "new_tris": 0,
+   "new_meshes": 0
+  },
+  "new_meshes": 45
+ },
+ "kn5": "palomares_niles_assets.kn5",
+ "meshes": 77,
+ "vmax": 21740,
+ "draw_calls": 32,
+ "secs": 14.5,
+ "kerbs": {
+  "palomares_niles_kerbs_nb.kn5": 29,
+  "palomares_niles_kerbs_sb.kn5": 19
+ }
+}
