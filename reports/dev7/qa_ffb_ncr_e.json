@@ -1,0 +1,179 @@
+{
+ "ok": false,
+ "fails": [
+  "canyon_rev_road: palomares_road_dev7.kn5 missing",
+  "canyon_rev_road: palomares_terrain_dev7.kn5 missing",
+  "canyon_rev_road: palomares_lines_road_dev7.kn5 missing",
+  "canyon_rev_road: palomares_niles_town.kn5 missing",
+  "canyon_rev_road: palomares_niles_town_terrain.kn5 missing",
+  "canyon_rev_road: palomares_niles_ncr.kn5 missing",
+  "canyon_rev_road: palomares_niles_ncr_terrain.kn5 missing",
+  "canyon_rev_road: palomares_niles_sunol.kn5 missing",
+  "canyon_rev_road: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_rev_road: palomares_niles_lines.kn5 missing",
+  "canyon_rev_road: palomares_niles_assets.kn5 missing",
+  "canyon_rev_road: palomares_niles_timing_canyon_rev_road.kn5 missing",
+  "canyon_rev_track: palomares_road_dev7.kn5 missing",
+  "canyon_rev_track: palomares_terrain_dev7.kn5 missing",
+  "canyon_rev_track: palomares_lines_road_dev7.kn5 missing",
+  "canyon_rev_track: palomares_niles_town.kn5 missing",
+  "canyon_rev_track: palomares_niles_town_terrain.kn5 missing",
+  "canyon_rev_track: palomares_niles_ncr.kn5 missing",
+  "canyon_rev_track: palomares_niles_ncr_terrain.kn5 missing",
+  "canyon_rev_track: palomares_niles_sunol.kn5 missing",
+  "canyon_rev_track: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_rev_track: palomares_niles_lines.kn5 missing",
+  "canyon_rev_track: palomares_niles_assets.kn5 missing",
+  "canyon_rev_track: palomares_niles_timing_canyon_rev_track.kn5 missing",
+  "canyon_rev_track: palomares_niles_kerbs_sb.kn5 missing",
+  "canyon_road: palomares_road_dev7.kn5 missing",
+  "canyon_road: palomares_terrain_dev7.kn5 missing",
+  "canyon_road: palomares_lines_road_dev7.kn5 missing",
+  "canyon_road: palomares_niles_town.kn5 missing",
+  "canyon_road: palomares_niles_town_terrain.kn5 missing",
+  "canyon_road: palomares_niles_ncr.kn5 missing",
+  "canyon_road: palomares_niles_ncr_terrain.kn5 missing",
+  "canyon_road: palomares_niles_sunol.kn5 missing",
+  "canyon_road: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_road: palomares_niles_lines.kn5 missing",
+  "canyon_road: palomares_niles_assets.kn5 missing",
+  "canyon_road: palomares_niles_timing_canyon_road.kn5 missing",
+  "canyon_track: palomares_road_dev7.kn5 missing",
+  "canyon_track: palomares_terrain_dev7.kn5 missing",
+  "canyon_track: palomares_lines_road_dev7.kn5 missing",
+  "canyon_track: palomares_niles_town.kn5 missing",
+  "canyon_track: palomares_niles_town_terrain.kn5 missing",
+  "canyon_track: palomares_niles_ncr.kn5 missing",
+  "canyon_track: palomares_niles_ncr_terrain.kn5 missing",
+  "canyon_track: palomares_niles_sunol.kn5 missing",
+  "canyon_track: palomares_niles_sunol_terrain.kn5 missing",
+  "canyon_track: palomares_niles_lines.kn5 missing",
+  "canyon_track: palomares_niles_assets.kn5 missing",
+  "canyon_track: palomares_niles_timing_canyon_track.kn5 missing",
+  "canyon_track: palomares_niles_kerbs_nb.kn5 missing",
+  "freeroam: palomares_trees.kn5 missing",
+  "freeroam: palomares_barriers.kn5 missing",
+  "freeroam: palomares_roadside.kn5 missing",
+  "freeroam: palomares_road_dev7.kn5 missing",
+  "freeroam: palomares_terrain_dev7.kn5 missing",
+  "freeroam: palomares_lines_road_dev7.kn5 missing",
+  "freeroam: palomares_niles_town.kn5 missing",
+  "freeroam: palomares_niles_town_terrain.kn5 missing",
+  "freeroam: palomares_niles_ncr.kn5 missing",
+  "freeroam: palomares_niles_ncr_terrain.kn5 missing",
+  "freeroam: palomares_niles_sunol.kn5 missing",
+  "freeroam: palomares_niles_sunol_terrain.kn5 missing",
+  "freeroam: palomares_niles_lines.kn5 missing",
+  "freeroam: palomares_niles_assets.kn5 missing",
+  "freeroam: palomares_niles_town_assets.kn5 missing",
+  "freeroam: palomares_niles_timing_freeroam.kn5 missing",
+  "freeroam_track: palomares_trees.kn5 missing",
+  "freeroam_track: palomares_barriers.kn5 missing",
+  "freeroam_track: palomares_roadside.kn5 missing",
+  "freeroam_track: palomares_road_dev7.kn5 missing",
+  "freeroam_track: palomares_terrain_dev7.kn5 missing",
+  "freeroam_track: palomares_lines_road_dev7.kn5 missing",
+  "freeroam_track: palomares_niles_town.kn5 missing",
+  "freeroam_track: palomares_niles_town_terrain.kn5 missing",
+  "freeroam_track: palomares_niles_ncr.kn5 missing",
+  "freeroam_track: palomares_niles_ncr_terrain.kn5 missing",
+  "freeroam_track: palomares_niles_sunol.kn5 missing",
+  "freeroam_track: palomares_niles_sunol_terrain.kn5 missing",
+  "freeroam_track: palomares_niles_lines.kn5 missing",
+  "freeroam_track: palomares_niles_assets.kn5 missing",
+  "freeroam_track: palomares_niles_town_assets.kn5 missing",
+  "freeroam_track: palomares_niles_timing_freeroam.kn5 missing",
+  "freeroam_track: palomares_kerbs_nb.kn5 missing",
+  "freeroam_track: palomares_dressing.kn5 missing",
+  "freeroam_track: palomares_dressing_nb.kn5 missing",
+  "freeroam_track: palomares_niles_kerbs_nb.kn5 missing"
+ ],
+ "warnings": [],
+ "n_warnings": 0,
+ "stats": {
+  "grass_banktoe_crease_max_deg": {
+   "1GRASS_ncr_e_bank_10": 74.4,
+   "1GRASS_ncr_e_rock_10": 70.7,
+   "1GRASS_ncr_e_shoulder_dirt_10": 0.0,
+   "1GRASS_ncr_e_ground_10": 0.0
+  },
+  "grass_crease_raw_max_deg": {
+   "1GRASS_ncr_e_bank_10": 74.4,
+   "1GRASS_ncr_e_rock_10": 70.7,
+   "1GRASS_ncr_e_ground_10": 38.2,
+   "1GRASS_ncr_e_shoulder_dirt_10": 17.0
+  },
+  "grass_crease_max_deg": {
+   "1GRASS_ncr_e_ground_10": 36.3,
+   "1GRASS_ncr_e_bank_10": 22.0,
+   "1GRASS_ncr_e_shoulder_dirt_10": 17.0,
+   "1GRASS_ncr_e_rock_10": 0.0
+  },
+  "road_banktoe_crease_max_deg": {
+   "1ROAD_ncr_e_road_asphalt_10": 0.0
+  },
+  "road_crease_raw_max_deg": {
+   "1ROAD_ncr_e_road_asphalt_10": 2.8
+  },
+  "road_crease_max_deg": {
+   "1ROAD_ncr_e_road_asphalt_10": 2.8
+  },
+  "wall_face_crease_max_deg": {
+   "1WALL_ncr_e_br2L": 1.0,
+   "1WALL_ncr_e_br2R": 1.0
+  },
+  "layouts": {
+   "canyon_rev_road": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   },
+   "canyon_rev_track": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   },
+   "canyon_road": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   },
+   "canyon_track": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   },
+   "freeroam": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   },
+   "freeroam_track": {
+    "materials": 0,
+    "shader_texture_combos": 0,
+    "shaders": [],
+    "textures": 0,
+    "texture_mb": 0.0,
+    "csp_shader_replacements": 0
+   }
+  },
+  "wall_tris_total": 760,
+  "wall_tris_per_km": 71,
+  "wall_components": 2
+ }
+}

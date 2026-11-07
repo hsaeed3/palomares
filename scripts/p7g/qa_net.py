@@ -208,7 +208,7 @@ def check(rname, s_arg):
 ap_cluster = None
 results = {}
 _cl = None
-for _cn in ("town", "sunol"):
+for _cn in ("town", "sunol", "sunolmain"):
     _f = BUILD / "dev7" / f"{_cn}_build.json"
     if _f.exists():
         _cl = (_cl or {}); _cl.update(json.load(open(_f))["log"].get("roads", {}))

@@ -35,7 +35,7 @@ for f in sorted(TRK.glob("palomares_niles_*.kn5")):
 SURF = STI.TriGrid(np.concatenate(Ps), np.concatenate(Ts))
 # built station ranges
 rng = {"niles_canyon_road": None}
-for c in ("town", "sunol"):
+for c in ("town", "sunol", "sunolmain"):
     f = BUILD / "dev7" / f"{c}_build.json"
     if f.exists():
         for n, v in json.load(open(f))["log"]["roads"].items():
