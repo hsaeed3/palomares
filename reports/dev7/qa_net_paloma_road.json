@@ -1,0 +1,30 @@
+{
+ "road": "paloma_road",
+ "files": [
+  "palomares_niles_ncr.kn5",
+  "palomares_niles_ncr_terrain.kn5",
+  "palomares_niles_sunol.kn5",
+  "palomares_niles_sunol_terrain.kn5"
+ ],
+ "s": [
+  2.0,
+  340.5
+ ],
+ "holes": 0,
+ "holes_list": [],
+ "steps": 0,
+ "steps_list": [],
+ "step_max_m": 0.0,
+ "slope_breaks_checked": 62,
+ "asphalt_kinks": 0,
+ "asphalt_kinks_list": [],
+ "overlaps": 0,
+ "overlaps_list": [],
+ "grade_max_pct_25m": 0.9385049159178038,
+ "grade_max_pct_5m": 1.2399581563116158,
+ "grade_max_s": 93.0,
+ "camber_change_max_pct_per_m": 0.33480659067670615,
+ "open_edges_palomares_junction": 0,
+ "open_edges_in_band": 0,
+ "open_edges_in_band_s": []
+}

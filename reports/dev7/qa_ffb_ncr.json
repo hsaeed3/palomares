@@ -4,22 +4,30 @@
   "canyon_rev_road: palomares_road_dev7.kn5 missing",
   "canyon_rev_road: palomares_terrain_dev7.kn5 missing",
   "canyon_rev_road: palomares_lines_road_dev7.kn5 missing",
+  "canyon_rev_road: palomares_niles_town.kn5 missing",
+  "canyon_rev_road: palomares_niles_town_terrain.kn5 missing",
   "canyon_rev_road: palomares_niles_assets.kn5 missing",
   "canyon_rev_road: palomares_niles_timing_canyon_rev_road.kn5 missing",
   "canyon_rev_track: palomares_road_dev7.kn5 missing",
   "canyon_rev_track: palomares_terrain_dev7.kn5 missing",
   "canyon_rev_track: palomares_lines_road_dev7.kn5 missing",
+  "canyon_rev_track: palomares_niles_town.kn5 missing",
+  "canyon_rev_track: palomares_niles_town_terrain.kn5 missing",
   "canyon_rev_track: palomares_niles_assets.kn5 missing",
   "canyon_rev_track: palomares_niles_timing_canyon_rev_track.kn5 missing",
   "canyon_rev_track: palomares_niles_kerbs_sb.kn5 missing",
   "canyon_road: palomares_road_dev7.kn5 missing",
   "canyon_road: palomares_terrain_dev7.kn5 missing",
   "canyon_road: palomares_lines_road_dev7.kn5 missing",
+  "canyon_road: palomares_niles_town.kn5 missing",
+  "canyon_road: palomares_niles_town_terrain.kn5 missing",
   "canyon_road: palomares_niles_assets.kn5 missing",
   "canyon_road: palomares_niles_timing_canyon_road.kn5 missing",
   "canyon_track: palomares_road_dev7.kn5 missing",
   "canyon_track: palomares_terrain_dev7.kn5 missing",
   "canyon_track: palomares_lines_road_dev7.kn5 missing",
+  "canyon_track: palomares_niles_town.kn5 missing",
+  "canyon_track: palomares_niles_town_terrain.kn5 missing",
   "canyon_track: palomares_niles_assets.kn5 missing",
   "canyon_track: palomares_niles_timing_canyon_track.kn5 missing",
   "canyon_track: palomares_niles_kerbs_nb.kn5 missing"
@@ -29,39 +37,39 @@
  "stats": {
   "grass_banktoe_crease_max_deg": {
    "1GRASS_ncr_rock_03": 98.0,
-   "1GRASS_ncr_rock_04": 92.1,
+   "1GRASS_ncr_rock_04": 96.4,
    "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_rock_02": 85.4,
+   "1GRASS_ncr_rock_02": 86.4,
    "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_03": 84.6,
-   "1GRASS_ncr_bank_04": 84.2,
+   "1GRASS_ncr_bank_04": 83.8,
    "1GRASS_ncr_bank_02": 81.6,
    "1GRASS_ncr_bank_01": 81.4,
-   "1GRASS_ncr_bank_09": 79.8
+   "1GRASS_ncr_bank_03": 79.5,
+   "1GRASS_ncr_bank_05": 78.8
   },
   "grass_crease_raw_max_deg": {
-   "1GRASS_ncr_rock_03": 160.6,
-   "1GRASS_ncr_rock_04": 128.0,
+   "1GRASS_ncr_rock_03": 159.7,
    "1GRASS_ncr_rock_06": 118.5,
+   "1GRASS_ncr_rock_04": 116.9,
    "1GRASS_ncr_rock_00": 116.8,
    "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_rock_02": 85.4,
+   "1GRASS_ncr_rock_02": 86.4,
    "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_03": 84.6,
-   "1GRASS_ncr_bank_04": 84.2,
-   "1GRASS_ncr_bank_02": 81.6
+   "1GRASS_ncr_bank_04": 83.8,
+   "1GRASS_ncr_bank_02": 81.6,
+   "1GRASS_ncr_bank_01": 81.4
   },
   "grass_crease_max_deg": {
    "1GRASS_ncr_ground_06": 39.9,
-   "1GRASS_ncr_ground_05": 39.8,
-   "1GRASS_ncr_bank_02": 39.1,
-   "1GRASS_ncr_ground_03": 39.0,
-   "1GRASS_ncr_ground_09": 37.7,
+   "1GRASS_ncr_bank_02": 37.9,
+   "1GRASS_ncr_ground_03": 37.9,
    "1GRASS_ncr_ground_10": 37.5,
+   "1GRASS_ncr_ground_09": 37.2,
    "1GRASS_ncr_ground_01": 36.5,
    "1GRASS_ncr_bank_03": 36.3,
    "1GRASS_ncr_bank_01": 35.9,
-   "1GRASS_ncr_bank_05": 35.9
+   "1GRASS_ncr_ground_02": 35.8,
+   "1GRASS_ncr_ground_05": 35.2
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_ncr_road_asphalt_00": 0.0,
@@ -76,24 +84,24 @@
    "1ROAD_ncr_road_asphalt_08": 0.0
   },
   "road_crease_raw_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 10.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,
+   "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
-   "1ROAD_ncr_road_asphalt_10": 2.7,
    "1ROAD_ncr_road_asphalt_06": 2.7,
    "1ROAD_ncr_road_asphalt_01": 2.4,
    "1ROAD_ncr_road_asphalt_09": 2.4,
    "1ROAD_ncr_road_asphalt_08": 2.2
   },
   "road_crease_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 10.5,
+   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,
+   "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
-   "1ROAD_ncr_road_asphalt_10": 2.7,
    "1ROAD_ncr_road_asphalt_06": 2.7,
    "1ROAD_ncr_road_asphalt_01": 2.4,
    "1ROAD_ncr_road_asphalt_09": 2.4,
@@ -106,8 +114,8 @@
    "1WALL_ncr_br3R": 1.8,
    "1WALL_ncr_br0R": 1.7,
    "1WALL_ncr_br0L": 1.4,
-   "1WALL_ncr_br2R": 1.0,
-   "1WALL_ncr_br2L": 0.3
+   "1WALL_ncr_br2L": 1.0,
+   "1WALL_ncr_br2R": 1.0
   },
   "layouts": {
    "canyon_rev_road": {
@@ -155,8 +163,8 @@
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 3920,
-  "wall_tris_per_km": 365,
+  "wall_tris_total": 4528,
+  "wall_tris_per_km": 422,
   "wall_components": 8
  }
 }
