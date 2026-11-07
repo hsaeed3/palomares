@@ -6,6 +6,7 @@
   "canyon_rev_road: palomares_lines_road_dev7.kn5 missing",
   "canyon_rev_road: palomares_niles_town.kn5 missing",
   "canyon_rev_road: palomares_niles_town_terrain.kn5 missing",
+  "canyon_rev_road: palomares_niles_ncr_terrain.kn5 missing",
   "canyon_rev_road: palomares_niles_sunol.kn5 missing",
   "canyon_rev_road: palomares_niles_sunol_terrain.kn5 missing",
   "canyon_rev_road: palomares_niles_assets.kn5 missing",
@@ -15,6 +16,7 @@
   "canyon_rev_track: palomares_lines_road_dev7.kn5 missing",
   "canyon_rev_track: palomares_niles_town.kn5 missing",
   "canyon_rev_track: palomares_niles_town_terrain.kn5 missing",
+  "canyon_rev_track: palomares_niles_ncr_terrain.kn5 missing",
   "canyon_rev_track: palomares_niles_sunol.kn5 missing",
   "canyon_rev_track: palomares_niles_sunol_terrain.kn5 missing",
   "canyon_rev_track: palomares_niles_assets.kn5 missing",
@@ -25,6 +27,7 @@
   "canyon_road: palomares_lines_road_dev7.kn5 missing",
   "canyon_road: palomares_niles_town.kn5 missing",
   "canyon_road: palomares_niles_town_terrain.kn5 missing",
+  "canyon_road: palomares_niles_ncr_terrain.kn5 missing",
   "canyon_road: palomares_niles_sunol.kn5 missing",
   "canyon_road: palomares_niles_sunol_terrain.kn5 missing",
   "canyon_road: palomares_niles_assets.kn5 missing",
@@ -34,6 +37,7 @@
   "canyon_track: palomares_lines_road_dev7.kn5 missing",
   "canyon_track: palomares_niles_town.kn5 missing",
   "canyon_track: palomares_niles_town_terrain.kn5 missing",
+  "canyon_track: palomares_niles_ncr_terrain.kn5 missing",
   "canyon_track: palomares_niles_sunol.kn5 missing",
   "canyon_track: palomares_niles_sunol_terrain.kn5 missing",
   "canyon_track: palomares_niles_assets.kn5 missing",
@@ -47,6 +51,7 @@
   "freeroam: palomares_lines_road_dev7.kn5 missing",
   "freeroam: palomares_niles_town.kn5 missing",
   "freeroam: palomares_niles_town_terrain.kn5 missing",
+  "freeroam: palomares_niles_ncr_terrain.kn5 missing",
   "freeroam: palomares_niles_sunol.kn5 missing",
   "freeroam: palomares_niles_sunol_terrain.kn5 missing",
   "freeroam: palomares_niles_assets.kn5 missing",
@@ -60,6 +65,7 @@
   "freeroam_track: palomares_lines_road_dev7.kn5 missing",
   "freeroam_track: palomares_niles_town.kn5 missing",
   "freeroam_track: palomares_niles_town_terrain.kn5 missing",
+  "freeroam_track: palomares_niles_ncr_terrain.kn5 missing",
   "freeroam_track: palomares_niles_sunol.kn5 missing",
   "freeroam_track: palomares_niles_sunol_terrain.kn5 missing",
   "freeroam_track: palomares_niles_assets.kn5 missing",
@@ -74,157 +80,159 @@
  "n_warnings": 0,
  "stats": {
   "grass_banktoe_crease_max_deg": {
-   "1GRASS_ncr_rock_03": 98.0,
-   "1GRASS_ncr_rock_04": 96.4,
-   "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_04": 83.8,
-   "1GRASS_ncr_bank_02": 81.6,
-   "1GRASS_ncr_bank_01": 81.4,
-   "1GRASS_ncr_bank_03": 79.5,
-   "1GRASS_ncr_bank_05": 78.8
+   "1GRASS_ncr_shoulder_dirt_00": 0.0,
+   "1GRASS_ncr_shoulder_dirt_01": 0.0,
+   "1GRASS_ncr_shoulder_dirt_02": 0.0,
+   "1GRASS_ncr_shoulder_dirt_03": 0.0,
+   "1GRASS_ncr_shoulder_dirt_04": 0.0,
+   "1GRASS_ncr_shoulder_dirt_05": 0.0,
+   "1GRASS_ncr_shoulder_dirt_06": 0.0,
+   "1GRASS_ncr_shoulder_dirt_07": 0.0,
+   "1GRASS_ncr_shoulder_dirt_08": 0.0,
+   "1GRASS_ncr_shoulder_dirt_09": 0.0
   },
   "grass_crease_raw_max_deg": {
-   "1GRASS_ncr_rock_03": 159.7,
-   "1GRASS_ncr_rock_06": 118.5,
-   "1GRASS_ncr_rock_04": 116.9,
-   "1GRASS_ncr_rock_00": 116.8,
-   "1GRASS_ncr_rock_05": 88.2,
-   "1GRASS_ncr_rock_02": 86.4,
-   "1GRASS_ncr_bank_06": 85.0,
-   "1GRASS_ncr_bank_04": 83.8,
-   "1GRASS_ncr_bank_02": 81.6,
-   "1GRASS_ncr_bank_01": 81.4
+   "1GRASS_ncr_shoulder_dirt_04": 24.7,
+   "1GRASS_ncr_shoulder_dirt_06": 24.7,
+   "1GRASS_ncr_shoulder_dirt_03": 19.7,
+   "1GRASS_ncr_shoulder_dirt_00": 18.9,
+   "1GRASS_ncr_shoulder_dirt_02": 17.0,
+   "1GRASS_ncr_shoulder_dirt_05": 16.7,
+   "1GRASS_ncr_shoulder_dirt_07": 16.4,
+   "1GRASS_ncr_shoulder_dirt_01": 15.7,
+   "1GRASS_ncr_shoulder_dirt_08": 13.9,
+   "1GRASS_ncr_shoulder_dirt_09": 12.0
   },
   "grass_crease_max_deg": {
-   "1GRASS_ncr_ground_06": 39.9,
-   "1GRASS_ncr_bank_02": 37.9,
-   "1GRASS_ncr_ground_03": 37.9,
-   "1GRASS_ncr_ground_10": 37.5,
-   "1GRASS_ncr_ground_09": 37.2,
-   "1GRASS_ncr_ground_01": 36.5,
-   "1GRASS_ncr_bank_03": 36.3,
-   "1GRASS_ncr_bank_01": 35.9,
-   "1GRASS_ncr_ground_02": 35.8,
-   "1GRASS_ncr_ground_05": 35.2
+   "1GRASS_ncr_shoulder_dirt_04": 24.7,
+   "1GRASS_ncr_shoulder_dirt_06": 24.7,
+   "1GRASS_ncr_shoulder_dirt_03": 19.7,
+   "1GRASS_ncr_shoulder_dirt_00": 18.9,
+   "1GRASS_ncr_shoulder_dirt_02": 17.0,
+   "1GRASS_ncr_shoulder_dirt_05": 16.7,
+   "1GRASS_ncr_shoulder_dirt_07": 16.4,
+   "1GRASS_ncr_shoulder_dirt_01": 15.7,
+   "1GRASS_ncr_shoulder_dirt_08": 13.9,
+   "1GRASS_ncr_shoulder_dirt_09": 12.0
   },
   "road_banktoe_crease_max_deg": {
    "1ROAD_ncr_road_asphalt_00": 0.0,
    "1ROAD_ncr_road_asphalt_01": 0.0,
-   "1ROAD_ncr_road_asphalt_10": 0.0,
    "1ROAD_ncr_road_asphalt_02": 0.0,
    "1ROAD_ncr_road_asphalt_03": 0.0,
    "1ROAD_ncr_road_asphalt_04": 0.0,
    "1ROAD_ncr_road_asphalt_05": 0.0,
    "1ROAD_ncr_road_asphalt_06": 0.0,
    "1ROAD_ncr_road_asphalt_07": 0.0,
-   "1ROAD_ncr_road_asphalt_08": 0.0
+   "1ROAD_ncr_road_asphalt_08": 0.0,
+   "1ROAD_ncr_road_asphalt_09": 0.0
   },
   "road_crease_raw_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,
-   "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
    "1ROAD_ncr_road_asphalt_06": 2.7,
    "1ROAD_ncr_road_asphalt_01": 2.4,
    "1ROAD_ncr_road_asphalt_09": 2.4,
-   "1ROAD_ncr_road_asphalt_08": 2.2
+   "1ROAD_ncr_road_asphalt_08": 2.2,
+   "1ROAD_ncr_road_asphalt_00": 1.6
   },
   "road_crease_max_deg": {
-   "1ROAD_AP_ncr_road_asphalt_03": 7.4,
+   "1ROAD_AP_ncr_road_asphalt_03": 8.3,
    "1ROAD_ncr_road_asphalt_04": 4.1,
    "1ROAD_ncr_road_asphalt_05": 3.2,
    "1ROAD_ncr_road_asphalt_03": 2.9,
-   "1ROAD_ncr_road_asphalt_10": 2.8,
    "1ROAD_ncr_road_asphalt_07": 2.8,
    "1ROAD_ncr_road_asphalt_06": 2.7,
    "1ROAD_ncr_road_asphalt_01": 2.4,
    "1ROAD_ncr_road_asphalt_09": 2.4,
-   "1ROAD_ncr_road_asphalt_08": 2.2
+   "1ROAD_ncr_road_asphalt_08": 2.2,
+   "1ROAD_ncr_road_asphalt_00": 1.6
   },
   "wall_face_crease_max_deg": {
-   "1WALL_ncr_br1R": 7.1,
-   "1WALL_ncr_br1L": 5.6,
    "1WALL_ncr_br3L": 2.0,
    "1WALL_ncr_br3R": 1.8,
    "1WALL_ncr_br0R": 1.7,
-   "1WALL_ncr_br0L": 1.4,
-   "1WALL_ncr_br2L": 1.0,
-   "1WALL_ncr_br2R": 1.0
+   "1WALL_ncr_br0L": 1.4
   },
   "layouts": {
    "canyon_rev_road": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    },
    "canyon_rev_track": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    },
    "canyon_road": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    },
    "canyon_track": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    },
    "freeroam": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    },
    "freeroam_track": {
     "materials": 6,
-    "shader_texture_combos": 4,
+    "shader_texture_combos": 5,
     "shaders": [
      "ksPerPixel",
+     "ksPerPixelAT",
      "ksPerPixelMultiMap"
     ],
-    "textures": 6,
+    "textures": 7,
     "texture_mb": 8.4,
     "csp_shader_replacements": 0
    }
   },
-  "wall_tris_total": 4528,
-  "wall_tris_per_km": 422,
-  "wall_components": 8
+  "wall_tris_total": 3584,
+  "wall_tris_per_km": 334,
+  "wall_components": 4
  }
 }
